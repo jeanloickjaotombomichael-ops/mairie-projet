@@ -1,0 +1,36 @@
+{% extends "agents/base.html" %}
+{% load i18n %}
+
+{% block back %}{% endblock %}
+
+{% block content %}
+<div class="mairy-page agent-narrow">
+  <a class="agent-back" href="{% url 'agents:document_detail' number act.pk %}">&larr; {{ act.label }}</a>
+
+  <div class="agent-head">
+    <div>
+      <h1>{% translate "Demander la suppression" %}</h1>
+      <p class="mairy-muted">
+        {{ act.label }} — {{ act.holder_name }}{% translate ". Vous ne pouvez pas supprimer un document vous-même : l'administrateur examinera votre demande." %}
+      </p>
+    </div>
+  </div>
+
+  <section class="mairy-card">
+    <form method="post" class="agent-form" novalidate>
+      {% csrf_token %}
+      <div class="agent-field{% if error %} has-error{% endif %}">
+        <label for="reason">{% translate "Motif de la suppression" %} <span class="agent-required" aria-hidden="true">*</span></label>
+        <textarea id="reason" name="reason" rows="5" maxlength="2000" required
+                  placeholder="{% translate "Ex. : erreur dans un nom, document établi en double…" %}"
+                  {% if error %}aria-invalid="true" aria-describedby="reason-error"{% endif %}>{{ reason }}</textarea>
+        {% if error %}<p class="agent-error" id="reason-error">{{ error }}</p>{% endif %}
+      </div>
+      <div class="agent-actions">
+        <a class="agent-btn agent-btn-ghost" href="{% url 'agents:document_detail' number act.pk %}">{% translate "Annuler" %}</a>
+        <button type="submit" class="agent-btn agent-btn-danger">{% translate "Envoyer la demande à l'administrateur" %}</button>
+      </div>
+    </form>
+  </section>
+</div>
+{% endblock %}

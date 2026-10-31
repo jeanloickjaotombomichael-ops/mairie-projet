@@ -1,0 +1,21 @@
+{% load i18n %}
+{% comment %}
+  Sélecteur de langue (administration, espace agent, accueil, connexion).
+  Formulaire POST vers set_language ; `next` ramène sur la même page.
+  Variante : `switcher_class` pour l'adapter au fond (clair / sombre).
+{% endcomment %}
+{% get_current_language as CURRENT_LANGUAGE %}
+<form class="lang-switch {{ switcher_class }}" action="{% url 'set_language' %}" method="post">
+  {% csrf_token %}
+  <input type="hidden" name="next" value="{{ request.get_full_path }}">
+  <svg class="lang-switch-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
+  {# Sur téléphone, seul le code (FR / EN / MG) est affiché par-dessus le menu. #}
+  <span class="lang-switch-code" aria-hidden="true">{{ CURRENT_LANGUAGE|upper }}</span>
+  <label class="lang-switch-sr" for="lang-{{ switcher_id|default:'main' }}">{% translate "Langue" %}</label>
+  <select id="lang-{{ switcher_id|default:'main' }}" name="language" onchange="this.form.submit()">
+    <option value="fr"{% if CURRENT_LANGUAGE == 'fr' %} selected{% endif %}>FR — Français</option>
+    <option value="en"{% if CURRENT_LANGUAGE == 'en' %} selected{% endif %}>EN — English</option>
+    <option value="mg"{% if CURRENT_LANGUAGE == 'mg' %} selected{% endif %}>MG — Malagasy</option>
+  </select>
+  <noscript><button type="submit">{% translate "OK" %}</button></noscript>
+</form>

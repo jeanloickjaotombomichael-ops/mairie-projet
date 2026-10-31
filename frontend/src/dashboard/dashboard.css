@@ -1,0 +1,1308 @@
+/*
+ * Espace utilisateur : thèmes et classes utilitaires.
+ *
+ * Chaque thème est porté par l'attribut `data-dash-theme` du conteneur racine
+ * (voir DashboardLayout) et ne définit que des variables `--d-*`.
+ * Ce fichier n'est volontairement pas dans une `@layer` : ses règles passent
+ * donc avant les utilitaires Tailwind quand les deux visent le même élément.
+ */
+
+/* ------------------------------------------------------------------ */
+/* Thèmes                                                              */
+/* ------------------------------------------------------------------ */
+
+[data-dash-theme='nuit'] {
+  color-scheme: dark;
+  --d-bg: #111a2e;
+  --d-surface: #1b2640;
+  --d-surface-2: #243252;
+  --d-border: rgba(148, 163, 184, 0.16);
+  --d-text: #e6ebf5;
+  --d-muted: #8d99b6;
+  --d-accent: #2aa9ff;
+  --d-accent-fg: #04111f;
+  --d-accent-soft: rgba(42, 169, 255, 0.16);
+  --d-success: #4ade80;
+  --d-success-soft: rgba(74, 222, 128, 0.14);
+  --d-warning: #fbbf24;
+  --d-warning-soft: rgba(251, 191, 36, 0.14);
+  --d-danger: #f87171;
+  --d-danger-soft: rgba(248, 113, 113, 0.14);
+}
+
+[data-dash-theme='clair'] {
+  color-scheme: light;
+  --d-bg: #f1f4fa;
+  --d-surface: #ffffff;
+  --d-surface-2: #eef2f9;
+  --d-border: rgba(15, 23, 42, 0.12);
+  --d-text: #172033;
+  --d-muted: #5d6b88;
+  --d-accent: #1d5fe0;
+  --d-accent-fg: #ffffff;
+  --d-accent-soft: rgba(29, 95, 224, 0.1);
+  --d-success: #15803d;
+  --d-success-soft: rgba(21, 128, 61, 0.1);
+  --d-warning: #b45309;
+  --d-warning-soft: rgba(180, 83, 9, 0.1);
+  --d-danger: #b91c1c;
+  --d-danger-soft: rgba(185, 28, 28, 0.1);
+}
+
+[data-dash-theme='ocean'] {
+  color-scheme: dark;
+  --d-bg: #06202b;
+  --d-surface: #0b3547;
+  --d-surface-2: #104659;
+  --d-border: rgba(125, 211, 252, 0.18);
+  --d-text: #e0f4ff;
+  --d-muted: #86b6cb;
+  --d-accent: #22d3ee;
+  --d-accent-fg: #022b33;
+  --d-accent-soft: rgba(34, 211, 238, 0.15);
+  --d-success: #4ade80;
+  --d-success-soft: rgba(74, 222, 128, 0.14);
+  --d-warning: #fbbf24;
+  --d-warning-soft: rgba(251, 191, 36, 0.14);
+  --d-danger: #fb7185;
+  --d-danger-soft: rgba(251, 113, 133, 0.14);
+}
+
+[data-dash-theme='foret'] {
+  color-scheme: dark;
+  --d-bg: #0d1912;
+  --d-surface: #163024;
+  --d-surface-2: #1e402f;
+  --d-border: rgba(134, 239, 172, 0.16);
+  --d-text: #e5f6ea;
+  --d-muted: #90b79d;
+  --d-accent: #34d399;
+  --d-accent-fg: #04261a;
+  --d-accent-soft: rgba(52, 211, 153, 0.15);
+  --d-success: #86efac;
+  --d-success-soft: rgba(134, 239, 172, 0.14);
+  --d-warning: #fbbf24;
+  --d-warning-soft: rgba(251, 191, 36, 0.14);
+  --d-danger: #fb7185;
+  --d-danger-soft: rgba(251, 113, 133, 0.14);
+}
+
+[data-dash-theme='crepuscule'] {
+  color-scheme: dark;
+  --d-bg: #1a1230;
+  --d-surface: #2a1e4d;
+  --d-surface-2: #37285f;
+  --d-border: rgba(196, 181, 253, 0.18);
+  --d-text: #efe9ff;
+  --d-muted: #ab9fd3;
+  --d-accent: #a78bfa;
+  --d-accent-fg: #1b0f3a;
+  --d-accent-soft: rgba(167, 139, 250, 0.17);
+  --d-success: #86efac;
+  --d-success-soft: rgba(134, 239, 172, 0.14);
+  --d-warning: #fcd34d;
+  --d-warning-soft: rgba(252, 211, 77, 0.14);
+  --d-danger: #fda4af;
+  --d-danger-soft: rgba(253, 164, 175, 0.14);
+}
+
+/* ------------------------------------------------------------------ */
+/* Structure                                                           */
+/* ------------------------------------------------------------------ */
+
+.dash-root {
+  color: var(--d-text);
+  transition: color 0.25s ease;
+}
+
+/*
+ * Textes posés directement sur le fond « vagues bleues » (sombre quel que soit le thème) :
+ * couleurs fixes pour rester lisibles ; le contenu des cartes suit le thème.
+ */
+.d-page-heading {
+  color: #ffffff;
+}
+
+.d-page-muted {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.d-page-link {
+  color: #9cc8ff;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.d-page-link:hover {
+  color: #ffffff;
+}
+
+.d-topbar {
+  background: color-mix(in srgb, var(--d-bg) 88%, transparent);
+  border-bottom: 1px solid var(--d-border);
+  backdrop-filter: blur(10px);
+}
+
+.d-card {
+  /* Légèrement translucide : le fond « vagues bleues » transparaît sans gêner la lecture. */
+  background: color-mix(in srgb, var(--d-surface) 86%, transparent);
+  border: 1px solid var(--d-border);
+  border-radius: 1rem;
+  backdrop-filter: blur(14px);
+}
+
+.d-muted {
+  color: var(--d-muted);
+}
+
+.d-heading {
+  color: var(--d-text);
+}
+
+.d-divider {
+  border-color: var(--d-border);
+}
+
+/* ------------------------------------------------------------------ */
+/* Rangées de demandes (accueil de l'espace)                           */
+/* ------------------------------------------------------------------ */
+
+.d-row-track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 85%;
+  gap: 1rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  padding: 0.25rem 0.125rem 0.5rem;
+}
+
+.d-row-track::-webkit-scrollbar {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .d-row-track {
+    grid-auto-columns: calc((100% - 1rem) / 2);
+  }
+}
+
+@media (min-width: 768px) {
+  .d-row-track {
+    grid-auto-columns: calc((100% - 2rem) / 3);
+  }
+}
+
+/* Grand écran : quatre demandes visibles à la fois. */
+@media (min-width: 1024px) {
+  .d-row-track {
+    grid-auto-columns: calc((100% - 3rem) / 4);
+  }
+}
+
+.d-row-item {
+  scroll-snap-align: start;
+}
+
+/* Cartes de chiffres de l'accueil de l'espace (non cliquables). */
+.d-stat-card {
+  border-radius: 1.25rem;
+  background: #2f3a68;
+  box-shadow: 0 18px 40px -24px rgba(2, 10, 31, 0.9);
+  padding: 1.1rem 1.25rem 1rem;
+  color: #ffffff;
+}
+
+/* Téléphone : deux cartes par ligne, plus compactes. */
+@media (max-width: 639px) {
+  .d-stat-card {
+    border-radius: 1rem;
+    padding: 0.9rem 0.95rem 0.85rem;
+  }
+}
+
+.d-stat-plus {
+  display: inline-flex;
+  height: 1.9rem;
+  width: 1.9rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: #a5e3f2;
+  color: #12203f;
+}
+
+/*
+ * Cartes et flèches posées sur le fond « vagues bleues » : effet verre dépoli
+ * aux couleurs fixes (le fond est le même quel que soit le thème).
+ */
+.d-request-card {
+  display: flex;
+  height: 100%;
+  min-height: 12rem;
+  flex-direction: column;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 1.1rem;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.05));
+  box-shadow: 0 18px 40px -22px rgba(2, 10, 31, 0.8);
+  padding: 1.35rem;
+  color: #ffffff;
+  backdrop-filter: blur(14px);
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.d-request-card:hover {
+  border-color: rgba(255, 255, 255, 0.45);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.08));
+  transform: translateY(-3px);
+}
+
+.d-request-icon {
+  display: inline-flex;
+  height: 2.5rem;
+  width: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 0.8rem;
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+}
+
+.d-request-title {
+  color: #ffffff;
+}
+
+.d-request-text {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.d-request-cta {
+  margin-top: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  align-self: flex-start;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.14);
+  padding: 0.4rem 0.85rem;
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  transition: background-color 0.2s ease;
+}
+
+.d-request-card:hover .d-request-cta {
+  background: #ffffff;
+  color: #0a3684;
+}
+
+.d-row-arrow {
+  display: inline-flex;
+  height: 2.5rem;
+  width: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  backdrop-filter: blur(10px);
+  transition:
+    background-color 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.d-row-arrow:hover:not(:disabled) {
+  background: #ffffff;
+  color: #0a3684;
+}
+
+.d-row-arrow:disabled {
+  cursor: not-allowed;
+  opacity: 0.35;
+}
+
+/*
+ * Carte « verre dépoli » (formulaire d'une demande) : redéfinit localement les
+ * variables du thème, si bien que champs, boutons et messages suivent d'eux-mêmes.
+ */
+.d-glass {
+  color-scheme: dark;
+  --d-surface: rgba(255, 255, 255, 0.08);
+  --d-surface-2: rgba(255, 255, 255, 0.1);
+  --d-border: rgba(255, 255, 255, 0.24);
+  --d-text: #ffffff;
+  --d-muted: rgba(255, 255, 255, 0.72);
+  --d-accent: #ffffff;
+  --d-accent-fg: #0a3684;
+  --d-accent-soft: rgba(255, 255, 255, 0.22);
+  --d-success: #86efac;
+  --d-success-soft: rgba(134, 239, 172, 0.16);
+  --d-danger: #fecaca;
+  --d-danger-soft: rgba(254, 202, 202, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 1.25rem;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.05));
+  box-shadow: 0 24px 60px -28px rgba(2, 10, 31, 0.85);
+  color: var(--d-text);
+  backdrop-filter: blur(16px);
+}
+
+.d-glass .d-input:hover {
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.d-glass .d-input:focus {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+/* Liste déroulante native : fond opaque pour rester lisible. */
+.d-glass .d-input option,
+.d-glass .d-input optgroup {
+  background: #0a3684;
+  color: #ffffff;
+}
+
+.d-glass .d-required {
+  color: #fca5a5;
+}
+
+.d-glass .d-btn {
+  box-shadow: 0 10px 24px -12px rgba(2, 10, 31, 0.9);
+}
+
+.d-glass .d-btn:disabled {
+  opacity: 0.45;
+}
+
+/* ------------------------------------------------------------------ */
+/* Boutons, champs, menus                                              */
+/* ------------------------------------------------------------------ */
+
+.d-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 1px solid transparent;
+  border-radius: 0.65rem;
+  background: var(--d-accent);
+  padding: 0.65rem 1.15rem;
+  color: var(--d-accent-fg);
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition:
+    filter 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.d-btn:hover:not(:disabled) {
+  filter: brightness(1.08);
+}
+
+.d-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.d-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 1px solid var(--d-border);
+  border-radius: 0.65rem;
+  background: var(--d-surface);
+  padding: 0.5rem 0.9rem;
+  color: var(--d-text);
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: background-color 0.15s ease;
+}
+
+.d-btn-ghost:hover:not(:disabled) {
+  background: var(--d-surface-2);
+}
+
+.d-btn-ghost:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.d-icon-btn {
+  position: relative;
+  display: inline-flex;
+  height: 2.25rem;
+  width: 2.25rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.65rem;
+  color: var(--d-muted);
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.d-icon-btn:hover {
+  background: var(--d-surface-2);
+  color: var(--d-text);
+}
+
+.d-btn:focus-visible,
+.d-btn-ghost:focus-visible,
+.d-icon-btn:focus-visible,
+.d-row-arrow:focus-visible,
+.d-request-card:focus-visible,
+.d-menu-item:focus-visible,
+.d-lang-btn:focus-visible {
+  outline: 2px solid var(--d-accent);
+  outline-offset: 2px;
+}
+
+/* Sur le fond bleu, contour blanc pour rester visible. */
+.d-row-arrow:focus-visible,
+.d-request-card:focus-visible {
+  outline-color: #ffffff;
+}
+
+.d-input {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid var(--d-border);
+  border-radius: 0.65rem;
+  background: var(--d-surface-2);
+  padding: 0.6rem 0.75rem;
+  color: var(--d-text);
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.d-input::placeholder {
+  color: var(--d-muted);
+  opacity: 0.75;
+}
+
+.d-input:focus {
+  border-color: var(--d-accent);
+  outline: 2px solid var(--d-accent-soft);
+  outline-offset: 0;
+}
+
+.d-input[aria-invalid='true'] {
+  border-color: var(--d-danger);
+}
+
+.d-input option,
+.d-input optgroup {
+  background: var(--d-surface);
+  color: var(--d-text);
+}
+
+.d-label {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: var(--d-text);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.d-required {
+  color: var(--d-danger);
+}
+
+.d-error {
+  margin-top: 0.3rem;
+  color: var(--d-danger);
+  font-size: 0.75rem;
+}
+
+.d-fieldset {
+  min-width: 0;
+  border: 0;
+  padding: 0;
+}
+
+.d-legend {
+  margin-bottom: 0.85rem;
+  color: var(--d-text);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.d-popover {
+  border: 1px solid var(--d-border);
+  border-radius: 0.8rem;
+  background: var(--d-surface);
+  box-shadow: 0 18px 40px -12px rgba(0, 0, 0, 0.45);
+  color: var(--d-text);
+}
+
+.d-menu-item {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  background: transparent;
+  padding: 0.55rem 0.8rem;
+  color: var(--d-text);
+  font-size: 0.8rem;
+  text-align: left;
+}
+
+.d-menu-item:hover {
+  background: var(--d-surface-2);
+}
+
+.d-menu-item-active {
+  color: var(--d-accent);
+}
+
+.d-lang-btn {
+  border: 1px solid var(--d-border);
+  background: transparent;
+  color: var(--d-muted);
+}
+
+.d-lang-btn:hover {
+  border-color: var(--d-muted);
+  background: var(--d-surface-2);
+  color: var(--d-text);
+}
+
+/* ------------------------------------------------------------------ */
+/* Pastilles, badges                                                   */
+/* ------------------------------------------------------------------ */
+
+.d-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 9999px;
+  padding: 0.2rem 0.65rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.d-badge-pending {
+  background: var(--d-warning-soft);
+  color: var(--d-warning);
+}
+
+.d-badge-progress {
+  background: var(--d-accent-soft);
+  color: var(--d-accent);
+}
+
+.d-badge-approved,
+.d-badge-completed {
+  background: var(--d-success-soft);
+  color: var(--d-success);
+}
+
+.d-badge-rejected {
+  background: var(--d-danger-soft);
+  color: var(--d-danger);
+}
+
+.d-notice {
+  border: 1px solid var(--d-border);
+  border-radius: 0.8rem;
+  padding: 0.85rem 1rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.d-notice-success {
+  border-color: var(--d-success);
+  background: linear-gradient(var(--d-success-soft), var(--d-success-soft)), var(--d-surface);
+  color: var(--d-text);
+}
+
+.d-notice-error {
+  border-color: var(--d-danger);
+  background: linear-gradient(var(--d-danger-soft), var(--d-danger-soft)), var(--d-surface);
+  color: var(--d-text);
+}
+
+.d-dot {
+  display: inline-block;
+  height: 0.55rem;
+  width: 0.55rem;
+  border-radius: 9999px;
+  background: var(--d-accent);
+}
+
+.d-link {
+  color: var(--d-accent);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.d-count-badge {
+  position: absolute;
+  top: -0.15rem;
+  right: -0.15rem;
+  display: inline-flex;
+  min-width: 1.1rem;
+  height: 1.1rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: var(--d-danger);
+  padding: 0 0.3rem;
+  color: #ffffff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dash-root,
+  .d-btn,
+  .d-btn-ghost,
+  .d-icon-btn,
+  .d-row-arrow,
+  .d-request-card {
+    transition: none;
+  }
+
+  .d-request-card:hover {
+    transform: none;
+  }
+}
+
+/* Document téléchargeable (notifications de l'usager) */
+.d-doc-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  border: 1px solid var(--d-border);
+  border-radius: 0.8rem;
+  background: var(--d-surface-2);
+  padding: 0.6rem 0.75rem;
+  color: var(--d-accent);
+}
+
+/* ------------------------------------------------------------------ */
+/* Menu latéral (bouton « hamburger »)                                 */
+/* ------------------------------------------------------------------ */
+
+.d-drawer-root {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+}
+
+.d-drawer-root.is-open {
+  pointer-events: auto;
+}
+
+.d-drawer-scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.55);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.d-drawer-root.is-open .d-drawer-scrim {
+  opacity: 1;
+}
+
+.d-drawer {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  width: min(300px, 86vw);
+  flex-direction: column;
+  border-right: 1px solid var(--d-border);
+  background: var(--d-bg);
+  box-shadow: 12px 0 40px -12px rgba(0, 0, 0, 0.5);
+  color: var(--d-text);
+  transform: translateX(-102%);
+  transition: transform 0.25s ease;
+}
+
+.d-drawer-root.is-open .d-drawer {
+  transform: translateX(0);
+}
+
+.d-drawer-head {
+  display: flex;
+  height: 4rem;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.5rem;
+  border-bottom: 1px solid var(--d-border);
+  padding: 0 0.75rem 0 1rem;
+}
+
+.d-drawer-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.75rem 0.75rem 1.5rem 0;
+}
+
+.d-drawer-section + .d-drawer-section {
+  margin-top: 0.9rem;
+}
+
+.d-drawer-title {
+  margin: 0 0 0.35rem 1.25rem;
+  color: var(--d-muted);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.d-drawer-link {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 1rem;
+  border-radius: 0 999px 999px 0;
+  padding: 0.6rem 1rem 0.6rem 1.25rem;
+  color: var(--d-text);
+  font-size: 0.9rem;
+  text-align: left;
+  transition: background-color 0.15s ease;
+}
+
+.d-drawer-link:hover {
+  background: var(--d-surface-2);
+}
+
+.d-drawer-link.is-active {
+  background: var(--d-accent-soft);
+  color: var(--d-accent);
+  font-weight: 700;
+}
+
+.d-drawer-link:focus-visible {
+  outline: 2px solid var(--d-accent);
+  outline-offset: -2px;
+}
+
+.d-drawer-hint {
+  display: block;
+  overflow: hidden;
+  color: var(--d-muted);
+  font-size: 0.72rem;
+  font-weight: 400;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.d-drawer-badge {
+  min-width: 1.4rem;
+  border-radius: 999px;
+  background: var(--d-danger);
+  padding: 0.05rem 0.45rem;
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* ------------------------------------------------------------------ */
+/* Assistant IA                                                        */
+/* ------------------------------------------------------------------ */
+
+.d-assistant {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  z-index: 45;
+  display: flex;
+  width: min(380px, calc(100vw - 2rem));
+  height: min(560px, calc(100vh - 6rem));
+  height: min(560px, calc(100dvh - 6rem));
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.d-assistant-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  border-bottom: 1px solid var(--d-border);
+  padding: 0.75rem 0.75rem 0.75rem 1rem;
+}
+
+.d-assistant-avatar {
+  display: inline-flex;
+  height: 2.25rem;
+  width: 2.25rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--d-accent-soft);
+  color: var(--d-accent);
+}
+
+.d-assistant-log {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+.d-assistant-msg {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 0.75rem;
+}
+
+.d-assistant-msg.is-me {
+  align-items: flex-end;
+}
+
+.d-assistant-bubble {
+  max-width: 88%;
+  border-radius: 1rem 1rem 1rem 0.3rem;
+  background: var(--d-surface-2);
+  padding: 0.6rem 0.85rem;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  white-space: pre-line;
+}
+
+.d-assistant-msg.is-me .d-assistant-bubble {
+  border-radius: 1rem 1rem 0.3rem 1rem;
+  background: var(--d-accent);
+  color: var(--d-accent-fg);
+}
+
+.d-assistant-item {
+  display: flex;
+  max-width: 88%;
+  flex-direction: column;
+  border: 1px solid var(--d-border);
+  border-radius: 0.7rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.8rem;
+  transition: background-color 0.15s ease;
+}
+
+.d-assistant-item:hover {
+  background: var(--d-surface-2);
+}
+
+.d-assistant-item strong {
+  color: var(--d-accent);
+}
+
+.d-assistant-typing {
+  display: inline-flex;
+  gap: 0.25rem;
+}
+
+.d-assistant-typing span {
+  height: 0.45rem;
+  width: 0.45rem;
+  border-radius: 999px;
+  background: var(--d-muted);
+  animation: d-typing 1s infinite ease-in-out;
+}
+
+.d-assistant-typing span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.d-assistant-typing span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes d-typing {
+  0%,
+  80%,
+  100% {
+    opacity: 0.3;
+  }
+  40% {
+    opacity: 1;
+  }
+}
+
+.d-assistant-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0 1rem 0.75rem;
+}
+
+.d-assistant-form {
+  display: flex;
+  gap: 0.5rem;
+  border-top: 1px solid var(--d-border);
+  padding: 0.75rem;
+}
+
+/* ------------------------------------------------------------------ */
+/* Mail (à la manière de Gmail)                                         */
+/* ------------------------------------------------------------------ */
+
+.d-mail-compose-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-radius: 1rem;
+  background: color-mix(in srgb, var(--d-accent) 28%, var(--d-surface));
+  padding: 0.95rem 1.4rem;
+  color: var(--d-text);
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: box-shadow 0.15s ease;
+}
+
+.d-mail-compose-btn:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+.d-mail-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--d-border);
+}
+
+.d-mail-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  border-bottom: 3px solid transparent;
+  padding: 0.9rem 1.4rem;
+  color: var(--d-muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.d-mail-tab:hover {
+  background: var(--d-surface-2);
+}
+
+.d-mail-tab.is-active {
+  border-bottom-color: var(--d-accent);
+  color: var(--d-accent);
+}
+
+.d-mail-count {
+  border-radius: 999px;
+  background: var(--d-accent);
+  padding: 0 0.45rem;
+  color: var(--d-accent-fg);
+  font-size: 0.7rem;
+}
+
+.d-mail-row {
+  display: grid;
+  width: 100%;
+  grid-template-columns: minmax(110px, 190px) minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1rem;
+  border-bottom: 1px solid var(--d-border);
+  background: color-mix(in srgb, var(--d-surface-2) 45%, transparent);
+  padding: 0.7rem 1.25rem;
+  color: var(--d-muted);
+  font-size: 0.85rem;
+  text-align: left;
+}
+
+.d-mail-row.is-unread {
+  background: transparent;
+  color: var(--d-text);
+  font-weight: 700;
+}
+
+.d-mail-row:hover {
+  box-shadow: inset 0 0 0 1px var(--d-border), 0 2px 6px -2px rgba(0, 0, 0, 0.4);
+}
+
+.d-mail-from,
+.d-mail-line {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.d-mail-subject {
+  color: var(--d-text);
+}
+
+.d-mail-row:not(.is-unread) .d-mail-line .d-muted {
+  font-weight: 400;
+}
+
+.d-mail-date {
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+.d-mail-avatar {
+  display: inline-flex;
+  height: 2.5rem;
+  width: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--d-accent);
+  color: var(--d-accent-fg);
+  font-weight: 700;
+}
+
+.d-compose {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 0;
+  z-index: 46;
+  width: min(520px, calc(100vw - 2rem));
+  overflow: hidden;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.d-compose-head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--d-surface-2);
+  padding: 0.4rem 0.5rem 0.4rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.d-compose-field {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0 1rem;
+  border-bottom: 1px solid var(--d-border);
+  font-size: 0.85rem;
+}
+
+.d-compose-field select,
+.d-compose-field input,
+.d-compose-body {
+  min-width: 0;
+  flex: 1;
+  background: transparent;
+  padding: 0.65rem 0;
+  color: var(--d-text);
+  outline: none;
+}
+
+.d-compose-field select option {
+  background: var(--d-surface);
+  color: var(--d-text);
+}
+
+.d-compose-body {
+  display: block;
+  width: calc(100% - 2rem);
+  min-height: 220px;
+  margin: 0 1rem;
+  resize: vertical;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.d-compose-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 1rem 0.9rem;
+}
+
+@media (max-width: 640px) {
+  .d-mail-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .d-mail-line {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .d-assistant,
+  .d-compose {
+    right: 1rem;
+    left: 1rem;
+    width: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .d-drawer,
+  .d-drawer-scrim {
+    transition: none;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Formulaire en étapes (demandes d'actes)                             */
+/* ------------------------------------------------------------------ */
+
+.d-steps {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.d-step {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Trait entre deux étapes. */
+.d-step + .d-step::before {
+  content: '';
+  height: 2px;
+  min-width: 1rem;
+  flex: 0 1 2.5rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.d-step.is-done + .d-step::before,
+.d-step.is-current::before {
+  background: var(--d-accent);
+}
+
+.d-step button {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: 0.55rem;
+  border-radius: 999px;
+  padding: 0.2rem 0.6rem 0.2rem 0.2rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.d-step button:not(:disabled):hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.d-step button:disabled {
+  cursor: default;
+}
+
+.d-step-dot {
+  display: inline-flex;
+  height: 1.75rem;
+  width: 1.75rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  font-size: 0.75rem;
+}
+
+.d-step-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.d-step.is-current button {
+  color: #ffffff;
+}
+
+.d-step.is-current .d-step-dot,
+.d-step.is-done .d-step-dot {
+  border-color: var(--d-accent);
+  background: var(--d-accent);
+  color: var(--d-accent-fg);
+}
+
+/* Sur téléphone : seul le libellé de l'étape en cours reste affiché. */
+@media (max-width: 640px) {
+  .d-step:not(.is-current) .d-step-label {
+    display: none;
+  }
+}
+
+/* Rubriques d'une étape (ex. « Père », « Mère ») et aide sous un champ. */
+.d-subsection + .d-subsection {
+  margin-top: 1.25rem;
+  border-top: 1px solid var(--d-border);
+  padding-top: 1.1rem;
+}
+
+.d-subsection-title {
+  margin-bottom: 0.75rem;
+  color: var(--d-text);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.d-hint {
+  margin-top: 0.3rem;
+  color: var(--d-muted);
+  font-size: 0.72rem;
+}
+
+.d-glass .d-hint {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Choix « Oui » / « Non » en deux boutons (ex. « Résidence principale ? » de l'étape Quartier). */
+.d-choice {
+  display: inline-flex;
+  gap: 0.5rem;
+}
+
+.d-choice-btn {
+  display: inline-flex;
+  min-width: 6.5rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  border: 1px solid var(--d-border);
+  border-radius: 0.65rem;
+  background: color-mix(in srgb, var(--d-surface) 60%, transparent);
+  padding: 0.65rem 1.25rem;
+  color: var(--d-text);
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.d-choice-btn:hover {
+  border-color: var(--d-accent);
+}
+
+.d-choice-btn.is-active {
+  border-color: var(--d-accent);
+  background: var(--d-accent);
+  color: var(--d-accent-fg);
+}
+
+.d-choice-btn:focus-visible {
+  outline: 2px solid var(--d-accent);
+  outline-offset: 2px;
+}

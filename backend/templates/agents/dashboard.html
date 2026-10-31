@@ -1,0 +1,90 @@
+{% extends "agents/base.html" %}
+{% load i18n %}
+
+{% block back %}{% endblock %}
+
+{% block content %}
+<div class="mairy-page">
+  <div class="agent-head">
+    <div>
+      <h1>{{ guichet.title }}</h1>
+      <p class="mairy-muted">{% blocktranslate with label=guichet.label %}{{ label }} — tableau de bord de votre guichet{% endblocktranslate %}</p>
+    </div>
+    <a class="agent-btn" href="{{ list_url }}?statut=PENDING">
+      {% translate "Traiter les demandes en attente" %}{% if pending %} ({{ pending }}){% endif %}
+    </a>
+  </div>
+
+  {% if new_count %}
+  <a class="agent-banner" href="{% url 'agents:notifications' number %}">
+    <svg class="mairy-ico" aria-hidden="true"><use href="#mi-bell"/></svg>
+    <span>{% blocktranslate count counter=new_count %}<strong>{{ counter }} nouvelle demande</strong> reçue depuis votre dernière consultation des notifications.{% plural %}<strong>{{ counter }} nouvelles demandes</strong> reçues depuis votre dernière consultation des notifications.{% endblocktranslate %}</span>
+    <span class="agent-banner-cta">{% translate "Voir" %}</span>
+  </a>
+  {% endif %}
+
+  <section class="mairy-kpis">
+    {% for card in kpi_cards %}
+    <a class="mairy-card mairy-kpi" href="{{ card.url }}">
+      <span class="mairy-kpi-label">{{ card.label }}</span>
+      <span class="mairy-kpi-row">
+        <span class="mairy-kpi-value">{{ card.value }}</span>
+        <span class="mairy-kpi-change {% if card.up %}up{% else %}down{% endif %}">
+          {% if card.up %}+{% endif %}{{ card.change }}&nbsp;%
+          <svg class="mairy-ico"><use href="#mi-{% if card.up %}up{% else %}down{% endif %}"/></svg>
+        </span>
+      </span>
+      <span class="mairy-kpi-sub">{% blocktranslate with total=card.total %}Ce mois-ci, comparé au mois dernier · {{ total }} au total{% endblocktranslate %}</span>
+    </a>
+    {% endfor %}
+    <a class="mairy-card mairy-kpi" href="{{ list_url }}?statut=PENDING">
+      <span class="mairy-kpi-label">{% translate "En attente" %}</span>
+      <span class="mairy-kpi-row"><span class="mairy-kpi-value">{{ pending }}</span></span>
+      <span class="mairy-kpi-sub">{% translate "Demandes à prendre en charge" %}</span>
+    </a>
+  </section>
+
+  <section class="mairy-card">
+    <div class="mairy-card-head">
+      <h2>{% translate "Demandes reçues" %}</h2>
+      <span class="mairy-muted">{% blocktranslate count counter=chart.total %}12 derniers mois · {{ counter }} demande{% plural %}12 derniers mois · {{ counter }} demandes{% endblocktranslate %}</span>
+    </div>
+    {% include "admin/mairy/line_chart.html" with chart=chart aria_label="Demandes reçues par mois" %}
+  </section>
+
+  <div class="mairy-widgets">
+    <section class="mairy-card mairy-widget-sm">
+      <div class="mairy-card-head"><h2>{% translate "Par statut" %}</h2><span class="mairy-muted">{% blocktranslate with total=by_status.total %}{{ total }} au total{% endblocktranslate %}</span></div>
+      <ul class="mairy-bars">
+        {% for row in by_status.rows %}
+        <li>
+          <span class="mairy-bar-label">{{ row.label }}</span>
+          <span class="mairy-bar-track"><span class="mairy-bar-fill" style="width: {{ row.percent }}%"></span></span>
+          <span class="mairy-bar-value">{{ row.value }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+      {% if by_type %}
+      <div class="mairy-card-head agent-subhead"><h2>{% translate "Par type de dossier" %}</h2></div>
+      <ul class="mairy-bars">
+        {% for row in by_type.rows %}
+        <li>
+          <span class="mairy-bar-label">{{ row.label }}</span>
+          <span class="mairy-bar-track"><span class="mairy-bar-fill" style="width: {{ row.percent }}%"></span></span>
+          <span class="mairy-bar-value">{{ row.value }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </section>
+
+    <section class="mairy-card mairy-widget-lg">
+      <div class="mairy-card-head">
+        <h2>{% translate "Dernières demandes" %}</h2>
+        <a href="{{ list_url }}">{% translate "Tout voir" %}</a>
+      </div>
+      {% include "agents/_requests_table.html" with requests=latest_requests %}
+    </section>
+  </div>
+</div>
+{% endblock %}

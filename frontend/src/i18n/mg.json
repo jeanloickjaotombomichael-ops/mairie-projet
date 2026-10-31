@@ -1,0 +1,350 @@
+{
+  "common": {
+    "back": "Hiverina",
+    "backHome": "Hiverina any amin'ny fandraisana"
+  },
+  "header": {
+    "nav": {
+      "home": "Fandraisana",
+      "services": "Asa fanompoana",
+      "contact": "Fifandraisana",
+      "about": "Mombamomba"
+    },
+    "login": "Hiditra",
+    "language": "Fiteny",
+    "menuOpen": "Sokafy ny menio",
+    "menuClose": "Akatony ny menio",
+    "profile": "Mombamomba"
+  },
+  "home": {
+    "kicker": "Fitantanana nomerika",
+    "title": "Salama Jiaby e !",
+    "subtitle": "Tongasoa eto amin'ny Kaominina Mahajanga",
+    "typedLead": "Tsotra, azo antoka ary haingana ho an'ny",
+    "typedWords": [
+      "kopia nahaterahana",
+      "soratra fanambadiana",
+      "soratra fahafatesana",
+      "ladoany sy fitaterana",
+      "fandrafetan-tanàna sy kadasitra"
+    ],
+    "paragraph": "Ny antontan-taratasy ofisialinao, omena sy voamarina amim-pitokisana. Ny mari-pankasitrahana tsirairay dia arovan'ny kaody QR, ny marika nomerika ary ny sonia kriptografika tsy azo diovina.",
+    "searchPlaceholder": "Mitady fanompoana, raharaha...",
+    "searchButton": "Tadiavo",
+    "ctaScan": "Sivano ny taratasy",
+    "ctaAgent": "Ho tonga mpiasam-panjakana",
+    "ctaRequest": "Hanao fangatahana",
+    "servicesTitle": "Ny serivisinay",
+    "servicesIntro": "Ny raharaha rehetra ao amin'ny Kaominina, azo atao an-tserasera avy amin'ny toerana manokana anao.",
+    "allServices": "Ny serivisy rehetra",
+    "stepsTitle": "Ahoana no fiasany?",
+    "steps": [
+      {
+        "title": "Midira",
+        "text": "Mamorona kaonty na midira mba hidirana amin'ny toerana manokana anao."
+      },
+      {
+        "title": "Fenoy ny fangatahana",
+        "text": "Safidio ny raharaha, fenoy ny taratasy ary alefaso ao anatin'ny minitra vitsy."
+      },
+      {
+        "title": "Raiso ny valiny",
+        "text": "Tonga ao amin'ny fampahafantarana anao ny valin'ny Kaominina: tsy mila mandeha foana intsony."
+      }
+    ],
+    "verifyTitle": "Hamarino ny maha-izy azy ny taratasy",
+    "verifyText": "Misy kaody QR ny taratasy rehetra omen'ny Kaominina. Sivano izy mba hahafantarana raha marina, nofoanana na lany daty.",
+    "helpTitle": "Mila fanampiana?",
+    "helpText": "Manontany momba ny raharaha iray? Soraty izahay na jereo ny fanontaniana matetika apetraka.",
+    "helpContact": "Hifandray aminay",
+    "helpFaq": "Fanontaniana matetika",
+    "prev": "Hijery ny serivisy teo aloha",
+    "next": "Hijery ny serivisy manaraka"
+  },
+  "verify": {
+    "pageTitle": "Fanamarinana taratasy",
+    "motto": "Fitiavana - Tanindrazana - Fandrosoana",
+    "subtitle": "Antontan-taratasy ofisialy",
+    "loading": "Mandritra ny fanamarinana…",
+    "verifiedBadge": "Voamarina ny taratasy ofisialy",
+    "integrityOk": "Mifanaraka ny marika",
+    "integrityKo": "Tsy mifanaraka ny marika",
+    "integrityLabel": "Tsy fiovan'ny votoaty",
+    "signatureOk": "Manan-kery ny sonia",
+    "signatureKo": "Tsy manan-kery ny sonia",
+    "signatureLabel": "Fahamarinana",
+    "detailsTitle": "Antsipiriany momba ny fanamarinana",
+    "fields": {
+      "documentType": "Karazana taratasy",
+      "holder": "Tompony",
+      "nationalId": "Laharan'ny CIN",
+      "issueDate": "Daty nanomezana",
+      "identifier": "Famantarana (UUID)",
+      "fingerprint": "Marika SHA-256"
+    },
+    "download": "Alaivo ny PDF ofisialy",
+    "revoked": {
+      "badge": "Nofoanana ny taratasy",
+      "title": "Nofoanana ity taratasy ity",
+      "text": "Navoakan'ny Kaominina ity taratasy ity fa nofoanan'ny fitantanana izao, ka tsy azo ampiasaina intsony ho an'ny raharaha ofisialy."
+    },
+    "expired": {
+      "badge": "Lany daty ny taratasy",
+      "title": "Lany daty ity taratasy ity",
+      "text": "Tapitra ny fotoana nanan-kery ity taratasy ity. Mifandraisa amin'ny Kaominina mba hahazoana taratasy vaovao."
+    },
+    "invalid": {
+      "badge": "Tsy lasa ny fanamarinana",
+      "title": "Tsy lasa ny fanamarinana",
+      "text": "Tsy nahomby ny fanamarinana ity taratasy ity. Mety novana ny votoatiny, na tsy navoakan'ny Kaominina izy."
+    },
+    "maskedNotice": "Noho ny fiarovana, tsy aseho ny fampahalalana manokana momba ny tompon'ny taratasy rehefa tsy lasa ny fanamarinana.",
+    "notFound": {
+      "badge": "Tsy hita ny taratasy",
+      "title": "Tsy misy taratasy mifanaraka",
+      "text": "Tsy ao amin'ny rejistra ofisialy io famantarana io. Azo inoana fa sandoka ilay taratasy."
+    },
+    "badId": {
+      "title": "Famantarana diso",
+      "text": "Tsy misy famantarana taratasy mety ao amin'ny rohy na ny kaody voasivana."
+    },
+    "error": {
+      "title": "Tsy misy ny serivisy amin'izao fotoana izao",
+      "text": "Tsy azo tratra ny mpizara fanamarinana. Hamarino ny fifandraisanao dia andramo indray."
+    },
+    "retry": "Andramo indray",
+    "scanAnother": "Sivano taratasy hafa"
+  },
+  "scan": {
+    "title": "Sivano ny taratasy",
+    "badge": "Rafitra fanamarinana mivantana",
+    "instructions": "Asehoy ny fakantsary amin'ny kaody QR eo amin'ny taratasy ofisialy. Hanomboka ho azy ny fanamarinana.",
+    "start": "Alefaso ny fakantsary",
+    "stop": "Atsaharo ny fakantsary",
+    "starting": "Mandefa ny fakantsary…",
+    "cameraDenied": "Nolavina ny fahazoana mampiasa ny fakantsary. Avelao amin'ny navigatera, na ampidiro etsy ambany ny famantarana.",
+    "cameraError": "Tsy afaka manomboka ny fakantsary amin'ity fitaovana ity. Ampidiro etsy ambany ny famantarana.",
+    "insecure": "Mila fifandraisana azo antoka (HTTPS) na localhost ny fakantsary.",
+    "unrecognized": "Tsy fantatra ny kaody QR: tsy misy famantarana taratasy ao anatiny.",
+    "manualTitle": "Na ampidiro ny famantarana",
+    "manualHelp": "Apetraho ny famantarana (UUID) na ny rohy feno voasoratra amin'ny taratasy.",
+    "manualPlaceholder": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "manualButton": "Hamarino",
+    "manualError": "Famantarana diso: tokony ho toy ny xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx izy."
+  },
+  "agent": {
+    "title": "Ho tonga mpiasam-panjakana eo amin'ny sehatra",
+    "bullets": [
+      "Karakarao ny fangatahan'ny mpampiasa ao amin'ny varavarankelinao avy amin'ny tabilao manokana anao",
+      "Varavarankely iray isaky ny mpiasa: fahaterahana, fanambadiana, fahafatesana, lalàna na hetra / fitaterana / tsena…",
+      "Voafetra ny fidirana: dinihin'ny mpitantana ny fangatahanao ary omeny anao ny varavarankelinao",
+      "Rehefa voamarina, mahazo ny mombamomba fidirana ianao ary afaka miditra amin'ny toerana manokana anao"
+    ],
+    "formTitle": "Fangatahana fidirana ho mpiasa",
+    "firstName": "Anarana",
+    "firstNamePlaceholder": "Ny anaranao",
+    "lastName": "Fanampin'anarana",
+    "lastNamePlaceholder": "Ny fanampin'anaranao",
+    "phone": "Laharana finday",
+    "phonePlaceholder": "+261 34 00 000 00",
+    "email": "Mailaka",
+    "emailPlaceholder": "anarana@ohatra.com",
+    "requestType": "Karazana fangatahana",
+    "requestTypeAgent": "Mpiasam-panjakana — Famoronana taratasy ara-pitantanana",
+    "message": "Fanampim-pahalalana",
+    "messagePlaceholder": "Ampidiro ny antsipiriany (tsy voatery)",
+    "submit": "Alefaso ny fangatahana",
+    "submitting": "Mandefa…",
+    "required": "* Saha takiana",
+    "success": "Voalefa ny fangatahanao. Hodinihin'ny mpitantana izany ary horaisinao ny mombamomba anao rehefa voamarina.",
+    "errors": {
+      "required": "Voatery fenoina ity saha ity.",
+      "email": "Adiresy mailaka diso.",
+      "throttled": "Be loatra ny fangatahana nalefa. Andramo indray any aoriana any.",
+      "network": "Tsy azo tratra ny mpizara. Hamarino ny fifandraisanao dia andramo indray.",
+      "server": "Nisy hadisoana. Andramo indray.",
+      "invalid": "Misy saha tsy mety. Ahitsio dia andramo indray."
+    }
+  },
+  "pages": {
+    "faq": {
+      "title": "Fanontaniana matetika",
+      "text": "Hisokatra tsy ho ela ity pejy ity. Eo am-pananganana ny fanontaniana matetika."
+    },
+    "join": {
+      "title": "Hiditra aminay",
+      "text": "Hisokatra tsy ho ela ity pejy ity. Eo am-pananganana ny toerana fangatahana fidirana."
+    }
+  },
+  "notFound": {
+    "title": "Tsy hita ny pejy",
+    "text": "Tsy misy na nafindra ny pejy tadiavinao."
+  },
+  "footer": {
+    "hours": "Ora fisokafana",
+    "hoursValue": "Alatsinainy – Zoma · 08h00 – 16h00",
+    "address": "Adiresy",
+    "addressValue": "Hotel de Ville, Mahajanga, Madagasikara",
+    "follow": "Araho izahay",
+    "followValue": "Facebook · Instagram",
+    "brand": "Kaominina Mahajanga",
+    "contactButton": "Mifandraisa aminay",
+    "columns": {
+      "townhall": {
+        "title": "Kaominina",
+        "items": [
+          "Fanampiana",
+          "Ho tonga mpiasam-panjakana",
+          "Fampahalalana ara-dalàna",
+          "Faharetan'ny fandraharahana"
+        ]
+      },
+      "documents": {
+        "title": "Antontan-taratasy",
+        "items": [
+          "Fanambarana fahaterahana",
+          "Fanambarana fanambadiana",
+          "Fanambarana fahafatesana",
+          "Diplaoma & taratasy fanamarinana"
+        ]
+      },
+      "verification": {
+        "title": "Fanamarinana",
+        "items": [
+          "Famakiana kaody QR",
+          "Fanamarinana taratasy",
+          "Sonia nomerika",
+          "Fiarovana ny angon-drakitra"
+        ]
+      },
+      "support": {
+        "title": "Fanampiana",
+        "items": [
+          "Fanontaniana matetika",
+          "Fifandraisana",
+          "Ora fisokafana",
+          "Tongava hitsidika anay"
+        ]
+      }
+    },
+    "legal": {
+      "copyright": "Kaominina Mahajanga. Voatahiry ny zo rehetra. Sehatra nomerika ofisialy momba ny fanomezana sy ny fanamarinana ny antontan-taratasy ara-pitantanana.",
+      "terms": "Fepetra fampiasana",
+      "privacy": "Tsiambaratelo",
+      "security": "Fiarovana",
+      "backToTop": "Miakatra"
+    }
+  },
+  "about": {
+    "kicker": "Kaominina Ambonivohitr'i Mahajanga",
+    "title": "Manompo ny mponin'i Mahajanga isan'andro",
+    "intro": "Renivohitry ny faritra Boeny sy tanàna seranana lehibe any avaratra andrefan'i Madagasikara, i Mahajanga dia tantanan'ny Kaominina Ambonivohiny. Ny lapan'ny tanàna no andrim-panjakana akaiky indrindra ny mponina: mitana ny sora-piankohonana, mandrafitra ny tanàna, mitantana ny tolotra eo an-toerana ary miahy ny fiadanan'ny mponina.",
+    "mission": {
+      "title": "Ny iraka sahaninay",
+      "text": "Manome tolotra ho an'ny daholobe akaiky, haingana sy ara-drariny ho an'ny mponina tsirairay, ary hahatonga an'i Mahajanga ho tanàna madio, milamina, voalamina tsara ary mibanjina ny ho avy. Miasa eo ambany fahefan'ny Ben'ny tanàna sy ny Filankevitra monisipaly ny Kaominina, izay mandany ny tetibola sy ny fanapahan-kevitry ny tanàna."
+    },
+    "missions": {
+      "title": "Ny asan'ny lapan'ny tanàna",
+      "intro": "Ireo andraikitra lehibe sahanin'ny Kaominina, tanterahan'ireo sampan-draharaha sy varavarankeliny isan'andro.",
+      "items": [
+        {
+          "title": "Sora-piankohonana",
+          "text": "Manoratra ny fahaterahana, manatanteraka ny fanambadiana, manoratra ny fahafatesana ary mamoaka ny kopia sy sombin-tsoratra."
+        },
+        {
+          "title": "Fandrafetan-tanàna sy kadasitra",
+          "text": "Manome fahazoan-dàlana hanorina sy fanondroana fetra, mitana ny drafitry ny tanàna sy ny laharan'ny tany."
+        },
+        {
+          "title": "Ladoany sy hetra eo an-toerana",
+          "text": "Manangona ny hetra amin'ny tany, ny haba sy ny sarany mamatsy vola ny tolotra sy fotodrafitrasan'ny tanàna."
+        },
+        {
+          "title": "Tsena sy varotra",
+          "text": "Mandamina ny tsenan'ny kaominina, manome toerana ary manohana ny mpivarotra."
+        },
+        {
+          "title": "Fitaterana an-tanàn-dehibe",
+          "text": "Manome fahazoan-dàlana ho an'ny taxi sy taxi-be, mandamina ny fijanonana sy ny fifamoivoizana."
+        },
+        {
+          "title": "Fahadiovana sy tontolo iainana",
+          "text": "Manangona ny fako, mikarakara ny lalana, ny toerana maitso ary ny lakan-drano."
+        },
+        {
+          "title": "Asa sosialy sy fiainam-piarahamonina",
+          "text": "Manohana ny fianakaviana marefo, ny sekoly ambaratonga voalohany, ny fahasalamana fototra, ny fanatanjahantena ary ny kolontsaina."
+        },
+        {
+          "title": "Filaminana sy fandaminana",
+          "text": "Miaro ny filaminam-bahoaka miaraka amin'ny polisy monisipaly ary misoroka ny loza (rivodoza, tondra-drano, afo)."
+        },
+        {
+          "title": "Didim-pitondrana sy fanapahan-kevitra",
+          "text": "Manomana, mamoaka ary mitahiry ny fanapahan-kevitry ny Ben'ny tanàna sy ny Filankevitra, ary mamoaka sombiny voamarina."
+        }
+      ]
+    },
+    "goals": {
+      "title": "Ny tanjonay",
+      "intro": "Ireo zavatra hatsarain'ny Kaominina ho an'ny mponina.",
+      "items": [
+        {
+          "title": "Hanakaiky ny lapan'ny tanàna amin'ny vahoaka",
+          "text": "Tsy dia misy filaharana sy dia intsony: azo atomboka an-tserasera amin'ny fotoana rehetra ny fangatahana mahazatra."
+        },
+        {
+          "title": "Mangarahara kokoa",
+          "text": "Mahafantatra ny dingana misy ny fangatahany ny tsirairay ary mahazo valiny mazava; azon'ny rehetra hamarinina ny antontan-taratasy navoaka."
+        },
+        {
+          "title": "Manavao ny fitantanana",
+          "text": "Mampiditra amin'ny nomerika ny rejisitra sy ny fomba fiasa mba hanafainganana, hampihenana ny hadisoana ary hiadiana amin'ny hosoka."
+        },
+        {
+          "title": "Mampandroso ny tanàna",
+          "text": "Manatsara ny lalana, ny fanadiovana, ny jiro an-dalambe ary ny tsena, ary manohana ny toekarena sy ny fizahan-tany."
+        },
+        {
+          "title": "Mampandray anjara ny mponina",
+          "text": "Mihaino ny soso-kevitra sy ny fitarainan'ny olom-pirenena sy ny fokontany mba hitarihana tsara kokoa ny asan'ny kaominina."
+        }
+      ]
+    },
+    "values": {
+      "title": "Ny soatoavinay",
+      "items": [
+        {
+          "title": "Tolotra ho an'ny daholobe",
+          "text": "Fandraisana feno fanajana sy tolotra mitovy ho an'ny rehetra."
+        },
+        {
+          "title": "Fahamarinana",
+          "text": "Fomba fiasa mazava sy antontan-taratasy tsy azo sandohana."
+        },
+        {
+          "title": "Fitoviana",
+          "text": "Karakaraina araka ny filaharana sy ny lalàna ny fangatahana tsirairay."
+        },
+        {
+          "title": "Fanavaozana",
+          "text": "Ny nomerika ho fanamorana ny fangatahana andavanandro."
+        }
+      ]
+    },
+    "digital": {
+      "title": "Ny lapan'ny tanàna an-tserasera",
+      "intro": "Ity sehatra ity no varavarana nomerikan'ny Kaominina. Ahafahana:",
+      "items": [
+        "Mangataka kopia na tolotra avy amin'ny finday na ordinatera.",
+        "Manaraka ny fandrosoan'ny fangatahana ary mahazo ny valin'ny lapan'ny tanàna.",
+        "Maka ireo antontan-taratasy ofisialy navoakan'ny varavarankely.",
+        "Manamarina ny maha-marina ny antontan-taratasy amin'ny QR code sy ny dian-tanana SHA-256."
+      ]
+    },
+    "cta": {
+      "request": "Hanao fangatahana",
+      "contact": "Hifandray aminay"
+    }
+  }
+}

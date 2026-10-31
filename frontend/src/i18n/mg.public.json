@@ -1,0 +1,54 @@
+{
+  "nav": {
+    "mySpace": "Ny toerako",
+    "servicesMenu": "Lisitry ny serivisy",
+    "civilMenu": "Taratasy momba ny fiainam-pirenena"
+  },
+  "search": {
+    "label": "Hikaroka eto amin'ny sehatra",
+    "submit": "Alefaso ny fikarohana",
+    "scan": "Skana taratasy",
+    "noResults": "Tsy misy valiny ho an'ny « {{query}} ».",
+    "resultsLabel": "Valin'ny fikarohana",
+    "groupService": "Serivisy",
+    "groupPage": "Pejy",
+    "pages": {
+      "espace": "Ny toerako manokana",
+      "verify": "Hamarino ny taratasy"
+    }
+  },
+  "servicesPage": {
+    "signInToRequest": "Hiditra hanao fangatahana",
+    "viewService": "Hijery ny serivisy",
+    "civilIntro": "Safidio ny taratasy momba ny fiainam-pirenena tianao hangatahina."
+  },
+  "contactPage": {
+    "title": "Misy fanontaniana ve ianao?",
+    "intro": "Misaotra anao noho ny fahaliananao amin'ny serivisinay. Fenoy ny taratasy etsy ambany na soraty ho anay ao amin'ny {{email}} ary hamaly anao haingana izahay.",
+    "getInTouch": "Mifandraisa aminay",
+    "firstName": "Fanampiny",
+    "lastName": "Anarana",
+    "phone": "Laharana finday",
+    "email": "Mailaka",
+    "message": "Hafatra",
+    "send": "Alefaso ny hafatra",
+    "sending": "Alefa…",
+    "privacy": "Tsy mivarotra, tsy mizara, ary tsy mifanakalo ny mombamomba anao ny Kaominina Ambanivohitra Mahajanga. Zava-dehibe aminay ny fiainanao manokana.",
+    "success": "Voaray ny hafatrao. Hamaly anao haingana izahay.",
+    "errors": {
+      "required": "Tsy maintsy fenoina ity saha ity.",
+      "email": "Tsy mety ny adiresy mailaka.",
+      "phone": "Tsy mety ny laharana finday.",
+      "invalid": "Misy saha tsy mety. Ahitsio ary andramo indray.",
+      "throttled": "Be loatra ny hafatra nalefa. Andramo indray any aoriana kely.",
+      "network": "Tsy afaka mifandray amin'ny mpizara. Hamarino ny rohy ary andramo indray.",
+      "server": "Nisy fahadisoana. Andramo indray azafady."
+    }
+  },
+  "auth": {
+    "requiredTitle": "Ilaina ny fidirana",
+    "requiredText": "Ho an'ireo mpampiasa niditra ihany ny toerana manokana anao. Midira mba handefasana ny fangatahanao sy hanaraha-maso ny valin'ny Kaominina.",
+    "signIn": "Hiditra",
+    "loading": "Eo am-pakàna…"
+  }
+}

@@ -1,0 +1,123 @@
+{
+  "catalog": {
+    "servicesTitle": "Serivisy",
+    "servicesIntro": "Eto no hitanao ny serivisin'ny Kaominina Ambanivohitra Mahajanga ary azonao alefa an-tserasera ny fangatahanao avy amin'ny toerana manokana ho anao.",
+    "civil": {
+      "title": "Raharaham-pirenena (État civil)",
+      "description": "Taratasy fahaterahana, fanambadiana, fahafatesana, lalàna ary taratasy hafa avoakan'ny Kaominina."
+    },
+    "piecesTitle": "Taratasy ilaina",
+    "piecesNote": "Lisitra tsotra fotsiny : mety hangataka taratasy fanampiny ny Kaominina araka ny toe-javatrao.",
+    "requestCta": "Hanao ny fangatahako",
+    "backToServices": "Ny serivisy rehetra",
+    "types": {
+      "recette": {
+        "title": "Fidiram-bola (Recette)",
+        "description": "Fandoavana hetra, onitra, sarany amin'ny tsena ary fidiram-bola hafa ao amin'ny Kaominina, miaraka amin'ny fanaraha-maso ny toe-javatrao.",
+        "pieces": [
+          "Karatra nasionaly (CIN) na laharan'ny mpandoa hetra",
+          "Laharan'ny taratasy fandoavana na ny hetra voakasik'izany",
+          "porofon'ny fandoavana teo aloha (raha fanavaozana)"
+        ]
+      },
+      "transport": {
+        "title": "Fitaterana",
+        "description": "Alalana sy karatra mifandraika amin'ny fitaterana an-tanàna sy ny fijanonan'ny fiara ao amin'ny Kaominina.",
+        "pieces": [
+          "CIN an'ny mpangataka",
+          "Karatra fotsy (carte grise) an'ny fiara",
+          "Fahazoan-dalana mitondra fiara mbola manan-kery",
+          "Fanamarinana fiantohana mbola manan-kery"
+        ]
+      },
+      "urbanisme": {
+        "title": "Fanamboaran-tanàna (Urbanisme)",
+        "description": "Alalana hanorina, taratasy fanamarinana ny fanamboaran-tanàna, alalana hiasa ary fandrefesana.",
+        "pieces": [
+          "CIN an'ny mpangataka",
+          "Taratasy fananana na porofon'ny fananana ny tany",
+          "Drafitra misy ny toerana sy ny tetikasa",
+          "Famaritana amin'ny antsipiriany ny asa atao"
+        ]
+      },
+      "marche": {
+        "title": "Tsena",
+        "description": "Fanomezana, fanavaozana na famindrana toerana amin'ny tsenan'ny Kaominina.",
+        "pieces": [
+          "CIN an'ny mpangataka",
+          "Sary vao haingana",
+          "Karazan'ny asa ataonao",
+          "Porofon'ny fandoavana ny sarany amin'ny toerana"
+        ]
+      },
+      "cadastre": {
+        "title": "Kadastra",
+        "description": "Rakitra avy amin'ny kadastra, taratasy manamarina ny fananana, fandrefesana sy famindrana tany.",
+        "pieces": [
+          "CIN an'ny mpangataka",
+          "Laharan'ny tany na laharan'ny titre foncier",
+          "Drafitra na sary an'ny tany",
+          "Porofon'ny fananana"
+        ]
+      },
+      "impot_foncier": {
+        "title": "Hetra amin'ny tany (Impôt foncier)",
+        "description": "Fanambarana, taratasy fanamarinana ny hetra, fanamarinana ny fandoavana ary fitarainana mikasika ny hetra amin'ny tany.",
+        "pieces": [
+          "CIN an'ny mpangataka",
+          "Laharana ara-pitantanana na adiresin'ny tany",
+          "Taratasy farany momba ny hetra",
+          "Porofon'ny fananana"
+        ]
+      },
+      "naissance": {
+        "title": "Taratasy fahaterahana",
+        "description": "Kopia na rakitra avy amin'ny taratasy fahaterahana avoakan'ny birao misahana ny raharaham-pirenena ao amin'ny Kaominina.",
+        "pieces": [
+          "CIN an'ny mpangataka",
+          "Anarana, daty sy toerana nahaterahan'ilay olona voakasik'izany",
+          "Anaran'ny ray aman-dreny, raha fantatra",
+          "Porofon'ny fifandraisana, raha ho an'olon-kafa ny fangatahana"
+        ]
+      },
+      "mariage": {
+        "title": "Taratasy fanambadiana",
+        "description": "Kopia na rakitra avy amin'ny taratasy fanambadiana avoakan'ny birao misahana ny raharaham-pirenena ao amin'ny Kaominina.",
+        "pieces": [
+          "CIN an'ny mpangataka",
+          "Anaran'ny mpivady roa",
+          "Daty sy toerana nanaovana ny fanambadiana",
+          "Boky fianakaviana, raha misy"
+        ]
+      },
+      "deces": {
+        "title": "Taratasy fahafatesana",
+        "description": "Kopia na rakitra avy amin'ny taratasy fahafatesana avoakan'ny birao misahana ny raharaham-pirenena ao amin'ny Kaominina.",
+        "pieces": [
+          "CIN an'ny mpangataka",
+          "Anaran'ny maty, daty sy toerana nahafatesany",
+          "Porofon'ny fifandraisana amin'ny maty",
+          "Taratasy fanamarinana ara-pitsaboana ny fahafatesana, raha misy"
+        ]
+      },
+      "legislation": {
+        "title": "Lalàna",
+        "description": "Fijerena sy kopian'ny didim-pitantanana, ny fanapahan-kevitra ary ny fitsipika eo anivon'ny Kaominina.",
+        "pieces": [
+          "CIN an'ny mpangataka",
+          "Karazana sy laharan'ny lahatsoratra notadiavina",
+          "Antony nangatahana"
+        ]
+      },
+      "actes_divers": {
+        "title": "Taratasy hafa",
+        "description": "Taratasy sy fanamarinana hafa avoakan'ny Kaominina izay tsy ao anatin'ireo lohahevitra etsy ambony.",
+        "pieces": [
+          "CIN an'ny mpangataka",
+          "Famaritana mazava ny taratasy na fanamarinana irina",
+          "Porofo ilaina amin'ny fangatahana"
+        ]
+      }
+    }
+  }
+}

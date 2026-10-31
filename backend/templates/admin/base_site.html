@@ -1,0 +1,114 @@
+{% extends "admin/base.html" %}
+{% load i18n static %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block extrastyle %}{{ block.super }}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="{% static 'mairy_admin/admin.css' %}?v=18">
+<link rel="stylesheet" href="{% static 'mairy_admin/lang.css' %}?v=3">
+<link rel="stylesheet" href="{% static 'mairy_admin/responsive.css' %}?v=1">
+{% endblock %}
+
+{% block bodyclass %}{% if has_permission and mairy_nav %}mairy-shell{% endif %}{% endblock %}
+
+{% block header %}
+{% if has_permission and mairy_nav %}
+<header id="header" class="mairy-topbar">
+  <button type="button" class="mairy-burger" aria-label="{% translate "Ouvrir le menu" %}" onclick="document.body.classList.toggle('mairy-nav-open')">
+    <svg class="mairy-ico"><use href="#mi-menu"/></svg>
+  </button>
+  <a class="mairy-logo" href="{% url 'admin:index' %}">mairy<span>admin</span></a>
+
+  <div class="mairy-topbar-actions">
+    {% if 'pending' in mairy_badges %}
+    <a class="mairy-topbar-icon" href="{% url 'admin:espace_dossierrequest_changelist' %}?status__exact=PENDING" title="{% translate "Demandes en attente" %}">
+      <svg class="mairy-ico"><use href="#mi-bell"/></svg>
+      {% if mairy_badges.pending %}<span class="mairy-dot">{{ mairy_badges.pending }}</span>{% endif %}
+    </a>
+    {% endif %}
+    {% if 'mail' in mairy_badges %}
+    <a class="mairy-topbar-icon mairy-topbar-mail" href="{% url 'admin:espace_contactmessage_changelist' %}?handled__exact=0" title="{% translate "Messages de contact non traités" %}">
+      <svg class="mairy-ico"><use href="#mi-mail"/></svg>
+      {% if mairy_badges.mail %}<span class="mairy-dot">{{ mairy_badges.mail }}</span>{% endif %}
+    </a>
+    {% endif %}
+    <a class="mairy-topbar-icon mairy-topbar-site" href="{{ frontend_url }}" target="_blank" rel="noopener noreferrer" title="{% translate "Voir le site" %}">
+      <svg class="mairy-ico"><use href="#mi-globe"/></svg>
+    </a>
+    {% include "includes/language_switcher.html" with switcher_id="admin" %}
+    {% include "admin/color_theme_toggle.html" %}
+
+    <details class="mairy-account">
+      <summary title="{% firstof user.get_full_name user.get_username %}">
+        <span class="mairy-avatar">{% firstof user.first_name|first user.username|first %}</span>
+      </summary>
+      <div class="mairy-account-menu">
+        <p><strong>{% firstof user.get_full_name user.get_username %}</strong><br><span>{{ user.email }}</span></p>
+        {% if user.has_usable_password %}
+        <a href="{% url 'admin:password_change' %}"><svg class="mairy-ico"><use href="#mi-gear"/></svg>{% translate 'Change password' %}</a>
+        {% endif %}
+        <form method="post" action="{% url 'admin:logout' %}">
+          {% csrf_token %}
+          <button type="submit"><svg class="mairy-ico"><use href="#mi-logout"/></svg>{% translate 'Log out' %}</button>
+        </form>
+      </div>
+    </details>
+  </div>
+</header>
+
+<aside class="mairy-sidebar" aria-label="{% translate "Menu principal" %}">
+  {% for section in mairy_nav %}
+  <div class="mairy-nav-section">
+    <h3>{{ section.title }}</h3>
+    <ul>
+      {% for item in section.items %}
+      <li>
+        <a href="{{ item.url }}"{% if item.active %} class="active" aria-current="page"{% endif %}>
+          <svg class="mairy-ico"><use href="#mi-{{ item.icon }}"/></svg>
+          <span>{{ item.label }}</span>
+          {% if item.badge %}<span class="mairy-count">{{ item.badge }}</span>{% endif %}
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endfor %}
+  {% include "includes/assistant.html" %}
+</aside>
+<div class="mairy-scrim" onclick="document.body.classList.remove('mairy-nav-open')"></div>
+{% else %}
+{{ block.super }}
+{% endif %}
+{% endblock %}
+
+{% block branding %}
+<div id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:_('Django administration') }}</a></div>
+{% if user.is_anonymous %}
+  {% include "admin/color_theme_toggle.html" %}
+{% endif %}
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
+
+{# Bouton « Retour » en haut de chaque page (sauf le tableau de bord) : page précédente de l'admin, sinon l'accueil. #}
+{% block messages %}
+{% url 'admin:index' as admin_home %}
+{% if has_permission and mairy_nav and request.path != admin_home %}
+<a class="mairy-back" href="{{ admin_home }}" data-admin-back>&larr; {% translate "Retour" %}</a>
+<script>
+  document.querySelector('[data-admin-back]').addEventListener('click', function (event) {
+    if (document.referrer.indexOf(location.origin + '{{ admin_home }}') === 0 && history.length > 1) {
+      event.preventDefault();
+      history.back();
+    }
+  });
+</script>
+{% endif %}
+{{ block.super }}
+{% endblock messages %}
+
+{% block extrabody %}
+{% include "admin/mairy/icons.html" %}
+{% endblock %}

@@ -1,0 +1,350 @@
+{
+  "common": {
+    "back": "Retour",
+    "backHome": "Retour à l'accueil"
+  },
+  "header": {
+    "nav": {
+      "home": "Accueil",
+      "services": "Services",
+      "contact": "Contact",
+      "about": "À propos"
+    },
+    "login": "Se connecter",
+    "language": "Langue",
+    "menuOpen": "Ouvrir le menu",
+    "menuClose": "Fermer le menu",
+    "profile": "Profil"
+  },
+  "home": {
+    "kicker": "Administration numérique",
+    "title": "Bienvenue à Tous !",
+    "subtitle": "Bienvenue à la Mairie de Mahajanga",
+    "typedLead": "Simple, sûr et rapide pour",
+    "typedWords": [
+      "les actes de naissance",
+      "les actes de mariage",
+      "les actes de décès",
+      "la recette et le transport",
+      "l'urbanisme et le cadastre"
+    ],
+    "paragraph": "Vos documents officiels, délivrés et vérifiés en toute confiance. Chaque certificat est protégé par un QR code, une empreinte numérique et une signature cryptographique infalsifiable.",
+    "searchPlaceholder": "Rechercher un service, une démarche...",
+    "searchButton": "Rechercher",
+    "ctaScan": "Scanner un document",
+    "ctaAgent": "Devenir agent municipal",
+    "ctaRequest": "Faire une demande",
+    "servicesTitle": "Nos services",
+    "servicesIntro": "Toutes les démarches de la Commune, accessibles en ligne depuis votre espace personnel.",
+    "allServices": "Tous les services",
+    "stepsTitle": "Comment ça marche ?",
+    "steps": [
+      {
+        "title": "Connectez-vous",
+        "text": "Créez votre compte ou connectez-vous pour accéder à votre espace personnel."
+      },
+      {
+        "title": "Remplissez la demande",
+        "text": "Choisissez la démarche, remplissez le formulaire et envoyez-le en quelques minutes."
+      },
+      {
+        "title": "Recevez la réponse",
+        "text": "La réponse de la Commune arrive dans vos notifications : plus besoin de vous déplacer pour rien."
+      }
+    ],
+    "verifyTitle": "Vérifiez l'authenticité d'un document",
+    "verifyText": "Chaque document délivré par la Commune porte un QR code. Scannez-le pour savoir en quelques secondes s'il est authentique, révoqué ou expiré.",
+    "helpTitle": "Besoin d'aide ?",
+    "helpText": "Une question sur une démarche ? Écrivez-nous ou consultez les questions fréquentes.",
+    "helpContact": "Nous contacter",
+    "helpFaq": "Questions fréquentes",
+    "prev": "Voir les services précédents",
+    "next": "Voir les services suivants"
+  },
+  "verify": {
+    "pageTitle": "Vérification de document",
+    "motto": "Fitiavana - Tanindrazana - Fandrosoana",
+    "subtitle": "État civil et documents officiels",
+    "loading": "Vérification en cours…",
+    "verifiedBadge": "Document officiel vérifié",
+    "integrityOk": "Empreinte conforme",
+    "integrityKo": "Empreinte différente",
+    "integrityLabel": "Intégrité",
+    "signatureOk": "Signature valide",
+    "signatureKo": "Signature invalide",
+    "signatureLabel": "Authenticité",
+    "detailsTitle": "Détails de la vérification",
+    "fields": {
+      "documentType": "Type de document",
+      "holder": "Titulaire",
+      "nationalId": "N° de CIN",
+      "issueDate": "Date de délivrance",
+      "identifier": "Identifiant (UUID)",
+      "fingerprint": "Empreinte SHA-256"
+    },
+    "download": "Télécharger le PDF officiel",
+    "revoked": {
+      "badge": "Document révoqué",
+      "title": "Ce document a été révoqué",
+      "text": "Ce document a bien été délivré par la Mairie, mais il a depuis été révoqué par l'administration et n'est plus valable pour un usage officiel."
+    },
+    "expired": {
+      "badge": "Document expiré",
+      "title": "Ce document a expiré",
+      "text": "La période de validité de ce document est terminée. Veuillez contacter la Mairie pour obtenir un document à jour."
+    },
+    "invalid": {
+      "badge": "Échec de l'authentification",
+      "title": "Vérification échouée",
+      "text": "Ce document n'a pas pu être authentifié. Son contenu a peut-être été modifié, ou il n'a pas été délivré par la Mairie."
+    },
+    "maskedNotice": "Pour des raisons de sécurité, les informations personnelles du titulaire ne sont pas affichées lorsqu'un document échoue à la vérification.",
+    "notFound": {
+      "badge": "Document introuvable",
+      "title": "Aucun document correspondant",
+      "text": "Cet identifiant ne figure pas dans le registre officiel. Le document est probablement falsifié."
+    },
+    "badId": {
+      "title": "Identifiant invalide",
+      "text": "Le lien ou le code scanné ne contient pas d'identifiant de document valide."
+    },
+    "error": {
+      "title": "Service momentanément indisponible",
+      "text": "Impossible de joindre le serveur de vérification. Vérifiez votre connexion puis réessayez."
+    },
+    "retry": "Réessayer",
+    "scanAnother": "Scanner un autre document"
+  },
+  "scan": {
+    "title": "Scanner un document",
+    "badge": "Système d'authentification en direct",
+    "instructions": "Pointez la caméra vers le QR code figurant sur le certificat ou le document officiel. La vérification démarre automatiquement.",
+    "start": "Activer la caméra",
+    "stop": "Arrêter la caméra",
+    "starting": "Démarrage de la caméra…",
+    "cameraDenied": "L'accès à la caméra a été refusé. Autorisez-le dans votre navigateur, ou saisissez l'identifiant ci-dessous.",
+    "cameraError": "Impossible de démarrer la caméra sur cet appareil. Saisissez l'identifiant ci-dessous.",
+    "insecure": "La caméra nécessite une connexion sécurisée (HTTPS) ou localhost.",
+    "unrecognized": "QR code non reconnu : il ne contient pas d'identifiant de document.",
+    "manualTitle": "Ou saisissez l'identifiant",
+    "manualHelp": "Collez l'identifiant (UUID) ou le lien complet imprimé sur le document.",
+    "manualPlaceholder": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "manualButton": "Vérifier",
+    "manualError": "Identifiant invalide : il doit ressembler à xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx."
+  },
+  "agent": {
+    "title": "Devenir agent municipal sur la plateforme",
+    "bullets": [
+      "Traitez les demandes des usagers de votre guichet depuis votre propre tableau de bord",
+      "Un guichet par agent : naissance, mariage, décès, législation ou recette / transport / marché…",
+      "Accès réservé : l'administrateur examine votre demande et vous attribue votre guichet",
+      "Une fois validé, vous recevez vos identifiants et vous vous connectez à votre espace"
+    ],
+    "formTitle": "Demande d'accès Agent",
+    "firstName": "Prénom",
+    "firstNamePlaceholder": "Votre prénom",
+    "lastName": "Nom",
+    "lastNamePlaceholder": "Votre nom",
+    "phone": "Téléphone",
+    "phonePlaceholder": "+261 34 00 000 00",
+    "email": "E-mail",
+    "emailPlaceholder": "nom@exemple.com",
+    "requestType": "Type de demande",
+    "requestTypeAgent": "Agent municipal — Création de documents administratifs",
+    "message": "Précisions",
+    "messagePlaceholder": "Précisez votre demande (optionnel)",
+    "submit": "Envoyer la demande",
+    "submitting": "Envoi en cours…",
+    "required": "* Champs obligatoires",
+    "success": "Votre demande a bien été envoyée. L'administrateur va l'examiner et vous recevrez vos identifiants une fois validée.",
+    "errors": {
+      "required": "Ce champ est obligatoire.",
+      "email": "Adresse e-mail invalide.",
+      "throttled": "Trop de demandes envoyées. Réessayez plus tard.",
+      "network": "Impossible de joindre le serveur. Vérifiez votre connexion puis réessayez.",
+      "server": "Une erreur est survenue. Veuillez réessayer.",
+      "invalid": "Certains champs sont invalides. Corrigez-les puis réessayez."
+    }
+  },
+  "pages": {
+    "faq": {
+      "title": "Foire aux questions",
+      "text": "Cette page sera bientôt disponible. La foire aux questions est en cours de construction."
+    },
+    "join": {
+      "title": "Nous rejoindre",
+      "text": "Cette page sera bientôt disponible. L'espace de demande d'adhésion est en cours de construction."
+    }
+  },
+  "notFound": {
+    "title": "Page introuvable",
+    "text": "La page que vous cherchez n'existe pas ou a été déplacée."
+  },
+  "footer": {
+    "hours": "Horaires",
+    "hoursValue": "Lundi – Vendredi · 08h00 – 16h00",
+    "address": "Adresse",
+    "addressValue": "Hôtel de Ville, Mahajanga, Madagascar",
+    "follow": "Suivez-nous",
+    "followValue": "Facebook · Instagram",
+    "brand": "Mahajanga Commune Urbaine",
+    "contactButton": "Nous contacter",
+    "columns": {
+      "townhall": {
+        "title": "Mairie",
+        "items": [
+          "Assistance",
+          "Devenir agent municipal",
+          "Mentions légales",
+          "Délais de traitement"
+        ]
+      },
+      "documents": {
+        "title": "Documents",
+        "items": [
+          "Acte de naissance",
+          "Acte de mariage",
+          "Acte de décès",
+          "Diplômes & attestations"
+        ]
+      },
+      "verification": {
+        "title": "Vérification",
+        "items": [
+          "Scanner un QR code",
+          "Vérifier un document",
+          "Signature numérique",
+          "Sécurité des données"
+        ]
+      },
+      "support": {
+        "title": "Assistance",
+        "items": [
+          "Questions fréquentes",
+          "Contact",
+          "Horaires d'ouverture",
+          "Nous rendre visite"
+        ]
+      }
+    },
+    "legal": {
+      "copyright": "Commune Urbaine de Mahajanga. Tous droits réservés. Plateforme numérique officielle de délivrance et de vérification des documents administratifs.",
+      "terms": "Conditions d'utilisation",
+      "privacy": "Confidentialité",
+      "security": "Sécurité",
+      "backToTop": "Haut de page"
+    }
+  },
+  "about": {
+    "kicker": "La Commune Urbaine de Mahajanga",
+    "title": "Au service des Majungais, chaque jour",
+    "intro": "Chef-lieu de la région Boeny et grande ville portuaire du nord-ouest de Madagascar, Mahajanga est administrée par sa Commune Urbaine. La mairie est l'institution la plus proche des habitants : elle tient l'état civil, aménage la ville, gère les services de proximité et veille au bien-être de la population.",
+    "mission": {
+      "title": "Notre mission",
+      "text": "Offrir à chaque habitant un service public de proximité, rapide et équitable, et faire de Mahajanga une ville propre, sûre, bien organisée et tournée vers l'avenir. La Commune agit sous l'autorité du Maire et du Conseil municipal, qui votent le budget et les décisions de la ville."
+    },
+    "missions": {
+      "title": "Ce que fait la mairie",
+      "intro": "Les principales missions de la Commune Urbaine, exercées au quotidien par ses services et ses guichets.",
+      "items": [
+        {
+          "title": "État civil",
+          "text": "Enregistrer les naissances, célébrer les mariages, déclarer les décès et délivrer les copies et extraits d'actes."
+        },
+        {
+          "title": "Urbanisme et cadastre",
+          "text": "Délivrer les permis de construire et les alignements, tenir le plan de la ville et les références des parcelles."
+        },
+        {
+          "title": "Recettes et fiscalité locale",
+          "text": "Percevoir les impôts fonciers, taxes et redevances qui financent les services et les équipements de la ville."
+        },
+        {
+          "title": "Marchés et commerce",
+          "text": "Organiser les marchés municipaux, attribuer les emplacements et accompagner les commerçants."
+        },
+        {
+          "title": "Transport urbain",
+          "text": "Délivrer les licences de taxi et de taxi-be, organiser le stationnement et la circulation en ville."
+        },
+        {
+          "title": "Propreté et environnement",
+          "text": "Assurer la collecte des déchets, l'entretien des rues, des espaces verts et des canaux d'évacuation."
+        },
+        {
+          "title": "Action sociale et vie locale",
+          "text": "Soutenir les familles vulnérables, les écoles primaires publiques, la santé de base, le sport et la culture."
+        },
+        {
+          "title": "Sécurité et ordre public",
+          "text": "Veiller à la tranquillité publique avec la police municipale et prévenir les risques (cyclones, inondations, incendies)."
+        },
+        {
+          "title": "Arrêtés et délibérations",
+          "text": "Préparer, publier et conserver les décisions du Maire et du Conseil municipal, et en délivrer des extraits certifiés."
+        }
+      ]
+    },
+    "goals": {
+      "title": "Nos objectifs",
+      "intro": "Ce que la Commune s'engage à améliorer pour ses habitants.",
+      "items": [
+        {
+          "title": "Rapprocher la mairie des citoyens",
+          "text": "Moins de files d'attente et de déplacements : les démarches courantes peuvent être lancées en ligne, à toute heure."
+        },
+        {
+          "title": "Plus de transparence",
+          "text": "Chaque usager suit l'état de sa demande et reçoit une réponse claire ; les documents délivrés sont vérifiables par tous."
+        },
+        {
+          "title": "Moderniser l'administration",
+          "text": "Numériser les registres et les procédures pour réduire les délais, limiter les erreurs et lutter contre la fraude documentaire."
+        },
+        {
+          "title": "Développer la ville",
+          "text": "Améliorer la voirie, l'assainissement, l'éclairage public et les marchés, et accompagner l'activité économique et touristique."
+        },
+        {
+          "title": "Associer les habitants",
+          "text": "Écouter les suggestions et les réclamations des citoyens et des quartiers (fokontany) pour mieux orienter l'action municipale."
+        }
+      ]
+    },
+    "values": {
+      "title": "Nos valeurs",
+      "items": [
+        {
+          "title": "Service public",
+          "text": "Un accueil respectueux et le même service pour tous."
+        },
+        {
+          "title": "Intégrité",
+          "text": "Des procédures claires et des documents infalsifiables."
+        },
+        {
+          "title": "Équité",
+          "text": "Chaque demande est traitée dans l'ordre et selon les règles."
+        },
+        {
+          "title": "Innovation",
+          "text": "Le numérique au service des démarches de tous les jours."
+        }
+      ]
+    },
+    "digital": {
+      "title": "La mairie en ligne",
+      "intro": "Cette plateforme est la porte d'entrée numérique de la Commune. Elle permet de :",
+      "items": [
+        "Faire une demande d'acte ou de service depuis son téléphone ou son ordinateur.",
+        "Suivre l'avancement de sa demande et recevoir la réponse de la mairie.",
+        "Télécharger les documents officiels délivrés par les guichets.",
+        "Vérifier l'authenticité d'un document grâce à son QR code et à son empreinte SHA-256."
+      ]
+    },
+    "cta": {
+      "request": "Faire une demande",
+      "contact": "Nous contacter"
+    }
+  }
+}

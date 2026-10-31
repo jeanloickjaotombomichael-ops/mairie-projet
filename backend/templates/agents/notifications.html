@@ -1,0 +1,35 @@
+{% extends "agents/base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="mairy-page">
+  <div class="agent-head">
+    <div>
+      <h1>{% translate "Notifications" %}</h1>
+      <p class="mairy-muted">{% blocktranslate with guichet=guichet.title label=guichet.label %}Demandes envoyées par les usagers au {{ guichet }} — {{ label }}.{% endblocktranslate %}</p>
+    </div>
+  </div>
+
+  <section class="mairy-card">
+    <ul class="agent-notifications">
+      {% for dossier in notifications %}
+      <li{% if dossier.is_new %} class="is-new"{% endif %}>
+        <span class="agent-notif-icon" aria-hidden="true"><svg class="mairy-ico"><use href="#mi-bell"/></svg></span>
+        <div class="agent-notif-body">
+          <p>
+            {% if dossier.is_new %}<span class="mairy-status s-pending">{% translate "Nouveau" %}</span>{% endif %}
+            <strong>{{ dossier.applicant }}</strong> {% translate "a envoyé une demande" %}
+            <strong>{{ dossier.get_dossier_type_display }}</strong>
+            <span class="mairy-muted">({{ dossier.reference }})</span>
+          </p>
+          <span class="mairy-muted">{{ dossier.created_at|date:"DATETIME_FORMAT" }} · {{ dossier.get_status_display }}</span>
+        </div>
+        <a class="mairy-btn" href="{% url 'agents:request_detail' number dossier.pk %}">{% translate "Traiter" %}</a>
+      </li>
+      {% empty %}
+      <li class="mairy-muted">{% translate "Aucune demande pour le moment." %}</li>
+      {% endfor %}
+    </ul>
+  </section>
+</div>
+{% endblock %}

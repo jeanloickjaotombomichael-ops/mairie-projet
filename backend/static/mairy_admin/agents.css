@@ -1,0 +1,854 @@
+/*
+ * Espace agent : socle normalement fourni par les CSS de l'admin Django
+ * (non chargées ici), puis composants propres (onglets, formulaires, fiche).
+ * L'apparence générale vient de admin.css (classes mairy-*).
+ */
+
+body {
+  margin: 0;
+  font-family: var(--font-family-primary);
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+a {
+  color: var(--m-accent);
+}
+
+#header.mairy-topbar {
+  display: flex;
+  align-items: center;
+}
+
+#content h1 {
+  margin: 0;
+}
+
+.agent-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.agent-guichet-chip {
+  border-radius: 999px;
+  background: var(--m-accent-soft);
+  padding: 4px 12px;
+  color: var(--m-accent);
+  font-size: 0.82rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* ---------- En-têtes de page, boutons ---------- */
+
+.agent-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.agent-head p {
+  margin: 4px 0 0;
+}
+
+.agent-btn,
+a.agent-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--m-accent);
+  padding: 10px 18px;
+  color: var(--m-bg);
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.agent-btn:hover {
+  filter: brightness(1.12);
+}
+
+.agent-btn:focus-visible,
+.agent-tabs a:focus-visible,
+.agent-back:focus-visible {
+  outline: 2px solid var(--m-accent);
+  outline-offset: 2px;
+}
+
+.agent-back {
+  align-self: flex-start;
+  color: var(--m-muted);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.agent-subhead {
+  margin-top: 22px;
+}
+
+.agent-narrow {
+  max-width: 640px;
+}
+
+/* ---------- Messages ---------- */
+
+.agent-messages {
+  margin: 0 0 18px;
+  padding: 0;
+  list-style: none;
+}
+
+.agent-messages li {
+  border-radius: 10px;
+  background: #e5faf2;
+  padding: 10px 14px;
+  color: #17734a;
+  font-weight: 600;
+}
+
+/* ---------- Liste : onglets, recherche, pagination ---------- */
+
+.agent-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.agent-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.agent-tabs a {
+  border-radius: 999px;
+  padding: 6px 14px;
+  color: var(--m-muted);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.agent-tabs a:hover {
+  background: var(--m-accent-soft);
+  color: var(--m-text);
+}
+
+.agent-tabs a.active {
+  background: var(--m-accent);
+  color: var(--m-bg);
+}
+
+.agent-search {
+  display: flex;
+  gap: 8px;
+}
+
+.agent-search input,
+.agent-field input,
+.agent-field select,
+.agent-field textarea {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  border: 1px solid var(--m-border);
+  border-radius: 10px;
+  background: var(--m-surface);
+  padding: 9px 12px;
+  color: var(--m-text);
+  font: inherit;
+}
+
+.agent-search input {
+  width: 260px;
+}
+
+.agent-search input:focus,
+.agent-field input:focus,
+.agent-field select:focus,
+.agent-field textarea:focus {
+  outline: 2px solid var(--m-accent-soft);
+  border-color: var(--m-accent);
+}
+
+.agent-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin-top: 16px;
+}
+
+.agent-count {
+  margin: 12px 0 0;
+}
+
+.agent-cell-action {
+  text-align: right;
+}
+
+/* ---------- Fiche d'une demande ---------- */
+
+.agent-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.agent-dl {
+  display: grid;
+  grid-template-columns: minmax(130px, 40%) 1fr;
+  gap: 10px 16px;
+  margin: 0;
+}
+
+.agent-dl dt {
+  color: var(--m-muted);
+  font-weight: 600;
+}
+
+.agent-dl dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.agent-form {
+  display: grid;
+  gap: 18px;
+}
+
+.agent-field label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 700;
+}
+
+.agent-field select {
+  max-width: 340px;
+}
+
+.agent-field.has-error input,
+.agent-field.has-error select,
+.agent-field.has-error textarea {
+  border-color: var(--m-down);
+}
+
+.agent-help {
+  margin: 6px 0 0;
+  font-size: 0.85rem;
+}
+
+.agent-help ul {
+  margin: 4px 0 0;
+  padding-left: 18px;
+}
+
+.agent-error {
+  margin: 6px 0 0;
+  color: var(--m-down);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.agent-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (max-width: 900px) {
+  .agent-guichet-chip {
+    display: none;
+  }
+
+  .agent-search,
+  .agent-search input {
+    width: 100%;
+  }
+}
+
+/* ---------- Documents officiels ---------- */
+
+.agent-head-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.agent-btn-ghost,
+a.agent-btn-ghost {
+  border: 1px solid var(--m-border);
+  background: var(--m-surface);
+  color: var(--m-text);
+}
+
+.agent-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px 20px;
+}
+
+.agent-span {
+  grid-column: 1 / -1;
+}
+
+.agent-required {
+  color: var(--m-down);
+}
+
+.agent-radios {
+  display: flex;
+  gap: 18px;
+  padding-top: 6px;
+}
+
+.agent-radios label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  font-weight: 600;
+}
+
+.agent-alert {
+  margin: 0;
+  border-radius: 10px;
+  background: #fff0f1;
+  padding: 10px 14px;
+  color: #b4233a;
+  font-weight: 600;
+}
+
+.agent-actions {
+  align-items: center;
+  gap: 16px;
+}
+
+.agent-security img {
+  display: block;
+  border: 1px solid var(--m-border);
+  border-radius: 10px;
+  background: #ffffff;
+  padding: 8px;
+}
+
+.agent-mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.82rem;
+  overflow-wrap: anywhere;
+}
+
+.agent-plain-list {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.agent-plain-list li {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* ---------- Messages ---------- */
+
+.agent-messages-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.agent-messages-list li {
+  border-bottom: 1px solid var(--m-border);
+  padding: 14px 0;
+}
+
+.agent-messages-list li:last-child {
+  border-bottom: 0;
+}
+
+.agent-message-head {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.agent-message-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  color: var(--m-muted);
+  font-size: 0.85rem;
+}
+
+.agent-messages-list p {
+  margin: 8px 0 0;
+  white-space: normal;
+}
+
+/* ---------- Suppression d'un acte ---------- */
+
+.agent-inline-form {
+  display: inline;
+  margin: 0;
+}
+
+.agent-btn.agent-btn-danger,
+a.agent-btn.agent-btn-danger {
+  background: var(--m-down);
+  color: #ffffff;
+}
+
+.mairy-btn.agent-danger,
+a.mairy-btn.agent-danger:link,
+a.mairy-btn.agent-danger:visited {
+  border: 0;
+  border-radius: 10px;
+  background: rgba(209, 26, 42, 0.12);
+  padding: 5px 12px;
+  color: var(--m-down);
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.mairy-btn.agent-danger:hover,
+a.mairy-btn.agent-danger:hover {
+  background: var(--m-down);
+  color: #ffffff;
+}
+
+/* Boutons d'une ligne de tableau : toujours côte à côte. */
+.agent-row-actions {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.agent-row-actions .mairy-btn {
+  line-height: 1.4;
+}
+
+
+/* ---------- Notifications ---------- */
+
+.mairy-dot[hidden] {
+  display: none;
+}
+
+.agent-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-radius: 12px;
+  background: var(--m-accent-soft);
+  padding: 14px 18px;
+  color: var(--m-text);
+  text-decoration: none;
+}
+
+.agent-banner .mairy-ico {
+  color: var(--m-accent);
+}
+
+.agent-banner-cta {
+  margin-left: auto;
+  color: var(--m-accent);
+  font-weight: 700;
+}
+
+.agent-notifications {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.agent-notifications li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-bottom: 1px solid var(--m-border);
+  padding: 14px 8px;
+}
+
+.agent-notifications li:last-child {
+  border-bottom: 0;
+}
+
+.agent-notifications li.is-new {
+  border-radius: 10px;
+  background: var(--m-accent-soft);
+}
+
+.agent-notif-icon {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  flex: none;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--m-surface);
+  color: var(--m-accent);
+  box-shadow: var(--m-shadow);
+}
+
+.agent-notif-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.agent-notif-body p {
+  margin: 0 0 2px;
+}
+
+/* Alerte « nouvelle demande » (coin inférieur droit) */
+.agent-toasts {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 60;
+  display: grid;
+  gap: 10px;
+  max-width: min(360px, calc(100vw - 40px));
+}
+
+.agent-toast {
+  display: grid;
+  gap: 2px;
+  border-left: 4px solid var(--m-accent);
+  border-radius: 12px;
+  background: var(--m-surface);
+  padding: 14px 16px;
+  color: var(--m-text);
+  text-decoration: none;
+  box-shadow: 0 16px 40px -16px rgba(0, 0, 0, 0.45);
+  animation: toast-in 0.3s ease-out;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.agent-toast span {
+  color: var(--m-muted);
+  font-size: 0.88rem;
+}
+
+.agent-toast.is-leaving {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .agent-toast {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* Suppression en attente de l'administrateur */
+.agent-pending {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  border: 1px solid #f1c27d;
+  border-radius: 12px;
+  background: #fff6e6;
+  padding: 14px 18px;
+  color: #6b4508;
+}
+
+.agent-pending p {
+  margin: 4px 0 0;
+}
+
+
+/* ---------- Envoi de l'acte à l'usager ---------- */
+
+.agent-send p {
+  margin: 0;
+}
+
+.agent-send .agent-btn .mairy-ico {
+  width: 18px;
+  height: 18px;
+}
+
+.agent-dl-title {
+  margin: 18px 0 8px;
+  color: var(--m-accent);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.agent-dl-title:first-of-type {
+  margin-top: 0;
+}
+
+/* Case à cocher (ex. « père décédé ») : taille normale, alignée à gauche. */
+.agent-field input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  margin-top: 8px;
+  accent-color: var(--m-accent);
+}
+
+/* ---------- File d'attente : premier arrivé, premier servi ---------- */
+.agent-queue {
+  display: block;
+  margin-top: 4px;
+  color: var(--m-muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.agent-queue.is-first {
+  color: #b45309;
+}
+
+.agent-queue-alert {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  border: 1px solid #f5c26b;
+  border-radius: 12px;
+  background: #fff7e6;
+  padding: 14px 18px;
+  color: #7a4a00;
+  font-weight: 600;
+}
+
+.agent-queue-alert p {
+  flex: 1 1 260px;
+  margin: 0;
+}
+
+.agent-queue-alert .mairy-ico {
+  color: #b45309;
+}
+
+.agent-fieldset {
+  display: contents;
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+.agent-fieldset:disabled .agent-btn,
+.agent-btn.is-disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+@media (prefers-color-scheme: dark) {
+  .agent-queue-alert {
+    border-color: #7a5a1e;
+    background: #2e2412;
+    color: #f5d08a;
+  }
+
+  .agent-queue.is-first {
+    color: #f5b04a;
+  }
+}
+
+/* Lien « retour » commun, au-dessus du contenu de la page */
+.agent-back-top {
+  display: inline-block;
+  margin: 0 0 14px;
+}
+
+/* Nom de l'espace (« Agents municipaux », traduit selon la langue) */
+#header .mairy-logo.agent-logo,
+#header .mairy-logo.agent-logo:link,
+#header .mairy-logo.agent-logo:visited {
+  min-width: 0;
+  overflow: hidden;
+  font-size: 1.45rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+  #header .mairy-logo.agent-logo,
+  #header .mairy-logo.agent-logo:link,
+  #header .mairy-logo.agent-logo:visited {
+    font-size: 1.05rem;
+  }
+}
+
+
+/* ---------- Dossiers et corbeille de l'agent ---------- */
+
+.files-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.files-actions form {
+  margin: 0;
+}
+
+.files-actions .agent-btn,
+.files-upload {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.files-new,
+.files-rename {
+  position: relative;
+}
+
+.files-new summary,
+.files-rename summary {
+  list-style: none;
+}
+
+.files-new summary::-webkit-details-marker,
+.files-rename summary::-webkit-details-marker {
+  display: none;
+}
+
+.files-inline-form {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 20;
+  display: flex;
+  gap: 8px;
+  width: max-content;
+  padding: 10px;
+  border-radius: 10px;
+  background: var(--m-surface);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3), 0 1px 12px rgba(0, 0, 0, 0.15);
+}
+
+.files-inline-form input {
+  width: 220px;
+  padding: 8px 10px;
+  border: 1px solid var(--m-border);
+  border-radius: 8px;
+  background: var(--m-bg);
+  color: var(--m-text);
+  font: inherit;
+}
+
+.files-card.is-dragging {
+  outline: 2px dashed var(--m-accent);
+  outline-offset: -8px;
+}
+
+.files-breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
+}
+
+.files-name {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--m-text) !important;
+}
+
+.files-ico.is-folder {
+  color: #f2b01e;
+  fill: color-mix(in srgb, #f2b01e 35%, transparent);
+}
+
+.files-ext {
+  display: inline-block;
+  min-width: 38px;
+  padding: 2px 4px;
+  border-radius: 4px;
+  background: var(--m-accent-soft);
+  color: var(--m-accent);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.files-table .agent-row-actions form {
+  margin: 0;
+}
+
+.files-table .mairy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.files-table .mairy-btn .mairy-ico {
+  width: 16px;
+  height: 16px;
+}
+
+.files-empty {
+  padding: 48px 16px !important;
+  text-align: center;
+}
+
+.files-empty > * {
+  display: block;
+  margin: 0 auto 6px;
+}
+
+.files-empty .mairy-ico {
+  width: 40px;
+  height: 40px;
+  color: var(--m-faint);
+}
+
+.files-danger {
+  color: var(--m-down) !important;
+}
+
+/* Filtre « Fokontany » de la liste des demandes (guichets des actes). */
+.agent-search .agent-select {
+  max-width: 200px;
+  border: 1px solid var(--m-border);
+  border-radius: 10px;
+  background: var(--m-surface);
+  padding: 9px 12px;
+  color: var(--m-text);
+  font: inherit;
+}

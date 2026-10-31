@@ -1,0 +1,3103 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-26 17:22+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: agents/admin.py:20 templates/admin/index.html:51
+#: templates/admin/security.html:90
+msgid "Agent"
+msgstr "Agent"
+
+#: agents/admin.py:24
+msgid "Nom d'utilisateur"
+msgstr "Username"
+
+#: agents/admin.py:28 documents/models.py:48
+msgid "Actif"
+msgstr "Active"
+
+#: agents/admin.py:38
+msgid "Demandée (à décider)"
+msgstr "Requested (pending decision)"
+
+#: agents/admin.py:38
+msgid "Supprimé"
+msgstr "Deleted"
+
+#: agents/admin.py:38
+msgid "Aucune"
+msgstr "None"
+
+#: agents/admin.py:69
+msgid "Titulaire / objet"
+msgstr "Holder / subject"
+
+#: agents/admin.py:73
+msgid "Envoyé à l'usager"
+msgstr "Sent to the citizen"
+
+#: agents/admin.py:77
+msgid "Suppression"
+msgstr "Deletion"
+
+#: agents/admin.py:80
+#, python-format
+msgid "Supprimé le %(date)s"
+msgstr "Deleted on %(date)s"
+
+#: agents/admin.py:82
+#, python-format
+msgid "Demandée : %(reason)s"
+msgstr "Requested: %(reason)s"
+
+#: agents/admin.py:97
+msgid "Accepter la suppression demandée par l'agent"
+msgstr "Accept the deletion requested by the agent"
+
+#: agents/admin.py:105
+#, python-format
+msgid "%(count)s document(s) supprimé(s)."
+msgstr "%(count)s document(s) deleted."
+
+#: agents/admin.py:107
+msgid "Refuser la suppression demandée par l'agent"
+msgstr "Refuse the deletion requested by the agent"
+
+#: agents/admin.py:112
+#, python-format
+msgid ""
+"%(count)s demande(s) de suppression refusée(s) : les documents sont "
+"conservés."
+msgstr "%(count)s deletion request(s) refused: the documents are kept."
+
+#: agents/admin.py:115 documents/admin.py:63
+msgid "Révoquer les documents sélectionnés"
+msgstr "Revoke the selected documents"
+
+#: agents/admin.py:118 documents/admin.py:75
+#, python-format
+msgid "%(count)s document(s) révoqué(s)."
+msgstr "%(count)s document(s) revoked."
+
+#: agents/apps.py:8 core/admin_site.py:21
+msgid "Agents municipaux"
+msgstr "Municipal agents"
+
+#: agents/assistant.py:140
+#, python-format
+msgid ""
+"Je suis l'assistant de l'application. Je ne connais que les demandes et "
+"documents de %(where)s. Exemples :"
+msgstr ""
+"I'm the application's assistant. I only know the requests and documents of "
+"%(where)s. Examples:"
+
+#: agents/assistant.py:141
+msgid "votre guichet"
+msgstr "your desk"
+
+#: agents/assistant.py:141
+msgid "tous les guichets"
+msgstr "all desks"
+
+#: agents/assistant.py:142
+msgid "• « Quelle est la prochaine demande à traiter ? »"
+msgstr "• “Which is the next request to process?”"
+
+#: agents/assistant.py:143
+msgid "• « Combien de demandes en attente ? »"
+msgstr "• “How many pending requests?”"
+
+#: agents/assistant.py:144
+msgid "• « Montre la demande MV-2026-000012 » ou « la demande de Rabe »"
+msgstr "• “Show request MV-2026-000012” or “find the request for Rabe”"
+
+#: agents/assistant.py:145
+msgid "• « Prends en charge la prochaine demande à ma place »"
+msgstr "• “Please process the next request”"
+
+#: agents/assistant.py:146
+msgid ""
+"• « Approuve cette demande : votre acte est prêt » / « Refuse la demande de "
+"Rabe motif : pièce manquante »"
+msgstr ""
+"• “Approve this request: your certificate is ready” / “Reject the request "
+"for Rabe reason: missing document”"
+
+#: agents/assistant.py:149
+msgid "• « Établis l'acte de la prochaine demande »"
+msgstr "• “Établis l'acte de la prochaine demande” (draw up the certificate)"
+
+#: agents/assistant.py:151
+msgid "• « Y a-t-il des fraudes ? » · « Demandes d'accès agent en attente ? »"
+msgstr "• “Any fraud?” · “Demandes d'accès agent en attente ?”"
+
+#: agents/assistant.py:157
+msgid ""
+"Je ne peux pas vous aider pour cela : je réponds seulement aux questions sur"
+" l'application (demandes, documents, guichets) et j'effectue les tâches de "
+"cette page. Tapez « aide » pour des exemples."
+msgstr ""
+"I can't help with that: I only answer questions about the application "
+"(requests, documents, desks) and carry out tasks on this page. Type “help” "
+"for examples."
+
+#: agents/assistant.py:169
+#, python-format
+msgid ""
+"Demandes : %(total)s au total — %(new_today)s aujourd'hui, %(new_week)s "
+"cette semaine."
+msgstr ""
+"Requests: %(total)s in total — %(new_today)s today, %(new_week)s this week."
+
+#: agents/assistant.py:181
+#, python-format
+msgid "Documents officiels établis : %(count)s."
+msgstr "Official documents drawn up: %(count)s."
+
+#: agents/assistant.py:189
+#, python-format
+msgid "Par type : %(list)s."
+msgstr "By type: %(list)s."
+
+#: agents/assistant.py:209
+msgid "Aucune demande en attente : tout est à jour."
+msgstr "No pending requests: everything is up to date."
+
+#: agents/assistant.py:212
+#, python-format
+msgid ""
+"%(count)s demande(s) en attente. À traiter en premier (ordre d'arrivée) :"
+msgstr "%(count)s pending request(s). Process first (order of arrival):"
+
+#: agents/assistant.py:220 templates/admin/index.html:87
+#: templates/agents/_requests_table.html:23
+#: templates/agents/notifications.html:30
+msgid "Aucune demande pour le moment."
+msgstr "No requests yet."
+
+#: agents/assistant.py:221
+msgid "Les dernières demandes reçues :"
+msgstr "Latest requests received:"
+
+#: agents/assistant.py:232
+#, python-format
+msgid ""
+"%(total)s document(s) contrôlé(s) : %(altered)s altéré(s), %(deletions)s "
+"suppression(s) demandée(s)."
+msgstr ""
+"%(total)s document(s) checked: %(altered)s tampered, %(deletions)s deletion "
+"request(s)."
+
+#: agents/assistant.py:239
+msgid "Ouvrir « Sécurité et fraude »"
+msgstr "Open “Security and fraud”"
+
+#: agents/assistant.py:250
+#, python-format
+msgid "%(count)s demande(s) d'accès agent en attente de votre validation."
+msgstr "%(count)s agent access request(s) awaiting your approval."
+
+#: agents/assistant.py:251
+msgid "Ouvrir les demandes d'accès agent"
+msgstr "Open agent access requests"
+
+#: agents/assistant.py:263
+#, python-format
+msgid "%(count)s message(s) de contact non traité(s)."
+msgstr "%(count)s unhandled contact message(s)."
+
+#: agents/assistant.py:264
+msgid "Ouvrir les messages de contact"
+msgstr "Open contact messages"
+
+#: agents/assistant.py:307
+msgid ""
+"Je ne trouve pas la demande. Donnez sa référence (ex. MV-2026-000012), le "
+"nom de l'usager, ou dites « la prochaine demande »."
+msgstr ""
+"I can't find the request. Give its reference (e.g. MV-2026-000012), the "
+"citizen's name, or say “the next request”."
+
+#: agents/assistant.py:311
+msgid "Plusieurs demandes correspondent. Précisez la référence :"
+msgstr "Several requests match. Give the reference:"
+
+#: agents/assistant.py:334 agents/assistant.py:362 agents/assistant.py:472
+msgid "Votre compte ne permet pas de modifier les demandes."
+msgstr "Your account cannot change requests."
+
+#: agents/assistant.py:343
+#, python-format
+msgid ""
+"Je vais passer la demande %(reference)s (%(person)s) au statut « %(status)s "
+"»."
+msgstr "I will set request %(reference)s (%(person)s) to “%(status)s”."
+
+#: agents/assistant.py:347
+#, python-format
+msgid "Message envoyé à l'usager : « %(message)s »"
+msgstr "Message sent to the citizen: “%(message)s”"
+
+#: agents/assistant.py:349
+msgid "Astuce : ajoutez « motif : … » pour expliquer le refus à l'usager."
+msgstr "Tip: add “reason: …” to explain the refusal to the citizen."
+
+#: agents/assistant.py:351
+msgid "Confirmez-vous ?"
+msgstr "Do you confirm?"
+
+#: agents/assistant.py:360
+msgid ""
+"Écrivez le message après deux-points, ex. « Réponds à cette demande : votre "
+"dossier est prêt »"
+msgstr ""
+"Write the message after a colon, e.g. “Reply to this request: your file is "
+"ready”"
+
+#: agents/assistant.py:371
+#, python-format
+msgid ""
+"Je vais envoyer ce message à %(person)s (demande %(reference)s) : « "
+"%(message)s ». Confirmez-vous ?"
+msgstr ""
+"I will send this message to %(person)s (request %(reference)s): "
+"“%(message)s”. Do you confirm?"
+
+#: agents/assistant.py:386 agents/views.py:379
+msgid "Ce guichet n'établit pas de documents officiels."
+msgstr "This desk does not issue official documents."
+
+#: agents/assistant.py:393
+#, python-format
+msgid ""
+"Le formulaire est pré-rempli avec les informations de la demande "
+"%(reference)s : vérifiez-le, complétez-le puis enregistrez pour sceller le "
+"document."
+msgstr ""
+"The form is pre-filled with the details of request %(reference)s: check it, "
+"complete it, then save to seal the document."
+
+#: agents/assistant.py:404
+msgid "Demandes trouvées :"
+msgstr "Requests found:"
+
+#: agents/assistant.py:407
+#, python-format
+msgid "Demande %(reference)s — %(type)s, déposée le %(date)s par %(person)s."
+msgstr ""
+"Request %(reference)s — %(type)s, submitted on %(date)s by %(person)s."
+
+#: agents/assistant.py:411
+#, python-format
+msgid "Statut : %(status)s."
+msgstr "Status: %(status)s."
+
+#: agents/assistant.py:416
+#, python-format
+msgid "À traiter après %(reference)s (ordre d'arrivée)."
+msgstr "To process after %(reference)s (order of arrival)."
+
+#: agents/assistant.py:417
+msgid "C'est la prochaine demande de ce type à traiter."
+msgstr "This is the next request of this type to process."
+
+#: agents/assistant.py:420
+#, python-format
+msgid "Réponse déjà envoyée : « %(message)s »"
+msgstr "Reply already sent: “%(message)s”"
+
+#: agents/assistant.py:428
+msgid "L'assistant est réservé aux agents et aux administrateurs."
+msgstr "The assistant is reserved for agents and administrators."
+
+#: agents/assistant.py:470
+msgid "Action inconnue."
+msgstr "Unknown action."
+
+#: agents/assistant.py:475
+msgid "Je ne trouve pas la demande."
+msgstr "I can't find the request."
+
+#: agents/assistant.py:485
+#, python-format
+msgid "Action impossible : %(errors)s"
+msgstr "Action not possible: %(errors)s"
+
+#: agents/assistant.py:488
+#, python-format
+msgid "C'est fait : la demande %(reference)s est maintenant « %(status)s »."
+msgstr "Done: request %(reference)s is now “%(status)s”."
+
+#: agents/forms.py:36
+msgid "Identifiant ou mot de passe incorrect."
+msgstr "Incorrect username or password."
+
+#: agents/forms.py:38
+msgid ""
+"Ce compte n'a pas encore de rôle. Attendez que l'administrateur valide votre"
+" demande d'accès et vous attribue un guichet."
+msgstr ""
+"This account has no role yet. Wait for the administrator to approve your "
+"access request and assign you a desk."
+
+#: agents/forms.py:42
+msgid ""
+"Votre demande d'accès est en attente de validation par l'administrateur. "
+"Vous pourrez vous connecter dès qu'elle sera acceptée."
+msgstr ""
+"Your access request is awaiting approval by the administrator. You will be "
+"able to sign in as soon as it is accepted."
+
+#: agents/forms.py:45
+msgid "Votre demande d'accès a été refusée par l'administrateur."
+msgstr "Your access request was refused by the administrator."
+
+#: agents/forms.py:50
+msgid "E-mail ou nom d'utilisateur"
+msgstr "E-mail or username"
+
+#: agents/forms.py:86
+msgid "Statut de la demande"
+msgstr "Request status"
+
+#: agents/forms.py:87
+msgid "Réponse à l'usager"
+msgstr "Reply to the citizen"
+
+#: agents/forms.py:90
+msgid "Elle apparaît dans les notifications de l'usager."
+msgstr "It appears in the citizen’s notifications."
+
+#: agents/forms.py:109
+msgid "Nom"
+msgstr "Last name"
+
+#: agents/forms.py:110
+msgid "Prénom"
+msgstr "First name"
+
+#: agents/forms.py:111
+msgid "Ce sera votre identifiant de connexion."
+msgstr "This will be your sign-in username."
+
+#: agents/forms.py:112 agents/views.py:191
+msgid "Mot de passe"
+msgstr "Password"
+
+#: agents/forms.py:113
+msgid "Confirmer le mot de passe"
+msgstr "Confirm password"
+
+#: agents/forms.py:131
+msgid "Un compte existe déjà avec cet e-mail."
+msgstr "An account already exists with this e-mail."
+
+#: agents/forms.py:136
+msgid "Une demande avec cet e-mail attend déjà la validation."
+msgstr "A request with this e-mail is already awaiting approval."
+
+#: agents/forms.py:144
+msgid "Les deux mots de passe ne correspondent pas."
+msgstr "The two passwords do not match."
+
+#: agents/forms.py:172
+msgid "Enregistrement"
+msgstr "Registration"
+
+#: agents/forms.py:232
+msgid "La date de l'acte ne peut pas être dans le futur."
+msgstr "The date of the record cannot be in the future."
+
+#: agents/forms.py:240
+msgid "Informations sur l'enfant"
+msgstr "Information about the child"
+
+#: agents/forms.py:241
+msgid "Père"
+msgstr "Father"
+
+#: agents/forms.py:242
+msgid "Mère"
+msgstr "Mother"
+
+#: agents/forms.py:243 agents/forms.py:324
+msgid "Déclaration et délivrance"
+msgstr "Declaration and issuance"
+
+#: agents/forms.py:257
+msgid "Laissez vide si la filiation paternelle n'est pas établie."
+msgstr "Leave blank if paternity is not established."
+
+#: agents/forms.py:258
+msgid "Séparez les prénoms par une virgule : « Lucas, Alexandre »."
+msgstr "Separate first names with a comma: “Lucas, Alexandre”."
+
+#: agents/forms.py:263
+msgid "La date de naissance ne peut pas être dans le futur."
+msgstr "The date of birth cannot be in the future."
+
+#: agents/forms.py:264
+msgid "L'acte ne peut pas être dressé avant la naissance."
+msgstr "The record cannot be drawn up before the birth."
+
+#: agents/forms.py:270
+msgid "Indiquez le nom du père (ou videz ses autres champs)."
+msgstr "Enter the father’s name (or clear his other fields)."
+
+#: agents/forms.py:278
+msgid "Célébration"
+msgstr "Ceremony"
+
+#: agents/forms.py:279
+msgid "L'époux"
+msgstr "The husband"
+
+#: agents/forms.py:284
+msgid "L'épouse"
+msgstr "The wife"
+
+#: agents/forms.py:289
+msgid "Témoins"
+msgstr "Witnesses"
+
+#: agents/forms.py:290 agents/forms.py:356 agents/forms.py:382
+msgid "Délivrance"
+msgstr "Issuance"
+
+#: agents/forms.py:304
+msgid "La date du mariage ne peut pas être dans le futur."
+msgstr "The marriage date cannot be in the future."
+
+#: agents/forms.py:305
+msgid "L'acte ne peut pas être dressé avant le mariage."
+msgstr "The record cannot be drawn up before the marriage."
+
+#: agents/forms.py:308
+msgid "Doit être antérieure à la date du mariage."
+msgstr "Must be before the marriage date."
+
+#: agents/forms.py:316
+msgid "Le défunt"
+msgstr "The deceased"
+
+#: agents/forms.py:320
+msgid "Situation familiale"
+msgstr "Family situation"
+
+#: agents/forms.py:323
+msgid "Décès"
+msgstr "Death"
+
+#: agents/forms.py:341
+msgid "La date du décès ne peut pas être dans le futur."
+msgstr "The date of death cannot be in the future."
+
+#: agents/forms.py:342
+msgid "L'acte ne peut pas être dressé avant le décès."
+msgstr "The record cannot be drawn up before the death."
+
+#: agents/forms.py:343
+msgid "Doit être antérieure à la date du décès."
+msgstr "Must be before the date of death."
+
+#: agents/forms.py:346
+msgid "Âge invalide."
+msgstr "Invalid age."
+
+#: agents/forms.py:354 agents/official.py:166
+msgid "Texte"
+msgstr "Text"
+
+#: agents/forms.py:355
+msgid "Extrait certifié"
+msgstr "Certified extract"
+
+#: agents/forms.py:370
+msgid "La date du texte ne peut pas être dans le futur."
+msgstr "The date of the text cannot be in the future."
+
+#: agents/forms.py:371
+msgid "L'extrait ne peut pas précéder le texte."
+msgstr "The extract cannot predate the text."
+
+#: agents/forms.py:379
+msgid "Service"
+msgstr "Service"
+
+#: agents/forms.py:380 agents/official.py:168
+msgid "Bénéficiaire"
+msgstr "Beneficiary"
+
+#: agents/forms.py:381
+msgid "Objet"
+msgstr "Subject"
+
+#: agents/forms.py:397
+msgid "Le montant ne peut pas être négatif."
+msgstr "The amount cannot be negative."
+
+#: agents/forms.py:398
+msgid "La date de validité doit suivre la date de l'acte."
+msgstr "The validity date must come after the date of the record."
+
+#: agents/guichets.py:20
+#, python-brace-format
+msgid "Guichet {number}"
+msgstr "Desk {number}"
+
+#: agents/guichets.py:24 core/admin_site.py:30
+msgid "Actes de naissance"
+msgstr "Birth certificates"
+
+#: agents/guichets.py:25 core/admin_site.py:32
+msgid "Actes de mariage"
+msgstr "Marriage certificates"
+
+#: agents/guichets.py:26 core/admin_site.py:34
+msgid "Actes de décès"
+msgstr "Death certificates"
+
+#: agents/guichets.py:27 core/admin_site.py:36 espace/models.py:20
+msgid "Législation"
+msgstr "Legislation"
+
+#: agents/guichets.py:28
+msgid "Recette, transport, marché et autres services"
+msgstr "Revenue, transport, market and other services"
+
+#: agents/models.py:22
+msgid "compte"
+msgstr "account"
+
+#: agents/models.py:24 documents/models.py:214 espace/models.py:30
+msgid "guichet"
+msgstr "desk"
+
+#: agents/models.py:25 agents/models.py:90 documents/models.py:77
+msgid "créé le"
+msgstr "created on"
+
+#: agents/models.py:27
+msgid "notifications vues le"
+msgstr "notifications seen on"
+
+#: agents/models.py:31
+msgid "agent municipal"
+msgstr "municipal agent"
+
+#: agents/models.py:32
+msgid "agents municipaux"
+msgstr "municipal agents"
+
+#: agents/models.py:61 templates/admin/security.html:69
+msgid "Valide"
+msgstr "Valid"
+
+#: agents/models.py:62 documents/models.py:49
+#: templates/agents/document_detail.html:109
+msgid "Révoqué"
+msgstr "Revoked"
+
+#: agents/models.py:73
+msgid "numéro d'acte"
+msgstr "record number"
+
+#: agents/models.py:76
+msgid "région"
+msgstr "region"
+
+#: agents/models.py:77
+msgid "district"
+msgstr "district"
+
+#: agents/models.py:78
+msgid "commune"
+msgstr "municipality"
+
+#: agents/models.py:79
+msgid "date et heure de l'acte"
+msgstr "date and time of the record"
+
+#: agents/models.py:84
+msgid "demande d'origine"
+msgstr "original request"
+
+#: agents/models.py:88
+msgid "établi par"
+msgstr "drawn up by"
+
+#: agents/models.py:91 documents/models.py:73 documents/models.py:218
+#: espace/models.py:31
+msgid "statut"
+msgstr "status"
+
+#: agents/models.py:93
+msgid "envoyé à l'usager le"
+msgstr "sent to the citizen on"
+
+#: agents/models.py:96
+msgid "envoyé par"
+msgstr "sent by"
+
+#: agents/models.py:99
+msgid "suppression demandée le"
+msgstr "deletion requested on"
+
+#: agents/models.py:102
+msgid "suppression demandée par"
+msgstr "deletion requested by"
+
+#: agents/models.py:104
+msgid "motif de la suppression"
+msgstr "reason for deletion"
+
+#: agents/models.py:107 documents/models.py:76
+msgid "supprimé le"
+msgstr "deleted on"
+
+#: agents/models.py:110
+msgid "supprimé par"
+msgstr "deleted by"
+
+#: agents/models.py:114 documents/models.py:70
+msgid "empreinte SHA-256"
+msgstr "SHA-256 fingerprint"
+
+#: agents/models.py:115 documents/models.py:71
+msgid "signature HMAC-SHA256"
+msgstr "HMAC-SHA256 signature"
+
+#: agents/models.py:247
+msgid "Masculin"
+msgstr "Male"
+
+#: agents/models.py:248
+msgid "Féminin"
+msgstr "Female"
+
+#: agents/models.py:258
+msgid "nom de famille de l'enfant"
+msgstr "child’s last name"
+
+#: agents/models.py:259
+msgid "prénoms de l'enfant"
+msgstr "child’s first names"
+
+#: agents/models.py:260 agents/models.py:408
+msgid "sexe"
+msgstr "sex"
+
+#: agents/models.py:261
+msgid "date et heure de naissance"
+msgstr "date and time of birth"
+
+#: agents/models.py:262
+msgid "lieu de naissance"
+msgstr "place of birth"
+
+#: agents/models.py:265
+msgid "nom complet du père"
+msgstr "father’s full name"
+
+#: agents/models.py:266
+msgid "date de naissance du père"
+msgstr "father’s date of birth"
+
+#: agents/models.py:267
+msgid "lieu de naissance du père"
+msgstr "father’s place of birth"
+
+#: agents/models.py:268
+msgid "profession du père"
+msgstr "father’s occupation"
+
+#: agents/models.py:269
+msgid "domicile du père"
+msgstr "father’s address"
+
+#: agents/models.py:272
+msgid "nom complet de la mère"
+msgstr "mother’s full name"
+
+#: agents/models.py:273
+msgid "date de naissance de la mère"
+msgstr "mother’s date of birth"
+
+#: agents/models.py:274
+msgid "lieu de naissance de la mère"
+msgstr "mother’s place of birth"
+
+#: agents/models.py:275
+msgid "profession de la mère"
+msgstr "mother’s occupation"
+
+#: agents/models.py:276
+msgid "domicile de la mère"
+msgstr "mother’s address"
+
+#: agents/models.py:279 agents/models.py:423
+msgid "nom du déclarant"
+msgstr "declarant’s name"
+
+#: agents/models.py:281 agents/models.py:425
+msgid "qualité du déclarant"
+msgstr "declarant’s capacity"
+
+#: agents/models.py:281
+msgid "Ex. : le père de l'enfant, la sage-femme…"
+msgstr "E.g. the child’s father, the midwife…"
+
+#: agents/models.py:283 agents/models.py:358 agents/models.py:430
+msgid "nom de l'officier d'état civil"
+msgstr "civil registrar’s name"
+
+#: agents/models.py:285 agents/models.py:359 agents/models.py:431
+msgid "qualité de l'officier"
+msgstr "registrar’s capacity"
+
+#: agents/models.py:287 agents/models.py:360 agents/models.py:432
+msgid "mentions marginales"
+msgstr "marginal notes"
+
+#: agents/models.py:297
+msgid "acte de naissance"
+msgstr "birth certificate"
+
+#: agents/models.py:298
+msgid "actes de naissance"
+msgstr "birth certificates"
+
+#: agents/models.py:321
+msgid "date et heure du mariage"
+msgstr "date and time of the marriage"
+
+#: agents/models.py:322
+msgid "lieu de célébration"
+msgstr "place of the ceremony"
+
+#: agents/models.py:324
+msgid "nom de l'époux"
+msgstr "husband’s last name"
+
+#: agents/models.py:325
+msgid "prénoms de l'époux"
+msgstr "husband’s first names"
+
+#: agents/models.py:326
+msgid "date de naissance de l'époux"
+msgstr "husband’s date of birth"
+
+#: agents/models.py:327
+msgid "lieu de naissance de l'époux"
+msgstr "husband’s place of birth"
+
+#: agents/models.py:328
+msgid "profession de l'époux"
+msgstr "husband’s occupation"
+
+#: agents/models.py:329
+msgid "domicile de l'époux"
+msgstr "husband’s address"
+
+#: agents/models.py:330
+msgid "père de l'époux"
+msgstr "husband’s father"
+
+#: agents/models.py:331
+msgid "profession du père de l'époux"
+msgstr "occupation of the husband’s father"
+
+#: agents/models.py:332
+msgid "mère de l'époux"
+msgstr "husband’s mother"
+
+#: agents/models.py:333
+msgid "profession de la mère de l'époux"
+msgstr "occupation of the husband’s mother"
+
+#: agents/models.py:335
+msgid "nom de l'épouse"
+msgstr "wife’s last name"
+
+#: agents/models.py:336
+msgid "prénoms de l'épouse"
+msgstr "wife’s first names"
+
+#: agents/models.py:337
+msgid "date de naissance de l'épouse"
+msgstr "wife’s date of birth"
+
+#: agents/models.py:338
+msgid "lieu de naissance de l'épouse"
+msgstr "wife’s place of birth"
+
+#: agents/models.py:339
+msgid "profession de l'épouse"
+msgstr "wife’s occupation"
+
+#: agents/models.py:340
+msgid "domicile de l'épouse"
+msgstr "wife’s address"
+
+#: agents/models.py:341
+msgid "père de l'épouse"
+msgstr "wife’s father"
+
+#: agents/models.py:342
+msgid "profession du père de l'épouse"
+msgstr "occupation of the wife’s father"
+
+#: agents/models.py:343
+msgid "mère de l'épouse"
+msgstr "wife’s mother"
+
+#: agents/models.py:344
+msgid "profession de la mère de l'épouse"
+msgstr "occupation of the wife’s mother"
+
+#: agents/models.py:347
+msgid "régime matrimonial"
+msgstr "marital property regime"
+
+#: agents/models.py:348
+msgid "Ex. : contrat de mariage reçu le … par Maître …, notaire à Mahajanga."
+msgstr ""
+"E.g. marriage contract received on … by Maître …, notary in Mahajanga."
+
+#: agents/models.py:350
+msgid "premier témoin"
+msgstr "first witness"
+
+#: agents/models.py:352
+msgid "premier témoin — qualité / domicile"
+msgstr "first witness — capacity / address"
+
+#: agents/models.py:354
+msgid "second témoin"
+msgstr "second witness"
+
+#: agents/models.py:356
+msgid "second témoin — qualité / domicile"
+msgstr "second witness — capacity / address"
+
+#: agents/models.py:376
+msgid "acte de mariage"
+msgstr "marriage certificate"
+
+#: agents/models.py:377
+msgid "actes de mariage"
+msgstr "marriage certificates"
+
+#: agents/models.py:402
+msgid "Célibataire"
+msgstr "Single"
+
+#: agents/models.py:403
+msgid "Marié(e)"
+msgstr "Married"
+
+#: agents/models.py:404
+msgid "Veuf / veuve"
+msgstr "Widowed"
+
+#: agents/models.py:405
+msgid "Divorcé(e)"
+msgstr "Divorced"
+
+#: agents/models.py:406
+msgid "nom du défunt"
+msgstr "deceased’s last name"
+
+#: agents/models.py:407
+msgid "prénoms du défunt"
+msgstr "deceased’s first names"
+
+#: agents/models.py:409
+msgid "date de naissance du défunt"
+msgstr "deceased’s date of birth"
+
+#: agents/models.py:410
+msgid "lieu de naissance du défunt"
+msgstr "deceased’s place of birth"
+
+#: agents/models.py:411
+msgid "profession du défunt"
+msgstr "deceased’s occupation"
+
+#: agents/models.py:412
+msgid "domicile du défunt"
+msgstr "deceased’s address"
+
+#: agents/models.py:413
+msgid "situation matrimoniale"
+msgstr "marital status"
+
+#: agents/models.py:414
+msgid "nom du conjoint"
+msgstr "spouse’s name"
+
+#: agents/models.py:415
+msgid "nom du père"
+msgstr "father’s name"
+
+#: agents/models.py:416
+msgid "père décédé (« feu »)"
+msgstr "father deceased (“late”)"
+
+#: agents/models.py:417
+msgid "nom de la mère"
+msgstr "mother’s name"
+
+#: agents/models.py:418
+msgid "mère décédée (« feue »)"
+msgstr "mother deceased (“late”)"
+
+#: agents/models.py:420
+msgid "date et heure du décès"
+msgstr "date and time of death"
+
+#: agents/models.py:421
+msgid "lieu du décès"
+msgstr "place of death"
+
+#: agents/models.py:425
+msgid "Ex. : fils du défunt, voisin, médecin…"
+msgstr "E.g. son of the deceased, neighbour, doctor…"
+
+#: agents/models.py:427
+msgid "âge du déclarant"
+msgstr "declarant’s age"
+
+#: agents/models.py:428
+msgid "profession du déclarant"
+msgstr "declarant’s occupation"
+
+#: agents/models.py:429
+msgid "domicile du déclarant"
+msgstr "declarant’s address"
+
+#: agents/models.py:444
+msgid "acte de décès"
+msgstr "death certificate"
+
+#: agents/models.py:445
+msgid "actes de décès"
+msgstr "death certificates"
+
+#: agents/models.py:477
+msgid "Arrêté"
+msgstr "Order"
+
+#: agents/models.py:478
+msgid "Délibération"
+msgstr "Resolution"
+
+#: agents/models.py:479
+msgid "Règlement"
+msgstr "Regulation"
+
+#: agents/models.py:480
+msgid "Décision"
+msgstr "Decision"
+
+#: agents/models.py:481
+msgid "Autre texte"
+msgstr "Other text"
+
+#: agents/models.py:482
+msgid "type de texte"
+msgstr "type of text"
+
+#: agents/models.py:483
+msgid "numéro du texte"
+msgstr "text number"
+
+#: agents/models.py:484
+msgid "date du texte"
+msgstr "date of the text"
+
+#: agents/models.py:485 agents/models.py:556
+msgid "objet"
+msgstr "subject"
+
+#: agents/models.py:486
+msgid "extrait certifié"
+msgstr "certified extract"
+
+#: agents/models.py:486
+msgid "Dispositif ou articles reproduits."
+msgstr "Operative part or articles reproduced."
+
+#: agents/models.py:487
+msgid "délivré à"
+msgstr "issued to"
+
+#: agents/models.py:488 agents/models.py:559
+msgid "nom du signataire"
+msgstr "signatory’s name"
+
+#: agents/models.py:489 agents/models.py:560
+msgid "qualité du signataire"
+msgstr "signatory’s capacity"
+
+#: agents/models.py:497
+msgid "extrait de texte"
+msgstr "text extract"
+
+#: agents/models.py:498
+msgid "extraits de textes (législation)"
+msgstr "text extracts (legislation)"
+
+#: agents/models.py:522 espace/models.py:11
+msgid "Recette"
+msgstr "Revenue"
+
+#: agents/models.py:523 espace/models.py:12
+msgid "Transport"
+msgstr "Transport"
+
+#: agents/models.py:524 espace/models.py:13
+msgid "Urbanisme"
+msgstr "Urban planning"
+
+#: agents/models.py:525 espace/models.py:14
+msgid "Marché"
+msgstr "Market"
+
+#: agents/models.py:526 espace/models.py:15
+msgid "Cadastre"
+msgstr "Land registry"
+
+#: agents/models.py:527 espace/models.py:16
+msgid "Impôt foncier"
+msgstr "Property tax"
+
+#: agents/models.py:528 espace/models.py:21
+msgid "Actes divers"
+msgstr "Miscellaneous records"
+
+#: agents/models.py:540
+msgid "service"
+msgstr "service"
+
+#: agents/models.py:542
+msgid "nature de l'acte"
+msgstr "nature of the record"
+
+#: agents/models.py:543
+msgid "Ex. : licence de taxi, permis de construire, attestation de paiement…"
+msgstr "E.g. taxi licence, building permit, payment certificate…"
+
+#: agents/models.py:545
+msgid "bénéficiaire (nom et prénoms)"
+msgstr "beneficiary (full name)"
+
+#: agents/models.py:546
+msgid "N° de CIN du bénéficiaire"
+msgstr "beneficiary’s ID card no."
+
+#: agents/models.py:547
+msgid "adresse du bénéficiaire"
+msgstr "beneficiary’s address"
+
+#: agents/models.py:549 espace/models.py:34
+msgid "référence"
+msgstr "reference"
+
+#: agents/models.py:550
+msgid ""
+"Immatriculation, référence de parcelle, N° d'emplacement, référence fiscale…"
+msgstr "Registration, plot reference, pitch no., tax reference…"
+
+#: agents/models.py:553
+msgid "lieu / bien concerné"
+msgstr "place / property concerned"
+
+#: agents/models.py:554
+msgid "Adresse du terrain ou du bien, nom du marché, quartier…"
+msgstr "Address of the land or property, market name, neighbourhood…"
+
+#: agents/models.py:556
+msgid "Ce que la Commune atteste ou autorise."
+msgstr "What the Municipality certifies or authorises."
+
+#: agents/models.py:557
+msgid "montant (Ar)"
+msgstr "amount (Ar)"
+
+#: agents/models.py:558
+msgid "valable jusqu'au"
+msgstr "valid until"
+
+#: agents/models.py:561
+msgid "observations"
+msgstr "remarks"
+
+#: agents/models.py:569
+msgid "attestation de service"
+msgstr "service certificate"
+
+#: agents/models.py:570
+msgid "attestations de services (guichet 5)"
+msgstr "service certificates (desk 5)"
+
+#: agents/official.py:160
+msgid "Nouvel acte de naissance"
+msgstr "New birth certificate"
+
+#: agents/official.py:160
+msgid "Établir l'acte de naissance"
+msgstr "Draw up the birth certificate"
+
+#: agents/official.py:160
+msgid "Enfant"
+msgstr "Child"
+
+#: agents/official.py:160
+msgid "Né(e) le"
+msgstr "Born on"
+
+#: agents/official.py:162
+msgid "Nouvel acte de mariage"
+msgstr "New marriage certificate"
+
+#: agents/official.py:162
+msgid "Établir l'acte de mariage"
+msgstr "Draw up the marriage certificate"
+
+#: agents/official.py:162
+msgid "Époux"
+msgstr "Spouses"
+
+#: agents/official.py:162
+msgid "Marié(s) le"
+msgstr "Married on"
+
+#: agents/official.py:164
+msgid "Nouvel acte de décès"
+msgstr "New death certificate"
+
+#: agents/official.py:164
+msgid "Établir l'acte de décès"
+msgstr "Draw up the death certificate"
+
+#: agents/official.py:164
+msgid "Défunt"
+msgstr "Deceased"
+
+#: agents/official.py:164
+msgid "Décédé(e) le"
+msgstr "Died on"
+
+#: agents/official.py:166
+msgid "Nouvel extrait de texte"
+msgstr "New text extract"
+
+#: agents/official.py:166
+msgid "Établir l'extrait certifié"
+msgstr "Draw up the certified extract"
+
+#: agents/official.py:166
+msgid "Date du texte"
+msgstr "Date of the text"
+
+#: agents/official.py:168
+msgid "Nouvelle attestation"
+msgstr "New certificate"
+
+#: agents/official.py:168
+msgid "Établir l'attestation"
+msgstr "Draw up the certificate"
+
+#: agents/official.py:168
+msgid "Date de l'acte"
+msgstr "Date of the record"
+
+#: agents/queue.py:35
+#, python-format
+msgid ""
+"Attention : vous devez d'abord traiter la demande %(reference)s, déposée le "
+"%(date)s, avant celle-ci. Les demandes se traitent dans leur ordre "
+"d'arrivée."
+msgstr ""
+"Warning: you must first process request %(reference)s, submitted on "
+"%(date)s, before this one. Requests are processed in the order they arrive."
+
+#: agents/views.py:44 agents/views.py:707
+msgid "Toutes"
+msgstr "All"
+
+#: agents/views.py:45 agents/views.py:176 documents/models.py:205
+#: espace/models.py:23 templates/agents/dashboard.html:41
+msgid "En attente"
+msgstr "Pending"
+
+#: agents/views.py:46 agents/views.py:178
+msgid "En cours"
+msgstr "In progress"
+
+#: agents/views.py:47
+msgid "Approuvées"
+msgstr "Approved"
+
+#: agents/views.py:48
+msgid "Refusées"
+msgstr "Refused"
+
+#: agents/views.py:49
+msgid "Terminées"
+msgstr "Completed"
+
+#: agents/views.py:102
+msgid "Trop de demandes envoyées. Réessayez plus tard."
+msgstr "Too many requests sent. Try again later."
+
+#: agents/views.py:168 core/admin_site.py:15 core/admin_site.py:55
+#: templates/agents/base.html:81
+msgid "Tableau de bord"
+msgstr "Dashboard"
+
+#: agents/views.py:170
+msgid "Toutes les demandes"
+msgstr "All requests"
+
+#: agents/views.py:173
+msgid "À traiter"
+msgstr "To process"
+
+#: agents/views.py:174 agents/views.py:648 core/admin_site.py:25
+#: templates/agents/base.html:27 templates/agents/notifications.html:8
+msgid "Notifications"
+msgstr "Notifications"
+
+#: agents/views.py:181
+msgid "Outils"
+msgstr "Tools"
+
+#: agents/views.py:182 agents/views.py:432 core/admin_site.py:29
+#: documents/apps.py:8 templates/agents/document_detail.html:8
+#: templates/agents/document_form.html:8 templates/agents/documents.html:8
+msgid "Documents officiels"
+msgstr "Official documents"
+
+#: agents/views.py:185 agents/views.py:696 core/admin_site.py:26
+#: templates/admin/mail.html:7 templates/admin/mail.html:12
+#: templates/agents/mail.html:8
+msgid "Mail"
+msgstr "Mail"
+
+#: agents/views.py:187 agents/views.py:729 core/admin_site.py:27
+#: templates/agents/messages.html:8
+msgid "Messages"
+msgstr "Messages"
+
+#: agents/views.py:190
+msgid "Mon compte"
+msgstr "My account"
+
+#: agents/views.py:196
+msgid "Tous les guichets"
+msgstr "All desks"
+
+#: agents/views.py:200
+msgid "Administration"
+msgstr "Administration"
+
+#: agents/views.py:240 templates/agents/dashboard.html:49
+msgid "Demandes reçues"
+msgstr "Requests received"
+
+#: agents/views.py:241
+msgid "Réponses envoyées"
+msgstr "Replies sent"
+
+#: agents/views.py:297 templates/agents/request_detail.html:8
+#: templates/agents/requests.html:8
+msgid "Demandes du guichet"
+msgstr "Desk requests"
+
+#: agents/views.py:321
+#, python-format
+msgid "Demande %(reference)s mise à jour."
+msgstr "Request %(reference)s updated."
+
+#: agents/views.py:328
+#, python-format
+msgid "Demande %(reference)s"
+msgstr "Request %(reference)s"
+
+#: agents/views.py:360
+msgid "Votre mot de passe a été modifié."
+msgstr "Your password has been changed."
+
+#: agents/views.py:367 templates/agents/base.html:41
+#: templates/agents/password_change.html:8
+msgid "Changer mon mot de passe"
+msgstr "Change my password"
+
+#: agents/views.py:401
+msgid "j F Y à H:i"
+msgstr "F j, Y, H:i"
+
+#: agents/views.py:403
+msgid "j F Y"
+msgstr "F j, Y"
+
+#: agents/views.py:459
+#, python-format
+msgid "%(document)s établi et scellé. Vous pouvez télécharger le PDF."
+msgstr "%(document)s drawn up and sealed. You can download the PDF."
+
+#: agents/views.py:516
+#, python-format
+msgid ""
+"La suppression du document %(number)s attend déjà la décision de "
+"l'administrateur."
+msgstr ""
+"Deletion of document %(number)s is already awaiting the administrator’s "
+"decision."
+
+#: agents/views.py:524
+msgid ""
+"Indiquez le motif de la suppression : l'administrateur en a besoin pour "
+"décider."
+msgstr "Give the reason for deletion: the administrator needs it to decide."
+
+#: agents/views.py:532
+#, python-format
+msgid ""
+"Demande de suppression du document %(number)s envoyée à l'administrateur."
+msgstr "Deletion request for document %(number)s sent to the administrator."
+
+#: agents/views.py:538
+#, python-format
+msgid "Supprimer le document %(number)s"
+msgstr "Delete document %(number)s"
+
+#: agents/views.py:556
+#, python-format
+msgid "Demande de suppression du document %(number)s annulée."
+msgstr "Deletion request for document %(number)s cancelled."
+
+#: agents/views.py:590
+msgid ""
+"Ce document ne peut pas être envoyé (suppression demandée ou document "
+"révoqué)."
+msgstr ""
+"This document cannot be sent (deletion requested or document revoked)."
+
+#: agents/views.py:598
+msgid "Choisissez la demande de l'usager à qui envoyer le document."
+msgstr "Choose the citizen’s request to send the document to."
+
+#: agents/views.py:620
+#, python-format
+msgid ""
+"%(document)s envoyé à %(person)s : il peut le télécharger depuis ses "
+"notifications."
+msgstr ""
+"%(document)s sent to %(person)s: they can download it from their "
+"notifications."
+
+#: agents/views.py:707
+msgid "Non lues"
+msgstr "Unread"
+
+#: agents/views.py:707
+msgid "Lues"
+msgstr "Read"
+
+#: core/admin_site.py:16 templates/admin/analytics.html:6
+#: templates/admin/login.html:34 templates/admin/mail.html:6
+#: templates/admin/security.html:6 templates/landing.html:8
+msgid "Accueil"
+msgstr "Home"
+
+#: core/admin_site.py:17 core/admin_site.py:184
+msgid "Analyse"
+msgstr "Analytics"
+
+#: core/admin_site.py:19
+msgid "Menu rapide"
+msgstr "Quick menu"
+
+#: core/admin_site.py:20 core/admin_site.py:191
+msgid "Utilisateurs"
+msgstr "Users"
+
+#: core/admin_site.py:22
+msgid "Demandes d'accès agent"
+msgstr "Agent access requests"
+
+#: core/admin_site.py:38
+msgid "Attestations (guichet 5)"
+msgstr "Certificates (desk 5)"
+
+#: core/admin_site.py:41 templates/agents/document_detail.html:105
+msgid "Sécurité"
+msgstr "Security"
+
+#: core/admin_site.py:42 core/admin_site.py:317
+#: templates/admin/security.html:7 templates/admin/security.html:12
+msgid "Sécurité et fraude"
+msgstr "Security and fraud"
+
+#: core/admin_site.py:44
+msgid "Autres fonctionnalités"
+msgstr "Other features"
+
+#: core/admin_site.py:45
+msgid "Journal d'audit"
+msgstr "Audit log"
+
+#: core/admin_site.py:47
+msgid "Groupes"
+msgstr "Groups"
+
+#: core/admin_site.py:53
+msgid "Mairie de Mahajanga — Administration"
+msgstr "Mahajanga Town Hall — Administration"
+
+#: core/admin_site.py:147
+msgid "Documents émis"
+msgstr "Documents issued"
+
+#: core/admin_site.py:152 templates/admin/index.html:31
+msgid "Demandes de dossiers"
+msgstr "File requests"
+
+#: core/admin_site.py:157
+msgid "Messages reçus"
+msgstr "Messages received"
+
+#: core/admin_site.py:196
+msgid "Documents actifs"
+msgstr "Active documents"
+
+#: core/admin_site.py:200
+msgid "Documents émis par mois"
+msgstr "Documents issued per month"
+
+#: core/admin_site.py:204
+msgid "Documents par type"
+msgstr "Documents by type"
+
+#: core/admin_site.py:208
+msgid "Documents par statut"
+msgstr "Documents by status"
+
+#: core/admin_site.py:215
+msgid "Vérifications réussies"
+msgstr "Successful verifications"
+
+#: core/admin_site.py:219
+msgid "Fraudes détectées"
+msgstr "Fraud detected"
+
+#: core/admin_site.py:223
+msgid "Vérifications de documents par mois"
+msgstr "Document verifications per month"
+
+#: core/admin_site.py:236
+msgid "Demandes par statut"
+msgstr "Requests by status"
+
+#: core/admin_site.py:240
+msgid "Demandes par type de dossier"
+msgstr "Requests by file type"
+
+#: core/admin_site.py:256
+msgid "Tous"
+msgstr "All"
+
+#: core/admin_site.py:257 templates/admin/mail.html:74
+msgid "En ligne"
+msgstr "Online"
+
+#: core/admin_site.py:258
+msgid "Équipe"
+msgstr "Team"
+
+#: core/admin_site.py:259
+msgid "Usagers"
+msgstr "Citizens"
+
+#: core/admin_site.py:274
+msgid "Mail — personnes connectées"
+msgstr "Mail — connected people"
+
+#: core/admin_site.py:298
+msgid "Tous les documents"
+msgstr "All documents"
+
+#: core/admin_site.py:299
+msgid "Alertes"
+msgstr "Alerts"
+
+#: core/admin_site.py:300
+msgid "Altérés (fraude)"
+msgstr "Tampered (fraud)"
+
+#: core/admin_site.py:301
+msgid "Suppressions demandées"
+msgstr "Deletion requests"
+
+#: core/dashboard.py:9
+msgid "Jan"
+msgstr "Jan"
+
+#: core/dashboard.py:9
+msgid "Fév"
+msgstr "Feb"
+
+#: core/dashboard.py:9
+msgid "Mar"
+msgstr "Mar"
+
+#: core/dashboard.py:9
+msgid "Avr"
+msgstr "Apr"
+
+#: core/dashboard.py:9
+msgid "Mai"
+msgstr "May"
+
+#: core/dashboard.py:9
+msgid "Juin"
+msgstr "Jun"
+
+#: core/dashboard.py:9
+msgid "Juil"
+msgstr "Jul"
+
+#: core/dashboard.py:9
+msgid "Aoû"
+msgstr "Aug"
+
+#: core/dashboard.py:9
+msgid "Sep"
+msgstr "Sep"
+
+#: core/dashboard.py:9
+msgid "Oct"
+msgstr "Oct"
+
+#: core/dashboard.py:9
+msgid "Nov"
+msgstr "Nov"
+
+#: core/dashboard.py:9
+msgid "Déc"
+msgstr "Dec"
+
+#: core/people.py:25
+msgid "Administrateur principal"
+msgstr "Main administrator"
+
+#: core/people.py:27 templates/admin/index.html:51
+msgid "Administrateur"
+msgstr "Administrator"
+
+#: core/people.py:30
+#, python-format
+msgid "Agent — Guichet %(number)s"
+msgstr "Agent — Desk %(number)s"
+
+#: core/people.py:31
+msgid "Compte sans rôle"
+msgstr "Account without a role"
+
+#: core/people.py:74
+msgid "Usager (pas encore de demande)"
+msgstr "Citizen (no request yet)"
+
+#: core/people.py:77 templates/agents/mail.html:26
+msgid "Usager"
+msgstr "Citizen"
+
+#: core/security.py:21
+msgid "Altéré — fraude"
+msgstr "Tampered — fraud"
+
+#: core/security.py:22 templates/agents/_document_delete.html:2
+msgid "Suppression demandée"
+msgstr "Deletion requested"
+
+#: core/security.py:23
+msgid "Révoqué / supprimé"
+msgstr "Revoked / deleted"
+
+#: core/security.py:24
+msgid "Intègre"
+msgstr "Intact"
+
+#: core/security.py:86
+msgid "Agent inconnu"
+msgstr "Unknown agent"
+
+#: core/views.py:15
+msgid "les actes de naissance"
+msgstr "birth certificates"
+
+#: core/views.py:16
+msgid "les actes de mariage"
+msgstr "marriage certificates"
+
+#: core/views.py:17
+msgid "les actes de décès"
+msgstr "death certificates"
+
+#: core/views.py:18
+msgid "les demandes des usagers"
+msgstr "citizen requests"
+
+#: core/views.py:19
+msgid "les documents officiels"
+msgstr "official documents"
+
+#: documents/admin.py:50 templates/admin/security.html:48
+msgid "Titulaire"
+msgstr "Holder"
+
+#: documents/admin.py:54
+msgid "Lien de vérification"
+msgstr "Verification link"
+
+#: documents/admin.py:72
+msgid "Révocation depuis l'administration."
+msgstr "Revoked from the administration."
+
+#: documents/admin.py:83
+msgid "Suppression logique depuis l'administration."
+msgstr "Soft deletion from the administration."
+
+#: documents/admin.py:123
+msgid "Compte agent"
+msgstr "Agent account"
+
+#: documents/admin.py:127
+msgid "Approuver et créer les comptes agents"
+msgstr "Approve and create the agent accounts"
+
+#: documents/admin.py:150
+msgid ""
+"Compte créé pour {} — Guichet {} : l'agent se connecte avec "
+"<strong>{}</strong> et le mot de passe qu'il a choisi."
+msgstr ""
+"Account created for {} — Desk {}: the agent signs in with "
+"<strong>{}</strong> and the password they chose."
+
+#: documents/admin.py:161
+msgid ""
+"Compte créé pour {} — Guichet {} : identifiant <strong>{}</strong>, mot de "
+"passe provisoire <strong>{}</strong> (à transmettre à l'agent ; il ne sera "
+"plus affiché)."
+msgstr ""
+"Account created for {} — Desk {}: username <strong>{}</strong>, temporary "
+"password <strong>{}</strong> (give it to the agent; it will not be shown "
+"again)."
+
+#: documents/admin.py:169
+msgid "Aucun compte créé (seules les demandes en attente sont approuvées)."
+msgstr "No account created (only pending requests are approved)."
+
+#: documents/admin.py:171
+msgid "Rejeter les demandes sélectionnées"
+msgstr "Reject the selected requests"
+
+#: documents/admin.py:176
+#, python-format
+msgid "%(count)s demande(s) rejetée(s)."
+msgstr "%(count)s request(s) rejected."
+
+#: documents/models.py:42 espace/models.py:17
+msgid "Acte de naissance"
+msgstr "Birth certificate"
+
+#: documents/models.py:43 espace/models.py:18
+msgid "Acte de mariage"
+msgstr "Marriage certificate"
+
+#: documents/models.py:44 espace/models.py:19
+msgid "Acte de décès"
+msgstr "Death certificate"
+
+#: documents/models.py:45
+msgid "Diplôme"
+msgstr "Diploma"
+
+#: documents/models.py:46
+msgid "Attestation"
+msgstr "Certificate"
+
+#: documents/models.py:50
+msgid "Expiré"
+msgstr "Expired"
+
+#: documents/models.py:58
+msgid "type de document"
+msgstr "document type"
+
+#: documents/models.py:59
+msgid "prénom du titulaire"
+msgstr "holder’s first name"
+
+#: documents/models.py:60
+msgid "nom du titulaire"
+msgstr "holder’s last name"
+
+#: documents/models.py:62
+msgid "numéro de CIN"
+msgstr "ID card number"
+
+#: documents/models.py:63
+msgid "Optionnel."
+msgstr "Optional."
+
+#: documents/models.py:65
+msgid "photo du titulaire"
+msgstr "holder’s photo"
+
+#: documents/models.py:66
+msgid "date d'émission"
+msgstr "issue date"
+
+#: documents/models.py:67
+msgid "date d'expiration"
+msgstr "expiry date"
+
+#: documents/models.py:68
+msgid "PDF officiel"
+msgstr "Official PDF"
+
+#: documents/models.py:75
+msgid "supprimé"
+msgstr "deleted"
+
+#: documents/models.py:85 documents/models.py:179
+msgid "document"
+msgstr "document"
+
+#: documents/models.py:86
+msgid "documents"
+msgstr "documents"
+
+#: documents/models.py:173
+msgid "Vérification réussie"
+msgstr "Verification succeeded"
+
+#: documents/models.py:174
+msgid "Vérification échouée / fraude"
+msgstr "Verification failed / fraud"
+
+#: documents/models.py:175
+msgid "Document révoqué"
+msgstr "Document revoked"
+
+#: documents/models.py:176
+msgid "Document supprimé"
+msgstr "Document deleted"
+
+#: documents/models.py:181
+msgid "action"
+msgstr "action"
+
+#: documents/models.py:184
+msgid "effectuée par"
+msgstr "performed by"
+
+#: documents/models.py:186
+msgid "adresse IP"
+msgstr "IP address"
+
+#: documents/models.py:187
+msgid "détails"
+msgstr "details"
+
+#: documents/models.py:188
+msgid "date"
+msgstr "date"
+
+#: documents/models.py:192
+msgid "entrée du journal d'audit"
+msgstr "audit log entry"
+
+#: documents/models.py:193
+msgid "journal d'audit"
+msgstr "audit log"
+
+#: documents/models.py:201
+msgid "Agent Municipal — Création de documents administratifs"
+msgstr "Municipal agent — Creating administrative documents"
+
+#: documents/models.py:206 espace/admin.py:87 espace/models.py:25
+msgid "Approuvée"
+msgstr "Approved"
+
+#: documents/models.py:207
+msgid "Rejetée"
+msgstr "Rejected"
+
+#: documents/models.py:208 espace/models.py:86
+msgid "prénom"
+msgstr "first name"
+
+#: documents/models.py:209 espace/models.py:87
+msgid "nom"
+msgstr "last name"
+
+#: documents/models.py:210 espace/models.py:88
+msgid "téléphone"
+msgstr "phone"
+
+#: documents/models.py:211 espace/models.py:89
+msgid "e-mail"
+msgstr "e-mail"
+
+#: documents/models.py:212
+msgid "type de demande"
+msgstr "request type"
+
+#: documents/models.py:215
+msgid ""
+"Guichet souhaité par le demandeur ; l'administrateur peut le changer avant "
+"d'approuver."
+msgstr ""
+"Desk wanted by the applicant; the administrator can change it before "
+"approving."
+
+#: documents/models.py:217
+msgid "précisions"
+msgstr "details"
+
+#: documents/models.py:219
+msgid "reçue le"
+msgstr "received on"
+
+#: documents/models.py:220
+msgid "traitée le"
+msgstr "processed on"
+
+#: documents/models.py:222
+msgid "mot de passe (haché)"
+msgstr "password (hashed)"
+
+#: documents/models.py:225
+msgid "compte agent créé"
+msgstr "agent account created"
+
+#: documents/models.py:230
+msgid "demande d'accès agent"
+msgstr "agent access request"
+
+#: documents/models.py:231
+msgid "demandes d'accès agent"
+msgstr "agent access requests"
+
+#: espace/admin.py:40
+msgid "Demande"
+msgstr "Request"
+
+#: espace/admin.py:41
+msgid "Demandeur et contenu"
+msgstr "Applicant and content"
+
+#: espace/admin.py:42 templates/agents/request_detail.html:71
+msgid "Traitement"
+msgstr "Processing"
+
+#: espace/admin.py:56
+msgid "Identité du demandeur"
+msgstr "Applicant’s identity"
+
+#: espace/admin.py:60 templates/agents/request_detail.html:62
+msgid "Détails de la demande"
+msgstr "Request details"
+
+#: espace/admin.py:64 templates/admin/index.html:71
+#: templates/agents/_requests_table.html:4
+#: templates/agents/request_detail.html:55
+msgid "Demandeur"
+msgstr "Applicant"
+
+#: espace/admin.py:69
+msgid "Répondu"
+msgstr "Replied"
+
+#: espace/admin.py:79
+#, python-format
+msgid "%(count)s demande(s) marquée(s) « %(status)s »."
+msgstr "%(count)s request(s) marked “%(status)s”."
+
+#: espace/admin.py:81
+msgid "Marquer comme « En cours de traitement »"
+msgstr "Mark as “In progress”"
+
+#: espace/admin.py:83 espace/models.py:24
+msgid "En cours de traitement"
+msgstr "In progress"
+
+#: espace/admin.py:85
+msgid "Marquer comme « Approuvée »"
+msgstr "Mark as “Approved”"
+
+#: espace/admin.py:89
+msgid "Marquer comme « Refusée »"
+msgstr "Mark as “Refused”"
+
+#: espace/admin.py:91 espace/models.py:26
+msgid "Refusée"
+msgstr "Refused"
+
+#: espace/admin.py:93
+msgid "Marquer comme « Terminée »"
+msgstr "Mark as “Completed”"
+
+#: espace/admin.py:95 espace/models.py:27
+msgid "Terminée"
+msgstr "Completed"
+
+#: espace/admin.py:112
+msgid "Marquer comme traité"
+msgstr "Mark as handled"
+
+#: espace/admin.py:115
+#, python-format
+msgid "%(count)s message(s) marqué(s) comme traité(s)."
+msgstr "%(count)s message(s) marked as handled."
+
+#: espace/apps.py:8
+msgid "Espace usager"
+msgstr "Citizen space"
+
+#: espace/models.py:28 espace/models.py:106
+msgid "identifiant Clerk"
+msgstr "Clerk ID"
+
+#: espace/models.py:29
+msgid "type de dossier"
+msgstr "file type"
+
+#: espace/models.py:35
+msgid "identité du demandeur"
+msgstr "applicant’s identity"
+
+#: espace/models.py:36
+msgid "détails de la demande"
+msgstr "request details"
+
+#: espace/models.py:37
+msgid "réponse de la mairie"
+msgstr "town hall reply"
+
+#: espace/models.py:38
+msgid "date de la réponse"
+msgstr "reply date"
+
+#: espace/models.py:39
+msgid "réponse lue"
+msgstr "reply read"
+
+#: espace/models.py:40
+msgid "créée le"
+msgstr "created on"
+
+#: espace/models.py:41
+msgid "modifiée le"
+msgstr "modified on"
+
+#: espace/models.py:45
+msgid "demande de dossier"
+msgstr "file request"
+
+#: espace/models.py:46
+msgid "demandes de dossiers"
+msgstr "file requests"
+
+#: espace/models.py:90
+msgid "message"
+msgstr "message"
+
+#: espace/models.py:91
+msgid "traité"
+msgstr "handled"
+
+#: espace/models.py:92
+msgid "reçu le"
+msgstr "received on"
+
+#: espace/models.py:96
+msgid "message de contact"
+msgstr "contact message"
+
+#: espace/models.py:97
+msgid "messages de contact"
+msgstr "contact messages"
+
+#: espace/models.py:107
+msgid "première visite"
+msgstr "first visit"
+
+#: espace/models.py:108
+msgid "dernière activité"
+msgstr "last activity"
+
+#: espace/models.py:112
+msgid "usager de l'espace"
+msgstr "space user"
+
+#: espace/models.py:113
+msgid "usagers de l'espace"
+msgstr "space users"
+
+#: templates/admin/analytics.html:28
+#, python-format
+msgid "12 derniers mois · %(total)s au total"
+msgstr "Last 12 months · %(total)s in total"
+
+#: templates/admin/analytics.html:40 templates/agents/dashboard.html:57
+#, python-format
+msgid "%(total)s au total"
+msgstr "%(total)s in total"
+
+#: templates/admin/analytics.html:57
+msgid "Vous n'avez accès à aucune statistique."
+msgstr "You do not have access to any statistics."
+
+#: templates/admin/base_site.html:4 templates/admin/login.html:8
+msgid "Django site admin"
+msgstr ""
+
+#: templates/admin/base_site.html:18 templates/agents/base.html:19
+msgid "Ouvrir le menu"
+msgstr "Open the menu"
+
+#: templates/admin/base_site.html:25
+msgid "Demandes en attente"
+msgstr "Pending requests"
+
+#: templates/admin/base_site.html:31
+msgid "Messages de contact non traités"
+msgstr "Unhandled contact messages"
+
+#: templates/admin/base_site.html:36 templates/agents/base.html:31
+msgid "Voir le site"
+msgstr "View the site"
+
+#: templates/admin/base_site.html:49
+msgid "Change password"
+msgstr ""
+
+#: templates/admin/base_site.html:53
+msgid "Log out"
+msgstr ""
+
+#: templates/admin/base_site.html:60
+msgid "Menu principal"
+msgstr "Main menu"
+
+#: templates/admin/base_site.html:86
+msgid "Django administration"
+msgstr ""
+
+#: templates/admin/base_site.html:98 templates/agents/forbidden.html:18
+msgid "Retour"
+msgstr "Back"
+
+#: templates/admin/index.html:22 templates/agents/dashboard.html:37
+#, python-format
+msgid "Ce mois-ci, comparé au mois dernier · %(total)s au total"
+msgstr "This month, compared with last month · %(total)s in total"
+
+#: templates/admin/index.html:32 templates/agents/dashboard.html:50
+#, python-format
+msgid "12 derniers mois · %(counter)s demande"
+msgid_plural "12 derniers mois · %(counter)s demandes"
+msgstr[0] "Last 12 months · %(counter)s request"
+msgstr[1] "Last 12 months · %(counter)s requests"
+
+#: templates/admin/index.html:42
+msgid "Nouveaux membres"
+msgstr "New members"
+
+#: templates/admin/index.html:43 templates/admin/index.html:66
+#: templates/agents/dashboard.html:84
+msgid "Tout voir"
+msgstr "See all"
+
+#: templates/admin/index.html:51
+msgid "Utilisateur"
+msgstr "User"
+
+#: templates/admin/index.html:53 templates/agents/_requests_table.html:20
+#: templates/agents/dashboard.html:22
+msgid "Voir"
+msgstr "View"
+
+#: templates/admin/index.html:56
+msgid "Aucun membre pour le moment."
+msgstr "No members yet."
+
+#: templates/admin/index.html:65 templates/agents/dashboard.html:83
+msgid "Dernières demandes"
+msgstr "Latest requests"
+
+#: templates/admin/index.html:71
+msgid "Date"
+msgstr "Date"
+
+#: templates/admin/index.html:71 templates/agents/_requests_table.html:4
+msgid "Dossier"
+msgstr "File"
+
+#: templates/admin/index.html:71 templates/admin/mail.html:52
+#: templates/agents/_requests_table.html:4 templates/agents/documents.html:27
+msgid "Statut"
+msgstr "Status"
+
+#: templates/admin/login.html:8 templates/agents/inscription.html:8
+msgid "Erreur :"
+msgstr "Error:"
+
+#: templates/admin/login.html:8 templates/admin/login.html:37
+#: templates/agents/inscription.html:34
+msgid "Connexion"
+msgstr "Sign in"
+
+#: templates/admin/login.html:38
+msgid "Agents et administrateurs de la Commune Urbaine de Mahajanga"
+msgstr "Agents and administrators of the Urban Municipality of Mahajanga"
+
+#: templates/admin/login.html:42
+msgid "Please correct the error below."
+msgid_plural "Please correct the errors below."
+msgstr[0] ""
+msgstr[1] ""
+
+#: templates/admin/login.html:51
+#, python-format
+msgid ""
+"Vous êtes connecté en tant que %(username)s, mais ce compte n'a pas accès à "
+"cette page. Connectez-vous avec un autre compte."
+msgstr ""
+"You are signed in as %(username)s, but this account does not have access to "
+"this page. Sign in with another account."
+
+#: templates/admin/login.html:73
+msgid "Afficher le mot de passe"
+msgstr "Show password"
+
+#: templates/admin/login.html:83
+msgid "Forgotten your login credentials?"
+msgstr ""
+
+#: templates/admin/login.html:86 templates/agents/inscription.html:75
+#: templates/landing.html:40
+msgid "Se connecter"
+msgstr "Sign in"
+
+#: templates/admin/login.html:92
+msgid "Bonjour, cher agent&nbsp;!"
+msgstr "Hello, dear agent!"
+
+#: templates/admin/login.html:93
+msgid ""
+"Cet espace est réservé aux agents et aux administrateurs de la Commune. "
+"Connectez-vous pour traiter les demandes des usagers."
+msgstr ""
+"This space is reserved for the Municipality’s agents and administrators. "
+"Sign in to process citizen requests."
+
+#: templates/admin/login.html:94
+msgid "Demander un accès"
+msgstr "Request access"
+
+#: templates/admin/mail.html:13
+msgid "Toutes les personnes qui utilisent l'application, avec leur e-mail."
+msgstr "Everyone who uses the application, with their e-mail."
+
+#: templates/admin/mail.html:27
+#, python-format
+msgid ""
+"Session ouverte (équipe) ou actif depuis moins de %(minutes)s min (usagers)"
+msgstr "Session open (team) or active in the last %(minutes)s min (citizens)"
+
+#: templates/admin/mail.html:28
+msgid "Administrateurs et agents des guichets"
+msgstr "Administrators and desk agents"
+
+#: templates/admin/mail.html:29
+msgid "Comptes de l'espace citoyen"
+msgstr "Citizen space accounts"
+
+#: templates/admin/mail.html:30
+msgid "Équipe et usagers"
+msgstr "Team and citizens"
+
+#: templates/admin/mail.html:40 templates/admin/mail.html:42
+#: templates/admin/security.html:37 templates/admin/security.html:39
+#: templates/agents/documents.html:18 templates/agents/documents.html:20
+#: templates/agents/mail.html:17 templates/agents/mail.html:19
+#: templates/agents/requests.html:23 templates/agents/requests.html:25
+msgid "Rechercher"
+msgstr "Search"
+
+#: templates/admin/mail.html:41 templates/agents/mail.html:18
+msgid "Nom, e-mail, téléphone…"
+msgstr "Name, e-mail, phone…"
+
+#: templates/admin/mail.html:45
+msgid "Écrire à toute la liste"
+msgstr "Write to the whole list"
+
+#: templates/admin/mail.html:52
+msgid "Personne"
+msgstr "Person"
+
+#: templates/admin/mail.html:52 templates/agents/mail.html:26
+msgid "E-mail"
+msgstr "E-mail"
+
+#: templates/admin/mail.html:52
+msgid "Rôle"
+msgstr "Role"
+
+#: templates/admin/mail.html:52
+msgid "Dernière activité"
+msgstr "Last activity"
+
+#: templates/admin/mail.html:52 templates/admin/security.html:53
+#: templates/agents/documents.html:27
+msgid "Actions"
+msgstr "Actions"
+
+#: templates/admin/mail.html:69 templates/agents/requests.html:42
+#, python-format
+msgid "%(counter)s demande"
+msgid_plural "%(counter)s demandes"
+msgstr[0] "%(counter)s request"
+msgstr[1] "%(counter)s requests"
+
+#: templates/admin/mail.html:71
+msgid "Jamais"
+msgstr "Never"
+
+#: templates/admin/mail.html:73
+msgid "Désactivé"
+msgstr "Disabled"
+
+#: templates/admin/mail.html:75
+msgid "Hors ligne"
+msgstr "Offline"
+
+#: templates/admin/mail.html:78 templates/agents/mail.html:26
+#: templates/agents/mail.html:40
+msgid "Écrire"
+msgstr "Write"
+
+#: templates/admin/mail.html:79
+msgid "Compte"
+msgstr "Account"
+
+#: templates/admin/mail.html:79
+msgid "Ses demandes"
+msgstr "Their requests"
+
+#: templates/admin/mail.html:83
+msgid "Personne ne correspond à cette recherche."
+msgstr "Nobody matches this search."
+
+#: templates/admin/security.html:13
+msgid ""
+"Chaque document établi par les agents est re-vérifié à l'ouverture de cette "
+"page : son empreinte SHA-256 et sa signature HMAC sont recalculées et "
+"comparées à celles du scellement."
+msgstr ""
+"Every document drawn up by agents is re-checked when this page opens: its "
+"SHA-256 fingerprint and HMAC signature are recomputed and compared with "
+"those recorded when it was sealed."
+
+#: templates/admin/security.html:24
+msgid "Documents altérés, suppressions demandées ou révoqués"
+msgstr "Tampered documents, deletion requests or revoked"
+
+#: templates/admin/security.html:25
+msgid "Contenu modifié après le scellement : à examiner en priorité"
+msgstr "Content changed after sealing: review first"
+
+#: templates/admin/security.html:26
+msgid "Demandes des agents en attente de votre décision"
+msgstr "Agent requests awaiting your decision"
+
+#: templates/admin/security.html:27
+msgid "Établis aux guichets 1 à 5"
+msgstr "Drawn up at desks 1 to 5"
+
+#: templates/admin/security.html:38
+msgid "N° d'acte, titulaire, agent…"
+msgstr "Record no., holder, agent…"
+
+#: templates/admin/security.html:47
+msgid "Document"
+msgstr "Document"
+
+#: templates/admin/security.html:49
+msgid "Établi par"
+msgstr "Drawn up by"
+
+#: templates/admin/security.html:50
+msgid "Empreinte"
+msgstr "Fingerprint"
+
+#: templates/admin/security.html:51
+msgid "Signature"
+msgstr "Signature"
+
+#: templates/admin/security.html:52
+msgid "État"
+msgstr "State"
+
+#: templates/admin/security.html:61
+#, python-format
+msgid "Guichet %(number)s"
+msgstr "Desk %(number)s"
+
+#: templates/admin/security.html:68
+msgid "Conforme"
+msgstr "Matches"
+
+#: templates/admin/security.html:68
+msgid "Différente"
+msgstr "Different"
+
+#: templates/admin/security.html:69
+msgid "Invalide"
+msgstr "Invalid"
+
+#: templates/admin/security.html:72
+#, python-format
+msgid "%(person)s : « %(reason)s »"
+msgstr "%(person)s: “%(reason)s”"
+
+#: templates/admin/security.html:74
+msgid "Examiner"
+msgstr "Review"
+
+#: templates/admin/security.html:77
+msgid "Aucun document dans cette catégorie."
+msgstr "No documents in this category."
+
+#: templates/admin/security.html:86
+msgid "Par agent"
+msgstr "By agent"
+
+#: templates/admin/security.html:90
+msgid "Guichet"
+msgstr "Desk"
+
+#: templates/admin/security.html:90
+msgid "Documents"
+msgstr "Documents"
+
+#: templates/admin/security.html:90
+msgid "Altérés"
+msgstr "Tampered"
+
+#: templates/admin/security.html:90
+msgid "Suppressions"
+msgstr "Deletions"
+
+#: templates/admin/security.html:95
+#, python-format
+msgid "Dernier document : %(date)s"
+msgstr "Last document: %(date)s"
+
+#: templates/admin/security.html:102
+msgid "Aucun document établi pour le moment."
+msgstr "No documents drawn up yet."
+
+#: templates/admin/security.html:111
+msgid "Vérifications publiques (QR code)"
+msgstr "Public checks (QR code)"
+
+#: templates/admin/security.html:112
+#, python-format
+msgid "%(ok)s réussies · %(bad)s échouées"
+msgstr "%(ok)s succeeded · %(bad)s failed"
+
+#: templates/admin/security.html:117
+msgid "Échec"
+msgstr "Failed"
+
+#: templates/admin/security.html:119
+msgid "Document inconnu"
+msgstr "Unknown document"
+
+#: templates/admin/security.html:124
+msgid "Aucune vérification échouée : aucun faux document n'a été présenté."
+msgstr "No failed checks: no fake document has been presented."
+
+#: templates/agents/_document_delete.html:2
+msgid "En attente de la décision de l'administrateur"
+msgstr "Awaiting the administrator’s decision"
+
+#: templates/agents/_document_delete.html:6
+#, python-format
+msgid "Demander la suppression du document %(number)s"
+msgstr "Request deletion of document %(number)s"
+
+#: templates/agents/_document_delete.html:6
+msgid "Supprimer"
+msgstr "Delete"
+
+#: templates/agents/_requests_table.html:4
+msgid "Reçue le"
+msgstr "Received on"
+
+#: templates/agents/_requests_table.html:4
+msgid "Action"
+msgstr "Action"
+
+#: templates/agents/_requests_table.html:17
+msgid "À traiter en premier"
+msgstr "Process first"
+
+#: templates/agents/_requests_table.html:18
+#, python-format
+msgid "N° %(position)s dans la file"
+msgstr "No. %(position)s in the queue"
+
+#: templates/agents/_requests_table.html:20
+#: templates/agents/notifications.html:27
+msgid "Traiter"
+msgstr "Process"
+
+#: templates/agents/base.html:8
+msgid "Mairie de Mahajanga"
+msgstr "Mahajanga Town Hall"
+
+#: templates/agents/base.html:27
+msgid "Notifications : nouvelles demandes"
+msgstr "Notifications: new requests"
+
+#: templates/agents/base.html:27
+#, python-format
+msgid "%(counter)s nouvelle demande"
+msgid_plural "%(counter)s nouvelles demandes"
+msgstr[0] "%(counter)s new request"
+msgstr[1] "%(counter)s new requests"
+
+#: templates/agents/base.html:44 templates/agents/forbidden.html:32
+msgid "Se déconnecter"
+msgstr "Sign out"
+
+#: templates/agents/base.html:51
+msgid "Menu du guichet"
+msgstr "Desk menu"
+
+#: templates/agents/dashboard.html:11
+#, python-format
+msgid "%(label)s — tableau de bord de votre guichet"
+msgstr "%(label)s — your desk dashboard"
+
+#: templates/agents/dashboard.html:14
+msgid "Traiter les demandes en attente"
+msgstr "Process pending requests"
+
+#: templates/agents/dashboard.html:21
+#, python-format
+msgid ""
+"<strong>%(counter)s nouvelle demande</strong> reçue depuis votre dernière "
+"consultation des notifications."
+msgid_plural ""
+"<strong>%(counter)s nouvelles demandes</strong> reçues depuis votre dernière"
+" consultation des notifications."
+msgstr[0] ""
+"<strong>%(counter)s new request</strong> received since you last checked "
+"your notifications."
+msgstr[1] ""
+"<strong>%(counter)s new requests</strong> received since you last checked "
+"your notifications."
+
+#: templates/agents/dashboard.html:43
+msgid "Demandes à prendre en charge"
+msgstr "Requests to handle"
+
+#: templates/agents/dashboard.html:57
+msgid "Par statut"
+msgstr "By status"
+
+#: templates/agents/dashboard.html:68
+msgid "Par type de dossier"
+msgstr "By file type"
+
+#: templates/agents/document_delete.html:12
+msgid "Demander la suppression"
+msgstr "Request deletion"
+
+#: templates/agents/document_delete.html:14
+msgid ""
+". Vous ne pouvez pas supprimer un document vous-même : l'administrateur "
+"examinera votre demande."
+msgstr ""
+". You cannot delete a document yourself: the administrator will review your "
+"request."
+
+#: templates/agents/document_delete.html:23
+msgid "Motif de la suppression"
+msgstr "Reason for deletion"
+
+#: templates/agents/document_delete.html:25
+msgid "Ex. : erreur dans un nom, document établi en double…"
+msgstr "E.g. error in a name, document drawn up twice…"
+
+#: templates/agents/document_delete.html:30
+#: templates/includes/assistant.html:17
+msgid "Annuler"
+msgstr "Cancel"
+
+#: templates/agents/document_delete.html:31
+msgid "Envoyer la demande à l'administrateur"
+msgstr "Send the request to the administrator"
+
+#: templates/agents/document_detail.html:14
+#, python-format
+msgid "%(holder)s · établi le %(date)s"
+msgstr "%(holder)s · drawn up on %(date)s"
+
+#: templates/agents/document_detail.html:15
+#: templates/agents/document_detail.html:29
+msgid "par"
+msgstr "by"
+
+#: templates/agents/document_detail.html:19
+msgid "Aperçu"
+msgstr "Preview"
+
+#: templates/agents/document_detail.html:20
+msgid "Télécharger le PDF"
+msgstr "Download the PDF"
+
+#: templates/agents/document_detail.html:28
+#, python-format
+msgid "Suppression demandée le %(date)s"
+msgstr "Deletion requested on %(date)s"
+
+#: templates/agents/document_detail.html:30
+msgid "— en attente de la décision de l'administrateur."
+msgstr "— awaiting the administrator’s decision."
+
+#: templates/agents/document_detail.html:31
+#, python-format
+msgid "Motif : %(reason)s"
+msgstr "Reason: %(reason)s"
+
+#: templates/agents/document_detail.html:35
+msgid "Annuler la demande"
+msgstr "Cancel the request"
+
+#: templates/agents/document_detail.html:43
+#: templates/agents/document_detail.html:74
+msgid "Envoyer à l'usager"
+msgstr "Send to the citizen"
+
+#: templates/agents/document_detail.html:44
+#, python-format
+msgid "Envoyé le %(date)s"
+msgstr "Sent on %(date)s"
+
+#: templates/agents/document_detail.html:52
+msgid "Destinataire :"
+msgstr "Recipient:"
+
+#: templates/agents/document_detail.html:53
+msgid "— demande"
+msgstr "— request"
+
+#: templates/agents/document_detail.html:53
+msgid ". L'usager pourra télécharger le PDF depuis ses notifications."
+msgstr ""
+". The citizen will be able to download the PDF from their notifications."
+
+#: templates/agents/document_detail.html:57
+msgid "Demande de l'usager"
+msgstr "Citizen’s request"
+
+#: templates/agents/document_detail.html:59
+msgid "Choisissez la demande à laquelle répondre"
+msgstr "Choose the request to reply to"
+
+#: templates/agents/document_detail.html:64
+msgid ""
+"Ce document a été établi sans demande : choisissez l'usager à qui l'envoyer."
+msgstr ""
+"This document was drawn up without a request: choose the citizen to send it "
+"to."
+
+#: templates/agents/document_detail.html:68
+msgid "Message à l'usager"
+msgstr "Message to the citizen"
+
+#: templates/agents/document_detail.html:74
+msgid "Renvoyer à l'usager"
+msgstr "Send to the citizen again"
+
+#: templates/agents/document_detail.html:80
+#, python-format
+msgid ""
+"Aucune demande du guichet en attente à laquelle rattacher ce document. Pour "
+"l'envoyer à un usager, établissez-le depuis sa demande (bouton « %(label)s "
+"»)."
+msgstr ""
+"No pending desk request to attach this document to. To send it to a citizen,"
+" draw it up from their request (“%(label)s” button)."
+
+#: templates/agents/document_detail.html:88
+msgid "Contenu du document"
+msgstr "Document content"
+
+#: templates/agents/document_detail.html:96
+msgid "Traçabilité"
+msgstr "Traceability"
+
+#: templates/agents/document_detail.html:98
+msgid "Demande d'origine"
+msgstr "Original request"
+
+#: templates/agents/document_detail.html:107
+msgid "Authentique"
+msgstr "Authentic"
+
+#: templates/agents/document_detail.html:109
+msgid "Altéré"
+msgstr "Tampered"
+
+#: templates/agents/document_detail.html:113
+msgid "Le QR code ouvre la page de vérification :"
+msgstr "The QR code opens the verification page:"
+
+#: templates/agents/document_detail.html:115
+msgid "Empreinte SHA-256"
+msgstr "SHA-256 fingerprint"
+
+#: templates/agents/document_form.html:15
+#, python-format
+msgid ""
+"Pré-rempli à partir de la demande <strong>%(reference)s</strong> de "
+"%(person)s — vérifiez et complétez."
+msgstr ""
+"Pre-filled from request <strong>%(reference)s</strong> by %(person)s — check"
+" and complete."
+
+#: templates/agents/document_form.html:17
+msgid ""
+"Remplissez les champs du document. Une fois enregistré, il est scellé "
+"(SHA-256) et ne peut plus être modifié."
+msgstr ""
+"Fill in the document fields. Once saved, it is sealed (SHA-256) and can no "
+"longer be changed."
+
+#: templates/agents/document_form.html:28
+msgid ""
+"Certains champs sont à corriger : ils sont signalés en rouge ci-dessous."
+msgstr "Some fields need correcting: they are marked in red below."
+
+#: templates/agents/document_form.html:54
+msgid "* Champs obligatoires"
+msgstr "* Required fields"
+
+#: templates/agents/document_form.html:55
+msgid "Établir et sceller le document"
+msgstr "Draw up and seal the document"
+
+#: templates/agents/documents.html:9
+#, python-format
+msgid ""
+"%(plural)s établis au %(guichet)s — chacun est scellé (SHA-256) et porte un "
+"QR code unique."
+msgstr ""
+"%(plural)s drawn up at %(guichet)s — each one is sealed (SHA-256) and "
+"carries a unique QR code."
+
+#: templates/agents/documents.html:16
+#, python-format
+msgid "%(counter)s document"
+msgid_plural "%(counter)s documents"
+msgstr[0] "%(counter)s document"
+msgstr[1] "%(counter)s documents"
+
+#: templates/agents/documents.html:19
+msgid "N° d'acte, nom, objet…"
+msgstr "Record no., name, subject…"
+
+#: templates/agents/documents.html:27
+msgid "N° d'acte"
+msgstr "Record no."
+
+#: templates/agents/documents.html:27
+msgid "Établi le"
+msgstr "Drawn up on"
+
+#: templates/agents/documents.html:38
+msgid "Envoyé"
+msgstr "Sent"
+
+#: templates/agents/documents.html:44
+msgid "Ouvrir"
+msgstr "Open"
+
+#: templates/agents/documents.html:49
+#, python-format
+msgid ""
+"Aucun document pour le moment. Cliquez sur « %(label)s » pour en établir un."
+msgstr "No documents yet. Click “%(label)s” to draw one up."
+
+#: templates/agents/documents.html:56 templates/agents/messages.html:47
+#: templates/agents/requests.html:32
+msgid "Pages"
+msgstr "Pages"
+
+#: templates/agents/documents.html:57 templates/agents/messages.html:48
+#: templates/agents/requests.html:34
+msgid "Précédente"
+msgstr "Previous"
+
+#: templates/agents/documents.html:58 templates/agents/messages.html:49
+#: templates/agents/requests.html:36
+#, python-format
+msgid "Page %(number)s sur %(total)s"
+msgstr "Page %(number)s of %(total)s"
+
+#: templates/agents/documents.html:59 templates/agents/messages.html:50
+#: templates/agents/requests.html:38
+msgid "Suivante"
+msgstr "Next"
+
+#: templates/agents/forbidden.html:8
+msgid "Accès refusé | Mairie de Mahajanga"
+msgstr "Access denied | Mahajanga Town Hall"
+
+#: templates/agents/forbidden.html:20
+msgid "Accès refusé"
+msgstr "Access denied"
+
+#: templates/agents/forbidden.html:23
+#, python-format
+msgid ""
+"Ce guichet ne vous est pas attribué. Vous traitez uniquement les demandes du"
+" <strong>%(guichet)s — %(label)s</strong>."
+msgstr ""
+"This desk is not assigned to you. You only handle requests for "
+"<strong>%(guichet)s — %(label)s</strong>."
+
+#: templates/agents/forbidden.html:25
+msgid "Aller à mon guichet"
+msgstr "Go to my desk"
+
+#: templates/agents/forbidden.html:28
+msgid ""
+"Ce compte n'a pas encore de rôle. L'administrateur doit valider votre "
+"demande d'accès et vous attribuer un guichet."
+msgstr ""
+"This account has no role yet. The administrator must approve your access "
+"request and assign you a desk."
+
+#: templates/agents/inscription.html:8
+msgid "Demande d'accès agent | Mairie de Mahajanga"
+msgstr "Agent access request | Mahajanga Town Hall"
+
+#: templates/agents/inscription.html:39
+msgid "Demande envoyée"
+msgstr "Request sent"
+
+#: templates/agents/inscription.html:41
+#, python-format
+msgid ""
+"Merci %(name)s ! Votre demande est en attente de validation par "
+"l'administrateur, qui vous attribuera votre guichet."
+msgstr ""
+"Thank you %(name)s! Your request is awaiting approval by the administrator, "
+"who will assign you your desk."
+
+#: templates/agents/inscription.html:44
+msgid "Une fois acceptée, connectez-vous avec"
+msgstr "Once accepted, sign in with"
+
+#: templates/agents/inscription.html:44
+msgid ""
+"et le mot de passe que vous venez de choisir : vous arriverez directement "
+"sur la page de votre guichet."
+msgstr ""
+"and the password you just chose: you will land directly on your desk’s page."
+
+#: templates/agents/inscription.html:46
+msgid "Aller à la connexion"
+msgstr "Go to sign in"
+
+#: templates/agents/inscription.html:48
+msgid "Demande d'accès"
+msgstr "Access request"
+
+#: templates/agents/inscription.html:49
+msgid "Agents municipaux de la Commune Urbaine de Mahajanga"
+msgstr "Municipal agents of the Urban Municipality of Mahajanga"
+
+#: templates/agents/inscription.html:64 templates/includes/assistant.html:35
+msgid "Envoyer"
+msgstr "Send"
+
+#: templates/agents/inscription.html:71
+msgid "Rejoignez l'équipe&nbsp;!"
+msgstr "Join the team!"
+
+#: templates/agents/inscription.html:73
+msgid ""
+"Choisissez vos identifiants. L'administrateur valide votre demande et vous "
+"attribue votre guichet : vous accédez alors à votre propre espace pour "
+"traiter les demandes des usagers."
+msgstr ""
+"Choose your credentials. The administrator approves your request and assigns"
+" you your desk: you then get your own space to process citizen requests."
+
+#: templates/agents/mail.html:9
+#, python-format
+msgid "Adresses e-mail des usagers qui ont fait une demande au %(guichet)s."
+msgstr "E-mail addresses of citizens who made a request at %(guichet)s."
+
+#: templates/agents/mail.html:15
+#, python-format
+msgid "%(counter)s usager"
+msgid_plural "%(counter)s usagers"
+msgstr[0] "%(counter)s citizen"
+msgstr[1] "%(counter)s citizens"
+
+#: templates/agents/mail.html:26
+msgid "Téléphone"
+msgstr "Phone"
+
+#: templates/agents/mail.html:26
+msgid "Demandes"
+msgstr "Requests"
+
+#: templates/agents/mail.html:26
+msgid "Dernière demande"
+msgstr "Last request"
+
+#: templates/agents/mail.html:44
+msgid "Aucun usager pour le moment."
+msgstr "No citizens yet."
+
+#: templates/agents/messages.html:9
+#, python-format
+msgid ""
+"Réponses envoyées aux usagers du %(guichet)s (elles apparaissent dans leurs "
+"notifications)."
+msgstr ""
+"Replies sent to citizens of %(guichet)s (they appear in their "
+"notifications)."
+
+#: templates/agents/messages.html:12
+#, python-format
+msgid "%(counter)s demande sans réponse"
+msgid_plural "%(counter)s demandes sans réponse"
+msgstr[0] "%(counter)s request without a reply"
+msgstr[1] "%(counter)s requests without a reply"
+
+#: templates/agents/messages.html:18
+msgid "Filtrer les messages"
+msgstr "Filter messages"
+
+#: templates/agents/messages.html:36
+msgid "Lu"
+msgstr "Read"
+
+#: templates/agents/messages.html:36
+msgid "Non lu"
+msgstr "Unread"
+
+#: templates/agents/messages.html:42
+msgid "Aucun message pour le moment."
+msgstr "No messages yet."
+
+#: templates/agents/notifications.html:9
+#, python-format
+msgid "Demandes envoyées par les usagers au %(guichet)s — %(label)s."
+msgstr "Requests sent by citizens to %(guichet)s — %(label)s."
+
+#: templates/agents/notifications.html:20
+msgid "Nouveau"
+msgstr "New"
+
+#: templates/agents/notifications.html:21
+msgid "a envoyé une demande"
+msgstr "sent a request"
+
+#: templates/agents/password_change.html:9
+msgid ""
+"Remplacez le mot de passe provisoire reçu de l'administrateur par le vôtre."
+msgstr ""
+"Replace the temporary password received from the administrator with your "
+"own."
+
+#: templates/agents/password_change.html:26
+#: templates/agents/request_detail.html:92
+msgid "Enregistrer"
+msgstr "Save"
+
+#: templates/agents/request_detail.html:14
+#, python-format
+msgid "Déposée le %(date)s par %(person)s"
+msgstr "Submitted on %(date)s by %(person)s"
+
+#: templates/agents/request_detail.html:34
+#, python-format
+msgid "Ouvrir la demande %(reference)s"
+msgstr "Open request %(reference)s"
+
+#: templates/agents/request_detail.html:40
+msgid "Document établi pour cette demande"
+msgstr "Document drawn up for this request"
+
+#: templates/agents/request_detail.html:57
+msgid "Aucune information."
+msgstr "No information."
+
+#: templates/agents/request_detail.html:64
+msgid "Aucun détail."
+msgstr "No details."
+
+#: templates/agents/request_detail.html:74
+#, python-format
+msgid "Réponse envoyée le %(date)s"
+msgstr "Reply sent on %(date)s"
+
+#: templates/agents/request_detail.html:75
+msgid "lue par l'usager"
+msgstr "read by the citizen"
+
+#: templates/agents/request_detail.html:75
+msgid "pas encore lue"
+msgstr "not read yet"
+
+#: templates/agents/requests.html:15
+msgid "Filtrer par statut"
+msgstr "Filter by status"
+
+#: templates/agents/requests.html:24
+msgid "Référence, nom, e-mail, téléphone…"
+msgstr "Reference, name, e-mail, phone…"
+
+#: templates/includes/assistant.html:11 templates/includes/assistant.html:15
+#: templates/includes/assistant.html:23
+msgid "Assistant IA"
+msgstr "AI assistant"
+
+#: templates/includes/assistant.html:16
+msgid ""
+"Bonjour ! Je peux répondre à vos questions sur les demandes et documents, ou"
+" effectuer une tâche à votre place (je vous demande toujours de confirmer). "
+"Tapez « aide » pour des exemples."
+msgstr ""
+"Hello! I can answer your questions about requests and documents, or carry "
+"out a task for you (I always ask you to confirm). Type “help” for examples."
+
+#: templates/includes/assistant.html:17
+msgid "Confirmer"
+msgstr "Confirm"
+
+#: templates/includes/assistant.html:18
+msgid "Je confirme."
+msgstr "I confirm."
+
+#: templates/includes/assistant.html:18
+msgid "D'accord, je n'ai rien modifié."
+msgstr "OK, I haven't changed anything."
+
+#: templates/includes/assistant.html:19
+msgid "Je n'arrive pas à joindre le serveur. Réessayez dans un instant."
+msgstr "I can't reach the server. Try again in a moment."
+
+#: templates/includes/assistant.html:24
+msgid "Uniquement pour cette application"
+msgstr "Only for this application"
+
+#: templates/includes/assistant.html:26
+msgid "Effacer la conversation"
+msgstr "Clear the conversation"
+
+#: templates/includes/assistant.html:27
+msgid "Fermer"
+msgstr "Close"
+
+#: templates/includes/assistant.html:32
+msgid "Votre demande"
+msgstr "Your request"
+
+#: templates/includes/assistant.html:34
+msgid "Ex. : prends en charge la prochaine demande"
+msgstr "E.g. process the next request"
+
+#: templates/includes/language_switcher.html:14
+msgid "Langue"
+msgstr "Language"
+
+#: templates/includes/language_switcher.html:20
+msgid "OK"
+msgstr "OK"
+
+#: templates/landing.html:8 templates/landing.html:18
+msgid "Commune Urbaine de Mahajanga"
+msgstr "Urban Municipality of Mahajanga"
+
+#: templates/landing.html:24
+msgid "Administration numérique de la Commune"
+msgstr "The Municipality’s digital administration"
+
+#: templates/landing.html:25
+msgid "Gérez la mairie en ligne."
+msgstr "Run the town hall online."
+
+#: templates/landing.html:27
+msgid "Simple, sûr et rapide pour"
+msgstr "Simple, secure and fast for"
+
+#: templates/landing.html:29
+msgid ""
+"les actes de naissance, les actes de mariage, les actes de décès, les "
+"demandes des usagers et les documents officiels"
+msgstr ""
+"birth certificates, marriage certificates, death certificates, citizen "
+"requests and official documents"
+
+#: templates/landing.html:32
+msgid ""
+"Traitez les demandes des usagers, délivrez des documents officiels sécurisés"
+" par QR code et suivez l'activité de chaque guichet, depuis un seul espace "
+"réservé aux agents et aux administrateurs."
+msgstr ""
+"Process citizen requests, issue official documents secured by QR code and "
+"follow each desk’s activity, from a single space reserved for agents and "
+"administrators."
+
+#: templates/landing.html:38
+msgid "Mon espace"
+msgstr "My space"
+
+#~ msgid "Messages de contact"
+#~ msgstr "Contact messages"

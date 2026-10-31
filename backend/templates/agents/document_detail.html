@@ -1,0 +1,120 @@
+{% extends "agents/base.html" %}
+{% load i18n %}
+
+{% block back %}{% endblock %}
+
+{% block content %}
+<div class="mairy-page">
+  <a class="agent-back" href="{% url 'agents:documents' number %}">&larr; {% translate "Documents officiels" %}</a>
+
+  <div class="agent-head">
+    <div>
+      <h1>{{ act.label }}</h1>
+      <p class="mairy-muted">
+        {% blocktranslate with holder=act.holder_name date=act.created_at|date:"DATETIME_FORMAT" %}{{ holder }} · établi le {{ date }}{% endblocktranslate %}
+        {% if act.created_by %}{% translate "par" %} {% firstof act.created_by.get_full_name act.created_by.get_username %}{% endif %}
+      </p>
+    </div>
+    <div class="agent-head-actions">
+      <a class="agent-btn agent-btn-ghost" href="{% url 'agents:document_pdf' number act.pk %}?apercu=1" target="_blank" rel="noopener">{% translate "Aperçu" %}</a>
+      <a class="agent-btn" href="{% url 'agents:document_pdf' number act.pk %}">{% translate "Télécharger le PDF" %}</a>
+      {% include "agents/_document_delete.html" %}
+    </div>
+  </div>
+
+  {% if act.deletion_pending %}
+  <div class="agent-pending" role="status">
+    <div>
+      <strong>{% blocktranslate with date=act.deletion_requested_at|date:"DATETIME_FORMAT" %}Suppression demandée le {{ date }}{% endblocktranslate %}</strong>
+      {% if act.deletion_requested_by %}{% translate "par" %} {% firstof act.deletion_requested_by.get_full_name act.deletion_requested_by.get_username %}{% endif %}
+      {% translate "— en attente de la décision de l'administrateur." %}
+      <p class="mairy-muted">{% blocktranslate with reason=act.deletion_reason %}Motif : {{ reason }}{% endblocktranslate %}</p>
+    </div>
+    <form method="post" action="{% url 'agents:document_cancel_deletion' number act.pk %}">
+      {% csrf_token %}
+      <button type="submit" class="agent-btn agent-btn-ghost">{% translate "Annuler la demande" %}</button>
+    </form>
+  </div>
+  {% endif %}
+
+  {% if not act.deletion_pending and act.status == 'ACTIVE' %}
+  <section class="mairy-card agent-send">
+    <div class="mairy-card-head">
+      <h2>{% translate "Envoyer à l'usager" %}</h2>
+      {% if act.sent_at %}<span class="mairy-status s-approved">{% blocktranslate with date=act.sent_at|date:"DATETIME_FORMAT" %}Envoyé le {{ date }}{% endblocktranslate %}</span>{% endif %}
+    </div>
+
+    {% if act.request or candidate_requests %}
+    <form method="post" action="{% url 'agents:document_send' number act.pk %}" class="agent-form">
+      {% csrf_token %}
+      {% if act.request %}
+      <p>
+        {% translate "Destinataire :" %} <strong>{{ recipient }}</strong>{% if recipient_email %} ({{ recipient_email }}){% endif %}
+        {% translate "— demande" %} <a href="{% url 'agents:request_detail' number act.request.pk %}">{{ act.request.reference }}</a>{% translate ". L'usager pourra télécharger le PDF depuis ses notifications." %}
+      </p>
+      {% else %}
+      <div class="agent-field">
+        <label for="demande">{% translate "Demande de l'usager" %} <span class="agent-required" aria-hidden="true">*</span></label>
+        <select id="demande" name="demande" required>
+          <option value="">{% translate "Choisissez la demande à laquelle répondre" %}</option>
+          {% for dossier in candidate_requests %}
+          <option value="{{ dossier.pk }}">{{ dossier.reference }} — {{ dossier.applicant }} ({{ dossier.created_at|date:"d M Y" }})</option>
+          {% endfor %}
+        </select>
+        <p class="mairy-muted agent-help">{% translate "Ce document a été établi sans demande : choisissez l'usager à qui l'envoyer." %}</p>
+      </div>
+      {% endif %}
+      <div class="agent-field">
+        <label for="message">{% translate "Message à l'usager" %}</label>
+        <textarea id="message" name="message" rows="3" maxlength="4000">{{ default_message }}</textarea>
+      </div>
+      <div class="agent-actions">
+        <button type="submit" class="agent-btn">
+          <svg class="mairy-ico" aria-hidden="true"><use href="#mi-mail"/></svg>
+          {% if act.sent_at %}{% translate "Renvoyer à l'usager" %}{% else %}{% translate "Envoyer à l'usager" %}{% endif %}
+        </button>
+      </div>
+    </form>
+    {% else %}
+    <p class="mairy-muted">
+      {% blocktranslate with label=spec.issue_label %}Aucune demande du guichet en attente à laquelle rattacher ce document. Pour l'envoyer à un usager, établissez-le depuis sa demande (bouton « {{ label }} »).{% endblocktranslate %}
+    </p>
+    {% endif %}
+  </section>
+  {% endif %}
+
+  <div class="agent-detail-grid">
+    <section class="mairy-card">
+      <div class="mairy-card-head"><h2>{% translate "Contenu du document" %}</h2></div>
+      {% for section in content_sections %}
+      <h3 class="agent-dl-title">{{ section.title }}</h3>
+      <dl class="agent-dl">
+        {% for row in section.rows %}<dt>{{ row.label }}</dt><dd>{{ row.value|linebreaksbr }}</dd>{% endfor %}
+      </dl>
+      {% endfor %}
+      {% if act.request %}
+      <h3 class="agent-dl-title">{% translate "Traçabilité" %}</h3>
+      <dl class="agent-dl">
+        <dt>{% translate "Demande d'origine" %}</dt><dd><a href="{% url 'agents:request_detail' number act.request.pk %}">{{ act.request.reference }}</a></dd>
+      </dl>
+      {% endif %}
+    </section>
+
+    <section class="mairy-card agent-security">
+      <div class="mairy-card-head">
+        <h2>{% translate "Sécurité" %}</h2>
+        {% if check.is_authentic %}
+        <span class="mairy-status s-approved">{% translate "Authentique" %}</span>
+        {% else %}
+        <span class="mairy-status s-rejected">{% if check.status == 'REVOKED' %}{% translate "Révoqué" %}{% else %}{% translate "Altéré" %}{% endif %}</span>
+        {% endif %}
+      </div>
+      <img src="{{ qr_data_uri }}" alt="QR code de vérification du document {{ act.act_number }}" width="160" height="160">
+      <p class="mairy-muted agent-help">{% translate "Le QR code ouvre la page de vérification :" %}</p>
+      <p><a href="{{ act.verification_url }}" target="_blank" rel="noopener" class="agent-mono">{{ act.verification_url }}</a></p>
+      <p class="mairy-muted agent-help">{% translate "Empreinte SHA-256" %}</p>
+      <p class="agent-mono">{{ act.content_hash }}</p>
+    </section>
+  </div>
+</div>
+{% endblock %}

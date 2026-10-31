@@ -1,0 +1,123 @@
+{
+  "catalog": {
+    "servicesTitle": "Services",
+    "servicesIntro": "Retrouvez ici les services de la Commune Urbaine de Mahajanga et déposez votre demande en ligne depuis votre espace personnel.",
+    "civil": {
+      "title": "État civil",
+      "description": "Actes de naissance, de mariage, de décès, textes de législation et actes divers délivrés par la Commune."
+    },
+    "piecesTitle": "Pièces à fournir",
+    "piecesNote": "Liste indicative : la Commune peut demander des pièces complémentaires selon votre situation.",
+    "requestCta": "Faire ma demande",
+    "backToServices": "Tous les services",
+    "types": {
+      "recette": {
+        "title": "Recette",
+        "description": "Paiement des taxes, redevances, droits de place et autres recettes de la Commune, avec suivi de votre situation.",
+        "pieces": [
+          "CIN ou identifiant du contribuable",
+          "Référence de l'avis de paiement ou de la taxe concernée",
+          "Justificatif du paiement précédent (en cas de renouvellement)"
+        ]
+      },
+      "transport": {
+        "title": "Transport",
+        "description": "Licences, autorisations et cartes liées au transport urbain et au stationnement sur le territoire de la Commune.",
+        "pieces": [
+          "CIN du demandeur",
+          "Carte grise du véhicule",
+          "Permis de conduire en cours de validité",
+          "Attestation d'assurance en cours de validité"
+        ]
+      },
+      "urbanisme": {
+        "title": "Urbanisme",
+        "description": "Permis de construire, certificats d'urbanisme, autorisations de travaux et alignements.",
+        "pieces": [
+          "CIN du demandeur",
+          "Titre ou justificatif de propriété du terrain",
+          "Plan de situation et plan du projet",
+          "Description détaillée des travaux"
+        ]
+      },
+      "marche": {
+        "title": "Marché",
+        "description": "Attribution, renouvellement ou transfert d'un emplacement dans les marchés de la Commune.",
+        "pieces": [
+          "CIN du demandeur",
+          "Photo d'identité récente",
+          "Nature de l'activité exercée",
+          "Justificatif de paiement des droits de place"
+        ]
+      },
+      "cadastre": {
+        "title": "Cadastre",
+        "description": "Extraits cadastraux, certificats de propriété, bornage et mutations de parcelles.",
+        "pieces": [
+          "CIN du demandeur",
+          "Référence de la parcelle ou numéro du titre foncier",
+          "Plan ou croquis de la parcelle",
+          "Justificatif de propriété"
+        ]
+      },
+      "impot_foncier": {
+        "title": "Impôt foncier",
+        "description": "Déclaration, avis d'imposition, attestation de paiement et réclamation relatifs à l'impôt foncier.",
+        "pieces": [
+          "CIN du demandeur",
+          "Référence fiscale ou adresse du bien",
+          "Dernier avis d'imposition",
+          "Justificatif de propriété"
+        ]
+      },
+      "naissance": {
+        "title": "Acte de naissance",
+        "description": "Copie ou extrait d'acte de naissance délivré par l'état civil de la Commune.",
+        "pieces": [
+          "CIN du demandeur",
+          "Nom, prénom, date et lieu de naissance de la personne concernée",
+          "Noms des parents, si connus",
+          "Justificatif du lien de parenté, si la demande est faite pour un tiers"
+        ]
+      },
+      "mariage": {
+        "title": "Acte de mariage",
+        "description": "Copie ou extrait d'acte de mariage délivré par l'état civil de la Commune.",
+        "pieces": [
+          "CIN du demandeur",
+          "Noms des deux époux",
+          "Date et lieu du mariage",
+          "Livret de famille, s'il est disponible"
+        ]
+      },
+      "deces": {
+        "title": "Acte de décès",
+        "description": "Copie ou extrait d'acte de décès délivré par l'état civil de la Commune.",
+        "pieces": [
+          "CIN du demandeur",
+          "Nom du défunt, date et lieu du décès",
+          "Justificatif du lien avec le défunt",
+          "Certificat médical de décès, s'il est disponible"
+        ]
+      },
+      "legislation": {
+        "title": "Législation",
+        "description": "Consultation et copie des arrêtés, délibérations et règlements communaux.",
+        "pieces": [
+          "CIN du demandeur",
+          "Nature et référence du texte recherché",
+          "Objet de la demande"
+        ]
+      },
+      "actes_divers": {
+        "title": "Actes divers",
+        "description": "Autres actes et attestations délivrés par la Commune qui ne relèvent pas d'une rubrique ci-dessus.",
+        "pieces": [
+          "CIN du demandeur",
+          "Description précise de l'acte ou de l'attestation souhaitée",
+          "Justificatifs utiles à la demande"
+        ]
+      }
+    }
+  }
+}

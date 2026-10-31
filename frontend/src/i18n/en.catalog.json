@@ -1,0 +1,123 @@
+{
+  "catalog": {
+    "servicesTitle": "Services",
+    "servicesIntro": "Find the services of the Urban Commune of Mahajanga here and submit your request online from your personal space.",
+    "civil": {
+      "title": "Civil registry",
+      "description": "Birth, marriage and death certificates, legislation texts and miscellaneous documents issued by the Commune."
+    },
+    "piecesTitle": "Documents to provide",
+    "piecesNote": "Indicative list: the Commune may ask for additional documents depending on your situation.",
+    "requestCta": "Make my request",
+    "backToServices": "All services",
+    "types": {
+      "recette": {
+        "title": "Revenue",
+        "description": "Payment of taxes, fees, market stall dues and other municipal revenue, with follow-up of your situation.",
+        "pieces": [
+          "National ID card or taxpayer identifier",
+          "Reference of the payment notice or tax concerned",
+          "Proof of the previous payment (for renewals)"
+        ]
+      },
+      "transport": {
+        "title": "Transport",
+        "description": "Licences, authorisations and cards related to urban transport and parking within the Commune.",
+        "pieces": [
+          "Applicant's national ID card",
+          "Vehicle registration document",
+          "Valid driving licence",
+          "Valid insurance certificate"
+        ]
+      },
+      "urbanisme": {
+        "title": "Urban planning",
+        "description": "Building permits, planning certificates, works authorisations and alignments.",
+        "pieces": [
+          "Applicant's national ID card",
+          "Title deed or proof of ownership of the land",
+          "Location plan and project plan",
+          "Detailed description of the works"
+        ]
+      },
+      "marche": {
+        "title": "Market",
+        "description": "Allocation, renewal or transfer of a stall in the Commune's markets.",
+        "pieces": [
+          "Applicant's national ID card",
+          "Recent passport-size photo",
+          "Nature of the activity carried out",
+          "Proof of payment of stall dues"
+        ]
+      },
+      "cadastre": {
+        "title": "Land registry",
+        "description": "Land registry extracts, ownership certificates, boundary marking and plot transfers.",
+        "pieces": [
+          "Applicant's national ID card",
+          "Plot reference or land title number",
+          "Plan or sketch of the plot",
+          "Proof of ownership"
+        ]
+      },
+      "impot_foncier": {
+        "title": "Property tax",
+        "description": "Declaration, tax notice, payment certificate and claims related to property tax.",
+        "pieces": [
+          "Applicant's national ID card",
+          "Tax reference or address of the property",
+          "Latest tax notice",
+          "Proof of ownership"
+        ]
+      },
+      "naissance": {
+        "title": "Birth certificate",
+        "description": "Copy or extract of a birth certificate issued by the Commune's civil registry.",
+        "pieces": [
+          "Applicant's national ID card",
+          "Name, date and place of birth of the person concerned",
+          "Names of the parents, if known",
+          "Proof of kinship, if the request is made on behalf of someone else"
+        ]
+      },
+      "mariage": {
+        "title": "Marriage certificate",
+        "description": "Copy or extract of a marriage certificate issued by the Commune's civil registry.",
+        "pieces": [
+          "Applicant's national ID card",
+          "Names of both spouses",
+          "Date and place of the marriage",
+          "Family record book, if available"
+        ]
+      },
+      "deces": {
+        "title": "Death certificate",
+        "description": "Copy or extract of a death certificate issued by the Commune's civil registry.",
+        "pieces": [
+          "Applicant's national ID card",
+          "Name of the deceased, date and place of death",
+          "Proof of relationship with the deceased",
+          "Medical death certificate, if available"
+        ]
+      },
+      "legislation": {
+        "title": "Legislation",
+        "description": "Consultation and copies of municipal orders, deliberations and regulations.",
+        "pieces": [
+          "Applicant's national ID card",
+          "Nature and reference of the text requested",
+          "Purpose of the request"
+        ]
+      },
+      "actes_divers": {
+        "title": "Miscellaneous documents",
+        "description": "Other documents and certificates issued by the Commune that do not fall under the headings above.",
+        "pieces": [
+          "Applicant's national ID card",
+          "Precise description of the document or certificate wanted",
+          "Any supporting documents useful for the request"
+        ]
+      }
+    }
+  }
+}

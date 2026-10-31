@@ -1,0 +1,98 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block nav-breadcrumbs %}{% endblock %}
+
+{% block content_title %}{% endblock %}
+
+{% block content %}
+<div class="mairy-page">
+  {% if kpi_cards %}
+  <section class="mairy-kpis">
+    {% for card in kpi_cards %}
+    <a class="mairy-card mairy-kpi" href="{{ card.url }}">
+      <span class="mairy-kpi-label">{{ card.label }}</span>
+      <span class="mairy-kpi-row">
+        <span class="mairy-kpi-value">{{ card.value }}</span>
+        <span class="mairy-kpi-change {% if card.up %}up{% else %}down{% endif %}">
+          {% if card.up %}+{% endif %}{{ card.change }}&nbsp;%
+          <svg class="mairy-ico"><use href="#mi-{% if card.up %}up{% else %}down{% endif %}"/></svg>
+        </span>
+      </span>
+      <span class="mairy-kpi-sub">{% blocktranslate with total=card.total %}Ce mois-ci, comparé au mois dernier · {{ total }} au total{% endblocktranslate %}</span>
+    </a>
+    {% endfor %}
+  </section>
+  {% endif %}
+
+  {% if chart %}
+  <section class="mairy-card">
+    <div class="mairy-card-head">
+      <h2>{% translate "Demandes de dossiers" %}</h2>
+      <span class="mairy-muted">{% blocktranslate count counter=chart.total %}12 derniers mois · {{ counter }} demande{% plural %}12 derniers mois · {{ counter }} demandes{% endblocktranslate %}</span>
+    </div>
+    {% include "admin/mairy/line_chart.html" with chart=chart aria_label="Demandes de dossiers par mois" %}
+  </section>
+  {% endif %}
+
+  <div class="mairy-widgets">
+    {% if perms.auth.view_user %}
+    <section class="mairy-card mairy-widget-sm">
+      <div class="mairy-card-head">
+        <h2>{% translate "Nouveaux membres" %}</h2>
+        <a href="{% url 'admin:auth_user_changelist' %}">{% translate "Tout voir" %}</a>
+      </div>
+      <ul class="mairy-members">
+        {% for member in new_members %}
+        <li>
+          <span class="mairy-avatar">{% firstof member.first_name|first member.username|first %}</span>
+          <span class="mairy-member-info">
+            <strong>{% firstof member.get_full_name member.username %}</strong>
+            <span>{% if member.is_superuser %}{% translate "Administrateur" %}{% elif member.is_staff %}{% translate "Agent" %}{% else %}{% translate "Utilisateur" %}{% endif %} · {{ member.date_joined|date:"d M Y" }}</span>
+          </span>
+          <a class="mairy-btn" href="{% url 'admin:auth_user_change' member.pk %}">{% translate "Voir" %}</a>
+        </li>
+        {% empty %}
+        <li class="mairy-muted">{% translate "Aucun membre pour le moment." %}</li>
+        {% endfor %}
+      </ul>
+    </section>
+    {% endif %}
+
+    {% if perms.espace.view_dossierrequest %}
+    <section class="mairy-card mairy-widget-lg">
+      <div class="mairy-card-head">
+        <h2>{% translate "Dernières demandes" %}</h2>
+        <a href="{% url 'admin:espace_dossierrequest_changelist' %}">{% translate "Tout voir" %}</a>
+      </div>
+      <div class="mairy-table-wrap">
+        <table class="mairy-table">
+          <thead>
+            <tr><th>{% translate "Demandeur" %}</th><th>{% translate "Date" %}</th><th>{% translate "Dossier" %}</th><th>{% translate "Statut" %}</th></tr>
+          </thead>
+          <tbody>
+            {% for req in latest_requests %}
+            <tr>
+              <td>
+                <a href="{% url 'admin:espace_dossierrequest_change' req.pk %}">
+                  {% firstof req.identity.last_name '—' %} {{ req.identity.first_name }}
+                </a>
+                <span class="mairy-muted mairy-ref">{{ req.reference }}</span>
+              </td>
+              <td>{{ req.created_at|date:"d M Y" }}</td>
+              <td>{{ req.get_dossier_type_display }}</td>
+              <td><span class="mairy-status s-{{ req.status|lower }}">{{ req.get_status_display }}</span></td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="4" class="mairy-muted">{% translate "Aucune demande pour le moment." %}</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
+
+{% block sidebar %}{% endblock %}

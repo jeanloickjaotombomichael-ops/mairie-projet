@@ -1,0 +1,13 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}{{ block.super }}
+<link rel="stylesheet" href="{% static 'mairy_admin/mailbox.css' %}?v=3">
+{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+{% block content_title %}{% endblock %}
+
+{% block content %}
+{% include "messagerie/_mailbox.html" %}
+{% endblock %}

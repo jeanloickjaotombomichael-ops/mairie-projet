@@ -1,0 +1,54 @@
+{
+  "nav": {
+    "mySpace": "Mon espace",
+    "servicesMenu": "Menu des services",
+    "civilMenu": "Actes d'état civil"
+  },
+  "search": {
+    "label": "Rechercher sur la plateforme",
+    "submit": "Lancer la recherche",
+    "scan": "Scanner un document",
+    "noResults": "Aucun résultat pour « {{query}} ».",
+    "resultsLabel": "Résultats de la recherche",
+    "groupService": "Service",
+    "groupPage": "Page",
+    "pages": {
+      "espace": "Mon espace personnel",
+      "verify": "Vérifier un document"
+    }
+  },
+  "servicesPage": {
+    "signInToRequest": "Se connecter pour faire une demande",
+    "viewService": "Voir le service",
+    "civilIntro": "Choisissez l'acte ou le document d'état civil que vous souhaitez demander."
+  },
+  "contactPage": {
+    "title": "Une question ?",
+    "intro": "Merci de l'intérêt que vous portez à nos services. Remplissez le formulaire ci-dessous ou écrivez-nous à {{email}} et nous vous répondrons dans les meilleurs délais.",
+    "getInTouch": "Nous contacter",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "phone": "Téléphone",
+    "email": "E-mail",
+    "message": "Message",
+    "send": "Envoyer le message",
+    "sending": "Envoi en cours…",
+    "privacy": "La Commune Urbaine de Mahajanga ne vend, ne partage ni n'échange vos informations. Votre vie privée est très importante pour nous.",
+    "success": "Votre message a bien été envoyé. Nous vous répondrons dans les meilleurs délais.",
+    "errors": {
+      "required": "Ce champ est obligatoire.",
+      "email": "Adresse e-mail invalide.",
+      "phone": "Numéro de téléphone invalide.",
+      "invalid": "Certains champs sont invalides. Corrigez-les puis réessayez.",
+      "throttled": "Trop de messages envoyés. Réessayez plus tard.",
+      "network": "Impossible de joindre le serveur. Vérifiez votre connexion puis réessayez.",
+      "server": "Une erreur est survenue. Veuillez réessayer."
+    }
+  },
+  "auth": {
+    "requiredTitle": "Connexion requise",
+    "requiredText": "Votre espace personnel est réservé aux usagers connectés. Connectez-vous pour déposer vos demandes et suivre les réponses de la Commune.",
+    "signIn": "Se connecter",
+    "loading": "Chargement…"
+  }
+}

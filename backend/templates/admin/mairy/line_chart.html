@@ -1,0 +1,19 @@
+{% load l10n %}{% localize off %}<svg class="mairy-chart" viewBox="0 0 {{ chart.width }} {{ chart.height }}" role="img" aria-label="{{ aria_label }}">
+  {% for line in chart.grid %}
+  <line class="grid" x1="{{ chart.x_min }}" x2="{{ chart.x_max }}" y1="{{ line.y }}" y2="{{ line.y }}"/>
+  <text class="axis" x="{{ chart.x_min }}" y="{{ line.y }}" dx="-8" dy="4" text-anchor="end">{{ line.value }}</text>
+  {% endfor %}
+  {% for point in chart.points %}
+  <line class="grid" x1="{{ point.x }}" x2="{{ point.x }}" y1="{{ chart.grid.0.y }}" y2="{{ chart.grid.4.y }}"/>
+  {% endfor %}
+  <path class="area" d="{{ chart.area }}"/>
+  <path class="line" d="{{ chart.path }}"/>
+  {% for point in chart.points %}
+  <g class="pt">
+    <circle cx="{{ point.x }}" cy="{{ point.y }}" r="5"/>
+    <title>{{ point.label }} : {{ point.value }}</title>
+  </g>
+  <text class="axis" x="{{ point.x }}" y="{{ chart.label_y }}" text-anchor="middle">{{ point.label }}</text>
+  {% endfor %}
+</svg>
+{% endlocalize %}

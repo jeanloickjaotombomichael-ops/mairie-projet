@@ -1,0 +1,77 @@
+{% extends "agents/base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="mairy-page">
+  <div class="agent-head">
+    <div>
+      <h1>{% translate "Corbeille" %}</h1>
+      <p class="mairy-muted">{% blocktranslate with days=trash_days %}Les éléments placés dans la corbeille depuis plus de {{ days }} jours sont automatiquement supprimés.{% endblocktranslate %}</p>
+    </div>
+    {% if items %}
+    <form method="post" data-confirm="{% translate "Supprimer définitivement tout le contenu de la corbeille ?" %}">
+      {% csrf_token %}
+      <input type="hidden" name="action" value="empty">
+      <button type="submit" class="agent-btn files-danger">{% translate "Vider la corbeille" %}</button>
+    </form>
+    {% endif %}
+  </div>
+
+  <section class="mairy-card">
+    <div class="mairy-table-wrap">
+      <table class="mairy-table files-table">
+        <thead>
+          <tr><th>{% translate "Nom" %}</th><th>{% translate "Emplacement d'origine" %}</th><th>{% translate "Supprimé le" %}</th><th><span class="agent-sr">{% translate "Actions" %}</span></th></tr>
+        </thead>
+        <tbody>
+          {% for entry in items %}
+          <tr>
+            <td>
+              <span class="files-name">
+                {% if entry.kind == 'folder' %}<svg class="mairy-ico files-ico is-folder"><use href="#mi-folder"/></svg><strong>{{ entry.obj.name }}</strong>
+                {% else %}<span class="files-ext">{{ entry.obj.extension }}</span>{{ entry.obj.name }}{% endif %}
+              </span>
+            </td>
+            <td class="mairy-muted">{{ entry.location }}</td>
+            <td class="mairy-muted">
+              {{ entry.obj.trashed_at|date:"d M Y" }}
+              <span class="mairy-ref">{% blocktranslate with date=entry.expires|date:"d M Y" %}Suppression le {{ date }}{% endblocktranslate %}</span>
+            </td>
+            <td class="agent-cell-action">
+              <div class="agent-row-actions">
+                <form method="post">
+                  {% csrf_token %}
+                  <input type="hidden" name="action" value="restore_{{ entry.kind }}">
+                  <input type="hidden" name="id" value="{{ entry.obj.pk }}">
+                  <button type="submit" class="mairy-btn"><svg class="mairy-ico"><use href="#mi-restore"/></svg>{% translate "Restaurer" %}</button>
+                </form>
+                <form method="post" data-confirm="{% translate "Supprimer définitivement cet élément ? Cette action est irréversible." %}">
+                  {% csrf_token %}
+                  <input type="hidden" name="action" value="delete_{{ entry.kind }}">
+                  <input type="hidden" name="id" value="{{ entry.obj.pk }}">
+                  <button type="submit" class="mairy-btn files-danger" title="{% translate "Supprimer définitivement" %}"><svg class="mairy-ico"><use href="#mi-trash"/></svg></button>
+                </form>
+              </div>
+            </td>
+          </tr>
+          {% empty %}
+          <tr><td colspan="4" class="files-empty">
+            <svg class="mairy-ico"><use href="#mi-trash"/></svg>
+            <strong>{% translate "La corbeille est vide" %}</strong>
+            <span class="mairy-muted">{% translate "Les dossiers et fichiers supprimés apparaissent ici. Vous pouvez les restaurer." %}</span>
+          </td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>
+
+<script>
+  document.querySelectorAll('form[data-confirm]').forEach(function (form) {
+    form.addEventListener('submit', function (event) {
+      if (!window.confirm(form.dataset.confirm)) event.preventDefault();
+    });
+  });
+</script>
+{% endblock %}

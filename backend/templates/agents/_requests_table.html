@@ -1,0 +1,28 @@
+{% load i18n %}<div class="mairy-table-wrap">
+  <table class="mairy-table">
+    <thead>
+      <tr><th>{% translate "Demandeur" %}</th><th>{% translate "Dossier" %}</th>{% if number <= 4 %}<th>{% translate "Fokontany" %}</th>{% endif %}<th>{% translate "Reçue le" %}</th><th>{% translate "Statut" %}</th><th><span class="agent-sr">{% translate "Action" %}</span></th></tr>
+    </thead>
+    <tbody>
+      {% for req in requests %}
+      <tr>
+        <td>
+          <a href="{% url 'agents:request_detail' number req.pk %}">{{ req.applicant }}</a>
+          <span class="mairy-muted mairy-ref">{{ req.reference }}</span>
+        </td>
+        <td>{{ req.get_dossier_type_display }}</td>
+        {% if number <= 4 %}<td>{% firstof req.details.fokontany "—" %}</td>{% endif %}
+        <td>{{ req.created_at|date:"d M Y" }}</td>
+        <td>
+          <span class="mairy-status s-{{ req.status|lower }}">{{ req.get_status_display }}</span>
+          {% if req.queue_position == 1 %}<span class="agent-queue is-first">{% translate "À traiter en premier" %}</span>
+          {% elif req.queue_position %}<span class="agent-queue">{% blocktranslate with position=req.queue_position %}N° {{ position }} dans la file{% endblocktranslate %}</span>{% endif %}
+        </td>
+        <td class="agent-cell-action"><a class="mairy-btn" href="{% url 'agents:request_detail' number req.pk %}">{% if req.queue_position and req.queue_position > 1 %}{% translate "Voir" %}{% else %}{% translate "Traiter" %}{% endif %}</a></td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="{% if number <= 4 %}6{% else %}5{% endif %}" class="mairy-muted">{% translate "Aucune demande pour le moment." %}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,70 @@
+{% load static i18n %}<!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="NONE,NOARCHIVE">
+  <title>{% translate "Accueil" %} | {% translate "Commune Urbaine de Mahajanga" %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="{% static 'mairy_admin/lang.css' %}?v=3">
+  <link rel="stylesheet" href="{% static 'mairy_admin/landing.css' %}?v=3">
+  <link rel="stylesheet" href="{% static 'mairy_admin/responsive.css' %}?v=1">
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="{% url 'home' %}">
+      <img src="{% static 'mairy_admin/logo.png' %}" alt="" width="40" height="40">
+      <span>{% translate "Commune Urbaine de Mahajanga" %}</span>
+    </a>
+    {% include "includes/language_switcher.html" with switcher_class="on-dark" switcher_id="landing" %}
+  </header>
+
+  <main class="hero">
+    <p class="kicker">{% translate "Administration numérique de la Commune" %}</p>
+    <h1>{% translate "Gérez la mairie en ligne." %}</h1>
+    <p class="headline">
+      {% translate "Simple, sûr et rapide pour" %}
+      <span class="typed" id="typed" aria-hidden="true"></span><span class="caret" aria-hidden="true"></span>
+      <span class="sr-only">{% translate "les actes de naissance, les actes de mariage, les actes de décès, les demandes des usagers et les documents officiels" %}</span>
+    </p>
+    <p class="lead">
+      {% blocktranslate trimmed %}
+        Traitez les demandes des usagers, délivrez des documents officiels sécurisés par QR code
+        et suivez l'activité de chaque guichet, depuis un seul espace réservé aux agents et aux administrateurs.
+      {% endblocktranslate %}
+    </p>
+    {% if user.is_authenticated %}
+    <a class="btn" href="{% url 'connexion' %}">{% translate "Mon espace" %}</a>
+    {% else %}
+    <a class="btn" href="{% url 'connexion' %}">{% translate "Se connecter" %}</a>
+    {% endif %}
+  </main>
+
+  {# Mots qui s'écrivent puis s'effacent après « Simple, sûr et rapide pour ». #}
+  {{ typed_words|json_script:"typed-words" }}
+  <script>
+    (function () {
+      var words = JSON.parse(document.getElementById('typed-words').textContent);
+      var target = document.getElementById('typed');
+      if (!target || !words.length) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        target.textContent = words[0];
+        return;
+      }
+      var word = 0, letters = 0, deleting = false;
+      function step() {
+        var text = words[word];
+        letters += deleting ? -1 : 1;
+        target.textContent = text.slice(0, letters);
+        var delay = deleting ? 45 : 90;
+        if (!deleting && letters === text.length) { deleting = true; delay = 1600; }
+        else if (deleting && letters === 0) { deleting = false; word = (word + 1) % words.length; delay = 350; }
+        setTimeout(step, delay);
+      }
+      step();
+    })();
+  </script>
+</body>
+</html>

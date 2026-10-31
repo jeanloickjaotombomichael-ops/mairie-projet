@@ -1,0 +1,350 @@
+{
+  "common": {
+    "back": "Back",
+    "backHome": "Back to home"
+  },
+  "header": {
+    "nav": {
+      "home": "Home",
+      "services": "Services",
+      "contact": "Contact",
+      "about": "About"
+    },
+    "login": "Sign in",
+    "language": "Language",
+    "menuOpen": "Open menu",
+    "menuClose": "Close menu",
+    "profile": "Profile"
+  },
+  "home": {
+    "kicker": "Digital administration",
+    "title": "Morning everyone !",
+    "subtitle": "Welcome to the Town Hall of Mahajanga",
+    "typedLead": "Simple, secure and fast for",
+    "typedWords": [
+      "birth certificates",
+      "marriage certificates",
+      "death certificates",
+      "revenue and transport",
+      "urban planning and land registry"
+    ],
+    "paragraph": "Your official documents, issued and verified with complete confidence. Every certificate is protected by a QR code, a digital fingerprint and a tamper-proof cryptographic signature.",
+    "searchPlaceholder": "Search for a service or procedure...",
+    "searchButton": "Search",
+    "ctaScan": "Scan a document",
+    "ctaAgent": "Become a municipal agent",
+    "ctaRequest": "Make a request",
+    "servicesTitle": "Our services",
+    "servicesIntro": "All the Commune's procedures, available online from your personal space.",
+    "allServices": "All services",
+    "stepsTitle": "How does it work?",
+    "steps": [
+      {
+        "title": "Sign in",
+        "text": "Create your account or sign in to access your personal space."
+      },
+      {
+        "title": "Fill in the request",
+        "text": "Choose the procedure, fill in the form and send it in a few minutes."
+      },
+      {
+        "title": "Get the answer",
+        "text": "The Commune's answer arrives in your notifications: no more wasted trips."
+      }
+    ],
+    "verifyTitle": "Check that a document is authentic",
+    "verifyText": "Every document issued by the Commune carries a QR code. Scan it to find out in seconds whether it is authentic, revoked or expired.",
+    "helpTitle": "Need help?",
+    "helpText": "A question about a procedure? Write to us or read the frequently asked questions.",
+    "helpContact": "Contact us",
+    "helpFaq": "Frequently asked questions",
+    "prev": "See previous services",
+    "next": "See next services"
+  },
+  "verify": {
+    "pageTitle": "Document verification",
+    "motto": "Fitiavana - Tanindrazana - Fandrosoana",
+    "subtitle": "Civil status & official records",
+    "loading": "Verification in progress…",
+    "verifiedBadge": "Official document verified",
+    "integrityOk": "Fingerprint matches",
+    "integrityKo": "Fingerprint mismatch",
+    "integrityLabel": "Integrity",
+    "signatureOk": "Signature valid",
+    "signatureKo": "Signature invalid",
+    "signatureLabel": "Authenticity",
+    "detailsTitle": "Verification details",
+    "fields": {
+      "documentType": "Document type",
+      "holder": "Holder",
+      "nationalId": "National ID no.",
+      "issueDate": "Issue date",
+      "identifier": "Identifier (UUID)",
+      "fingerprint": "SHA-256 fingerprint"
+    },
+    "download": "Download the official PDF",
+    "revoked": {
+      "badge": "Document revoked",
+      "title": "This document has been revoked",
+      "text": "This document was issued by the Town Hall but has since been revoked by the administration and is no longer valid for official use."
+    },
+    "expired": {
+      "badge": "Document expired",
+      "title": "This document has expired",
+      "text": "This document's validity period has ended. Please contact the Town Hall to request an updated document."
+    },
+    "invalid": {
+      "badge": "Authenticity check failed",
+      "title": "Verification failed",
+      "text": "This document could not be authenticated. Its content may have been altered, or it may not have been issued by the Town Hall."
+    },
+    "maskedNotice": "For security reasons, the personal details of the document holder are not displayed for documents that fail verification.",
+    "notFound": {
+      "badge": "Document not found",
+      "title": "No matching document",
+      "text": "This identifier does not appear in the official registry. The document is likely forged."
+    },
+    "badId": {
+      "title": "Invalid identifier",
+      "text": "The link or code you scanned does not contain a valid document identifier."
+    },
+    "error": {
+      "title": "Service temporarily unavailable",
+      "text": "The verification server could not be reached. Check your connection and try again."
+    },
+    "retry": "Try again",
+    "scanAnother": "Scan another document"
+  },
+  "scan": {
+    "title": "Scan a document",
+    "badge": "Live authentication system",
+    "instructions": "Point the camera at the QR code on the official certificate or document. Verification starts automatically.",
+    "start": "Turn on the camera",
+    "stop": "Stop the camera",
+    "starting": "Starting the camera…",
+    "cameraDenied": "Camera access was denied. Allow it in your browser, or enter the identifier below.",
+    "cameraError": "The camera could not be started on this device. Enter the identifier below.",
+    "insecure": "The camera requires a secure connection (HTTPS) or localhost.",
+    "unrecognized": "QR code not recognised: it does not contain a document identifier.",
+    "manualTitle": "Or enter the identifier",
+    "manualHelp": "Paste the identifier (UUID) or the full link printed on the document.",
+    "manualPlaceholder": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "manualButton": "Verify",
+    "manualError": "Invalid identifier: it must look like xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx."
+  },
+  "agent": {
+    "title": "Become a municipal agent on the platform",
+    "bullets": [
+      "Handle the requests of your counter from your own dashboard",
+      "One counter per agent: birth, marriage, death, legislation or revenue / transport / market…",
+      "Restricted access: the administrator reviews your request and assigns your counter",
+      "Once approved, you receive your credentials and sign in to your space"
+    ],
+    "formTitle": "Agent access request",
+    "firstName": "First name",
+    "firstNamePlaceholder": "Your first name",
+    "lastName": "Last name",
+    "lastNamePlaceholder": "Your last name",
+    "phone": "Phone",
+    "phonePlaceholder": "+261 34 00 000 00",
+    "email": "Email",
+    "emailPlaceholder": "name@example.com",
+    "requestType": "Request type",
+    "requestTypeAgent": "Municipal agent — Creation of administrative documents",
+    "message": "Additional details",
+    "messagePlaceholder": "Tell us more about your request (optional)",
+    "submit": "Send request",
+    "submitting": "Sending…",
+    "required": "* Required fields",
+    "success": "Your request has been sent. The administrator will review it and you will receive your credentials once it is approved.",
+    "errors": {
+      "required": "This field is required.",
+      "email": "Invalid email address.",
+      "throttled": "Too many requests sent. Please try again later.",
+      "network": "The server could not be reached. Check your connection and try again.",
+      "server": "Something went wrong. Please try again.",
+      "invalid": "Some fields are invalid. Fix them and try again."
+    }
+  },
+  "pages": {
+    "faq": {
+      "title": "Frequently asked questions",
+      "text": "This page will be available soon. The FAQ is under construction."
+    },
+    "join": {
+      "title": "Join us",
+      "text": "This page will be available soon. The membership request area is under construction."
+    }
+  },
+  "notFound": {
+    "title": "Page not found",
+    "text": "The page you are looking for does not exist or has been moved."
+  },
+  "footer": {
+    "hours": "Opening hours",
+    "hoursValue": "Monday – Friday · 8:00 AM – 4:00 PM",
+    "address": "Address",
+    "addressValue": "Town Hall, Mahajanga, Madagascar",
+    "follow": "Follow us",
+    "followValue": "Facebook · Instagram",
+    "brand": "Mahajanga Commune Urbaine",
+    "contactButton": "Contact us",
+    "columns": {
+      "townhall": {
+        "title": "Town Hall",
+        "items": [
+          "Assistance",
+          "Become a municipal agent",
+          "Legal notice",
+          "Processing times"
+        ]
+      },
+      "documents": {
+        "title": "Documents",
+        "items": [
+          "Birth certificate",
+          "Marriage certificate",
+          "Death certificate",
+          "Diplomas & certificates"
+        ]
+      },
+      "verification": {
+        "title": "Verification",
+        "items": [
+          "Scan a QR code",
+          "Verify a document",
+          "Digital signature",
+          "Data security"
+        ]
+      },
+      "support": {
+        "title": "Support",
+        "items": [
+          "Frequently asked questions",
+          "Contact",
+          "Opening hours",
+          "Visit us"
+        ]
+      }
+    },
+    "legal": {
+      "copyright": "Mahajanga Commune Urbaine. All rights reserved. Official digital platform for issuing and verifying administrative documents.",
+      "terms": "Terms of use",
+      "privacy": "Privacy",
+      "security": "Security",
+      "backToTop": "Back to top"
+    }
+  },
+  "about": {
+    "kicker": "The Urban Municipality of Mahajanga",
+    "title": "Serving the people of Mahajanga, every day",
+    "intro": "Capital of the Boeny region and a major port city in north-western Madagascar, Mahajanga is run by its Urban Municipality. The town hall is the institution closest to residents: it keeps civil records, plans the city, runs local services and looks after the well-being of the population.",
+    "mission": {
+      "title": "Our mission",
+      "text": "To give every resident a local public service that is fast and fair, and to make Mahajanga a clean, safe, well-organised and forward-looking city. The Municipality acts under the authority of the Mayor and the Municipal Council, who vote the city's budget and decisions."
+    },
+    "missions": {
+      "title": "What the town hall does",
+      "intro": "The main responsibilities of the Urban Municipality, carried out every day by its departments and desks.",
+      "items": [
+        {
+          "title": "Civil registry",
+          "text": "Registering births, celebrating marriages, recording deaths and issuing copies and extracts of certificates."
+        },
+        {
+          "title": "Urban planning and land registry",
+          "text": "Issuing building permits and alignments, and keeping the city plan and plot references."
+        },
+        {
+          "title": "Revenue and local taxes",
+          "text": "Collecting property taxes, fees and charges that fund the city's services and facilities."
+        },
+        {
+          "title": "Markets and trade",
+          "text": "Running municipal markets, allocating pitches and supporting traders."
+        },
+        {
+          "title": "Urban transport",
+          "text": "Issuing taxi and taxi-be licences, and organising parking and traffic in the city."
+        },
+        {
+          "title": "Cleanliness and environment",
+          "text": "Collecting waste and maintaining streets, green spaces and drainage channels."
+        },
+        {
+          "title": "Social action and community life",
+          "text": "Supporting vulnerable families, public primary schools, basic health care, sport and culture."
+        },
+        {
+          "title": "Safety and public order",
+          "text": "Keeping the peace with the municipal police and preventing risks (cyclones, floods, fires)."
+        },
+        {
+          "title": "Orders and resolutions",
+          "text": "Preparing, publishing and archiving the decisions of the Mayor and the Municipal Council, and issuing certified extracts."
+        }
+      ]
+    },
+    "goals": {
+      "title": "Our goals",
+      "intro": "What the Municipality is committed to improving for its residents.",
+      "items": [
+        {
+          "title": "Bring the town hall closer to citizens",
+          "text": "Fewer queues and trips: everyday procedures can be started online, at any time."
+        },
+        {
+          "title": "More transparency",
+          "text": "Every citizen can follow their request and gets a clear answer; issued documents can be verified by anyone."
+        },
+        {
+          "title": "Modernise the administration",
+          "text": "Digitise registers and procedures to cut delays, limit errors and fight document fraud."
+        },
+        {
+          "title": "Develop the city",
+          "text": "Improve roads, sanitation, street lighting and markets, and support economic and tourist activity."
+        },
+        {
+          "title": "Involve residents",
+          "text": "Listen to suggestions and complaints from citizens and neighbourhoods (fokontany) to better guide municipal action."
+        }
+      ]
+    },
+    "values": {
+      "title": "Our values",
+      "items": [
+        {
+          "title": "Public service",
+          "text": "A respectful welcome and the same service for everyone."
+        },
+        {
+          "title": "Integrity",
+          "text": "Clear procedures and tamper-proof documents."
+        },
+        {
+          "title": "Fairness",
+          "text": "Every request is handled in order and by the rules."
+        },
+        {
+          "title": "Innovation",
+          "text": "Digital tools serving everyday procedures."
+        }
+      ]
+    },
+    "digital": {
+      "title": "The town hall online",
+      "intro": "This platform is the Municipality's digital front door. It lets you:",
+      "items": [
+        "Request a certificate or a service from your phone or computer.",
+        "Follow the progress of your request and receive the town hall's reply.",
+        "Download the official documents issued by the desks.",
+        "Check that a document is authentic with its QR code and SHA-256 fingerprint."
+      ]
+    },
+    "cta": {
+      "request": "Make a request",
+      "contact": "Contact us"
+    }
+  }
+}

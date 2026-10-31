@@ -1,0 +1,160 @@
+{% load i18n %}
+{% comment %}
+  Assistant IA (agents et administration) : bouton en bas du menu latéral et fenêtre de discussion.
+  Les réponses viennent de agents/assistant.py (local, sans service externe) ; les textes reçus
+  sont insérés avec textContent (jamais en HTML). La conversation est gardée pendant la session
+  de l'onglet pour suivre l'utilisateur d'une page à l'autre.
+{% endcomment %}
+<div class="mairy-assistant">
+  <button type="button" class="mairy-assistant-toggle" id="assistant-toggle" aria-expanded="false" aria-controls="assistant-panel">
+    <span class="mairy-assistant-avatar"><svg class="mairy-ico" aria-hidden="true"><use href="#mi-user"/></svg></span>
+    <span>{% translate "Assistant IA" %}</span>
+  </button>
+</div>
+
+<section class="assistant-panel" id="assistant-panel" role="dialog" aria-label="{% translate "Assistant IA" %}" hidden
+         data-welcome="{% translate "Bonjour ! Je peux répondre à vos questions sur les demandes et documents, ou effectuer une tâche à votre place (je vous demande toujours de confirmer). Tapez « aide » pour des exemples." %}"
+         data-confirm="{% translate "Confirmer" %}" data-cancel="{% translate "Annuler" %}"
+         data-confirmed="{% translate "Je confirme." %}" data-cancelled="{% translate "D'accord, je n'ai rien modifié." %}"
+         data-error="{% translate "Je n'arrive pas à joindre le serveur. Réessayez dans un instant." %}">
+  <header class="assistant-head">
+    <span class="mairy-assistant-avatar"><svg class="mairy-ico" aria-hidden="true"><use href="#mi-user"/></svg></span>
+    <div>
+      <strong>{% translate "Assistant IA" %}</strong>
+      <span>{% translate "Uniquement pour cette application" %}</span>
+    </div>
+    <button type="button" class="assistant-icon-btn" id="assistant-clear" title="{% translate "Effacer la conversation" %}" aria-label="{% translate "Effacer la conversation" %}">↺</button>
+    <button type="button" class="assistant-icon-btn" id="assistant-close" aria-label="{% translate "Fermer" %}">×</button>
+  </header>
+  <ol class="assistant-log" id="assistant-log" aria-live="polite"></ol>
+  <form class="assistant-form" id="assistant-form">
+    {% csrf_token %}
+    <label class="mail-sr" for="assistant-input">{% translate "Votre demande" %}</label>
+    <input id="assistant-input" type="text" autocomplete="off" maxlength="1000"
+           placeholder="{% translate "Ex. : prends en charge la prochaine demande" %}">
+    <button type="submit">{% translate "Envoyer" %}</button>
+  </form>
+</section>
+
+<script>
+(function () {
+  var url = "{% url 'agents:assistant' %}";
+  var panel = document.getElementById('assistant-panel');
+  // Hors du menu latéral (déplacé hors écran sur téléphone) pour rester visible.
+  document.body.appendChild(panel);
+  var texts = panel.dataset;
+  var toggle = document.getElementById('assistant-toggle');
+  var log = document.getElementById('assistant-log');
+  var form = document.getElementById('assistant-form');
+  var input = document.getElementById('assistant-input');
+  var csrf = form.querySelector('input[name="csrfmiddlewaretoken"]').value;
+  var KEY = 'mairy-assistant';
+  var history = [];
+
+  function save() {
+    try { sessionStorage.setItem(KEY, JSON.stringify({ open: !panel.hidden, history: history.slice(-30) })); } catch (e) {}
+  }
+
+  function render(entry) {
+    var li = document.createElement('li');
+    li.className = 'assistant-msg ' + (entry.from === 'me' ? 'is-me' : 'is-bot');
+    var bubble = document.createElement('div');
+    bubble.className = 'assistant-bubble';
+    bubble.textContent = entry.text;
+    li.appendChild(bubble);
+    (entry.items || []).forEach(function (item) {
+      if (!item.url || item.url.charAt(0) !== '/') return;  // liens internes uniquement
+      var a = document.createElement('a');
+      a.className = 'assistant-item';
+      a.href = item.url;
+      var strong = document.createElement('strong');
+      strong.textContent = item.label;
+      a.appendChild(strong);
+      if (item.meta) {
+        var meta = document.createElement('span');
+        meta.textContent = item.meta;
+        a.appendChild(meta);
+      }
+      li.appendChild(a);
+    });
+    if (entry.confirm && !entry.done) {
+      var row = document.createElement('div');
+      row.className = 'assistant-confirm';
+      var yes = document.createElement('button');
+      yes.type = 'button';
+      yes.textContent = texts.confirm;
+      var no = document.createElement('button');
+      no.type = 'button';
+      no.className = 'is-secondary';
+      no.textContent = texts.cancel;
+      yes.onclick = function () { entry.done = true; row.remove(); save(); send({ confirm: entry.confirm }, texts.confirmed); };
+      no.onclick = function () { entry.done = true; row.remove(); add({ from: 'bot', text: texts.cancelled }); };
+      row.appendChild(yes);
+      row.appendChild(no);
+      li.appendChild(row);
+    }
+    log.appendChild(li);
+    log.scrollTop = log.scrollHeight;
+  }
+
+  function add(entry) {
+    history.push(entry);
+    render(entry);
+    save();
+  }
+
+  function send(payload, shown) {
+    add({ from: 'me', text: shown });
+    var waiting = document.createElement('li');
+    waiting.className = 'assistant-msg is-bot';
+    waiting.innerHTML = '<div class="assistant-bubble assistant-typing"><span></span><span></span><span></span></div>';
+    log.appendChild(waiting);
+    log.scrollTop = log.scrollHeight;
+    payload.page = location.pathname;
+    fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrf },
+      body: JSON.stringify(payload),
+      credentials: 'same-origin'
+    })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (data) { waiting.remove(); add({ from: 'bot', text: data.text, items: data.items, confirm: data.confirm }); })
+      .catch(function () { waiting.remove(); add({ from: 'bot', text: texts.error }); });
+  }
+
+  function open(state) {
+    panel.hidden = !state;
+    toggle.setAttribute('aria-expanded', String(state));
+    if (state) {
+      if (!history.length) add({ from: 'bot', text: texts.welcome });
+      input.focus();
+    }
+    save();
+  }
+
+  toggle.addEventListener('click', function () { open(panel.hidden); });
+  document.getElementById('assistant-close').addEventListener('click', function () { open(false); });
+  document.getElementById('assistant-clear').addEventListener('click', function () {
+    history = [];
+    log.textContent = '';
+    add({ from: 'bot', text: texts.welcome });
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !panel.hidden) open(false); });
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var message = input.value.trim();
+    if (!message) return;
+    input.value = '';
+    send({ message: message }, message);
+  });
+
+  try {
+    var saved = JSON.parse(sessionStorage.getItem(KEY) || 'null');
+    if (saved && Array.isArray(saved.history)) {
+      history = saved.history;
+      history.forEach(render);
+      if (saved.open) { panel.hidden = false; toggle.setAttribute('aria-expanded', 'true'); }
+    }
+  } catch (e) {}
+})();
+</script>

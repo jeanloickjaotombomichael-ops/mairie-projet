@@ -1,0 +1,2470 @@
+/* Tableau de bord de l'administration Mairy (mise en page « lamaadmin »). */
+
+:root {
+  --m-bg: #ffffff;
+  --m-surface: #ffffff;
+  --m-sidebar: #fbfbff;
+  --m-text: #1f2333;
+  --m-muted: #6b7083;
+  --m-faint: #9a9fb0;
+  --m-border: #ececf3;
+  --m-accent: #2a2a8f;
+  --m-accent-soft: #ececfb;
+  --m-up: #138a36;
+  --m-down: #d11a2a;
+  --m-dot: #e5262f;
+  --m-shadow: 0 0 15px -6px rgba(0, 0, 0, 0.35);
+  --m-chart: #5550bd;
+  --m-side: 250px;
+  --m-top: 68px;
+
+  /* Couleurs de l'admin Django alignées sur le thème. */
+  --primary: #2a2a8f;
+  --secondary: #3c3ca8;
+  --link-fg: #2a2a8f;
+  --link-hover-color: #15156a;
+  --breadcrumbs-bg: transparent;
+  --breadcrumbs-fg: #6b7083;
+  --breadcrumbs-link-fg: #2a2a8f;
+  --header-bg: #2a2a8f;
+  --default-button-bg: #2a2a8f;
+  --button-bg: #3c3ca8;
+  --button-hover-bg: #15156a;
+  --default-button-hover-bg: #15156a;
+  --selected-row: #ececfb;
+  --font-family-primary: "Source Sans 3", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --m-bg: #121420;
+    --m-surface: #1b1e2d;
+    --m-sidebar: #161826;
+    --m-text: #e8e9f1;
+    --m-muted: #a3a7b9;
+    --m-faint: #7b8096;
+    --m-border: #2b2f42;
+    --m-accent: #a9a6ff;
+    --m-accent-soft: #2a2b4d;
+    --m-up: #4cc777;
+    --m-down: #ff6b74;
+    --m-shadow: 0 0 0 1px #2b2f42;
+    --m-chart: #a9a6ff;
+    --primary: #a9a6ff;
+    --link-fg: #a9a6ff;
+    --link-hover-color: #cfcdff;
+    --breadcrumbs-link-fg: #a9a6ff;
+    --header-bg: #1b1e2d;
+    --selected-row: #2a2b4d;
+  }
+}
+
+:root[data-theme="dark"] {
+  --m-bg: #121420;
+  --m-surface: #1b1e2d;
+  --m-sidebar: #161826;
+  --m-text: #e8e9f1;
+  --m-muted: #a3a7b9;
+  --m-faint: #7b8096;
+  --m-border: #2b2f42;
+  --m-accent: #a9a6ff;
+  --m-accent-soft: #2a2b4d;
+  --m-up: #4cc777;
+  --m-down: #ff6b74;
+  --m-shadow: 0 0 0 1px #2b2f42;
+  --m-chart: #a9a6ff;
+  --primary: #a9a6ff;
+  --link-fg: #a9a6ff;
+  --link-hover-color: #cfcdff;
+  --breadcrumbs-link-fg: #a9a6ff;
+  --header-bg: #1b1e2d;
+  --selected-row: #2a2b4d;
+}
+
+body {
+  background: var(--m-bg);
+  color: var(--m-text);
+}
+
+.mairy-ico {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ---------- Structure ---------- */
+
+/* L'admin Django souligne tous les liens : pas dans nos composants. */
+.mairy-topbar a,
+.mairy-sidebar a,
+.mairy-page a {
+  text-decoration: none !important;
+}
+
+.mairy-page .mairy-card-head a:hover,
+.mairy-table a:hover {
+  text-decoration: underline !important;
+}
+
+body.mairy-shell #container {
+  min-width: 0;
+}
+
+body.mairy-shell #container > nav,
+body.mairy-shell #main,
+body.mairy-shell #footer {
+  margin-left: var(--m-side);
+}
+
+body.mairy-shell #container > nav .breadcrumbs {
+  padding: 18px 32px 0;
+  font-size: 0.875rem;
+}
+
+body.mairy-shell .main > .content {
+  padding: 20px 32px 40px;
+}
+
+body.mairy-shell #content {
+  padding: 0;
+}
+
+body.mairy-shell #content h1 {
+  margin: 8px 0 20px;
+  color: var(--m-text);
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+/* ---------- Barre du haut ---------- */
+
+#header.mairy-topbar {
+  --header-bg: var(--m-bg);
+  --header-link-color: var(--m-text);
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  flex-direction: row;
+  box-sizing: border-box;
+  height: var(--m-top);
+  padding: 0 24px 0 28px;
+  background: var(--m-bg);
+  color: var(--m-text);
+  border-bottom: 1px solid var(--m-border);
+  gap: 16px;
+}
+
+.mairy-logo,
+#header .mairy-logo:link,
+#header .mairy-logo:visited {
+  font-size: 1.9rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--m-accent);
+  text-decoration: none;
+}
+
+.mairy-logo span {
+  color: var(--m-text);
+  font-weight: 600;
+}
+
+.mairy-topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.mairy-topbar-icon,
+#header .mairy-topbar-icon:link,
+#header .mairy-topbar-icon:visited {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: var(--m-text);
+  text-decoration: none;
+}
+
+.mairy-topbar-icon:hover,
+.mairy-burger:hover {
+  background: var(--m-accent-soft);
+}
+
+.mairy-topbar-icon .mairy-ico {
+  width: 22px;
+  height: 22px;
+}
+
+.mairy-dot {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  min-width: 17px;
+  height: 17px;
+  padding: 0 4px;
+  border-radius: 9px;
+  background: var(--m-dot);
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 700;
+  line-height: 17px;
+  text-align: center;
+}
+
+#header.mairy-topbar .theme-toggle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+#header.mairy-topbar .theme-toggle svg {
+  fill: var(--m-text);
+}
+
+.mairy-burger {
+  display: none;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--m-text);
+  cursor: pointer;
+  place-items: center;
+}
+
+.mairy-avatar {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--m-accent);
+  color: var(--m-bg);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.mairy-account {
+  position: relative;
+}
+
+.mairy-account summary {
+  list-style: none;
+  cursor: pointer;
+}
+
+.mairy-account summary::-webkit-details-marker {
+  display: none;
+}
+
+.mairy-account-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  min-width: 220px;
+  padding: 8px;
+  border: 1px solid var(--m-border);
+  border-radius: 10px;
+  background: var(--m-surface);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.35);
+}
+
+.mairy-account-menu p {
+  margin: 4px 8px 8px;
+  padding: 0 0 8px;
+  border-bottom: 1px solid var(--m-border);
+  color: var(--m-text);
+}
+
+.mairy-account-menu p span {
+  color: var(--m-muted);
+  font-size: 0.8rem;
+}
+
+#header .mairy-account-menu a,
+.mairy-account-menu button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px;
+  border: 0;
+  border-radius: 6px;
+  background: none;
+  color: var(--m-text);
+  font: inherit;
+  font-size: 0.9rem;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#header .mairy-account-menu a:hover,
+.mairy-account-menu button:hover {
+  background: var(--m-accent-soft);
+  text-decoration: none;
+}
+
+/* ---------- Menu latéral ---------- */
+
+.mairy-sidebar {
+  position: fixed;
+  z-index: 20;
+  top: var(--m-top);
+  bottom: 0;
+  left: 0;
+  width: var(--m-side);
+  box-sizing: border-box;
+  overflow-y: auto;
+  padding: 20px 16px 32px;
+  background: var(--m-sidebar);
+  border-right: 1px solid var(--m-border);
+}
+
+.mairy-nav-section + .mairy-nav-section {
+  margin-top: 18px;
+}
+
+.mairy-nav-section h3 {
+  margin: 0 0 6px 8px;
+  padding: 0;
+  color: var(--m-faint);
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: none;
+  text-transform: none;
+}
+
+.mairy-nav-section ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mairy-nav-section li {
+  padding: 0;
+  list-style: none;
+}
+
+.mairy-nav-section a,
+.mairy-nav-section a:link,
+.mairy-nav-section a:visited {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  color: var(--m-text);
+  font-size: 1rem;
+  text-decoration: none;
+}
+
+.mairy-nav-section a:hover,
+.mairy-nav-section a.active {
+  background: var(--m-accent-soft);
+  color: var(--m-text);
+  text-decoration: none;
+}
+
+.mairy-nav-section a.active {
+  color: var(--m-accent);
+  font-weight: 600;
+}
+
+.mairy-count {
+  margin-left: auto;
+  min-width: 22px;
+  padding: 1px 7px;
+  border-radius: 10px;
+  background: var(--m-dot);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.mairy-scrim {
+  display: none;
+}
+
+/* ---------- Cartes ---------- */
+
+.mairy-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.mairy-card {
+  padding: 24px 26px;
+  border-radius: 12px;
+  background: var(--m-surface);
+  box-shadow: var(--m-shadow);
+}
+
+.mairy-card-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.mairy-card h2,
+#content .mairy-card h2 {
+  margin: 0;
+  padding: 0;
+  background: none;
+  color: var(--m-text);
+  font-size: 1.3rem;
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.mairy-muted {
+  color: var(--m-muted);
+  font-size: 0.875rem;
+}
+
+.mairy-kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+}
+
+a.mairy-kpi,
+a.mairy-kpi:link,
+a.mairy-kpi:visited {
+  color: var(--m-text);
+  text-decoration: none;
+  transition: transform 0.15s ease;
+}
+
+a.mairy-kpi:hover {
+  transform: translateY(-2px);
+}
+
+.mairy-kpi {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 28px 30px;
+}
+
+.mairy-kpi-label {
+  font-size: 1.35rem;
+  color: var(--m-text);
+}
+
+.mairy-kpi-row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.mairy-kpi-value {
+  font-size: 2.1rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--m-text);
+}
+
+.mairy-kpi-change {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.95rem;
+  color: var(--m-text);
+}
+
+.mairy-kpi-change.up .mairy-ico {
+  color: var(--m-up);
+}
+
+.mairy-kpi-change.down .mairy-ico {
+  color: var(--m-down);
+}
+
+.mairy-kpi-sub {
+  color: var(--m-muted);
+  font-size: 0.95rem;
+}
+
+/* ---------- Graphique ---------- */
+
+.mairy-chart {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.mairy-chart .grid {
+  stroke: var(--m-border);
+  stroke-dasharray: 4 4;
+}
+
+.mairy-chart .axis {
+  fill: var(--m-muted);
+  font-size: 15px;
+}
+
+.mairy-chart .line {
+  fill: none;
+  stroke: var(--m-chart);
+  stroke-width: 2;
+}
+
+.mairy-chart .area {
+  fill: var(--m-chart);
+  opacity: 0.06;
+}
+
+.mairy-chart .pt circle {
+  fill: var(--m-surface);
+  stroke: var(--m-chart);
+  stroke-width: 1.5;
+}
+
+.mairy-chart .pt:hover circle {
+  fill: var(--m-chart);
+}
+
+/* ---------- Widgets ---------- */
+
+.mairy-widgets {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: 24px;
+}
+
+.mairy-members {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mairy-members li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  list-style: none;
+}
+
+.mairy-member-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+
+.mairy-member-info strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mairy-member-info span {
+  color: var(--m-muted);
+  font-size: 0.82rem;
+}
+
+a.mairy-btn,
+a.mairy-btn:link,
+a.mairy-btn:visited {
+  padding: 5px 12px;
+  border-radius: 10px;
+  background: var(--m-accent-soft);
+  color: var(--m-text);
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+
+a.mairy-btn:hover {
+  background: var(--m-accent);
+  color: var(--m-bg);
+}
+
+.mairy-table-wrap {
+  /* relative : les libellés masqués (position absolue) restent dans la zone défilante. */
+  position: relative;
+  overflow-x: auto;
+}
+
+.mairy-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#content .mairy-table th {
+  padding: 8px 10px;
+  background: none;
+  color: var(--m-text);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: left;
+  text-transform: none;
+}
+
+#content .mairy-table td {
+  padding: 12px 10px;
+  border-bottom: 1px solid var(--m-border);
+  color: var(--m-text);
+  vertical-align: middle;
+}
+
+.mairy-ref {
+  display: block;
+  font-size: 0.78rem;
+}
+
+.mairy-status {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 10px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.mairy-status.s-pending { background: #ebf1fe; color: #2a7ade; }
+.mairy-status.s-in_progress { background: #fff6e6; color: #a8650a; }
+.mairy-status.s-approved,
+.mairy-status.s-completed { background: #e5faf2; color: #3bb077; }
+.mairy-status.s-rejected { background: #fff0f1; color: #d95087; }
+
+/* ---------- Analyse ---------- */
+
+.mairy-breakdowns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.mairy-bars {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mairy-bars li {
+  display: grid;
+  grid-template-columns: minmax(110px, 1.2fr) 2fr 40px;
+  align-items: center;
+  gap: 12px;
+  padding: 7px 0;
+  list-style: none;
+}
+
+.mairy-bar-track {
+  height: 10px;
+  border-radius: 5px;
+  background: var(--m-accent-soft);
+  overflow: hidden;
+}
+
+.mairy-bar-fill {
+  display: block;
+  height: 100%;
+  border-radius: 5px;
+  background: var(--m-chart);
+}
+
+.mairy-bar-value {
+  font-weight: 600;
+  text-align: right;
+}
+
+/* ---------- Mobile ---------- */
+
+@media (max-width: 1024px) {
+  .mairy-widgets {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  :root {
+    --m-side: 0px;
+  }
+
+  .mairy-burger {
+    display: grid;
+  }
+
+  .mairy-logo,
+  #header .mairy-logo:link,
+  #header .mairy-logo:visited {
+    font-size: 1.5rem;
+  }
+
+  #header.mairy-topbar {
+    padding: 0 12px;
+  }
+
+  .mairy-sidebar {
+    width: 260px;
+    transform: translateX(-100%);
+    transition: transform 0.2s ease;
+  }
+
+  body.mairy-nav-open .mairy-sidebar {
+    transform: none;
+  }
+
+  body.mairy-nav-open .mairy-scrim {
+    display: block;
+    position: fixed;
+    inset: var(--m-top) 0 0 0;
+    z-index: 15;
+    background: rgba(0, 0, 0, 0.35);
+  }
+
+  body.mairy-shell .main > .content {
+    padding: 16px 16px 32px;
+  }
+
+  body.mairy-shell #container > nav .breadcrumbs {
+    padding: 14px 16px 0;
+  }
+
+  .mairy-topbar-actions {
+    gap: 2px;
+  }
+}
+
+@media (max-width: 600px) {
+  /* Le site et le Mail restent accessibles depuis le menu latéral. */
+  .mairy-topbar-site,
+  .mairy-topbar-mail {
+    display: none !important;
+  }
+
+  .mairy-logo,
+  #header .mairy-logo:link,
+  #header .mairy-logo:visited {
+    font-size: 1.3rem;
+  }
+
+  #header.mairy-topbar {
+    gap: 4px;
+    padding: 0 8px;
+  }
+
+  .mairy-topbar-actions {
+    gap: 0;
+  }
+
+  .mairy-topbar-icon,
+  #header .mairy-topbar-icon:link,
+  #header .mairy-topbar-icon:visited,
+  #header.mairy-topbar .theme-toggle,
+  .mairy-avatar {
+    width: 34px;
+    height: 34px;
+  }
+
+  .mairy-chart .axis {
+    font-size: 34px;
+  }
+
+  .mairy-chart .pt circle {
+    r: 9;
+  }
+}
+
+/* ===================================================================== */
+/* Contenu des pages de l'admin (listes, fiches, confirmations)          */
+/* Remplace l'apparence d'origine de Django : cartes, tableaux aérés,     */
+/* filtres en pastilles, champs arrondis. Préfixe body.mairy-shell pour   */
+/* l'emporter sur changelists.css / forms.css, chargés après ce fichier.  */
+/* ===================================================================== */
+
+body.mairy-shell {
+  --m-radius: 14px;
+  --m-field: #f6f7fb;
+  --m-field-border: #dfe2ec;
+  --m-row-hover: #f7f8fd;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) body.mairy-shell {
+    --m-field: #161826;
+    --m-field-border: #2f3348;
+    --m-row-hover: #20243a;
+  }
+}
+
+:root[data-theme="dark"] body.mairy-shell {
+  --m-field: #161826;
+  --m-field-border: #2f3348;
+  --m-row-hover: #20243a;
+}
+
+/* ---------- En-tête de page ---------- */
+
+body.mairy-shell #container > nav .breadcrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 0;
+  background: none;
+  color: var(--m-muted);
+}
+
+body.mairy-shell #container > nav .breadcrumbs li {
+  font-size: 0.82rem;
+}
+
+body.mairy-shell #container > nav .breadcrumbs a {
+  color: var(--m-muted);
+  text-decoration: none;
+}
+
+body.mairy-shell #container > nav .breadcrumbs a:hover {
+  color: var(--m-accent);
+}
+
+body.mairy-shell #content .titles-and-tools {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+body.mairy-shell #content h1 {
+  margin: 0;
+  color: var(--m-text);
+  font-size: 1.55rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+body.mairy-shell #content > .titles-and-tools h2,
+body.mairy-shell #content .titles h2 {
+  margin: 6px 0 0;
+  padding: 0;
+  background: none;
+  color: var(--m-muted);
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-transform: none;
+}
+
+/* Boutons d'action en haut à droite (Ajouter, Historique…) */
+body.mairy-shell .object-tools {
+  margin: 0;
+  padding: 0;
+}
+
+body.mairy-shell .object-tools a,
+body.mairy-shell .object-tools a:link,
+body.mairy-shell .object-tools a:visited {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 10px;
+  background: var(--m-accent);
+  padding: 9px 16px;
+  color: var(--m-bg);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+  text-decoration: none !important;
+}
+
+body.mairy-shell .object-tools a.historylink {
+  border: 1px solid var(--m-border);
+  background: var(--m-surface);
+  color: var(--m-text);
+}
+
+body.mairy-shell .object-tools a:hover {
+  filter: brightness(1.1);
+}
+
+body.mairy-shell .object-tools a.addlink {
+  background-image: none;
+  padding-right: 16px;
+}
+
+body.mairy-shell .object-tools a.addlink::before {
+  content: "+";
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+/* ---------- Messages ---------- */
+
+body.mairy-shell ul.messagelist {
+  margin: 0 0 18px;
+  padding: 0;
+}
+
+body.mairy-shell ul.messagelist li {
+  margin: 0 0 8px;
+  border-radius: 12px;
+  background: #e8f7ef;
+  background-image: none;
+  padding: 12px 16px;
+  color: #17603b;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+body.mairy-shell ul.messagelist li.warning {
+  background: #fff4e0;
+  color: #8a5300;
+}
+
+body.mairy-shell ul.messagelist li.error {
+  background: #fdecee;
+  color: #b4233a;
+}
+
+body.mairy-shell ul.messagelist li.info {
+  background: var(--m-accent-soft);
+  color: var(--m-text);
+}
+
+body.mairy-shell .errornote {
+  border: 0;
+  border-radius: 12px;
+  background: #fdecee;
+  background-image: none;
+  padding: 12px 16px;
+  color: #b4233a;
+  font-weight: 600;
+}
+
+body.mairy-shell ul.errorlist {
+  margin: 6px 0 0;
+  padding: 0;
+  background: none;
+  color: var(--m-down);
+}
+
+body.mairy-shell ul.errorlist li {
+  border: 0;
+  background: none;
+  padding: 0;
+  color: var(--m-down);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* ---------- Listes (changelist) ---------- */
+
+body.mairy-shell #changelist .changelist-form-container {
+  gap: 20px;
+}
+
+body.mairy-shell #changelist .changelist-form-container > div:first-child,
+body.mairy-shell #changelist #changelist-form {
+  min-width: 0;
+}
+
+body.mairy-shell #changelist .changelist-form-container > div:first-child {
+  border-radius: var(--m-radius);
+  background: var(--m-surface);
+  box-shadow: var(--m-shadow);
+  overflow: hidden;
+}
+
+body.mairy-shell #toolbar {
+  margin: 0;
+  border: 0;
+  border-bottom: 1px solid var(--m-border);
+  background: none;
+  padding: 16px 18px;
+}
+
+body.mairy-shell #toolbar form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+body.mairy-shell #toolbar label[for="searchbar"] img {
+  display: none;
+}
+
+body.mairy-shell #toolbar #searchbar {
+  height: 40px;
+  width: min(420px, 100%);
+  border: 1px solid var(--m-field-border);
+  border-radius: 10px;
+  background: var(--m-field) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238a8fa3' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-3.5-3.5'/%3E%3C/svg%3E") no-repeat 12px center / 18px;
+  padding: 0 14px 0 38px;
+  color: var(--m-text);
+  font-size: 0.92rem;
+}
+
+body.mairy-shell #toolbar #searchbar:focus {
+  border-color: var(--m-accent);
+  outline: 3px solid var(--m-accent-soft);
+}
+
+body.mairy-shell #toolbar form input[type="submit"],
+body.mairy-shell #changelist .actions button,
+body.mairy-shell .paginator input[type="submit"] {
+  height: 40px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--m-accent);
+  padding: 0 18px;
+  color: var(--m-bg);
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+body.mairy-shell #toolbar form input[type="submit"]:hover,
+body.mairy-shell #changelist .actions button:hover {
+  filter: brightness(1.1);
+}
+
+body.mairy-shell #toolbar .quiet {
+  color: var(--m-muted);
+}
+
+/* Navigation par date */
+body.mairy-shell #changelist nav.xfull,
+body.mairy-shell #changelist .xfull {
+  border-bottom: 1px solid var(--m-border);
+  background: none;
+  padding: 10px 18px;
+}
+
+body.mairy-shell #changelist .xfull ul,
+body.mairy-shell #changelist ul.toplinks {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+}
+
+body.mairy-shell #changelist ul.toplinks li {
+  float: none;
+  margin: 0;
+}
+
+body.mairy-shell #changelist ul.toplinks a {
+  border-radius: 999px;
+  background: var(--m-accent-soft);
+  padding: 4px 12px;
+  color: var(--m-accent);
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* Barre d'actions groupées */
+body.mairy-shell #changelist .actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0;
+  border: 0;
+  border-bottom: 1px solid var(--m-border);
+  background: none;
+  padding: 12px 18px;
+  color: var(--m-muted);
+}
+
+body.mairy-shell #changelist .actions label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--m-muted);
+  font-size: 0.88rem;
+}
+
+body.mairy-shell #changelist .actions select {
+  height: 40px;
+  min-width: 260px;
+  border: 1px solid var(--m-field-border);
+  border-radius: 10px;
+  background-color: var(--m-field);
+  padding: 0 12px;
+  color: var(--m-text);
+  font: inherit;
+  font-size: 0.9rem;
+}
+
+body.mairy-shell #changelist .actions .action-counter,
+body.mairy-shell #changelist .actions .all,
+body.mairy-shell #changelist .actions .question,
+body.mairy-shell #changelist .actions .clear {
+  color: var(--m-muted);
+  font-size: 0.85rem;
+}
+
+/* Tableau des résultats */
+body.mairy-shell #changelist table#result_list {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+body.mairy-shell #result_list thead th {
+  border: 0;
+  border-bottom: 1px solid var(--m-border);
+  background: none;
+  padding: 12px 14px;
+  color: var(--m-muted);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+body.mairy-shell #result_list thead th a {
+  color: var(--m-muted);
+  text-decoration: none;
+}
+
+body.mairy-shell #result_list thead th.sorted {
+  background: none;
+}
+
+body.mairy-shell #result_list thead th.sorted a {
+  color: var(--m-accent);
+}
+
+body.mairy-shell #result_list tbody td,
+body.mairy-shell #result_list tbody th {
+  border-bottom: 1px solid var(--m-border);
+  background: none;
+  padding: 14px;
+  color: var(--m-text);
+  font-size: 0.92rem;
+  vertical-align: middle;
+}
+
+body.mairy-shell #result_list tbody tr:last-child td,
+body.mairy-shell #result_list tbody tr:last-child th {
+  border-bottom: 0;
+}
+
+body.mairy-shell #result_list tbody tr:hover td,
+body.mairy-shell #result_list tbody tr:hover th {
+  background: var(--m-row-hover);
+}
+
+body.mairy-shell #result_list tbody tr.selected td,
+body.mairy-shell #result_list tbody tr.selected th {
+  background: var(--m-accent-soft);
+}
+
+body.mairy-shell #result_list tbody th a,
+body.mairy-shell #result_list tbody td a {
+  color: var(--m-accent);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+body.mairy-shell #result_list tbody th a:hover,
+body.mairy-shell #result_list tbody td a:hover {
+  text-decoration: underline;
+}
+
+body.mairy-shell #result_list input[type="checkbox"],
+body.mairy-shell #changelist input[type="checkbox"] {
+  width: 17px;
+  height: 17px;
+  accent-color: var(--m-accent);
+}
+
+body.mairy-shell #result_list input,
+body.mairy-shell #result_list select {
+  border: 1px solid var(--m-field-border);
+  border-radius: 8px;
+  background-color: var(--m-field);
+  padding: 6px 8px;
+  color: var(--m-text);
+}
+
+/* Pagination */
+body.mairy-shell .paginator {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  border: 0;
+  border-top: 1px solid var(--m-border);
+  background: none;
+  padding: 14px 18px;
+  color: var(--m-muted);
+  font-size: 0.88rem;
+}
+
+body.mairy-shell .paginator a:link,
+body.mairy-shell .paginator a:visited,
+body.mairy-shell .paginator .this-page {
+  display: inline-grid;
+  min-width: 32px;
+  height: 32px;
+  place-items: center;
+  border-radius: 8px;
+  background: var(--m-accent-soft);
+  padding: 0 8px;
+  color: var(--m-accent);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+body.mairy-shell .paginator .this-page {
+  background: var(--m-accent);
+  color: var(--m-bg);
+}
+
+body.mairy-shell .paginator a.showall {
+  width: auto;
+  background: none;
+}
+
+/* Filtres (colonne de droite) */
+body.mairy-shell #changelist-filter {
+  flex: 0 0 250px;
+  align-self: flex-start;
+  border-radius: var(--m-radius);
+  background: var(--m-surface);
+  box-shadow: var(--m-shadow);
+  padding: 6px 0 14px;
+}
+
+body.mairy-shell #changelist-filter h2 {
+  margin: 0;
+  border-radius: var(--m-radius) var(--m-radius) 0 0;
+  background: none;
+  padding: 14px 18px 8px;
+  color: var(--m-text);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+body.mairy-shell #changelist-filter-extra-actions {
+  border: 0;
+  padding: 0 18px 8px;
+  font-size: 0.82rem;
+}
+
+body.mairy-shell #changelist-filter-extra-actions a {
+  color: var(--m-accent);
+  text-decoration: none;
+}
+
+body.mairy-shell #changelist-filter details {
+  border: 0;
+  padding: 0 12px;
+}
+
+body.mairy-shell #changelist-filter h3,
+body.mairy-shell #changelist-filter details summary {
+  margin: 12px 6px 6px;
+  color: var(--m-muted);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+body.mairy-shell #changelist-filter ul {
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+body.mairy-shell #changelist-filter li {
+  margin: 0;
+  border: 0;
+  padding: 0;
+  list-style: none;
+}
+
+body.mairy-shell #changelist-filter li a,
+body.mairy-shell #changelist-filter li a:link,
+body.mairy-shell #changelist-filter li a:visited {
+  display: block;
+  border-radius: 8px;
+  padding: 6px 10px;
+  color: var(--m-text);
+  font-size: 0.88rem;
+  text-decoration: none;
+}
+
+body.mairy-shell #changelist-filter li a:hover {
+  background: var(--m-row-hover);
+}
+
+body.mairy-shell #changelist-filter li.selected {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+body.mairy-shell #changelist-filter li.selected a {
+  background: var(--m-accent-soft);
+  color: var(--m-accent);
+  font-weight: 700;
+}
+
+body.mairy-shell #changelist-filter-clear a {
+  margin: 6px 18px 0;
+  color: var(--m-down);
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+
+/* Icônes « oui / non » des colonnes booléennes : pastilles */
+body.mairy-shell #result_list img[src$="icon-yes.svg"],
+body.mairy-shell #result_list img[src$="icon-no.svg"] {
+  width: 16px;
+  height: 16px;
+}
+
+/* ---------- Fiches (formulaires d'édition) ---------- */
+
+body.mairy-shell #content-main form > div > fieldset.module,
+body.mairy-shell #content-main fieldset.module {
+  margin: 0 0 18px;
+  border: 0;
+  border-radius: var(--m-radius);
+  background: var(--m-surface);
+  box-shadow: var(--m-shadow);
+  padding: 6px 22px 12px;
+}
+
+body.mairy-shell fieldset .fieldset-heading,
+body.mairy-shell fieldset.module h2,
+body.mairy-shell .module h2,
+body.mairy-shell .module caption,
+body.mairy-shell .inline-group h2 {
+  margin: 0 -22px 6px;
+  border-bottom: 1px solid var(--m-border);
+  background: none;
+  padding: 14px 22px 12px;
+  color: var(--m-text);
+  font-size: 1.02rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-align: left;
+  text-transform: none;
+}
+
+body.mairy-shell fieldset .fieldset-heading::before,
+body.mairy-shell fieldset.module h2::before {
+  display: inline-block;
+  width: 4px;
+  height: 1em;
+  margin-right: 10px;
+  border-radius: 4px;
+  background: var(--m-accent);
+  vertical-align: -2px;
+  content: "";
+}
+
+body.mairy-shell .description {
+  color: var(--m-muted);
+}
+
+body.mairy-shell .form-row {
+  border-bottom: 1px solid var(--m-border);
+  padding: 14px 0;
+}
+
+body.mairy-shell fieldset .form-row:last-child {
+  border-bottom: 0;
+}
+
+body.mairy-shell .aligned label,
+body.mairy-shell .aligned .flex-container > label {
+  color: var(--m-muted);
+  font-size: 0.86rem;
+  font-weight: 600;
+}
+
+body.mairy-shell .aligned label.required,
+body.mairy-shell label.required {
+  color: var(--m-text);
+  font-weight: 700;
+}
+
+body.mairy-shell .aligned div.readonly,
+body.mairy-shell .readonly {
+  color: var(--m-text);
+  font-size: 0.95rem;
+}
+
+body.mairy-shell .help,
+body.mairy-shell p.help,
+body.mairy-shell div.help {
+  color: var(--m-muted);
+  font-size: 0.8rem;
+}
+
+body.mairy-shell #content-main input[type="text"],
+body.mairy-shell #content-main input[type="email"],
+body.mairy-shell #content-main input[type="password"],
+body.mairy-shell #content-main input[type="number"],
+body.mairy-shell #content-main input[type="url"],
+body.mairy-shell #content-main input[type="tel"],
+body.mairy-shell #content-main input[type="date"],
+body.mairy-shell #content-main input[type="datetime-local"],
+body.mairy-shell #content-main input.vDateField,
+body.mairy-shell #content-main input.vTimeField,
+body.mairy-shell #content-main select,
+body.mairy-shell #content-main textarea {
+  border: 1px solid var(--m-field-border);
+  border-radius: 10px;
+  background-color: var(--m-field);
+  padding: 9px 12px;
+  color: var(--m-text);
+  font: inherit;
+  font-size: 0.93rem;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+body.mairy-shell #content-main select {
+  min-height: 40px;
+}
+
+body.mairy-shell #content-main input:focus,
+body.mairy-shell #content-main select:focus,
+body.mairy-shell #content-main textarea:focus {
+  border-color: var(--m-accent);
+  outline: 0;
+  box-shadow: 0 0 0 3px var(--m-accent-soft);
+}
+
+body.mairy-shell #content-main textarea {
+  width: min(100%, 720px);
+  line-height: 1.5;
+}
+
+body.mairy-shell #content-main input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--m-accent);
+}
+
+/* Sélecteurs multiples (permissions, groupes) */
+body.mairy-shell .selector select,
+body.mairy-shell .selector .selector-available,
+body.mairy-shell .selector .selector-chosen {
+  border-radius: 10px;
+}
+
+body.mairy-shell .selector-available h2,
+body.mairy-shell .selector-chosen h2,
+body.mairy-shell .selector-available-title,
+body.mairy-shell .selector-chosen-title {
+  border-radius: 10px 10px 0 0;
+}
+
+/* Barre des boutons d'enregistrement : collée en bas pendant la saisie */
+body.mairy-shell .submit-row {
+  position: sticky;
+  bottom: 12px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 8px 0 0;
+  border: 0;
+  border-radius: var(--m-radius);
+  background: color-mix(in srgb, var(--m-surface) 92%, transparent);
+  padding: 14px 18px;
+  box-shadow: 0 14px 36px -18px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(8px);
+}
+
+body.mairy-shell .submit-row input,
+body.mairy-shell .submit-row a.button,
+body.mairy-shell .submit-row button,
+body.mairy-shell #content-main input[type="submit"],
+body.mairy-shell #content-main .button,
+body.mairy-shell #content-main button.button {
+  height: 42px;
+  margin: 0;
+  border: 1px solid var(--m-border);
+  border-radius: 10px;
+  background: var(--m-surface);
+  padding: 0 18px;
+  color: var(--m-text);
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+  cursor: pointer;
+}
+
+body.mairy-shell .submit-row input.default,
+body.mairy-shell #content-main input[type="submit"].default {
+  border-color: var(--m-accent);
+  background: var(--m-accent);
+  color: var(--m-bg);
+}
+
+body.mairy-shell .submit-row input:hover,
+body.mairy-shell #content-main input[type="submit"]:hover {
+  filter: brightness(1.08);
+}
+
+body.mairy-shell .submit-row a.deletelink,
+body.mairy-shell .submit-row a.deletelink:link,
+body.mairy-shell .submit-row a.deletelink:visited {
+  display: inline-flex;
+  align-items: center;
+  height: 42px;
+  margin-left: auto;
+  border-radius: 10px;
+  background: rgba(209, 26, 42, 0.1);
+  padding: 0 18px;
+  color: var(--m-down);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none !important;
+}
+
+body.mairy-shell .submit-row a.deletelink:hover {
+  background: var(--m-down);
+  color: #ffffff;
+}
+
+/* Liens dans le contenu : couleur d'accent, sans soulignement permanent */
+body.mairy-shell #content-main a:not(.button):not(.deletelink):not(.mairy-btn) {
+  color: var(--m-accent);
+  text-decoration: none;
+}
+
+body.mairy-shell #content-main a:not(.button):not(.deletelink):not(.mairy-btn):hover {
+  text-decoration: underline;
+}
+
+/* Tableaux génériques (historique, confirmation de suppression, inlines) */
+body.mairy-shell #content-main table:not(.mairy-table):not(#result_list) {
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+  border-radius: var(--m-radius);
+  background: var(--m-surface);
+  box-shadow: var(--m-shadow);
+}
+
+body.mairy-shell #content-main table:not(.mairy-table):not(#result_list) th,
+body.mairy-shell #content-main table:not(.mairy-table):not(#result_list) td {
+  border-bottom: 1px solid var(--m-border);
+  padding: 12px 14px;
+}
+
+body.mairy-shell #content-main table:not(.mairy-table):not(#result_list) thead th {
+  background: none;
+  color: var(--m-muted);
+  font-size: 0.74rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* Fiche « demande » : identité et détails lisibles (voir espace/admin.py) */
+.mairy-kv {
+  display: grid;
+  grid-template-columns: minmax(150px, 30%) 1fr;
+  gap: 8px 18px;
+  margin: 0;
+}
+
+.mairy-kv dt {
+  color: var(--m-muted);
+  font-weight: 600;
+}
+
+.mairy-kv dd {
+  margin: 0;
+  color: var(--m-text);
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 1024px) {
+  body.mairy-shell #changelist .changelist-form-container {
+    flex-direction: column;
+  }
+
+  body.mairy-shell #changelist-filter {
+    flex: none;
+    width: 100%;
+  }
+}
+
+/* ---------- Mail : personnes connectées ---------- */
+
+.mail-kpi.is-active {
+  outline: 2px solid var(--m-accent);
+  outline-offset: -2px;
+}
+
+.mail-dot {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #22b35e;
+  box-shadow: 0 0 0 3px rgba(34, 179, 94, 0.2);
+  vertical-align: 1px;
+}
+
+.mail-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.mail-search {
+  display: flex;
+  flex: 1 1 280px;
+  gap: 8px;
+  max-width: 460px;
+  min-width: 0;
+}
+
+.mail-search input {
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+  height: 40px;
+  border: 1px solid var(--m-field-border);
+  border-radius: 10px;
+  background: var(--m-field);
+  padding: 0 14px;
+  color: var(--m-text);
+  font: inherit;
+}
+
+.mail-search input:focus {
+  border-color: var(--m-accent);
+  outline: 3px solid var(--m-accent-soft);
+}
+
+.mail-search button {
+  height: 40px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--m-accent);
+  padding: 0 18px;
+  color: var(--m-bg);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.mail-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.mail-person {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mail-avatar {
+  width: 36px;
+  height: 36px;
+  font-size: 0.9rem;
+}
+
+.mail-avatar.is-citizen {
+  background: #3bb077;
+}
+
+.mail-offline {
+  background: var(--m-accent-soft);
+  color: var(--m-muted);
+}
+
+.mail-actions {
+  white-space: nowrap;
+  text-align: right;
+}
+
+.mail-actions .mairy-btn + .mairy-btn {
+  margin-left: 6px;
+}
+
+/* ---------- Ajustements (listes et fiches) ---------- */
+
+body.mairy-shell #toolbar form > div {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+body.mairy-shell #changelist .actions button.button {
+  border: 0;
+  background: var(--m-accent);
+  color: var(--m-bg);
+}
+
+body.mairy-shell #result_list thead th a:link,
+body.mairy-shell #result_list thead th a:visited,
+body.mairy-shell #result_list thead th .text a {
+  color: var(--m-muted);
+  text-decoration: none;
+}
+
+body.mairy-shell #result_list thead th.sorted .text a {
+  color: var(--m-accent);
+}
+
+body.mairy-shell #result_list tbody th a,
+body.mairy-shell #result_list tbody td:first-of-type a {
+  white-space: nowrap;
+}
+
+body.mairy-shell #changelist-filter-extra-actions a,
+body.mairy-shell #changelist-filter-extra-actions h3 {
+  font-size: 0.82rem;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+body.mairy-shell fieldset .fieldset-heading,
+body.mairy-shell fieldset.module h2,
+body.mairy-shell .module h2 {
+  border: 0;
+  border-bottom: 1px solid var(--m-border);
+  border-radius: 0;
+}
+
+body.mairy-shell #content-main fieldset.module {
+  border: 0 !important;
+}
+
+body.mairy-shell #toolbar form > div {
+  flex-wrap: nowrap;
+  max-width: none;
+}
+
+body.mairy-shell #toolbar #searchbar {
+  flex: 0 1 420px;
+  width: auto;
+  min-width: 0;
+  margin: 0;
+}
+
+/* La liste prend la place restante ; le tableau défile s'il est trop large. */
+body.mairy-shell #changelist .changelist-form-container > div:not(#changelist-filter) {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+/* En colonne (tablette, téléphone), une base de 0 réduirait la liste à une hauteur nulle. */
+@media (max-width: 1024px) {
+  body.mairy-shell #changelist .changelist-form-container > div:not(#changelist-filter) {
+    flex: none;
+    width: 100%;
+  }
+}
+
+body.mairy-shell #changelist .results {
+  overflow-x: auto;
+}
+
+/* Django ajoute 30 px de marge au panneau de filtres : l'écart de la grille suffit. */
+body.mairy-shell #changelist-filter {
+  margin: 0;
+}
+
+/* La liste et ses filtres restent dans la zone de contenu (Django leur donne 100 % + marges). */
+body.mairy-shell #content.flex,
+body.mairy-shell #content-main,
+body.mairy-shell #changelist,
+body.mairy-shell #changelist .changelist-form-container {
+  width: auto;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Sans min-width: 0, la colonne de contenu s'élargit à la taille du tableau et déborde. */
+body.mairy-shell #main,
+body.mairy-shell .main > .content {
+  min-width: 0;
+}
+
+body.mairy-shell #result_list tbody td,
+body.mairy-shell #result_list tbody th,
+body.mairy-shell #result_list thead th {
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+/* ===================================================================== */
+/* Fiches d'édition : champs en grille, étiquette au-dessus du champ      */
+/* ===================================================================== */
+
+/* Sans panneau de filtres, la liste occupe toute la largeur. */
+body.mairy-shell #changelist .changelist-form-container > div {
+  max-width: 100%;
+  width: 100%;
+}
+
+body.mairy-shell #content-main fieldset.module.aligned {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  column-gap: 26px;
+  padding-bottom: 18px;
+}
+
+/* Éléments qui occupent toute la largeur de la rubrique */
+body.mairy-shell fieldset.module.aligned > .fieldset-heading,
+body.mairy-shell fieldset.module.aligned > h2,
+body.mairy-shell fieldset.module.aligned > .description,
+body.mairy-shell fieldset.module.aligned > .form-row:has(textarea),
+body.mairy-shell fieldset.module.aligned > .form-row:has(.selector),
+body.mairy-shell fieldset.module.aligned > .form-row:has(.mairy-kv),
+body.mairy-shell fieldset.module.aligned > .form-row:has(#id_password),
+body.mairy-shell fieldset.module.aligned > .form-row.field-password {
+  grid-column: 1 / -1;
+}
+
+body.mairy-shell fieldset.module.aligned > .form-row {
+  min-width: 0;
+  border-bottom: 0;
+  padding: 12px 0 4px;
+}
+
+body.mairy-shell .aligned .form-row > div > .flex-container,
+body.mairy-shell .aligned .form-row > .flex-container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+}
+
+/* Étiquette, puis champ, puis texte d'aide */
+body.mairy-shell .aligned .flex-container > label {
+  order: 0;
+  width: auto;
+  min-width: 0;
+  float: none;
+  margin: 0;
+  padding: 0;
+  line-height: 1.3;
+}
+
+body.mairy-shell .aligned .flex-container > .help,
+body.mairy-shell .aligned .form-row .help {
+  order: 3;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+body.mairy-shell .aligned .flex-container > :not(label):not(.help) {
+  order: 1;
+}
+
+/* Cases à cocher : la case à côté de son libellé */
+body.mairy-shell .aligned .flex-container.checkbox-row {
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+body.mairy-shell .aligned .flex-container.checkbox-row > .help {
+  flex-basis: 100%;
+}
+
+body.mairy-shell .aligned .flex-container.checkbox-row > label {
+  color: var(--m-text);
+  font-size: 0.95rem;
+}
+
+/* Champs à la largeur de leur colonne */
+body.mairy-shell .aligned .vTextField,
+body.mairy-shell .aligned .vURLField,
+body.mairy-shell .aligned .vIntegerField,
+body.mairy-shell .aligned .vBigIntegerField,
+body.mairy-shell .aligned .vPositiveSmallIntegerField,
+body.mairy-shell .aligned input[type="email"],
+body.mairy-shell .aligned input[type="number"],
+body.mairy-shell .aligned select:not([multiple]) {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+}
+
+body.mairy-shell .aligned textarea {
+  box-sizing: border-box;
+  width: 100% !important;
+  min-height: 110px;
+}
+
+body.mairy-shell .aligned .related-widget-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+body.mairy-shell .aligned .related-widget-wrapper select {
+  flex: 1;
+}
+
+/* Valeurs en lecture seule : petite boîte comme un champ */
+body.mairy-shell .aligned div.readonly {
+  box-sizing: border-box;
+  min-height: 40px;
+  margin: 0;
+  border: 1px solid var(--m-border);
+  border-radius: 10px;
+  background: var(--m-field);
+  padding: 9px 12px;
+  color: var(--m-text);
+  font-size: 0.93rem;
+  overflow-wrap: anywhere;
+}
+
+body.mairy-shell .aligned div.readonly:has(.mairy-kv) {
+  padding: 14px 16px;
+}
+
+body.mairy-shell .aligned div.readonly img[src$="icon-yes.svg"],
+body.mairy-shell .aligned div.readonly img[src$="icon-no.svg"] {
+  width: 16px;
+  height: 16px;
+  vertical-align: -3px;
+}
+
+/* Mot de passe (fiche utilisateur) */
+body.mairy-shell .aligned #id_password {
+  border-radius: 10px;
+  background: var(--m-field);
+  padding: 10px 14px;
+  font-size: 0.85rem;
+}
+
+body.mairy-shell .aligned #id_password p {
+  margin: 4px 0;
+}
+
+/* Date et heure : les deux champs côte à côte */
+body.mairy-shell .aligned p.datetime {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  margin: 0;
+  color: var(--m-muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+body.mairy-shell .aligned p.datetime br {
+  display: none;
+}
+
+body.mairy-shell .datetimeshortcuts a {
+  color: var(--m-accent);
+}
+
+/* Erreurs sur un champ */
+body.mairy-shell .aligned .form-row.errors {
+  border-radius: 10px;
+  background: none;
+}
+
+body.mairy-shell .aligned .form-row.errors input,
+body.mairy-shell .aligned .form-row.errors select,
+body.mairy-shell .aligned .form-row.errors textarea {
+  border-color: var(--m-down);
+}
+
+/* Bloc des enregistrements liés (inlines) */
+body.mairy-shell .inline-group {
+  overflow: hidden;
+  margin-bottom: 18px;
+  border: 0;
+  border-radius: var(--m-radius);
+  background: var(--m-surface);
+  box-shadow: var(--m-shadow);
+}
+
+body.mairy-shell .inline-group h2 {
+  margin: 0;
+}
+
+@media (max-width: 760px) {
+  body.mairy-shell #content-main fieldset.module.aligned {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* La colonne principale occupe toute la largeur (Django place #content en flex). */
+body.mairy-shell #content-main {
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+}
+
+/* Navigation par date (au-dessus de la liste) : en pastilles, alignée sur la carte. */
+body.mairy-shell #changelist nav.toplinks {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  border-bottom: 1px solid var(--m-border);
+  padding: 10px 18px;
+  color: var(--m-muted);
+  font-size: 0.85rem;
+}
+
+body.mairy-shell #changelist nav.toplinks #date-hierarchy-label {
+  margin-right: 6px;
+  font-weight: 700;
+}
+
+body.mairy-shell #changelist nav.toplinks a {
+  border-radius: 999px;
+  background: var(--m-accent-soft);
+  padding: 4px 12px;
+  color: var(--m-accent);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* ---------- Formulaires sur téléphone et petite tablette ---------- */
+@media (max-width: 760px) {
+  body.mairy-shell fieldset.module .flex-container:not(.checkbox-row) {
+    display: block;
+    width: 100%;
+  }
+
+  body.mairy-shell fieldset.module input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]),
+  body.mairy-shell fieldset.module select,
+  body.mairy-shell fieldset.module textarea {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  body.mairy-shell fieldset.module .help,
+  body.mairy-shell fieldset.module .readonly {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  /* Recherche et actions de la liste : sur la largeur de la carte. */
+  body.mairy-shell #changelist-search > div {
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 8px;
+  }
+
+  body.mairy-shell #changelist-search #searchbar {
+    flex: 1 1 160px;
+    width: auto;
+    min-width: 0;
+  }
+
+  body.mairy-shell #changelist .actions {
+    flex-wrap: wrap;
+  }
+
+  body.mairy-shell #changelist .actions label,
+  body.mairy-shell #changelist .actions select {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  /* Boutons d'enregistrement : en bas du formulaire, pleine largeur (plus de barre collée). */
+  body.mairy-shell .submit-row {
+    position: static;
+    padding: 12px;
+  }
+
+  body.mairy-shell .submit-row input,
+  body.mairy-shell .submit-row a.button,
+  body.mairy-shell .submit-row button,
+  body.mairy-shell .submit-row a.deletelink,
+  body.mairy-shell .submit-row a.closelink {
+    flex: 1 1 100%;
+    margin: 0;
+    text-align: center;
+  }
+}
+
+/* ---------- Sécurité et fraude ---------- */
+.sec-check {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 2px 10px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.sec-check.is-ok {
+  background: color-mix(in srgb, var(--m-up) 14%, transparent);
+  color: var(--m-up);
+}
+
+.sec-check.is-bad {
+  background: color-mix(in srgb, var(--m-down) 14%, transparent);
+  color: var(--m-down);
+}
+
+.mairy-table tr.sec-row-danger td {
+  background: color-mix(in srgb, var(--m-down) 7%, transparent);
+}
+
+a.mairy-kpi.sec-kpi-danger {
+  box-shadow: inset 0 0 0 2px var(--m-down), var(--m-shadow);
+}
+
+a.mairy-kpi.sec-kpi-danger .mairy-kpi-value {
+  color: var(--m-down);
+}
+
+.sec-columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+  gap: 24px;
+}
+
+.sec-frauds {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sec-frauds li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+/* ---------- Assistant IA (bas du menu latéral + fenêtre de discussion) ---------- */
+.mairy-sidebar {
+  display: flex;
+  flex-direction: column;
+}
+
+.mairy-assistant {
+  position: sticky;
+  bottom: -32px;
+  margin: auto -16px -32px;
+  border-top: 1px solid var(--m-border);
+  background: var(--m-sidebar);
+  padding: 12px 16px 20px;
+}
+
+.mairy-assistant-toggle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  padding: 8px 10px;
+  color: var(--m-text);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.mairy-assistant-toggle:hover,
+.mairy-assistant-toggle[aria-expanded="true"] {
+  background: var(--m-accent-soft);
+  color: var(--m-accent);
+}
+
+.mairy-assistant-avatar {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--m-border);
+  border-radius: 50%;
+  background: var(--m-surface);
+  color: var(--m-accent);
+}
+
+.mairy-assistant-avatar .mairy-ico {
+  width: 18px;
+  height: 18px;
+}
+
+.assistant-panel {
+  position: fixed;
+  z-index: 60;
+  bottom: 16px;
+  left: calc(var(--m-side) + 16px);
+  display: flex;
+  flex-direction: column;
+  width: min(380px, calc(100vw - 32px));
+  height: min(560px, calc(100vh - var(--m-top) - 32px));
+  height: min(560px, calc(100dvh - var(--m-top) - 32px));
+  overflow: hidden;
+  border: 1px solid var(--m-border);
+  border-radius: 16px;
+  background: var(--m-surface);
+  box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.45);
+  color: var(--m-text);
+}
+
+.assistant-panel[hidden] {
+  display: none;
+}
+
+.assistant-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid var(--m-border);
+  padding: 12px 12px 12px 16px;
+}
+
+.assistant-head div {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.assistant-head div span {
+  color: var(--m-muted);
+  font-size: 0.78rem;
+}
+
+.assistant-icon-btn {
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--m-muted);
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.assistant-icon-btn:hover {
+  background: var(--m-accent-soft);
+  color: var(--m-text);
+}
+
+.assistant-log {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  overflow-y: auto;
+  padding: 16px;
+  list-style: none;
+}
+
+.assistant-msg {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 88%;
+  margin: 0;
+}
+
+.assistant-msg.is-me {
+  align-self: flex-end;
+  align-items: flex-end;
+}
+
+.assistant-bubble {
+  border-radius: 14px;
+  background: var(--m-accent-soft);
+  padding: 9px 12px;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+.assistant-msg.is-bot .assistant-bubble {
+  border-bottom-left-radius: 4px;
+}
+
+.assistant-msg.is-me .assistant-bubble {
+  border-bottom-right-radius: 4px;
+  background: var(--m-accent);
+  color: var(--m-bg);
+}
+
+.assistant-item {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--m-border);
+  border-radius: 10px;
+  padding: 8px 10px;
+  color: var(--m-accent) !important;
+  font-size: 0.84rem;
+  text-decoration: none !important;
+}
+
+.assistant-item:hover {
+  background: var(--m-accent-soft);
+}
+
+.assistant-item span {
+  color: var(--m-muted);
+  font-size: 0.76rem;
+}
+
+.assistant-confirm {
+  display: flex;
+  gap: 8px;
+}
+
+.assistant-confirm button,
+.assistant-form button {
+  border: 0;
+  border-radius: 10px;
+  background: var(--m-accent);
+  padding: 8px 14px;
+  color: var(--m-bg);
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.assistant-confirm button.is-secondary {
+  border: 1px solid var(--m-border);
+  background: transparent;
+  color: var(--m-text);
+}
+
+.assistant-form {
+  display: flex;
+  gap: 8px;
+  border-top: 1px solid var(--m-border);
+  padding: 12px;
+}
+
+.assistant-form input {
+  flex: 1;
+  min-width: 0;
+  height: 40px;
+  box-sizing: border-box;
+  border: 1px solid var(--m-border);
+  border-radius: 10px;
+  background: var(--m-bg);
+  padding: 0 12px;
+  color: var(--m-text);
+  font: inherit;
+  font-size: 0.88rem;
+}
+
+.assistant-form input:focus {
+  border-color: var(--m-accent);
+  outline: 3px solid var(--m-accent-soft);
+}
+
+.assistant-typing {
+  display: flex;
+  gap: 4px;
+  padding: 12px 14px;
+}
+
+.assistant-typing span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--m-muted);
+  animation: assistant-dot 1s infinite ease-in-out;
+}
+
+.assistant-typing span:nth-child(2) { animation-delay: 0.15s; }
+.assistant-typing span:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes assistant-dot {
+  0%, 80%, 100% { opacity: 0.3; transform: translateY(0); }
+  40% { opacity: 1; transform: translateY(-3px); }
+}
+
+/* Menu latéral replié (tablette, téléphone) : fenêtre en bas de l'écran, sur toute la largeur. */
+@media (max-width: 900px) {
+  .assistant-panel {
+    right: 12px;
+    bottom: 12px;
+    left: 12px;
+    width: auto;
+  }
+}
+
+/* Bouton « Retour » au-dessus du contenu des pages de l'admin */
+.mairy-back,
+#content-start .mairy-back:link,
+#content-start .mairy-back:visited {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 12px;
+  border: 1px solid var(--m-border);
+  border-radius: 999px;
+  background: var(--m-surface);
+  padding: 6px 14px;
+  color: var(--m-text);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none !important;
+}
+
+.mairy-back:hover {
+  border-color: var(--m-accent);
+  color: var(--m-accent);
+}

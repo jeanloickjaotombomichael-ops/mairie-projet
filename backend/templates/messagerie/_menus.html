@@ -1,0 +1,40 @@
+{% load i18n %}
+{# Menus « En attente », « Libellés » et « Plus » de la barre d'outils (à l'intérieur d'un formulaire avec ids). #}
+<details class="gm-menu">
+  <summary class="gm-icon-btn" title="{% translate "Mettre en attente" %}"><svg class="mairy-ico"><use href="#mi-clock"/></svg></summary>
+  <div class="gm-menu-list">
+    <p class="gm-menu-title">{% translate "Mettre en attente jusqu'à…" %}</p>
+    {% for value, label in mail_snooze_choices %}
+    <button name="op" value="snooze:{{ value }}">{{ label }}</button>
+    {% endfor %}
+    {% if mail_key == 'snoozed' or mail_opened.snoozed_until %}
+    <button name="op" value="unsnooze">{% translate "Annuler la mise en attente" %}</button>
+    {% endif %}
+  </div>
+</details>
+<details class="gm-menu">
+  <summary class="gm-icon-btn" title="{% translate "Libellés" %}"><svg class="mairy-ico"><use href="#mi-tag"/></svg></summary>
+  <div class="gm-menu-list">
+    <p class="gm-menu-title">{% translate "Ajouter le libellé" %}</p>
+    {% for item in mail_labels %}
+    <button name="op" value="label:{{ item.obj.pk }}">{{ item.obj.name }}</button>
+    {% empty %}
+    <p class="gm-menu-empty">{% translate "Créez d'abord un libellé avec le « + » du menu." %}</p>
+    {% endfor %}
+    {% if mail_labels %}
+    <p class="gm-menu-title">{% translate "Retirer le libellé" %}</p>
+    {% for item in mail_labels %}
+    <button name="op" value="unlabel:{{ item.obj.pk }}">{{ item.obj.name }}</button>
+    {% endfor %}
+    {% endif %}
+  </div>
+</details>
+<details class="gm-menu">
+  <summary class="gm-icon-btn" title="{% translate "Plus" %}"><svg class="mairy-ico"><use href="#mi-dots"/></svg></summary>
+  <div class="gm-menu-list">
+    <button name="op" value="star">{% translate "Suivre" %}</button>
+    <button name="op" value="unstar">{% translate "Ne plus suivre" %}</button>
+    <button name="op" value="important">{% translate "Marquer comme important" %}</button>
+    <button name="op" value="unimportant">{% translate "Marquer comme non important" %}</button>
+  </div>
+</details>

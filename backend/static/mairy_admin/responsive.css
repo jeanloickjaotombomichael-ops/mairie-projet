@@ -1,0 +1,34 @@
+/* Socle responsive commun (administration, espace agent, accueil, connexion).
+   Chargé en dernier : il ne fait que corriger ce qui gêne sur téléphone et tablette. */
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Un média ne dépasse jamais son conteneur. */
+img,
+video,
+canvas,
+iframe {
+  max-width: 100%;
+}
+
+img,
+video {
+  height: auto;
+}
+
+/* Longs mots (e-mails, liens, références) : retour à la ligne plutôt que débordement. */
+body {
+  overflow-wrap: break-word;
+}
+
+/* Écran tactile : iOS zoome la page au focus d'un champ de moins de 16 px. */
+@media (pointer: coarse) {
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]),
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}

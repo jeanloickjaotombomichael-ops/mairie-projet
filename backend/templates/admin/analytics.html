@@ -1,0 +1,60 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block breadcrumbs %}
+<ol class="breadcrumbs">
+  <li><a href="{% url 'admin:index' %}">{% translate "Accueil" %}</a></li>
+  <li aria-current="page">{{ title }}</li>
+</ol>
+{% endblock %}
+
+{% block content %}
+<div class="mairy-page">
+  {% if totals %}
+  <section class="mairy-kpis">
+    {% for total in totals %}
+    <div class="mairy-card mairy-kpi">
+      <span class="mairy-kpi-label">{{ total.label }}</span>
+      <span class="mairy-kpi-value">{{ total.value }}</span>
+    </div>
+    {% endfor %}
+  </section>
+  {% endif %}
+
+  {% for item in charts %}
+  <section class="mairy-card">
+    <div class="mairy-card-head">
+      <h2>{{ item.title }}</h2>
+      <span class="mairy-muted">{% blocktranslate with total=item.chart.total %}12 derniers mois · {{ total }} au total{% endblocktranslate %}</span>
+    </div>
+    {% include "admin/mairy/line_chart.html" with chart=item.chart aria_label=item.title %}
+  </section>
+  {% endfor %}
+
+  {% if breakdowns %}
+  <div class="mairy-breakdowns">
+    {% for block in breakdowns %}
+    <section class="mairy-card">
+      <div class="mairy-card-head">
+        <h2>{{ block.title }}</h2>
+        <span class="mairy-muted">{% blocktranslate with total=block.total %}{{ total }} au total{% endblocktranslate %}</span>
+      </div>
+      <ul class="mairy-bars">
+        {% for row in block.rows %}
+        <li>
+          <span class="mairy-bar-label">{{ row.label }}</span>
+          <span class="mairy-bar-track"><span class="mairy-bar-fill" style="width: {{ row.percent }}%"></span></span>
+          <span class="mairy-bar-value">{{ row.value }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if not totals and not charts and not breakdowns %}
+  <p class="mairy-muted">{% translate "Vous n'avez accès à aucune statistique." %}</p>
+  {% endif %}
+</div>
+{% endblock %}

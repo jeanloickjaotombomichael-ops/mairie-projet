@@ -1,0 +1,7 @@
+{% extends "admin/change_list.html" %}
+{% comment %}
+  Listes de l'administration : sans le panneau « Filtre » de Django (la liste prend toute la largeur).
+  Les filtres passés dans l'adresse (ex. ?status__exact=PENDING depuis la cloche) restent appliqués.
+{% endcomment %}
+
+{% block filters %}{% endblock %}

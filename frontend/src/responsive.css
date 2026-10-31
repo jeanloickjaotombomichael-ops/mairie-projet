@@ -1,0 +1,35 @@
+/* Socle responsive du site et de l'espace usager, en CSS simple (hors Tailwind).
+   Hors de toute couche @layer : ces règles l'emportent sur les utilitaires. */
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Longs mots (e-mails, liens, références) : retour à la ligne plutôt que débordement. */
+body {
+  overflow-wrap: break-word;
+}
+
+/* Écran tactile : iOS zoome la page au focus d'un champ de moins de 16 px. */
+@media (pointer: coarse) {
+  input:not([type='checkbox']):not([type='radio']):not([type='range']):not([type='file']),
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Hauteur d'écran réelle sur mobile (sans la barre d'adresse du navigateur). */
+.full-height {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* Zone de toucher d'au moins 44 × 44 px autour d'une petite icône. */
+.tap-target {
+  display: inline-grid;
+  min-width: 44px;
+  min-height: 44px;
+  place-items: center;
+}

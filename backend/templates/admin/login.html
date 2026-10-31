@@ -1,0 +1,115 @@
+{% load i18n static %}<!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE|default:'fr' }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="NONE,NOARCHIVE">
+  <title>{% if form.errors %}{% translate "Erreur :" %} {% endif %}{% translate "Connexion" %} | {{ site_title|default:_('Django site admin') }}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&display=swap">
+  <link rel="stylesheet" href="{% static 'mairy_admin/login.css' %}">
+  <link rel="stylesheet" href="{% static 'mairy_admin/lang.css' %}?v=3">
+  <link rel="stylesheet" href="{% static 'mairy_admin/responsive.css' %}?v=1">
+</head>
+<body>
+  <div class="lang-corner">{% include "includes/language_switcher.html" with switcher_id="corner" %}</div>
+  {# Fond animé : halos flottants et vagues superposées #}
+  <div class="bg" aria-hidden="true">
+    <span class="blob blob-1"></span>
+    <span class="blob blob-2"></span>
+    <span class="blob blob-3"></span>
+    <svg class="wave wave-1" viewBox="0 0 2880 320" preserveAspectRatio="none">
+      <path d="M0 160 C240 80 480 80 720 160 S1200 240 1440 160 S1920 80 2160 160 S2640 240 2880 160 V320 H0 Z"/>
+    </svg>
+    <svg class="wave wave-2" viewBox="0 0 2880 320" preserveAspectRatio="none">
+      <path d="M0 200 C240 130 480 130 720 200 S1200 270 1440 200 S1920 130 2160 200 S2640 270 2880 200 V320 H0 Z"/>
+    </svg>
+    <svg class="wave wave-3" viewBox="0 0 2880 320" preserveAspectRatio="none">
+      <path d="M0 240 C240 190 480 190 720 240 S1200 290 1440 240 S1920 190 2160 240 S2640 290 2880 240 V320 H0 Z"/>
+    </svg>
+  </div>
+
+  <main class="card">
+    <section class="card-form">
+      <a class="back" href="{% url 'home' %}">&larr; {% translate "Accueil" %}</a>
+
+      <img class="logo" src="{% static 'mairy_admin/logo.png' %}" alt="" width="64" height="64">
+      <h1>{% translate "Connexion" %}</h1>
+      <p class="subtitle">{% translate "Agents et administrateurs de la Commune Urbaine de Mahajanga" %}</p>
+
+      {% if form.errors and not form.non_field_errors %}
+      <p class="error" role="alert">
+        {% blocktranslate count counter=form.errors.items|length %}Please correct the error below.{% plural %}Please correct the errors below.{% endblocktranslate %}
+      </p>
+      {% endif %}
+      {% for error in form.non_field_errors %}
+      <p class="error" role="alert">{{ error }}</p>
+      {% endfor %}
+
+      {% if user.is_authenticated %}
+      <p class="error" role="alert">
+        {% blocktranslate with username=user.get_username %}Vous êtes connecté en tant que {{ username }}, mais ce compte n'a pas accès à cette page. Connectez-vous avec un autre compte.{% endblocktranslate %}
+      </p>
+      {% endif %}
+
+      <form action="{{ app_path }}" method="post" id="login-form" novalidate>
+        {% csrf_token %}
+        <div class="field">
+          <label class="sr-only" for="id_username">{{ form.username.label }}</label>
+          <svg class="field-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+          <input type="text" name="username" id="id_username" value="{{ form.username.value|default:'' }}"
+                 placeholder="{{ form.username.label }}" autocomplete="username" autocapitalize="none"
+                 maxlength="150" required autofocus
+                 {% if form.username.errors %}aria-invalid="true" aria-describedby="username-error"{% endif %}>
+        </div>
+        {% if form.username.errors %}<p class="field-error" id="username-error">{{ form.username.errors.0 }}</p>{% endif %}
+
+        <div class="field">
+          <label class="sr-only" for="id_password">{{ form.password.label }}</label>
+          <svg class="field-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+          <input type="password" name="password" id="id_password" placeholder="{{ form.password.label }}"
+                 autocomplete="current-password" required
+                 {% if form.password.errors %}aria-invalid="true" aria-describedby="password-error"{% endif %}>
+          <button type="button" class="toggle-password" aria-label="{% translate "Afficher le mot de passe" %}" aria-pressed="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+        {% if form.password.errors %}<p class="field-error" id="password-error">{{ form.password.errors.0 }}</p>{% endif %}
+
+        <input type="hidden" name="next" value="{{ next }}">
+
+        {% url 'admin_password_reset' as password_reset_url %}
+        {% if password_reset_url %}
+        <a class="forgot" href="{{ password_reset_url }}">{% translate 'Forgotten your login credentials?' %}</a>
+        {% endif %}
+
+        <button type="submit" class="btn">{% translate "Se connecter" %}</button>
+      </form>
+    </section>
+
+    <section class="card-panel">
+      <div class="panel-content">
+        <h2>{% translate "Bonjour, cher agent&nbsp;!" %}</h2>
+        <p>{% translate "Cet espace est réservé aux agents et aux administrateurs de la Commune. Connectez-vous pour traiter les demandes des usagers." %}</p>
+        <a class="btn-outline" href="{% url 'agents:inscription' %}">{% translate "Demander un accès" %}</a>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Afficher / masquer le mot de passe.
+    (function () {
+      var button = document.querySelector('.toggle-password');
+      var input = document.getElementById('id_password');
+      if (!button || !input) return;
+      button.addEventListener('click', function () {
+        var show = input.type === 'password';
+        input.type = show ? 'text' : 'password';
+        button.setAttribute('aria-pressed', String(show));
+        button.setAttribute('aria-label', show ? 'Masquer le mot de passe' : 'Afficher le mot de passe');
+      });
+    })();
+  </script>
+</body>
+</html>

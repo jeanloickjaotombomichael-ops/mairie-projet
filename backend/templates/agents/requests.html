@@ -1,0 +1,52 @@
+{% extends "agents/base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="mairy-page">
+  <div class="agent-head">
+    <div>
+      <h1>{% translate "Demandes du guichet" %}</h1>
+      <p class="mairy-muted">{{ guichet.title }} — {{ guichet.label }}</p>
+    </div>
+  </div>
+
+  <section class="mairy-card">
+    <div class="agent-toolbar">
+      <nav class="agent-tabs" aria-label="{% translate "Filtrer par statut" %}">
+        {% for tab in tabs %}
+        <a href="?{% if tab.value %}statut={{ tab.value }}{% endif %}{% if query %}{% if tab.value %}&amp;{% endif %}q={{ query|urlencode }}{% endif %}{% if fokontany %}{% if tab.value or query %}&amp;{% endif %}fokontany={{ fokontany|urlencode }}{% endif %}"
+           {% if tab.active %}class="active" aria-current="page"{% endif %}>{{ tab.label }}</a>
+        {% endfor %}
+      </nav>
+      <form method="get" class="agent-search" role="search">
+        {% if status %}<input type="hidden" name="statut" value="{{ status }}">{% endif %}
+        <label class="agent-sr" for="q">{% translate "Rechercher" %}</label>
+        {% if fokontany_choices %}
+        <label class="agent-sr" for="fokontany">{% translate "Fokontany" %}</label>
+        <select id="fokontany" name="fokontany" class="agent-select" onchange="this.form.submit()">
+          <option value="">{% translate "Tous les fokontany" %}</option>
+          {% for name in fokontany_choices %}<option value="{{ name }}"{% if name == fokontany %} selected{% endif %}>{{ name }}</option>{% endfor %}
+        </select>
+        {% endif %}
+        <input id="q" type="search" name="q" value="{{ query }}" placeholder="{% translate "Référence, nom, e-mail, téléphone…" %}">
+        <button type="submit" class="agent-btn">{% translate "Rechercher" %}</button>
+      </form>
+    </div>
+
+    {% include "agents/_requests_table.html" with requests=page.object_list %}
+
+    {% if page.paginator.num_pages > 1 %}
+    <nav class="agent-pagination" aria-label="{% translate "Pages" %}">
+      {% if page.has_previous %}
+      <a href="?{% if status %}statut={{ status }}&amp;{% endif %}{% if query %}q={{ query|urlencode }}&amp;{% endif %}{% if fokontany %}fokontany={{ fokontany|urlencode }}&amp;{% endif %}page={{ page.previous_page_number }}">&larr; {% translate "Précédente" %}</a>
+      {% endif %}
+      <span>{% blocktranslate with number=page.number total=page.paginator.num_pages %}Page {{ number }} sur {{ total }}{% endblocktranslate %}</span>
+      {% if page.has_next %}
+      <a href="?{% if status %}statut={{ status }}&amp;{% endif %}{% if query %}q={{ query|urlencode }}&amp;{% endif %}{% if fokontany %}fokontany={{ fokontany|urlencode }}&amp;{% endif %}page={{ page.next_page_number }}">{% translate "Suivante" %} &rarr;</a>
+      {% endif %}
+    </nav>
+    {% endif %}
+    <p class="mairy-muted agent-count">{% blocktranslate count counter=page.paginator.count %}{{ counter }} demande{% plural %}{{ counter }} demandes{% endblocktranslate %}</p>
+  </section>
+</div>
+{% endblock %}

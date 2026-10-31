@@ -1,0 +1,59 @@
+{% extends "agents/base.html" %}
+{% load i18n %}
+
+{% block back %}{% endblock %}
+
+{% block content %}
+<div class="mairy-page">
+  <a class="agent-back" href="{% url 'agents:documents' number %}">&larr; {% translate "Documents officiels" %}</a>
+
+  <div class="agent-head">
+    <div>
+      <h1>{{ spec.new_label }}</h1>
+      <p class="mairy-muted">
+        {% if origin %}
+        {% blocktranslate with reference=origin.reference person=origin_applicant %}Pré-rempli à partir de la demande <strong>{{ reference }}</strong> de {{ person }} — vérifiez et complétez.{% endblocktranslate %}
+        {% else %}
+        {% translate "Remplissez les champs du document. Une fois enregistré, il est scellé (SHA-256) et ne peut plus être modifié." %}
+        {% endif %}
+      </p>
+    </div>
+  </div>
+
+  <form method="post" class="agent-form" novalidate>
+    {% csrf_token %}
+    {% if origin %}<input type="hidden" name="demande" value="{{ origin.pk }}">{% endif %}
+
+    {% if form.errors %}
+    <p class="agent-alert" role="alert">{% translate "Certains champs sont à corriger : ils sont signalés en rouge ci-dessous." %}</p>
+    {% endif %}
+
+    {% for title, fields in form.sections %}
+    <section class="mairy-card">
+      <div class="mairy-card-head"><h2>{{ title }}</h2></div>
+      <div class="agent-grid">
+        {% for field in fields %}
+        <div class="agent-field{% if field.errors %} has-error{% endif %}{% if field.widget_type == 'textarea' %} agent-span{% endif %}">
+          <label for="{{ field.id_for_label }}">
+            {{ field.label|capfirst }}{% if field.field.required %} <span class="agent-required" aria-hidden="true">*</span>{% endif %}
+          </label>
+          {% if field.field.widget.input_type == 'radio' %}
+          <div class="agent-radios">{% for radio in field %}<label>{{ radio.tag }} {{ radio.choice_label }}</label>{% endfor %}</div>
+          {% else %}
+          {{ field }}
+          {% endif %}
+          {% if field.help_text %}<p class="mairy-muted agent-help">{{ field.help_text }}</p>{% endif %}
+          {% for error in field.errors %}<p class="agent-error">{{ error }}</p>{% endfor %}
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+    {% endfor %}
+
+    <div class="agent-actions">
+      <span class="mairy-muted">{% translate "* Champs obligatoires" %}</span>
+      <button type="submit" class="agent-btn">{% translate "Établir et sceller le document" %}</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

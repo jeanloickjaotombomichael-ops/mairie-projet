@@ -1,0 +1,353 @@
+{% load i18n %}
+{# Boîte mail à la manière de Gmail, partagée par l'administration (admin/mail.html) et l'espace agent (agents/mail.html). #}
+<div class="gm" id="gm">
+  <aside class="gm-side" aria-label="{% translate "Dossiers de la messagerie" %}">
+    <button type="button" class="gm-compose-btn" data-compose-open>
+      <svg class="mairy-ico"><use href="#mi-pencil"/></svg>
+      <span>{% translate "Nouveau message" %}</span>
+    </button>
+
+    <nav>
+      <ul class="gm-folders">
+        {% for folder in mail_folders %}
+        <li>
+          <a href="{{ folder.url }}" class="{% if folder.active %}is-active{% endif %}{% if folder.count and folder.key == 'inbox' %} is-unread{% endif %}"{% if folder.active %} aria-current="page"{% endif %}>
+            <svg class="mairy-ico"><use href="#mi-{{ folder.icon }}"/></svg>
+            <span class="gm-folder-name">{{ folder.label }}</span>
+            {% if folder.count %}<span class="gm-folder-count">{{ folder.count }}</span>{% endif %}
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+      <details class="gm-more"{% if mail_more_open %} open{% endif %}>
+        <summary>
+          <svg class="mairy-ico gm-more-chevron"><use href="#mi-chevron-down"/></svg>
+          <span class="gm-more-closed">{% translate "Plus" %}</span><span class="gm-more-opened">{% translate "Moins" %}</span>
+        </summary>
+        <ul class="gm-folders">
+          {% for folder in mail_more %}
+          <li>
+            <a href="{{ folder.url }}"{% if folder.active %} class="is-active" aria-current="page"{% endif %}>
+              <svg class="mairy-ico"><use href="#mi-{{ folder.icon }}"/></svg>
+              <span class="gm-folder-name">{{ folder.label }}</span>
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+      </details>
+    </nav>
+
+    <div class="gm-labels-head">
+      <h3>{% translate "Libellés" %}</h3>
+      <button type="button" class="gm-icon-btn" data-label-new title="{% translate "Créer un libellé" %}" aria-label="{% translate "Créer un libellé" %}">
+        <svg class="mairy-ico"><use href="#mi-plus"/></svg>
+      </button>
+    </div>
+    <form method="post" class="gm-label-form" data-label-form hidden>
+      {% csrf_token %}
+      <input type="hidden" name="action" value="create_label">
+      <label class="gm-sr" for="gm-label-name">{% translate "Nom du libellé" %}</label>
+      <input id="gm-label-name" name="name" maxlength="60" required placeholder="{% translate "Nom du nouveau libellé" %}">
+      <button type="submit">{% translate "Créer" %}</button>
+    </form>
+    <ul class="gm-folders gm-labels">
+      {% for item in mail_labels %}
+      <li>
+        <a href="{{ item.url }}"{% if item.active %} class="is-active" aria-current="page"{% endif %}>
+          <svg class="mairy-ico"><use href="#mi-tag"/></svg>
+          <span class="gm-folder-name">{{ item.obj.name }}</span>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </aside>
+
+  <section class="gm-main">
+    <form method="get" class="gm-search" role="search">
+      <svg class="mairy-ico"><use href="#mi-search"/></svg>
+      <input type="hidden" name="f" value="{{ mail_key }}">
+      {% if mail_label %}<input type="hidden" name="l" value="{{ mail_label.pk }}">{% endif %}
+      <label class="gm-sr" for="gm-q">{% translate "Rechercher dans les messages" %}</label>
+      <input id="gm-q" type="search" name="q" value="{{ mail_query }}" placeholder="{% translate "Rechercher dans les messages" %}">
+    </form>
+
+    <div class="gm-panel">
+    {% if mail_opened %}
+      {# ---------- Lecture d'un message ---------- #}
+      <form method="post" class="gm-toolbar">
+        {% csrf_token %}
+        <input type="hidden" name="ids" value="{{ mail_opened.pk }}">
+        <input type="hidden" name="back" value="{{ mail_back }}">
+        <a class="gm-icon-btn" href="?{{ mail_back }}" title="{% blocktranslate with folder=mail_title %}Retour à « {{ folder }} »{% endblocktranslate %}">
+          <svg class="mairy-ico"><use href="#mi-arrow-left"/></svg>
+        </a>
+        {% if mail_opened.trashed_at %}
+        <button class="gm-icon-btn" name="op" value="restore" title="{% translate "Restaurer" %}"><svg class="mairy-ico"><use href="#mi-restore"/></svg></button>
+        <button class="gm-icon-btn" name="op" value="delete" title="{% translate "Supprimer définitivement" %}"><svg class="mairy-ico"><use href="#mi-trash"/></svg></button>
+        {% else %}
+        <button class="gm-icon-btn" name="op" value="trash" title="{% translate "Supprimer" %}"><svg class="mairy-ico"><use href="#mi-trash"/></svg></button>
+        {% endif %}
+        <button class="gm-icon-btn" name="op" value="unread" title="{% translate "Marquer comme non lu" %}"><svg class="mairy-ico"><use href="#mi-mail"/></svg></button>
+        {% include "messagerie/_menus.html" %}
+      </form>
+
+      <article class="gm-read">
+        <h2 class="gm-read-subject">
+          {% firstof mail_opened.subject _("(aucun objet)") %}
+          <span class="gm-chip gm-chip-folder">{{ mail_opened.get_folder_display }}</span>
+          {% if mail_opened.citizen_id %}<span class="gm-chip gm-chip-citizen">{% translate "Espace usager" %}</span>{% endif %}
+          {% for label in mail_opened.labels.all %}<span class="gm-chip">{{ label.name }}</span>{% endfor %}
+        </h2>
+        <header class="gm-read-head">
+          <span class="mairy-avatar gm-avatar">{% firstof mail_opened.sender_name|first|upper mail_opened.sender_email|first|upper "?" %}</span>
+          <div class="gm-read-who">
+            <p><strong>{% firstof mail_opened.sender_name mail_opened.sender_email %}</strong>{% if mail_opened.sender_email %} <span class="gm-muted">&lt;{{ mail_opened.sender_email }}&gt;</span>{% endif %}</p>
+            <p class="gm-muted">{% translate "À" %} : {{ mail_opened.to }}</p>
+          </div>
+          <span class="gm-muted gm-read-date">{{ mail_opened.created_at|date:"DATETIME_FORMAT" }}</span>
+          <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="back" value="{% if mail_back %}{{ mail_back }}&{% endif %}m={{ mail_opened.pk }}">
+            <button class="gm-icon-btn gm-star{% if mail_opened.is_starred %} is-on{% endif %}" name="toggle_star" value="{{ mail_opened.pk }}"
+                    title="{% if mail_opened.is_starred %}{% translate "Ne plus suivre" %}{% else %}{% translate "Suivre" %}{% endif %}">
+              <svg class="mairy-ico"><use href="#mi-star"/></svg>
+            </button>
+          </form>
+        </header>
+        <div class="gm-read-body">{{ mail_opened.body|urlize|linebreaksbr }}</div>
+        <div class="gm-read-actions">
+          <a class="gm-pill" href="?{% if mail_back %}{{ mail_back }}&amp;{% endif %}m={{ mail_opened.pk }}&amp;compose=new&amp;reply={{ mail_opened.pk }}">
+            <svg class="mairy-ico"><use href="#mi-reply"/></svg>{% translate "Répondre" %}
+          </a>
+          <a class="gm-pill" href="?{% if mail_back %}{{ mail_back }}&amp;{% endif %}m={{ mail_opened.pk }}&amp;compose=new&amp;forward={{ mail_opened.pk }}">
+            <svg class="mairy-ico"><use href="#mi-forward"/></svg>{% translate "Transférer" %}
+          </a>
+        </div>
+      </article>
+    {% else %}
+      {# ---------- Liste des messages ---------- #}
+      <form method="post" class="gm-list" data-list>
+        {% csrf_token %}
+        <input type="hidden" name="back" value="{{ mail_back }}">
+        <div class="gm-toolbar">
+          <label class="gm-check" title="{% translate "Sélectionner" %}">
+            <span class="gm-sr">{% translate "Tout sélectionner" %}</span>
+            <input type="checkbox" data-select-all>
+          </label>
+          <a class="gm-icon-btn" href="?{{ mail_keep }}" title="{% translate "Actualiser" %}"><svg class="mairy-ico"><use href="#mi-refresh"/></svg></a>
+          <div class="gm-bulk" data-bulk>
+            {% if mail_key == 'trash' %}
+            <button class="gm-icon-btn" name="op" value="restore" title="{% translate "Restaurer" %}"><svg class="mairy-ico"><use href="#mi-restore"/></svg></button>
+            <button class="gm-icon-btn" name="op" value="delete" title="{% translate "Supprimer définitivement" %}"><svg class="mairy-ico"><use href="#mi-trash"/></svg></button>
+            {% else %}
+            <button class="gm-icon-btn" name="op" value="trash" title="{% translate "Supprimer" %}"><svg class="mairy-ico"><use href="#mi-trash"/></svg></button>
+            {% endif %}
+            <button class="gm-icon-btn" name="op" value="read" title="{% translate "Marquer comme lu" %}"><svg class="mairy-ico"><use href="#mi-mail-open"/></svg></button>
+            <button class="gm-icon-btn" name="op" value="unread" title="{% translate "Marquer comme non lu" %}"><svg class="mairy-ico"><use href="#mi-mail"/></svg></button>
+            {% include "messagerie/_menus.html" %}
+          </div>
+          {% if mail_key == 'trash' and mail_page.paginator.count %}
+          <button class="gm-link-btn" name="action" value="empty_trash" data-confirm="{% translate "Supprimer définitivement tous les messages de la corbeille ?" %}">{% translate "Vider la corbeille" %}</button>
+          {% endif %}
+          {% if mail_label %}
+          <button class="gm-link-btn" name="action" value="delete_label" form="gm-delete-label" data-confirm="{% translate "Supprimer ce libellé ? Les messages ne sont pas supprimés." %}">{% translate "Supprimer le libellé" %}</button>
+          {% endif %}
+
+          {% if mail_page.paginator.count %}
+          <div class="gm-pager">
+            <span>{{ mail_page.start_index }}–{{ mail_page.end_index }} {% translate "sur" %} {{ mail_page.paginator.count }}</span>
+            {% if mail_page.has_previous %}<a class="gm-icon-btn" href="?{% if mail_keep %}{{ mail_keep }}&amp;{% endif %}page={{ mail_page.previous_page_number }}" title="{% translate "Plus récents" %}"><svg class="mairy-ico"><use href="#mi-chevron-left"/></svg></a>
+            {% else %}<span class="gm-icon-btn is-disabled"><svg class="mairy-ico"><use href="#mi-chevron-left"/></svg></span>{% endif %}
+            {% if mail_page.has_next %}<a class="gm-icon-btn" href="?{% if mail_keep %}{{ mail_keep }}&amp;{% endif %}page={{ mail_page.next_page_number }}" title="{% translate "Plus anciens" %}"><svg class="mairy-ico"><use href="#mi-chevron-right"/></svg></a>
+            {% else %}<span class="gm-icon-btn is-disabled"><svg class="mairy-ico"><use href="#mi-chevron-right"/></svg></span>{% endif %}
+          </div>
+          {% endif %}
+        </div>
+
+        {% if mail_key == 'trash' and mail_page.paginator.count %}
+        <p class="gm-banner">{% translate "Les messages placés dans la corbeille depuis plus de 30 jours sont automatiquement supprimés." %}</p>
+        {% endif %}
+
+        {% if mail_page.object_list %}
+        <ul class="gm-rows">
+          {% for mail in mail_page.object_list %}
+          <li class="gm-row{% if not mail.is_read %} is-unread{% endif %}">
+            <label class="gm-check"><span class="gm-sr">{% translate "Sélectionner" %}</span><input type="checkbox" name="ids" value="{{ mail.pk }}" data-row-check></label>
+            <button class="gm-icon-btn gm-star{% if mail.is_starred %} is-on{% endif %}" name="toggle_star" value="{{ mail.pk }}"
+                    title="{% if mail.is_starred %}{% translate "Ne plus suivre" %}{% else %}{% translate "Suivre" %}{% endif %}">
+              <svg class="mairy-ico"><use href="#mi-star"/></svg>
+            </button>
+            <button class="gm-icon-btn gm-imp{% if mail.is_important %} is-on{% endif %}" name="toggle_important" value="{{ mail.pk }}"
+                    title="{% if mail.is_important %}{% translate "Marquer comme non important" %}{% else %}{% translate "Marquer comme important" %}{% endif %}">
+              <svg class="mairy-ico"><use href="#mi-important"/></svg>
+            </button>
+            <a class="gm-row-link" href="?{% if mail_back %}{{ mail_back }}&amp;{% endif %}m={{ mail.pk }}">
+              <span class="gm-from">
+                {% if mail.folder == 'DRAFT' %}<span class="gm-draft">{% translate "Brouillon" %}</span>
+                {% elif mail.folder == 'SENT' %}{% translate "À" %} : {{ mail.to }}
+                {% else %}{% firstof mail.sender_name mail.sender_email %}{% endif %}
+              </span>
+              <span class="gm-line">
+                {% if mail.citizen_id %}<span class="gm-chip gm-chip-citizen">{% translate "Usager" %}</span>{% endif %}
+                {% for label in mail.labels.all %}<span class="gm-chip">{{ label.name }}</span>{% endfor %}
+                {% if mail.snoozed_until and mail_key == 'snoozed' %}<span class="gm-chip gm-chip-folder">{% translate "Jusqu'au" %} {{ mail.snoozed_until|date:"d/m H:i" }}</span>{% endif %}
+                <span class="gm-subject">{% firstof mail.subject _("(aucun objet)") %}</span>
+                {% if mail.body %}<span class="gm-snippet"> - {{ mail.body|truncatechars:140 }}</span>{% endif %}
+              </span>
+              <span class="gm-date">{{ mail.short_date }}</span>
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <div class="gm-empty">
+          {% if mail_query %}
+          <p class="gm-empty-title">{% translate "Aucun message ne correspond à votre recherche." %}</p>
+          {% else %}
+          <p class="gm-empty-title">{% blocktranslate with folder=mail_title %}Votre dossier « {{ folder }} » est vide{% endblocktranslate %}</p>
+          {% if mail_key == 'inbox' %}<p>{% translate "Les messages que vous recevez des autres membres de l'équipe s'afficheront ici." %}</p>
+          {% elif mail_key == 'starred' %}<p>{% translate "Suivez des messages pour leur donner un statut spécial et les retrouver facilement. Pour suivre un message, cliquez sur l'étoile à côté de celui-ci." %}</p>
+          {% elif mail_key == 'snoozed' %}<p>{% translate "Les messages mis en attente réapparaissent dans votre boîte de réception à la date choisie." %}</p>
+          {% elif mail_key == 'sent' %}<p>{% translate "Aucun message envoyé. Commencez à écrire avec « Nouveau message »." %}</p>
+          {% elif mail_key == 'drafts' %}<p>{% translate "Vous n'avez enregistré aucun brouillon. Les brouillons vous permettent d'enregistrer un message pour l'envoyer plus tard." %}</p>
+          {% elif mail_key == 'trash' %}<p>{% translate "Aucune conversation dans la corbeille." %}</p>
+          {% elif mail_key == 'label' %}<p>{% translate "Aucune conversation ne porte ce libellé. Sélectionnez des messages puis utilisez le bouton « Libellés »." %}</p>{% endif %}
+          {% endif %}
+        </div>
+        {% endif %}
+      </form>
+      {% if mail_label %}
+      <form method="post" id="gm-delete-label" hidden>{% csrf_token %}<input type="hidden" name="label" value="{{ mail_label.pk }}"></form>
+      {% endif %}
+    {% endif %}
+
+      <footer class="gm-footer">
+        <span>{% blocktranslate with email=user.email|default:user.get_username %}Connecté en tant que {{ email }}{% endblocktranslate %}</span>
+        {% if user.last_login %}<span>{% blocktranslate with since=user.last_login|timesince %}Dernière activité sur le compte : il y a {{ since }}{% endblocktranslate %}</span>{% endif %}
+      </footer>
+    </div>
+  </section>
+
+  {# ---------- Fenêtre « Nouveau message » ---------- #}
+  <div class="gm-compose" data-compose{% if not mail_compose %} hidden{% endif %}>
+    <form method="post" data-compose-form>
+      {% csrf_token %}
+      <input type="hidden" name="back" value="{{ mail_back }}">
+      <input type="hidden" name="draft" value="{{ mail_compose.draft }}">
+      <input type="hidden" name="citizen" value="{{ mail_compose.citizen }}">
+      <header class="gm-compose-head">
+        <span data-compose-title data-default="{% translate "Nouveau message" %}">{% firstof mail_compose.subject _("Nouveau message") %}</span>
+        <button type="button" class="gm-icon-btn" data-compose-min title="{% translate "Réduire" %}" aria-label="{% translate "Réduire" %}"><svg class="mairy-ico"><use href="#mi-minus"/></svg></button>
+        <button type="submit" class="gm-icon-btn" name="action" value="draft" formnovalidate data-compose-close
+                title="{% translate "Enregistrer et fermer" %}" aria-label="{% translate "Enregistrer et fermer" %}"><svg class="mairy-ico"><use href="#mi-x"/></svg></button>
+      </header>
+      <div class="gm-compose-body">
+        <label class="gm-compose-field">
+          <span>{% translate "À" %}</span>
+          <input name="to" value="{{ mail_compose.to }}" list="gm-contacts" autocomplete="off" required>
+        </label>
+        <label class="gm-compose-field">
+          <span class="gm-sr">{% translate "Objet" %}</span>
+          <input name="subject" value="{{ mail_compose.subject }}" maxlength="255" placeholder="{% translate "Objet" %}" data-compose-subject>
+        </label>
+        <label class="gm-sr" for="gm-body">{% translate "Message" %}</label>
+        <textarea id="gm-body" name="body" rows="12">{{ mail_compose.body }}</textarea>
+      </div>
+      <footer class="gm-compose-foot">
+        <button type="submit" class="gm-send" name="action" value="send">{% translate "Envoyer" %}</button>
+        {% if not mail_smtp %}<span class="gm-muted gm-compose-hint">{% translate "Envoi extérieur désactivé (EMAIL_HOST non configuré)" %}</span>{% endif %}
+        <button type="submit" class="gm-icon-btn gm-discard" name="action" value="discard" formnovalidate
+                title="{% translate "Supprimer le brouillon" %}" aria-label="{% translate "Supprimer le brouillon" %}"><svg class="mairy-ico"><use href="#mi-trash"/></svg></button>
+      </footer>
+    </form>
+  </div>
+  <datalist id="gm-contacts">
+    {% for contact in mail_contacts %}<option value="{{ contact.email }}">{{ contact.name }}</option>{% endfor %}
+  </datalist>
+
+  {% if mail_undo %}
+  <div class="gm-toast" role="status" data-toast>
+    <span>{% blocktranslate count counter=mail_undo.ids|length %}{{ counter }} conversation placée dans la corbeille.{% plural %}{{ counter }} conversations placées dans la corbeille.{% endblocktranslate %}</span>
+    <form method="post">
+      {% csrf_token %}
+      <input type="hidden" name="op" value="restore">
+      <input type="hidden" name="back" value="{{ mail_undo.back }}">
+      {% for pk in mail_undo.ids %}<input type="hidden" name="ids" value="{{ pk }}">{% endfor %}
+      <button type="submit" class="gm-toast-undo">{% translate "Annuler" %}</button>
+    </form>
+    <button type="button" class="gm-icon-btn" data-toast-close aria-label="{% translate "Fermer" %}"><svg class="mairy-ico"><use href="#mi-x"/></svg></button>
+  </div>
+  {% endif %}
+</div>
+
+<script>
+  (function () {
+    var root = document.getElementById('gm');
+    var compose = root.querySelector('[data-compose]');
+    var form = root.querySelector('[data-compose-form]');
+
+    root.querySelector('[data-compose-open]').addEventListener('click', function () {
+      compose.hidden = false;
+      compose.classList.remove('is-min');
+      form.elements.to.focus();
+    });
+    root.querySelector('[data-compose-min]').addEventListener('click', function () {
+      compose.classList.toggle('is-min');
+    });
+    // Fenêtre vierge : la fermer ne crée pas de brouillon.
+    root.querySelector('[data-compose-close]').addEventListener('click', function (event) {
+      var empty = ['to', 'subject', 'body'].every(function (name) { return !form.elements[name].value.trim(); });
+      if (empty && !form.elements.draft.value) {
+        event.preventDefault();
+        compose.hidden = true;
+      }
+    });
+    form.elements.subject.addEventListener('input', function () {
+      var title = root.querySelector('[data-compose-title]');
+      title.textContent = this.value || title.dataset.default;
+    });
+    form.addEventListener('keydown', function (event) {
+      if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) {
+        event.preventDefault();
+        form.querySelector('[value="send"]').click();
+      }
+    });
+
+    var labelForm = root.querySelector('[data-label-form]');
+    root.querySelector('[data-label-new]').addEventListener('click', function () {
+      labelForm.hidden = !labelForm.hidden;
+      if (!labelForm.hidden) labelForm.elements.name.focus();
+    });
+
+    root.querySelectorAll('[data-confirm]').forEach(function (button) {
+      button.addEventListener('click', function (event) {
+        if (!window.confirm(button.dataset.confirm)) event.preventDefault();
+      });
+    });
+
+    var list = root.querySelector('[data-list]');
+    if (list) {
+      var all = list.querySelector('[data-select-all]');
+      var checks = list.querySelectorAll('[data-row-check]');
+      var sync = function () {
+        var selected = Array.prototype.filter.call(checks, function (box) { return box.checked; }).length;
+        all.checked = selected > 0 && selected === checks.length;
+        all.indeterminate = selected > 0 && selected < checks.length;
+        list.classList.toggle('has-selection', selected > 0);
+      };
+      all.addEventListener('change', function () {
+        checks.forEach(function (box) { box.checked = all.checked; box.closest('.gm-row').classList.toggle('is-selected', all.checked); });
+        sync();
+      });
+      checks.forEach(function (box) {
+        box.addEventListener('change', function () { box.closest('.gm-row').classList.toggle('is-selected', box.checked); sync(); });
+      });
+    }
+
+    var toast = root.querySelector('[data-toast]');
+    if (toast) {
+      toast.querySelector('[data-toast-close]').addEventListener('click', function () { toast.remove(); });
+      setTimeout(function () { if (toast.isConnected) toast.classList.add('is-leaving'); }, 10000);
+    }
+  })();
+</script>

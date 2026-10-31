@@ -1,0 +1,131 @@
+{% load static i18n %}<!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="NONE,NOARCHIVE">
+  <title>{{ title }} | {{ guichet.title }} — {% translate "Mairie de Mahajanga" %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap">
+  {# Même apparence que l'administration (admin.css), plus le socle propre à l'espace agent. #}
+  <link rel="stylesheet" href="{% static 'mairy_admin/admin.css' %}?v=18">
+  <link rel="stylesheet" href="{% static 'mairy_admin/agents.css' %}?v=14">
+  <link rel="stylesheet" href="{% static 'mairy_admin/lang.css' %}?v=3">
+  <link rel="stylesheet" href="{% static 'mairy_admin/responsive.css' %}?v=1">
+  {% block extrahead %}{% endblock %}
+</head>
+<body class="mairy-shell">
+<div id="container">
+  <header id="header" class="mairy-topbar">
+    <button type="button" class="mairy-burger" aria-label="{% translate "Ouvrir le menu" %}" onclick="document.body.classList.toggle('mairy-nav-open')">
+      <svg class="mairy-ico"><use href="#mi-menu"/></svg>
+    </button>
+    <a class="mairy-logo agent-logo" href="{% url 'agents:dashboard' number %}">{% translate "Agents municipaux" %}</a>
+    <span class="agent-guichet-chip">{{ guichet.title }} · {{ guichet.label }}</span>
+
+    <div class="mairy-topbar-actions">
+      <a class="mairy-topbar-icon" id="agent-bell" href="{% url 'agents:notifications' number %}"
+         title="{% translate "Notifications : nouvelles demandes" %}" aria-label="{% translate "Notifications" %}{% if new_count %} — {% blocktranslate count counter=new_count %}{{ counter }} nouvelle demande{% plural %}{{ counter }} nouvelles demandes{% endblocktranslate %}{% endif %}">
+        <svg class="mairy-ico"><use href="#mi-bell"/></svg>
+        <span class="mairy-dot" id="agent-bell-count"{% if not new_count %} hidden{% endif %}>{{ new_count }}</span>
+      </a>
+      <a class="mairy-topbar-icon mairy-topbar-site" href="{{ frontend_url }}" target="_blank" rel="noopener noreferrer" title="{% translate "Voir le site" %}">
+        <svg class="mairy-ico"><use href="#mi-globe"/></svg>
+      </a>
+      {% include "includes/language_switcher.html" with switcher_id="agent" %}
+      <details class="mairy-account">
+        <summary title="{% firstof user.get_full_name user.get_username %}">
+          <span class="mairy-avatar">{% firstof user.first_name|first user.username|first %}</span>
+        </summary>
+        <div class="mairy-account-menu">
+          <p><strong>{% firstof user.get_full_name user.get_username %}</strong><br><span>{{ guichet.title }} — {{ guichet.label }}</span></p>
+          <a href="{% url 'agents:password' %}"><svg class="mairy-ico"><use href="#mi-gear"/></svg>{% translate "Changer mon mot de passe" %}</a>
+          <form method="post" action="{% url 'deconnexion' %}">
+            {% csrf_token %}
+            <button type="submit"><svg class="mairy-ico"><use href="#mi-logout"/></svg>{% translate "Se déconnecter" %}</button>
+          </form>
+        </div>
+      </details>
+    </div>
+  </header>
+
+  <aside class="mairy-sidebar" aria-label="{% translate "Menu du guichet" %}">
+    {% for section in mairy_nav %}
+    <div class="mairy-nav-section">
+      <h3>{{ section.title }}</h3>
+      <ul>
+        {% for item in section.items %}
+        <li>
+          <a href="{{ item.url }}"{% if item.active %} class="active" aria-current="page"{% endif %}>
+            <svg class="mairy-ico"><use href="#mi-{{ item.icon }}"/></svg>
+            <span>{{ item.label }}</span>
+            {% if item.badge %}<span class="mairy-count">{{ item.badge }}</span>{% endif %}
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endfor %}
+    {% include "includes/assistant.html" %}
+  </aside>
+  <div class="mairy-scrim" onclick="document.body.classList.remove('mairy-nav-open')"></div>
+
+  <div class="main" id="main">
+    <main class="content" id="content-start">
+      <div id="content">
+        {% if messages %}
+        <ul class="agent-messages">
+          {% for message in messages %}<li class="{{ message.tags }}">{{ message }}</li>{% endfor %}
+        </ul>
+        {% endif %}
+        {# Retour au tableau de bord ; les pages qui ont leur propre lien « retour » remplacent ce bloc. #}
+        {% block back %}{% if number %}<a class="agent-back agent-back-top" href="{% url 'agents:dashboard' number %}">&larr; {% translate "Tableau de bord" %}</a>{% endif %}{% endblock %}
+        {% block content %}{% endblock %}
+      </div>
+    </main>
+  </div>
+</div>
+{% include "admin/mairy/icons.html" %}
+
+{# Alerte « nouvelle demande » : la page interroge le serveur toutes les 20 secondes. #}
+<div class="agent-toasts" id="agent-toasts" role="status" aria-live="polite"></div>
+<script>
+  (function () {
+    var url = "{% url 'agents:notifications_count' number %}";
+    var known = {{ new_count|default:0 }};
+    var badge = document.getElementById('agent-bell-count');
+    var toasts = document.getElementById('agent-toasts');
+
+    function toast(item, count) {
+      var link = document.createElement('a');
+      link.className = 'agent-toast';
+      link.href = item.url;
+      var title = document.createElement('strong');
+      title.textContent = count > 1 ? count + ' nouvelles demandes' : 'Nouvelle demande';
+      var text = document.createElement('span');
+      text.textContent = item.type + ' — ' + item.reference + ' · ' + item.applicant;
+      link.appendChild(title);
+      link.appendChild(text);
+      toasts.appendChild(link);
+      setTimeout(function () { link.classList.add('is-leaving'); }, 9000);
+      setTimeout(function () { link.remove(); }, 9600);
+    }
+
+    function check() {
+      fetch(url, { credentials: 'same-origin', headers: { Accept: 'application/json' } })
+        .then(function (response) { return response.ok ? response.json() : null; })
+        .then(function (data) {
+          if (!data) return;
+          badge.textContent = data.new_count;
+          badge.hidden = data.new_count === 0;
+          if (data.new_count > known && data.latest) toast(data.latest, data.new_count - known);
+          known = data.new_count;
+        })
+        .catch(function () {});
+    }
+    setInterval(check, 20000);
+  })();
+</script>
+</body>
+</html>

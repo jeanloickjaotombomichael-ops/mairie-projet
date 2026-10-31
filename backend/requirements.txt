@@ -1,0 +1,17 @@
+Django>=5.2,<7
+django-cors-headers>=4.4
+Pillow>=10.0
+pypdf>=4.0
+qrcode[pil]>=7.4
+# Génération des actes officiels en PDF (espace agent).
+reportlab>=4.2
+python-dotenv>=1.0
+psycopg[binary]>=3.1
+# Vérification des jetons de session Clerk (espace usager).
+PyJWT[crypto]>=2.8
+
+# Optionnel : lecture de QR codes dans les images du scan anti-fraude (staff).
+# Nécessite la bibliothèque système libzbar
+#   Debian/Ubuntu : sudo apt install libzbar0
+#   macOS         : brew install zbar
+# pyzbar>=0.1.9

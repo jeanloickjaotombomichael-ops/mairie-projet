@@ -1,0 +1,264 @@
+@import "tailwindcss";
+@import "@fontsource-variable/geist";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+}
+
+:root {
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+}
+
+/* Thème sombre : appliqué par défaut sur tout le site (classe "dark" sur <html>). */
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+}
+
+/* Fond « vagues bleues » des pages intérieures et de l'espace usager (public/fond-vagues.svg). */
+@layer components {
+  .bg-fond {
+    background: #0a2f73 url('/fond-vagues.svg') center top / cover no-repeat;
+  }
+
+  /* Pied de page : voile noir semi-transparent sur le même fond bleu que les pages. */
+  .bg-fond-voile {
+    background:
+      linear-gradient(rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.62)),
+      #0a2f73 url('/fond-vagues.svg') center bottom / cover no-repeat;
+  }
+
+  /* Sur grand écran, le fond reste en place au défilement (rendu irrégulier sur mobile). */
+  @media (min-width: 1024px) {
+    .bg-fond,
+    .bg-fond-voile {
+      background-attachment: fixed;
+    }
+  }
+}
+
+/* Curseur clignotant de la phrase animée (accueil) */
+.typed-caret {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  margin-left: 2px;
+  vertical-align: -0.12em;
+  background: currentColor;
+  animation: typed-caret-blink 1s steps(1) infinite;
+}
+
+@keyframes typed-caret-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .typed-caret {
+    animation: none;
+  }
+}
+
+/* ---------- Animations du fond (AnimatedBackground) ---------- */
+.fx-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.fx-glow {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  opacity: 0.4;
+  mix-blend-mode: screen;
+  will-change: transform;
+  animation: fx-float 22s ease-in-out infinite alternate;
+}
+
+.fx-glow-1 {
+  top: -10%;
+  left: -8%;
+  width: 42vw;
+  height: 42vw;
+  max-width: 560px;
+  max-height: 560px;
+  background: #38bdf8;
+}
+
+.fx-glow-2 {
+  top: 30%;
+  right: -10%;
+  width: 38vw;
+  height: 38vw;
+  max-width: 520px;
+  max-height: 520px;
+  background: #8b5cf6;
+  animation-duration: 26s;
+  animation-delay: -8s;
+}
+
+.fx-glow-3 {
+  bottom: -15%;
+  left: 30%;
+  width: 34vw;
+  height: 34vw;
+  max-width: 460px;
+  max-height: 460px;
+  background: #22c55e;
+  opacity: 0.22;
+  animation-duration: 30s;
+  animation-delay: -15s;
+}
+
+@keyframes fx-float {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(8vw, -6vh, 0) scale(1.15);
+  }
+  100% {
+    transform: translate3d(-5vw, 7vh, 0) scale(0.92);
+  }
+}
+
+/* Grille lumineuse qui s'estompe vers les bords */
+.fx-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse at 50% 30%, #000 0%, transparent 70%);
+  animation: fx-grid-drift 40s linear infinite;
+}
+
+@keyframes fx-grid-drift {
+  to {
+    background-position: 56px 56px;
+  }
+}
+
+/* Reflet qui traverse l'écran en diagonale de temps en temps */
+.fx-sweep {
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 40%;
+  height: 200%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.07), transparent);
+  transform: rotate(18deg);
+  animation: fx-sweep 11s ease-in-out infinite;
+}
+
+@keyframes fx-sweep {
+  0%,
+  55% {
+    left: -60%;
+  }
+  100% {
+    left: 130%;
+  }
+}
+
+/* Apparition douce du contenu de l'accueil */
+.fx-rise {
+  animation: fx-rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes fx-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fx-glow,
+  .fx-grid,
+  .fx-sweep,
+  .fx-rise {
+    animation: none;
+  }
+
+  .fx-sweep {
+    display: none;
+  }
+}

@@ -1,0 +1,3130 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-26 17:22+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: mg\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: agents/admin.py:20 templates/admin/index.html:51
+#: templates/admin/security.html:90
+msgid "Agent"
+msgstr "Mpiasa"
+
+#: agents/admin.py:24
+msgid "Nom d'utilisateur"
+msgstr "Anaran’ny mpampiasa"
+
+#: agents/admin.py:28 documents/models.py:48
+msgid "Actif"
+msgstr "Mavitrika"
+
+#: agents/admin.py:38
+msgid "Demandée (à décider)"
+msgstr "Nangatahina (miandry fanapahan-kevitra)"
+
+#: agents/admin.py:38
+msgid "Supprimé"
+msgstr "Voafafa"
+
+#: agents/admin.py:38
+msgid "Aucune"
+msgstr "Tsy misy"
+
+#: agents/admin.py:69
+msgid "Titulaire / objet"
+msgstr "Tompony / foto-dresaka"
+
+#: agents/admin.py:73
+msgid "Envoyé à l'usager"
+msgstr "Nalefa tany amin’ny olom-pirenena"
+
+#: agents/admin.py:77
+msgid "Suppression"
+msgstr "Famafana"
+
+#: agents/admin.py:80
+#, python-format
+msgid "Supprimé le %(date)s"
+msgstr "Voafafa ny %(date)s"
+
+#: agents/admin.py:82
+#, python-format
+msgid "Demandée : %(reason)s"
+msgstr "Nangatahina: %(reason)s"
+
+#: agents/admin.py:97
+msgid "Accepter la suppression demandée par l'agent"
+msgstr "Ekeo ny famafana nangatahin’ny mpiasa"
+
+#: agents/admin.py:105
+#, python-format
+msgid "%(count)s document(s) supprimé(s)."
+msgstr "Antontan-taratasy %(count)s voafafa."
+
+#: agents/admin.py:107
+msgid "Refuser la suppression demandée par l'agent"
+msgstr "Laviso ny famafana nangatahin’ny mpiasa"
+
+#: agents/admin.py:112
+#, python-format
+msgid ""
+"%(count)s demande(s) de suppression refusée(s) : les documents sont "
+"conservés."
+msgstr ""
+"Fangatahana famafana %(count)s nolavina: voatahiry ireo antontan-taratasy."
+
+#: agents/admin.py:115 documents/admin.py:63
+msgid "Révoquer les documents sélectionnés"
+msgstr "Foano ireo antontan-taratasy voafidy"
+
+#: agents/admin.py:118 documents/admin.py:75
+#, python-format
+msgid "%(count)s document(s) révoqué(s)."
+msgstr "Antontan-taratasy %(count)s nofoanana."
+
+#: agents/apps.py:8 core/admin_site.py:21
+msgid "Agents municipaux"
+msgstr "Mpiasan’ny kaominina"
+
+#: agents/assistant.py:140
+#, python-format
+msgid ""
+"Je suis l'assistant de l'application. Je ne connais que les demandes et "
+"documents de %(where)s. Exemples :"
+msgstr ""
+"Izaho no mpanampy amin'ity rindranasa ity. Ny fangatahana sy antontan-"
+"taratasin'ny %(where)s ihany no fantatro. Ohatra (amin'ny teny frantsay):"
+
+#: agents/assistant.py:141
+msgid "votre guichet"
+msgstr "ny varavarankelinao"
+
+#: agents/assistant.py:141
+msgid "tous les guichets"
+msgstr "varavarankely rehetra"
+
+#: agents/assistant.py:142
+msgid "• « Quelle est la prochaine demande à traiter ? »"
+msgstr "• « Quelle est la prochaine demande à traiter ? »"
+
+#: agents/assistant.py:143
+msgid "• « Combien de demandes en attente ? »"
+msgstr "• « Combien de demandes en attente ? »"
+
+#: agents/assistant.py:144
+msgid "• « Montre la demande MV-2026-000012 » ou « la demande de Rabe »"
+msgstr "• « Montre la demande MV-2026-000012 » na « la demande de Rabe »"
+
+#: agents/assistant.py:145
+msgid "• « Prends en charge la prochaine demande à ma place »"
+msgstr "• « Prends en charge la prochaine demande à ma place »"
+
+#: agents/assistant.py:146
+msgid ""
+"• « Approuve cette demande : votre acte est prêt » / « Refuse la demande de "
+"Rabe motif : pièce manquante »"
+msgstr ""
+"• « Approuve cette demande : votre acte est prêt » / « Refuse la demande de "
+"Rabe motif : pièce manquante »"
+
+#: agents/assistant.py:149
+msgid "• « Établis l'acte de la prochaine demande »"
+msgstr "• « Établis l'acte de la prochaine demande »"
+
+#: agents/assistant.py:151
+msgid "• « Y a-t-il des fraudes ? » · « Demandes d'accès agent en attente ? »"
+msgstr ""
+"• « Y a-t-il des fraudes ? » · « Demandes d'accès agent en attente ? »"
+
+#: agents/assistant.py:157
+msgid ""
+"Je ne peux pas vous aider pour cela : je réponds seulement aux questions sur"
+" l'application (demandes, documents, guichets) et j'effectue les tâches de "
+"cette page. Tapez « aide » pour des exemples."
+msgstr ""
+"Tsy afaka manampy anao amin'izany aho: ny fanontaniana momba ny rindranasa "
+"ihany (fangatahana, antontan-taratasy, varavarankely) no valiako ary ny asa "
+"amin'ity pejy ity no ataoko. Soraty « aide » raha hahita ohatra."
+
+#: agents/assistant.py:169
+#, python-format
+msgid ""
+"Demandes : %(total)s au total — %(new_today)s aujourd'hui, %(new_week)s "
+"cette semaine."
+msgstr ""
+"Fangatahana: %(total)s raha atambatra — %(new_today)s androany, %(new_week)s"
+" tamin'ity herinandro ity."
+
+#: agents/assistant.py:181
+#, python-format
+msgid "Documents officiels établis : %(count)s."
+msgstr "Antontan-taratasy ofisialy natao: %(count)s."
+
+#: agents/assistant.py:189
+#, python-format
+msgid "Par type : %(list)s."
+msgstr "Araka ny karazany: %(list)s."
+
+#: agents/assistant.py:209
+msgid "Aucune demande en attente : tout est à jour."
+msgstr "Tsy misy fangatahana miandry: vita daholo."
+
+#: agents/assistant.py:212
+#, python-format
+msgid ""
+"%(count)s demande(s) en attente. À traiter en premier (ordre d'arrivée) :"
+msgstr ""
+"Fangatahana %(count)s miandry. Karakaraina voalohany (araka ny filaharana):"
+
+#: agents/assistant.py:220 templates/admin/index.html:87
+#: templates/agents/_requests_table.html:23
+#: templates/agents/notifications.html:30
+msgid "Aucune demande pour le moment."
+msgstr "Tsy mbola misy fangatahana."
+
+#: agents/assistant.py:221
+msgid "Les dernières demandes reçues :"
+msgstr "Ireo fangatahana farany voaray:"
+
+#: agents/assistant.py:232
+#, python-format
+msgid ""
+"%(total)s document(s) contrôlé(s) : %(altered)s altéré(s), %(deletions)s "
+"suppression(s) demandée(s)."
+msgstr ""
+"Antontan-taratasy %(total)s voamarina: %(altered)s novaina, %(deletions)s "
+"nangatahina hofafana."
+
+#: agents/assistant.py:239
+msgid "Ouvrir « Sécurité et fraude »"
+msgstr "Sokafy « Fiarovana sy hosoka »"
+
+#: agents/assistant.py:250
+#, python-format
+msgid "%(count)s demande(s) d'accès agent en attente de votre validation."
+msgstr "Fangatahana fidirana mpiasa %(count)s miandry ny fankatoavanao."
+
+#: agents/assistant.py:251
+msgid "Ouvrir les demandes d'accès agent"
+msgstr "Sokafy ny fangatahana fidirana mpiasa"
+
+#: agents/assistant.py:263
+#, python-format
+msgid "%(count)s message(s) de contact non traité(s)."
+msgstr "Hafatra fifandraisana %(count)s tsy mbola voakarakara."
+
+#: agents/assistant.py:264
+msgid "Ouvrir les messages de contact"
+msgstr "Sokafy ny hafatra fifandraisana"
+
+#: agents/assistant.py:307
+msgid ""
+"Je ne trouve pas la demande. Donnez sa référence (ex. MV-2026-000012), le "
+"nom de l'usager, ou dites « la prochaine demande »."
+msgstr ""
+"Tsy hitako ilay fangatahana. Omeo ny laharany (ohatra MV-2026-000012), ny "
+"anaran'ny olom-pirenena, na lazao hoe « la prochaine demande »."
+
+#: agents/assistant.py:311
+msgid "Plusieurs demandes correspondent. Précisez la référence :"
+msgstr "Fangatahana maromaro no mifanaraka. Lazao ny laharany:"
+
+#: agents/assistant.py:334 agents/assistant.py:362 agents/assistant.py:472
+msgid "Votre compte ne permet pas de modifier les demandes."
+msgstr "Tsy afaka manova fangatahana ny kaontinao."
+
+#: agents/assistant.py:343
+#, python-format
+msgid ""
+"Je vais passer la demande %(reference)s (%(person)s) au statut « %(status)s "
+"»."
+msgstr "Hovaiko ho « %(status)s » ny fangatahana %(reference)s (%(person)s)."
+
+#: agents/assistant.py:347
+#, python-format
+msgid "Message envoyé à l'usager : « %(message)s »"
+msgstr "Hafatra halefa amin'ny olom-pirenena: « %(message)s »"
+
+#: agents/assistant.py:349
+msgid "Astuce : ajoutez « motif : … » pour expliquer le refus à l'usager."
+msgstr ""
+"Torohevitra: ampio « motif : … » hanazavana ny fandavana amin'ny olom-"
+"pirenena."
+
+#: agents/assistant.py:351
+msgid "Confirmez-vous ?"
+msgstr "Hamafisinao ve?"
+
+#: agents/assistant.py:360
+msgid ""
+"Écrivez le message après deux-points, ex. « Réponds à cette demande : votre "
+"dossier est prêt »"
+msgstr ""
+"Soraty aorian'ny teboka roa ny hafatra, ohatra « Réponds à cette demande : "
+"votre dossier est prêt »"
+
+#: agents/assistant.py:371
+#, python-format
+msgid ""
+"Je vais envoyer ce message à %(person)s (demande %(reference)s) : « "
+"%(message)s ». Confirmez-vous ?"
+msgstr ""
+"Halefako amin'i %(person)s (fangatahana %(reference)s) ity hafatra ity: « "
+"%(message)s ». Hamafisinao ve?"
+
+#: agents/assistant.py:386 agents/views.py:379
+msgid "Ce guichet n'établit pas de documents officiels."
+msgstr "Tsy mamoaka antontan-taratasy ofisialy ity varavarankely ity."
+
+#: agents/assistant.py:393
+#, python-format
+msgid ""
+"Le formulaire est pré-rempli avec les informations de la demande "
+"%(reference)s : vérifiez-le, complétez-le puis enregistrez pour sceller le "
+"document."
+msgstr ""
+"Efa nofenoina mialoha amin'ny mombamomba ny fangatahana %(reference)s ny "
+"taratasy: hamarino, fenoy ary tehirizo mba hisian'ny tombo-kase."
+
+#: agents/assistant.py:404
+msgid "Demandes trouvées :"
+msgstr "Fangatahana hita:"
+
+#: agents/assistant.py:407
+#, python-format
+msgid "Demande %(reference)s — %(type)s, déposée le %(date)s par %(person)s."
+msgstr ""
+"Fangatahana %(reference)s — %(type)s, napetrak'i %(person)s ny %(date)s."
+
+#: agents/assistant.py:411
+#, python-format
+msgid "Statut : %(status)s."
+msgstr "Sata: %(status)s."
+
+#: agents/assistant.py:416
+#, python-format
+msgid "À traiter après %(reference)s (ordre d'arrivée)."
+msgstr "Karakaraina aorian'ny %(reference)s (araka ny filaharana)."
+
+#: agents/assistant.py:417
+msgid "C'est la prochaine demande de ce type à traiter."
+msgstr "Ity no fangatahana manaraka amin'ity karazana ity hokarakaraina."
+
+#: agents/assistant.py:420
+#, python-format
+msgid "Réponse déjà envoyée : « %(message)s »"
+msgstr "Valiny efa nalefa: « %(message)s »"
+
+#: agents/assistant.py:428
+msgid "L'assistant est réservé aux agents et aux administrateurs."
+msgstr "Natokana ho an'ny mpiasa sy mpitantana ny mpanampy."
+
+#: agents/assistant.py:470
+msgid "Action inconnue."
+msgstr "Hetsika tsy fantatra."
+
+#: agents/assistant.py:475
+msgid "Je ne trouve pas la demande."
+msgstr "Tsy hitako ilay fangatahana."
+
+#: agents/assistant.py:485
+#, python-format
+msgid "Action impossible : %(errors)s"
+msgstr "Tsy azo atao: %(errors)s"
+
+#: agents/assistant.py:488
+#, python-format
+msgid "C'est fait : la demande %(reference)s est maintenant « %(status)s »."
+msgstr "Vita: « %(status)s » izao ny fangatahana %(reference)s."
+
+#: agents/forms.py:36
+msgid "Identifiant ou mot de passe incorrect."
+msgstr "Diso ny anarana fidirana na ny teny miafina."
+
+#: agents/forms.py:38
+msgid ""
+"Ce compte n'a pas encore de rôle. Attendez que l'administrateur valide votre"
+" demande d'accès et vous attribue un guichet."
+msgstr ""
+"Mbola tsy manana andraikitra ity kaonty ity. Andraso ny mpitantana "
+"hanamarina ny fangatahanao ary hanome anao varavarankely."
+
+#: agents/forms.py:42
+msgid ""
+"Votre demande d'accès est en attente de validation par l'administrateur. "
+"Vous pourrez vous connecter dès qu'elle sera acceptée."
+msgstr ""
+"Miandry fankatoavan’ny mpitantana ny fangatahanao. Afaka miditra ianao raha "
+"vao voaray izany."
+
+#: agents/forms.py:45
+msgid "Votre demande d'accès a été refusée par l'administrateur."
+msgstr "Nolavin’ny mpitantana ny fangatahanao hiditra."
+
+#: agents/forms.py:50
+msgid "E-mail ou nom d'utilisateur"
+msgstr "Mailaka na anaran’ny mpampiasa"
+
+#: agents/forms.py:86
+msgid "Statut de la demande"
+msgstr "Satan’ny fangatahana"
+
+#: agents/forms.py:87
+msgid "Réponse à l'usager"
+msgstr "Valiny ho an’ny olom-pirenena"
+
+#: agents/forms.py:90
+msgid "Elle apparaît dans les notifications de l'usager."
+msgstr "Hiseho ao amin’ny fampahafantarana ny olom-pirenena izany."
+
+#: agents/forms.py:109
+msgid "Nom"
+msgstr "Anarana"
+
+#: agents/forms.py:110
+msgid "Prénom"
+msgstr "Fanampin’anarana"
+
+#: agents/forms.py:111
+msgid "Ce sera votre identifiant de connexion."
+msgstr "Io no ho anarana fidiranao."
+
+#: agents/forms.py:112 agents/views.py:191
+msgid "Mot de passe"
+msgstr "Teny miafina"
+
+#: agents/forms.py:113
+msgid "Confirmer le mot de passe"
+msgstr "Hamafiso ny teny miafina"
+
+#: agents/forms.py:131
+msgid "Un compte existe déjà avec cet e-mail."
+msgstr "Efa misy kaonty mampiasa io mailaka io."
+
+#: agents/forms.py:136
+msgid "Une demande avec cet e-mail attend déjà la validation."
+msgstr "Efa misy fangatahana miandry fankatoavana mampiasa io mailaka io."
+
+#: agents/forms.py:144
+msgid "Les deux mots de passe ne correspondent pas."
+msgstr "Tsy mitovy ireo teny miafina roa."
+
+#: agents/forms.py:172
+msgid "Enregistrement"
+msgstr "Fanoratana"
+
+#: agents/forms.py:232
+msgid "La date de l'acte ne peut pas être dans le futur."
+msgstr "Tsy azo atao amin’ny ho avy ny datin’ny soratra."
+
+#: agents/forms.py:240
+msgid "Informations sur l'enfant"
+msgstr "Mombamomba ny zaza"
+
+#: agents/forms.py:241
+msgid "Père"
+msgstr "Ray"
+
+#: agents/forms.py:242
+msgid "Mère"
+msgstr "Reny"
+
+#: agents/forms.py:243 agents/forms.py:324
+msgid "Déclaration et délivrance"
+msgstr "Fanambarana sy famoahana"
+
+#: agents/forms.py:257
+msgid "Laissez vide si la filiation paternelle n'est pas établie."
+msgstr "Avelao ho banga raha tsy fantatra ny ray."
+
+#: agents/forms.py:258
+msgid "Séparez les prénoms par une virgule : « Lucas, Alexandre »."
+msgstr "Sarahy amin’ny faingo ny fanampin’anarana: « Lucas, Alexandre »."
+
+#: agents/forms.py:263
+msgid "La date de naissance ne peut pas être dans le futur."
+msgstr "Tsy azo atao amin’ny ho avy ny daty nahaterahana."
+
+#: agents/forms.py:264
+msgid "L'acte ne peut pas être dressé avant la naissance."
+msgstr "Tsy azo soratana alohan’ny fahaterahana ny soratra."
+
+#: agents/forms.py:270
+msgid "Indiquez le nom du père (ou videz ses autres champs)."
+msgstr "Soraty ny anaran’ny ray (na fafao ireo saha hafa momba azy)."
+
+#: agents/forms.py:278
+msgid "Célébration"
+msgstr "Fankalazana"
+
+#: agents/forms.py:279
+msgid "L'époux"
+msgstr "Ny vady lahy"
+
+#: agents/forms.py:284
+msgid "L'épouse"
+msgstr "Ny vady vavy"
+
+#: agents/forms.py:289
+msgid "Témoins"
+msgstr "Vavolombelona"
+
+#: agents/forms.py:290 agents/forms.py:356 agents/forms.py:382
+msgid "Délivrance"
+msgstr "Famoahana"
+
+#: agents/forms.py:304
+msgid "La date du mariage ne peut pas être dans le futur."
+msgstr "Tsy azo atao amin’ny ho avy ny datin’ny fanambadiana."
+
+#: agents/forms.py:305
+msgid "L'acte ne peut pas être dressé avant le mariage."
+msgstr "Tsy azo soratana alohan’ny fanambadiana ny soratra."
+
+#: agents/forms.py:308
+msgid "Doit être antérieure à la date du mariage."
+msgstr "Tsy maintsy alohan’ny datin’ny fanambadiana."
+
+#: agents/forms.py:316
+msgid "Le défunt"
+msgstr "Ny maty"
+
+#: agents/forms.py:320
+msgid "Situation familiale"
+msgstr "Toe-javatra ara-pianakaviana"
+
+#: agents/forms.py:323
+msgid "Décès"
+msgstr "Fahafatesana"
+
+#: agents/forms.py:341
+msgid "La date du décès ne peut pas être dans le futur."
+msgstr "Tsy azo atao amin’ny ho avy ny datin’ny fahafatesana."
+
+#: agents/forms.py:342
+msgid "L'acte ne peut pas être dressé avant le décès."
+msgstr "Tsy azo soratana alohan’ny fahafatesana ny soratra."
+
+#: agents/forms.py:343
+msgid "Doit être antérieure à la date du décès."
+msgstr "Tsy maintsy alohan’ny datin’ny fahafatesana."
+
+#: agents/forms.py:346
+msgid "Âge invalide."
+msgstr "Taona tsy mety."
+
+#: agents/forms.py:354 agents/official.py:166
+msgid "Texte"
+msgstr "Lahatsoratra"
+
+#: agents/forms.py:355
+msgid "Extrait certifié"
+msgstr "Sombiny voamarina"
+
+#: agents/forms.py:370
+msgid "La date du texte ne peut pas être dans le futur."
+msgstr "Tsy azo atao amin’ny ho avy ny datin’ny lahatsoratra."
+
+#: agents/forms.py:371
+msgid "L'extrait ne peut pas précéder le texte."
+msgstr "Tsy azo atao alohan’ny lahatsoratra ny sombiny."
+
+#: agents/forms.py:379
+msgid "Service"
+msgstr "Sampan-draharaha"
+
+#: agents/forms.py:380 agents/official.py:168
+msgid "Bénéficiaire"
+msgstr "Mpisitraka"
+
+#: agents/forms.py:381
+msgid "Objet"
+msgstr "Foto-dresaka"
+
+#: agents/forms.py:397
+msgid "Le montant ne peut pas être négatif."
+msgstr "Tsy azo ambanin’ny aotra ny vola."
+
+#: agents/forms.py:398
+msgid "La date de validité doit suivre la date de l'acte."
+msgstr ""
+"Tsy maintsy aorian’ny datin’ny soratra ny daty fiafaran’ny fahamanan-kery."
+
+#: agents/guichets.py:20
+#, python-brace-format
+msgid "Guichet {number}"
+msgstr "Varavarankely {number}"
+
+#: agents/guichets.py:24 core/admin_site.py:30
+msgid "Actes de naissance"
+msgstr "Kopia nahaterahana"
+
+#: agents/guichets.py:25 core/admin_site.py:32
+msgid "Actes de mariage"
+msgstr "Soratra fanambadiana"
+
+#: agents/guichets.py:26 core/admin_site.py:34
+msgid "Actes de décès"
+msgstr "Soratra fahafatesana"
+
+#: agents/guichets.py:27 core/admin_site.py:36 espace/models.py:20
+msgid "Législation"
+msgstr "Lalàna sy didy"
+
+#: agents/guichets.py:28
+msgid "Recette, transport, marché et autres services"
+msgstr "Ladoany, fitaterana, tsena sy sampan-draharaha hafa"
+
+#: agents/models.py:22
+msgid "compte"
+msgstr "kaonty"
+
+#: agents/models.py:24 documents/models.py:214 espace/models.py:30
+msgid "guichet"
+msgstr "varavarankely"
+
+#: agents/models.py:25 agents/models.py:90 documents/models.py:77
+msgid "créé le"
+msgstr "noforonina ny"
+
+#: agents/models.py:27
+msgid "notifications vues le"
+msgstr "fampahafantarana hita ny"
+
+#: agents/models.py:31
+msgid "agent municipal"
+msgstr "mpiasan’ny kaominina"
+
+#: agents/models.py:32
+msgid "agents municipaux"
+msgstr "mpiasan’ny kaominina"
+
+#: agents/models.py:61 templates/admin/security.html:69
+msgid "Valide"
+msgstr "Manan-kery"
+
+#: agents/models.py:62 documents/models.py:49
+#: templates/agents/document_detail.html:109
+msgid "Révoqué"
+msgstr "Nofoanana"
+
+#: agents/models.py:73
+msgid "numéro d'acte"
+msgstr "laharan’ny soratra"
+
+#: agents/models.py:76
+msgid "région"
+msgstr "faritra"
+
+#: agents/models.py:77
+msgid "district"
+msgstr "distrika"
+
+#: agents/models.py:78
+msgid "commune"
+msgstr "kaominina"
+
+#: agents/models.py:79
+msgid "date et heure de l'acte"
+msgstr "daty sy ora nanoratana"
+
+#: agents/models.py:84
+msgid "demande d'origine"
+msgstr "fangatahana niaviany"
+
+#: agents/models.py:88
+msgid "établi par"
+msgstr "nataon’i"
+
+#: agents/models.py:91 documents/models.py:73 documents/models.py:218
+#: espace/models.py:31
+msgid "statut"
+msgstr "sata"
+
+#: agents/models.py:93
+msgid "envoyé à l'usager le"
+msgstr "nalefa tamin’ny olom-pirenena ny"
+
+#: agents/models.py:96
+msgid "envoyé par"
+msgstr "nalefan’i"
+
+#: agents/models.py:99
+msgid "suppression demandée le"
+msgstr "famafana nangatahina ny"
+
+#: agents/models.py:102
+msgid "suppression demandée par"
+msgstr "famafana nangatahin’i"
+
+#: agents/models.py:104
+msgid "motif de la suppression"
+msgstr "antony famafana"
+
+#: agents/models.py:107 documents/models.py:76
+msgid "supprimé le"
+msgstr "voafafa ny"
+
+#: agents/models.py:110
+msgid "supprimé par"
+msgstr "nofafan’i"
+
+#: agents/models.py:114 documents/models.py:70
+msgid "empreinte SHA-256"
+msgstr "dian-tanana SHA-256"
+
+#: agents/models.py:115 documents/models.py:71
+msgid "signature HMAC-SHA256"
+msgstr "sonia HMAC-SHA256"
+
+#: agents/models.py:247
+msgid "Masculin"
+msgstr "Lahy"
+
+#: agents/models.py:248
+msgid "Féminin"
+msgstr "Vavy"
+
+#: agents/models.py:258
+msgid "nom de famille de l'enfant"
+msgstr "anaran’ny zaza"
+
+#: agents/models.py:259
+msgid "prénoms de l'enfant"
+msgstr "fanampin’anaran’ny zaza"
+
+#: agents/models.py:260 agents/models.py:408
+msgid "sexe"
+msgstr "maha-lahy na maha-vavy"
+
+#: agents/models.py:261
+msgid "date et heure de naissance"
+msgstr "daty sy ora nahaterahana"
+
+#: agents/models.py:262
+msgid "lieu de naissance"
+msgstr "toerana nahaterahana"
+
+#: agents/models.py:265
+msgid "nom complet du père"
+msgstr "anarana feno-n’ny ray"
+
+#: agents/models.py:266
+msgid "date de naissance du père"
+msgstr "daty nahaterahan’ny ray"
+
+#: agents/models.py:267
+msgid "lieu de naissance du père"
+msgstr "toerana nahaterahan’ny ray"
+
+#: agents/models.py:268
+msgid "profession du père"
+msgstr "asan’ny ray"
+
+#: agents/models.py:269
+msgid "domicile du père"
+msgstr "fonenan’ny ray"
+
+#: agents/models.py:272
+msgid "nom complet de la mère"
+msgstr "anarana feno-n’ny reny"
+
+#: agents/models.py:273
+msgid "date de naissance de la mère"
+msgstr "daty nahaterahan’ny reny"
+
+#: agents/models.py:274
+msgid "lieu de naissance de la mère"
+msgstr "toerana nahaterahan’ny reny"
+
+#: agents/models.py:275
+msgid "profession de la mère"
+msgstr "asan’ny reny"
+
+#: agents/models.py:276
+msgid "domicile de la mère"
+msgstr "fonenan’ny reny"
+
+#: agents/models.py:279 agents/models.py:423
+msgid "nom du déclarant"
+msgstr "anaran’ny mpanambara"
+
+#: agents/models.py:281 agents/models.py:425
+msgid "qualité du déclarant"
+msgstr "toeran’ny mpanambara"
+
+#: agents/models.py:281
+msgid "Ex. : le père de l'enfant, la sage-femme…"
+msgstr "Ohatra: ny rain’ny zaza, ny mpampivelona…"
+
+#: agents/models.py:283 agents/models.py:358 agents/models.py:430
+msgid "nom de l'officier d'état civil"
+msgstr "anaran’ny mpiandraikitra ny sora-piankohonana"
+
+#: agents/models.py:285 agents/models.py:359 agents/models.py:431
+msgid "qualité de l'officier"
+msgstr "toeran’ny mpiandraikitra"
+
+#: agents/models.py:287 agents/models.py:360 agents/models.py:432
+msgid "mentions marginales"
+msgstr "fanamarihana an-tsisiny"
+
+#: agents/models.py:297
+msgid "acte de naissance"
+msgstr "kopia nahaterahana"
+
+#: agents/models.py:298
+msgid "actes de naissance"
+msgstr "kopia nahaterahana"
+
+#: agents/models.py:321
+msgid "date et heure du mariage"
+msgstr "daty sy ora nanambadiana"
+
+#: agents/models.py:322
+msgid "lieu de célébration"
+msgstr "toerana nanaovana ny fankalazana"
+
+#: agents/models.py:324
+msgid "nom de l'époux"
+msgstr "anaran’ny vady lahy"
+
+#: agents/models.py:325
+msgid "prénoms de l'époux"
+msgstr "fanampin’anaran’ny vady lahy"
+
+#: agents/models.py:326
+msgid "date de naissance de l'époux"
+msgstr "daty nahaterahan’ny vady lahy"
+
+#: agents/models.py:327
+msgid "lieu de naissance de l'époux"
+msgstr "toerana nahaterahan’ny vady lahy"
+
+#: agents/models.py:328
+msgid "profession de l'époux"
+msgstr "asan’ny vady lahy"
+
+#: agents/models.py:329
+msgid "domicile de l'époux"
+msgstr "fonenan’ny vady lahy"
+
+#: agents/models.py:330
+msgid "père de l'époux"
+msgstr "rain’ny vady lahy"
+
+#: agents/models.py:331
+msgid "profession du père de l'époux"
+msgstr "asan’ny rain’ny vady lahy"
+
+#: agents/models.py:332
+msgid "mère de l'époux"
+msgstr "renin’ny vady lahy"
+
+#: agents/models.py:333
+msgid "profession de la mère de l'époux"
+msgstr "asan’ny renin’ny vady lahy"
+
+#: agents/models.py:335
+msgid "nom de l'épouse"
+msgstr "anaran’ny vady vavy"
+
+#: agents/models.py:336
+msgid "prénoms de l'épouse"
+msgstr "fanampin’anaran’ny vady vavy"
+
+#: agents/models.py:337
+msgid "date de naissance de l'épouse"
+msgstr "daty nahaterahan’ny vady vavy"
+
+#: agents/models.py:338
+msgid "lieu de naissance de l'épouse"
+msgstr "toerana nahaterahan’ny vady vavy"
+
+#: agents/models.py:339
+msgid "profession de l'épouse"
+msgstr "asan’ny vady vavy"
+
+#: agents/models.py:340
+msgid "domicile de l'épouse"
+msgstr "fonenan’ny vady vavy"
+
+#: agents/models.py:341
+msgid "père de l'épouse"
+msgstr "rain’ny vady vavy"
+
+#: agents/models.py:342
+msgid "profession du père de l'épouse"
+msgstr "asan’ny rain’ny vady vavy"
+
+#: agents/models.py:343
+msgid "mère de l'épouse"
+msgstr "renin’ny vady vavy"
+
+#: agents/models.py:344
+msgid "profession de la mère de l'épouse"
+msgstr "asan’ny renin’ny vady vavy"
+
+#: agents/models.py:347
+msgid "régime matrimonial"
+msgstr "fitsipika momba ny fananan’ny mpivady"
+
+#: agents/models.py:348
+msgid "Ex. : contrat de mariage reçu le … par Maître …, notaire à Mahajanga."
+msgstr ""
+"Ohatra: fifanarahana fanambadiana noraisin’i Maître … ny …, notera ao "
+"Mahajanga."
+
+#: agents/models.py:350
+msgid "premier témoin"
+msgstr "vavolombelona voalohany"
+
+#: agents/models.py:352
+msgid "premier témoin — qualité / domicile"
+msgstr "vavolombelona voalohany — toerana / fonenana"
+
+#: agents/models.py:354
+msgid "second témoin"
+msgstr "vavolombelona faharoa"
+
+#: agents/models.py:356
+msgid "second témoin — qualité / domicile"
+msgstr "vavolombelona faharoa — toerana / fonenana"
+
+#: agents/models.py:376
+msgid "acte de mariage"
+msgstr "soratra fanambadiana"
+
+#: agents/models.py:377
+msgid "actes de mariage"
+msgstr "soratra fanambadiana"
+
+#: agents/models.py:402
+msgid "Célibataire"
+msgstr "Tokan-tena"
+
+#: agents/models.py:403
+msgid "Marié(e)"
+msgstr "Manambady"
+
+#: agents/models.py:404
+msgid "Veuf / veuve"
+msgstr "Maty vady"
+
+#: agents/models.py:405
+msgid "Divorcé(e)"
+msgstr "Nisaraka"
+
+#: agents/models.py:406
+msgid "nom du défunt"
+msgstr "anaran’ny maty"
+
+#: agents/models.py:407
+msgid "prénoms du défunt"
+msgstr "fanampin’anaran’ny maty"
+
+#: agents/models.py:409
+msgid "date de naissance du défunt"
+msgstr "daty nahaterahan’ny maty"
+
+#: agents/models.py:410
+msgid "lieu de naissance du défunt"
+msgstr "toerana nahaterahan’ny maty"
+
+#: agents/models.py:411
+msgid "profession du défunt"
+msgstr "asan’ny maty"
+
+#: agents/models.py:412
+msgid "domicile du défunt"
+msgstr "fonenan’ny maty"
+
+#: agents/models.py:413
+msgid "situation matrimoniale"
+msgstr "toe-panambadiana"
+
+#: agents/models.py:414
+msgid "nom du conjoint"
+msgstr "anaran’ny vady"
+
+#: agents/models.py:415
+msgid "nom du père"
+msgstr "anaran’ny ray"
+
+#: agents/models.py:416
+msgid "père décédé (« feu »)"
+msgstr "efa maty ny ray (« nodimandry »)"
+
+#: agents/models.py:417
+msgid "nom de la mère"
+msgstr "anaran’ny reny"
+
+#: agents/models.py:418
+msgid "mère décédée (« feue »)"
+msgstr "efa maty ny reny (« nodimandry »)"
+
+#: agents/models.py:420
+msgid "date et heure du décès"
+msgstr "daty sy ora nahafatesana"
+
+#: agents/models.py:421
+msgid "lieu du décès"
+msgstr "toerana nahafatesana"
+
+#: agents/models.py:425
+msgid "Ex. : fils du défunt, voisin, médecin…"
+msgstr "Ohatra: zanaky ny maty, mpifanolo-bodirindrina, dokotera…"
+
+#: agents/models.py:427
+msgid "âge du déclarant"
+msgstr "taonan’ny mpanambara"
+
+#: agents/models.py:428
+msgid "profession du déclarant"
+msgstr "asan’ny mpanambara"
+
+#: agents/models.py:429
+msgid "domicile du déclarant"
+msgstr "fonenan’ny mpanambara"
+
+#: agents/models.py:444
+msgid "acte de décès"
+msgstr "soratra fahafatesana"
+
+#: agents/models.py:445
+msgid "actes de décès"
+msgstr "soratra fahafatesana"
+
+#: agents/models.py:477
+msgid "Arrêté"
+msgstr "Didim-pitondrana"
+
+#: agents/models.py:478
+msgid "Délibération"
+msgstr "Fanapahan-kevitry ny filankevitra"
+
+#: agents/models.py:479
+msgid "Règlement"
+msgstr "Fitsipika"
+
+#: agents/models.py:480
+msgid "Décision"
+msgstr "Fanapahan-kevitra"
+
+#: agents/models.py:481
+msgid "Autre texte"
+msgstr "Lahatsoratra hafa"
+
+#: agents/models.py:482
+msgid "type de texte"
+msgstr "karazana lahatsoratra"
+
+#: agents/models.py:483
+msgid "numéro du texte"
+msgstr "laharan’ny lahatsoratra"
+
+#: agents/models.py:484
+msgid "date du texte"
+msgstr "datin’ny lahatsoratra"
+
+#: agents/models.py:485 agents/models.py:556
+msgid "objet"
+msgstr "foto-dresaka"
+
+#: agents/models.py:486
+msgid "extrait certifié"
+msgstr "sombiny voamarina"
+
+#: agents/models.py:486
+msgid "Dispositif ou articles reproduits."
+msgstr "Andininy na fehezan-dalàna adika."
+
+#: agents/models.py:487
+msgid "délivré à"
+msgstr "nomena an’i"
+
+#: agents/models.py:488 agents/models.py:559
+msgid "nom du signataire"
+msgstr "anaran’ny mpanao sonia"
+
+#: agents/models.py:489 agents/models.py:560
+msgid "qualité du signataire"
+msgstr "toeran’ny mpanao sonia"
+
+#: agents/models.py:497
+msgid "extrait de texte"
+msgstr "sombin-dahatsoratra"
+
+#: agents/models.py:498
+msgid "extraits de textes (législation)"
+msgstr "sombin-dahatsoratra (lalàna)"
+
+#: agents/models.py:522 espace/models.py:11
+msgid "Recette"
+msgstr "Ladoany"
+
+#: agents/models.py:523 espace/models.py:12
+msgid "Transport"
+msgstr "Fitaterana"
+
+#: agents/models.py:524 espace/models.py:13
+msgid "Urbanisme"
+msgstr "Fandrafetan-tanàna"
+
+#: agents/models.py:525 espace/models.py:14
+msgid "Marché"
+msgstr "Tsena"
+
+#: agents/models.py:526 espace/models.py:15
+msgid "Cadastre"
+msgstr "Kadasitra"
+
+#: agents/models.py:527 espace/models.py:16
+msgid "Impôt foncier"
+msgstr "Hetra amin’ny tany"
+
+#: agents/models.py:528 espace/models.py:21
+msgid "Actes divers"
+msgstr "Soratra samihafa"
+
+#: agents/models.py:540
+msgid "service"
+msgstr "sampan-draharaha"
+
+#: agents/models.py:542
+msgid "nature de l'acte"
+msgstr "karazan’ny soratra"
+
+#: agents/models.py:543
+msgid "Ex. : licence de taxi, permis de construire, attestation de paiement…"
+msgstr ""
+"Ohatra: fahazoan-dàlana taxi, fahazoan-dàlana hanorina, fanamarinana "
+"fandoavana…"
+
+#: agents/models.py:545
+msgid "bénéficiaire (nom et prénoms)"
+msgstr "mpisitraka (anarana feno)"
+
+#: agents/models.py:546
+msgid "N° de CIN du bénéficiaire"
+msgstr "laharan’ny karapanondron’ny mpisitraka"
+
+#: agents/models.py:547
+msgid "adresse du bénéficiaire"
+msgstr "adiresin’ny mpisitraka"
+
+#: agents/models.py:549 espace/models.py:34
+msgid "référence"
+msgstr "laharana"
+
+#: agents/models.py:550
+msgid ""
+"Immatriculation, référence de parcelle, N° d'emplacement, référence fiscale…"
+msgstr ""
+"Laharan’ny fiara, laharan’ny tany, laharan’ny toerana, laharana ara-ketra…"
+
+#: agents/models.py:553
+msgid "lieu / bien concerné"
+msgstr "toerana / fananana voakasika"
+
+#: agents/models.py:554
+msgid "Adresse du terrain ou du bien, nom du marché, quartier…"
+msgstr "Adiresin’ny tany na fananana, anaran’ny tsena, fokontany…"
+
+#: agents/models.py:556
+msgid "Ce que la Commune atteste ou autorise."
+msgstr "Izay hamarinin’ny Kaominina na omeny alalana."
+
+#: agents/models.py:557
+msgid "montant (Ar)"
+msgstr "vola (Ar)"
+
+#: agents/models.py:558
+msgid "valable jusqu'au"
+msgstr "manan-kery hatramin’ny"
+
+#: agents/models.py:561
+msgid "observations"
+msgstr "fanamarihana"
+
+#: agents/models.py:569
+msgid "attestation de service"
+msgstr "fanamarinana sampan-draharaha"
+
+#: agents/models.py:570
+msgid "attestations de services (guichet 5)"
+msgstr "fanamarinana sampan-draharaha (varavarankely 5)"
+
+#: agents/official.py:160
+msgid "Nouvel acte de naissance"
+msgstr "Kopia nahaterahana vaovao"
+
+#: agents/official.py:160
+msgid "Établir l'acte de naissance"
+msgstr "Soraty ny kopia nahaterahana"
+
+#: agents/official.py:160
+msgid "Enfant"
+msgstr "Zaza"
+
+#: agents/official.py:160
+msgid "Né(e) le"
+msgstr "Teraka ny"
+
+#: agents/official.py:162
+msgid "Nouvel acte de mariage"
+msgstr "Soratra fanambadiana vaovao"
+
+#: agents/official.py:162
+msgid "Établir l'acte de mariage"
+msgstr "Soraty ny soratra fanambadiana"
+
+#: agents/official.py:162
+msgid "Époux"
+msgstr "Mpivady"
+
+#: agents/official.py:162
+msgid "Marié(s) le"
+msgstr "Nivady ny"
+
+#: agents/official.py:164
+msgid "Nouvel acte de décès"
+msgstr "Soratra fahafatesana vaovao"
+
+#: agents/official.py:164
+msgid "Établir l'acte de décès"
+msgstr "Soraty ny soratra fahafatesana"
+
+#: agents/official.py:164
+msgid "Défunt"
+msgstr "Maty"
+
+#: agents/official.py:164
+msgid "Décédé(e) le"
+msgstr "Maty ny"
+
+#: agents/official.py:166
+msgid "Nouvel extrait de texte"
+msgstr "Sombin-dahatsoratra vaovao"
+
+#: agents/official.py:166
+msgid "Établir l'extrait certifié"
+msgstr "Soraty ny sombiny voamarina"
+
+#: agents/official.py:166
+msgid "Date du texte"
+msgstr "Datin’ny lahatsoratra"
+
+#: agents/official.py:168
+msgid "Nouvelle attestation"
+msgstr "Fanamarinana vaovao"
+
+#: agents/official.py:168
+msgid "Établir l'attestation"
+msgstr "Soraty ny fanamarinana"
+
+#: agents/official.py:168
+msgid "Date de l'acte"
+msgstr "Datin’ny soratra"
+
+#: agents/queue.py:35
+#, python-format
+msgid ""
+"Attention : vous devez d'abord traiter la demande %(reference)s, déposée le "
+"%(date)s, avant celle-ci. Les demandes se traitent dans leur ordre "
+"d'arrivée."
+msgstr ""
+"Fampitandremana: tsy maintsy karakarainao aloha ny fangatahana "
+"%(reference)s, napetraka ny %(date)s, alohan'ity iray ity. Karakaraina araka"
+" ny filaharan'ny fahatongavany ny fangatahana."
+
+#: agents/views.py:44 agents/views.py:707
+msgid "Toutes"
+msgstr "Rehetra"
+
+#: agents/views.py:45 agents/views.py:176 documents/models.py:205
+#: espace/models.py:23 templates/agents/dashboard.html:41
+msgid "En attente"
+msgstr "Miandry"
+
+#: agents/views.py:46 agents/views.py:178
+msgid "En cours"
+msgstr "Eo am-pikarakarana"
+
+#: agents/views.py:47
+msgid "Approuvées"
+msgstr "Nekena"
+
+#: agents/views.py:48
+msgid "Refusées"
+msgstr "Nolavina"
+
+#: agents/views.py:49
+msgid "Terminées"
+msgstr "Vita"
+
+#: agents/views.py:102
+msgid "Trop de demandes envoyées. Réessayez plus tard."
+msgstr "Be loatra ny fangatahana nalefa. Andramo indray any aoriana."
+
+#: agents/views.py:168 core/admin_site.py:15 core/admin_site.py:55
+#: templates/agents/base.html:81
+msgid "Tableau de bord"
+msgstr "Tabilao fitantanana"
+
+#: agents/views.py:170
+msgid "Toutes les demandes"
+msgstr "Fangatahana rehetra"
+
+#: agents/views.py:173
+msgid "À traiter"
+msgstr "Hokarakaraina"
+
+#: agents/views.py:174 agents/views.py:648 core/admin_site.py:25
+#: templates/agents/base.html:27 templates/agents/notifications.html:8
+msgid "Notifications"
+msgstr "Fampahafantarana"
+
+#: agents/views.py:181
+msgid "Outils"
+msgstr "Fitaovana"
+
+#: agents/views.py:182 agents/views.py:432 core/admin_site.py:29
+#: documents/apps.py:8 templates/agents/document_detail.html:8
+#: templates/agents/document_form.html:8 templates/agents/documents.html:8
+msgid "Documents officiels"
+msgstr "Antontan-taratasy ofisialy"
+
+#: agents/views.py:185 agents/views.py:696 core/admin_site.py:26
+#: templates/admin/mail.html:7 templates/admin/mail.html:12
+#: templates/agents/mail.html:8
+msgid "Mail"
+msgstr "Mailaka"
+
+#: agents/views.py:187 agents/views.py:729 core/admin_site.py:27
+#: templates/agents/messages.html:8
+msgid "Messages"
+msgstr "Hafatra"
+
+#: agents/views.py:190
+msgid "Mon compte"
+msgstr "Ny kaontiko"
+
+#: agents/views.py:196
+msgid "Tous les guichets"
+msgstr "Varavarankely rehetra"
+
+#: agents/views.py:200
+msgid "Administration"
+msgstr "Fitantanana"
+
+#: agents/views.py:240 templates/agents/dashboard.html:49
+msgid "Demandes reçues"
+msgstr "Fangatahana voaray"
+
+#: agents/views.py:241
+msgid "Réponses envoyées"
+msgstr "Valiny nalefa"
+
+#: agents/views.py:297 templates/agents/request_detail.html:8
+#: templates/agents/requests.html:8
+msgid "Demandes du guichet"
+msgstr "Fangatahana ao amin’ny varavarankely"
+
+#: agents/views.py:321
+#, python-format
+msgid "Demande %(reference)s mise à jour."
+msgstr "Nohavaozina ny fangatahana %(reference)s."
+
+#: agents/views.py:328
+#, python-format
+msgid "Demande %(reference)s"
+msgstr "Fangatahana %(reference)s"
+
+#: agents/views.py:360
+msgid "Votre mot de passe a été modifié."
+msgstr "Voaova ny teny miafinao."
+
+#: agents/views.py:367 templates/agents/base.html:41
+#: templates/agents/password_change.html:8
+msgid "Changer mon mot de passe"
+msgstr "Hanova ny teny miafiko"
+
+#: agents/views.py:401
+msgid "j F Y à H:i"
+msgstr "j F Y, H:i"
+
+#: agents/views.py:403
+msgid "j F Y"
+msgstr "j F Y"
+
+#: agents/views.py:459
+#, python-format
+msgid "%(document)s établi et scellé. Vous pouvez télécharger le PDF."
+msgstr "Vita sy voaisy tombo-kase ny %(document)s. Azonao alaina ny PDF."
+
+#: agents/views.py:516
+#, python-format
+msgid ""
+"La suppression du document %(number)s attend déjà la décision de "
+"l'administrateur."
+msgstr ""
+"Efa miandry ny fanapahan-kevitry ny mpitantana ny famafana ny antontan-"
+"taratasy %(number)s."
+
+#: agents/views.py:524
+msgid ""
+"Indiquez le motif de la suppression : l'administrateur en a besoin pour "
+"décider."
+msgstr ""
+"Lazao ny antony famafana: ilain’ny mpitantana izany handraisany fanapahan-"
+"kevitra."
+
+#: agents/views.py:532
+#, python-format
+msgid ""
+"Demande de suppression du document %(number)s envoyée à l'administrateur."
+msgstr ""
+"Nalefa tany amin’ny mpitantana ny fangatahana hamafa ny antontan-taratasy "
+"%(number)s."
+
+#: agents/views.py:538
+#, python-format
+msgid "Supprimer le document %(number)s"
+msgstr "Fafao ny antontan-taratasy %(number)s"
+
+#: agents/views.py:556
+#, python-format
+msgid "Demande de suppression du document %(number)s annulée."
+msgstr "Nofoanana ny fangatahana hamafa ny antontan-taratasy %(number)s."
+
+#: agents/views.py:590
+msgid ""
+"Ce document ne peut pas être envoyé (suppression demandée ou document "
+"révoqué)."
+msgstr ""
+"Tsy azo alefa ity antontan-taratasy ity (nangatahina hofafana na nofoanana)."
+
+#: agents/views.py:598
+msgid "Choisissez la demande de l'usager à qui envoyer le document."
+msgstr ""
+"Fidio ny fangatahan’ny olom-pirenena handefasana ny antontan-taratasy."
+
+#: agents/views.py:620
+#, python-format
+msgid ""
+"%(document)s envoyé à %(person)s : il peut le télécharger depuis ses "
+"notifications."
+msgstr ""
+"Nalefa tany amin’i %(person)s ny %(document)s: azony alaina ao amin’ny "
+"fampahafantarana izany."
+
+#: agents/views.py:707
+msgid "Non lues"
+msgstr "Tsy mbola voavaky"
+
+#: agents/views.py:707
+msgid "Lues"
+msgstr "Voavaky"
+
+#: core/admin_site.py:16 templates/admin/analytics.html:6
+#: templates/admin/login.html:34 templates/admin/mail.html:6
+#: templates/admin/security.html:6 templates/landing.html:8
+msgid "Accueil"
+msgstr "Fandraisana"
+
+#: core/admin_site.py:17 core/admin_site.py:184
+msgid "Analyse"
+msgstr "Famakafakana"
+
+#: core/admin_site.py:19
+msgid "Menu rapide"
+msgstr "Menio haingana"
+
+#: core/admin_site.py:20 core/admin_site.py:191
+msgid "Utilisateurs"
+msgstr "Mpampiasa"
+
+#: core/admin_site.py:22
+msgid "Demandes d'accès agent"
+msgstr "Fangatahana fidirana mpiasa"
+
+#: core/admin_site.py:38
+msgid "Attestations (guichet 5)"
+msgstr "Fanamarinana (varavarankely 5)"
+
+#: core/admin_site.py:41 templates/agents/document_detail.html:105
+msgid "Sécurité"
+msgstr "Fiarovana"
+
+#: core/admin_site.py:42 core/admin_site.py:317
+#: templates/admin/security.html:7 templates/admin/security.html:12
+msgid "Sécurité et fraude"
+msgstr "Fiarovana sy hosoka"
+
+#: core/admin_site.py:44
+msgid "Autres fonctionnalités"
+msgstr "Asa hafa"
+
+#: core/admin_site.py:45
+msgid "Journal d'audit"
+msgstr "Diarin’ny fanaraha-maso"
+
+#: core/admin_site.py:47
+msgid "Groupes"
+msgstr "Vondrona"
+
+#: core/admin_site.py:53
+msgid "Mairie de Mahajanga — Administration"
+msgstr "Lapan’ny tanànan’i Mahajanga — Fitantanana"
+
+#: core/admin_site.py:147
+msgid "Documents émis"
+msgstr "Antontan-taratasy navoaka"
+
+#: core/admin_site.py:152 templates/admin/index.html:31
+msgid "Demandes de dossiers"
+msgstr "Fangatahana antontan-taratasy"
+
+#: core/admin_site.py:157
+msgid "Messages reçus"
+msgstr "Hafatra voaray"
+
+#: core/admin_site.py:196
+msgid "Documents actifs"
+msgstr "Antontan-taratasy manan-kery"
+
+#: core/admin_site.py:200
+msgid "Documents émis par mois"
+msgstr "Antontan-taratasy navoaka isam-bolana"
+
+#: core/admin_site.py:204
+msgid "Documents par type"
+msgstr "Antontan-taratasy araka ny karazany"
+
+#: core/admin_site.py:208
+msgid "Documents par statut"
+msgstr "Antontan-taratasy araka ny satany"
+
+#: core/admin_site.py:215
+msgid "Vérifications réussies"
+msgstr "Fanamarinana nahomby"
+
+#: core/admin_site.py:219
+msgid "Fraudes détectées"
+msgstr "Hosoka hita"
+
+#: core/admin_site.py:223
+msgid "Vérifications de documents par mois"
+msgstr "Fanamarinana antontan-taratasy isam-bolana"
+
+#: core/admin_site.py:236
+msgid "Demandes par statut"
+msgstr "Fangatahana araka ny satany"
+
+#: core/admin_site.py:240
+msgid "Demandes par type de dossier"
+msgstr "Fangatahana araka ny karazan’antontan-taratasy"
+
+#: core/admin_site.py:256
+msgid "Tous"
+msgstr "Rehetra"
+
+#: core/admin_site.py:257 templates/admin/mail.html:74
+msgid "En ligne"
+msgstr "Mifandray"
+
+#: core/admin_site.py:258
+msgid "Équipe"
+msgstr "Ekipa"
+
+#: core/admin_site.py:259
+msgid "Usagers"
+msgstr "Olom-pirenena"
+
+#: core/admin_site.py:274
+msgid "Mail — personnes connectées"
+msgstr "Mailaka — olona mifandray"
+
+#: core/admin_site.py:298
+msgid "Tous les documents"
+msgstr "Antontan-taratasy rehetra"
+
+#: core/admin_site.py:299
+msgid "Alertes"
+msgstr "Fampitandremana"
+
+#: core/admin_site.py:300
+msgid "Altérés (fraude)"
+msgstr "Novaina (hosoka)"
+
+#: core/admin_site.py:301
+msgid "Suppressions demandées"
+msgstr "Fangatahana famafana"
+
+#: core/dashboard.py:9
+msgid "Jan"
+msgstr "Jan"
+
+#: core/dashboard.py:9
+msgid "Fév"
+msgstr "Feb"
+
+#: core/dashboard.py:9
+msgid "Mar"
+msgstr "Mar"
+
+#: core/dashboard.py:9
+msgid "Avr"
+msgstr "Apr"
+
+#: core/dashboard.py:9
+msgid "Mai"
+msgstr "Mey"
+
+#: core/dashboard.py:9
+msgid "Juin"
+msgstr "Jon"
+
+#: core/dashboard.py:9
+msgid "Juil"
+msgstr "Jol"
+
+#: core/dashboard.py:9
+msgid "Aoû"
+msgstr "Aog"
+
+#: core/dashboard.py:9
+msgid "Sep"
+msgstr "Sep"
+
+#: core/dashboard.py:9
+msgid "Oct"
+msgstr "Okt"
+
+#: core/dashboard.py:9
+msgid "Nov"
+msgstr "Nov"
+
+#: core/dashboard.py:9
+msgid "Déc"
+msgstr "Des"
+
+#: core/people.py:25
+msgid "Administrateur principal"
+msgstr "Mpitantana voalohany"
+
+#: core/people.py:27 templates/admin/index.html:51
+msgid "Administrateur"
+msgstr "Mpitantana"
+
+#: core/people.py:30
+#, python-format
+msgid "Agent — Guichet %(number)s"
+msgstr "Mpiasa — Varavarankely %(number)s"
+
+#: core/people.py:31
+msgid "Compte sans rôle"
+msgstr "Kaonty tsy misy andraikitra"
+
+#: core/people.py:74
+msgid "Usager (pas encore de demande)"
+msgstr "Olom-pirenena (tsy mbola nangataka)"
+
+#: core/people.py:77 templates/agents/mail.html:26
+msgid "Usager"
+msgstr "Olom-pirenena"
+
+#: core/security.py:21
+msgid "Altéré — fraude"
+msgstr "Novaina — hosoka"
+
+#: core/security.py:22 templates/agents/_document_delete.html:2
+msgid "Suppression demandée"
+msgstr "Nangatahina hofafana"
+
+#: core/security.py:23
+msgid "Révoqué / supprimé"
+msgstr "Nofoanana / voafafa"
+
+#: core/security.py:24
+msgid "Intègre"
+msgstr "Tsy voakitika"
+
+#: core/security.py:86
+msgid "Agent inconnu"
+msgstr "Mpiasa tsy fantatra"
+
+#: core/views.py:15
+msgid "les actes de naissance"
+msgstr "ny kopia nahaterahana"
+
+#: core/views.py:16
+msgid "les actes de mariage"
+msgstr "ny soratra fanambadiana"
+
+#: core/views.py:17
+msgid "les actes de décès"
+msgstr "ny soratra fahafatesana"
+
+#: core/views.py:18
+msgid "les demandes des usagers"
+msgstr "ny fangatahan’ny olom-pirenena"
+
+#: core/views.py:19
+msgid "les documents officiels"
+msgstr "ny antontan-taratasy ofisialy"
+
+#: documents/admin.py:50 templates/admin/security.html:48
+msgid "Titulaire"
+msgstr "Tompony"
+
+#: documents/admin.py:54
+msgid "Lien de vérification"
+msgstr "Rohy fanamarinana"
+
+#: documents/admin.py:72
+msgid "Révocation depuis l'administration."
+msgstr "Nofoanana avy amin’ny fitantanana."
+
+#: documents/admin.py:83
+msgid "Suppression logique depuis l'administration."
+msgstr "Famafana avy amin’ny fitantanana."
+
+#: documents/admin.py:123
+msgid "Compte agent"
+msgstr "Kaontin’ny mpiasa"
+
+#: documents/admin.py:127
+msgid "Approuver et créer les comptes agents"
+msgstr "Ekeo ary foroniny ny kaontin’ny mpiasa"
+
+#: documents/admin.py:150
+msgid ""
+"Compte créé pour {} — Guichet {} : l'agent se connecte avec "
+"<strong>{}</strong> et le mot de passe qu'il a choisi."
+msgstr ""
+"Kaonty noforonina ho an’i {} — Varavarankely {}: miditra amin’ny "
+"<strong>{}</strong> sy ny teny miafina nofidiny ny mpiasa."
+
+#: documents/admin.py:161
+msgid ""
+"Compte créé pour {} — Guichet {} : identifiant <strong>{}</strong>, mot de "
+"passe provisoire <strong>{}</strong> (à transmettre à l'agent ; il ne sera "
+"plus affiché)."
+msgstr ""
+"Kaonty noforonina ho an’i {} — Varavarankely {}: anarana fidirana "
+"<strong>{}</strong>, teny miafina vonjimaika <strong>{}</strong> (omeo ny "
+"mpiasa; tsy haseho intsony izany)."
+
+#: documents/admin.py:169
+msgid "Aucun compte créé (seules les demandes en attente sont approuvées)."
+msgstr "Tsy nisy kaonty noforonina (ireo fangatahana miandry ihany no ekena)."
+
+#: documents/admin.py:171
+msgid "Rejeter les demandes sélectionnées"
+msgstr "Laviso ireo fangatahana voafidy"
+
+#: documents/admin.py:176
+#, python-format
+msgid "%(count)s demande(s) rejetée(s)."
+msgstr "Fangatahana %(count)s nolavina."
+
+#: documents/models.py:42 espace/models.py:17
+msgid "Acte de naissance"
+msgstr "Kopia nahaterahana"
+
+#: documents/models.py:43 espace/models.py:18
+msgid "Acte de mariage"
+msgstr "Soratra fanambadiana"
+
+#: documents/models.py:44 espace/models.py:19
+msgid "Acte de décès"
+msgstr "Soratra fahafatesana"
+
+#: documents/models.py:45
+msgid "Diplôme"
+msgstr "Diplaoma"
+
+#: documents/models.py:46
+msgid "Attestation"
+msgstr "Fanamarinana"
+
+#: documents/models.py:50
+msgid "Expiré"
+msgstr "Tapitra"
+
+#: documents/models.py:58
+msgid "type de document"
+msgstr "karazan’antontan-taratasy"
+
+#: documents/models.py:59
+msgid "prénom du titulaire"
+msgstr "fanampin’anaran’ny tompony"
+
+#: documents/models.py:60
+msgid "nom du titulaire"
+msgstr "anaran’ny tompony"
+
+#: documents/models.py:62
+msgid "numéro de CIN"
+msgstr "laharan’ny karapanondro"
+
+#: documents/models.py:63
+msgid "Optionnel."
+msgstr "Tsy voatery."
+
+#: documents/models.py:65
+msgid "photo du titulaire"
+msgstr "sarin’ny tompony"
+
+#: documents/models.py:66
+msgid "date d'émission"
+msgstr "daty namoahana"
+
+#: documents/models.py:67
+msgid "date d'expiration"
+msgstr "daty fiafarana"
+
+#: documents/models.py:68
+msgid "PDF officiel"
+msgstr "PDF ofisialy"
+
+#: documents/models.py:75
+msgid "supprimé"
+msgstr "voafafa"
+
+#: documents/models.py:85 documents/models.py:179
+msgid "document"
+msgstr "antontan-taratasy"
+
+#: documents/models.py:86
+msgid "documents"
+msgstr "antontan-taratasy"
+
+#: documents/models.py:173
+msgid "Vérification réussie"
+msgstr "Fanamarinana nahomby"
+
+#: documents/models.py:174
+msgid "Vérification échouée / fraude"
+msgstr "Fanamarinana tsy nahomby / hosoka"
+
+#: documents/models.py:175
+msgid "Document révoqué"
+msgstr "Antontan-taratasy nofoanana"
+
+#: documents/models.py:176
+msgid "Document supprimé"
+msgstr "Antontan-taratasy voafafa"
+
+#: documents/models.py:181
+msgid "action"
+msgstr "hetsika"
+
+#: documents/models.py:184
+msgid "effectuée par"
+msgstr "nataon’i"
+
+#: documents/models.py:186
+msgid "adresse IP"
+msgstr "adiresy IP"
+
+#: documents/models.py:187
+msgid "détails"
+msgstr "antsipiriany"
+
+#: documents/models.py:188
+msgid "date"
+msgstr "daty"
+
+#: documents/models.py:192
+msgid "entrée du journal d'audit"
+msgstr "soratra ao amin’ny diarin’ny fanaraha-maso"
+
+#: documents/models.py:193
+msgid "journal d'audit"
+msgstr "diarin’ny fanaraha-maso"
+
+#: documents/models.py:201
+msgid "Agent Municipal — Création de documents administratifs"
+msgstr "Mpiasan’ny kaominina — Famoronana antontan-taratasy ara-pitantanana"
+
+#: documents/models.py:206 espace/admin.py:87 espace/models.py:25
+msgid "Approuvée"
+msgstr "Nekena"
+
+#: documents/models.py:207
+msgid "Rejetée"
+msgstr "Nolavina"
+
+#: documents/models.py:208 espace/models.py:86
+msgid "prénom"
+msgstr "fanampin’anarana"
+
+#: documents/models.py:209 espace/models.py:87
+msgid "nom"
+msgstr "anarana"
+
+#: documents/models.py:210 espace/models.py:88
+msgid "téléphone"
+msgstr "telefaonina"
+
+#: documents/models.py:211 espace/models.py:89
+msgid "e-mail"
+msgstr "mailaka"
+
+#: documents/models.py:212
+msgid "type de demande"
+msgstr "karazana fangatahana"
+
+#: documents/models.py:215
+msgid ""
+"Guichet souhaité par le demandeur ; l'administrateur peut le changer avant "
+"d'approuver."
+msgstr ""
+"Varavarankely tian’ny mpangataka; azon’ny mpitantana ovaina alohan’ny "
+"hankatoavana."
+
+#: documents/models.py:217
+msgid "précisions"
+msgstr "fanazavana"
+
+#: documents/models.py:219
+msgid "reçue le"
+msgstr "voaray ny"
+
+#: documents/models.py:220
+msgid "traitée le"
+msgstr "nokarakaraina ny"
+
+#: documents/models.py:222
+msgid "mot de passe (haché)"
+msgstr "teny miafina (voaafina)"
+
+#: documents/models.py:225
+msgid "compte agent créé"
+msgstr "kaontin’ny mpiasa noforonina"
+
+#: documents/models.py:230
+msgid "demande d'accès agent"
+msgstr "fangatahana fidirana mpiasa"
+
+#: documents/models.py:231
+msgid "demandes d'accès agent"
+msgstr "fangatahana fidirana mpiasa"
+
+#: espace/admin.py:40
+msgid "Demande"
+msgstr "Fangatahana"
+
+#: espace/admin.py:41
+msgid "Demandeur et contenu"
+msgstr "Mpangataka sy votoatiny"
+
+#: espace/admin.py:42 templates/agents/request_detail.html:71
+msgid "Traitement"
+msgstr "Fikarakarana"
+
+#: espace/admin.py:56
+msgid "Identité du demandeur"
+msgstr "Mombamomba ny mpangataka"
+
+#: espace/admin.py:60 templates/agents/request_detail.html:62
+msgid "Détails de la demande"
+msgstr "Antsipirian’ny fangatahana"
+
+#: espace/admin.py:64 templates/admin/index.html:71
+#: templates/agents/_requests_table.html:4
+#: templates/agents/request_detail.html:55
+msgid "Demandeur"
+msgstr "Mpangataka"
+
+#: espace/admin.py:69
+msgid "Répondu"
+msgstr "Novaliana"
+
+#: espace/admin.py:79
+#, python-format
+msgid "%(count)s demande(s) marquée(s) « %(status)s »."
+msgstr "Fangatahana %(count)s voamarika « %(status)s »."
+
+#: espace/admin.py:81
+msgid "Marquer comme « En cours de traitement »"
+msgstr "Mariho ho « Eo am-pikarakarana »"
+
+#: espace/admin.py:83 espace/models.py:24
+msgid "En cours de traitement"
+msgstr "Eo am-pikarakarana"
+
+#: espace/admin.py:85
+msgid "Marquer comme « Approuvée »"
+msgstr "Mariho ho « Nekena »"
+
+#: espace/admin.py:89
+msgid "Marquer comme « Refusée »"
+msgstr "Mariho ho « Nolavina »"
+
+#: espace/admin.py:91 espace/models.py:26
+msgid "Refusée"
+msgstr "Nolavina"
+
+#: espace/admin.py:93
+msgid "Marquer comme « Terminée »"
+msgstr "Mariho ho « Vita »"
+
+#: espace/admin.py:95 espace/models.py:27
+msgid "Terminée"
+msgstr "Vita"
+
+#: espace/admin.py:112
+msgid "Marquer comme traité"
+msgstr "Mariho ho voakarakara"
+
+#: espace/admin.py:115
+#, python-format
+msgid "%(count)s message(s) marqué(s) comme traité(s)."
+msgstr "Hafatra %(count)s voamarika ho voakarakara."
+
+#: espace/apps.py:8
+msgid "Espace usager"
+msgstr "Sehatry ny olom-pirenena"
+
+#: espace/models.py:28 espace/models.py:106
+msgid "identifiant Clerk"
+msgstr "famantarana Clerk"
+
+#: espace/models.py:29
+msgid "type de dossier"
+msgstr "karazan’antontan-taratasy"
+
+#: espace/models.py:35
+msgid "identité du demandeur"
+msgstr "mombamomba ny mpangataka"
+
+#: espace/models.py:36
+msgid "détails de la demande"
+msgstr "antsipirian’ny fangatahana"
+
+#: espace/models.py:37
+msgid "réponse de la mairie"
+msgstr "valin’ny lapan’ny tanàna"
+
+#: espace/models.py:38
+msgid "date de la réponse"
+msgstr "datin’ny valiny"
+
+#: espace/models.py:39
+msgid "réponse lue"
+msgstr "valiny voavaky"
+
+#: espace/models.py:40
+msgid "créée le"
+msgstr "noforonina ny"
+
+#: espace/models.py:41
+msgid "modifiée le"
+msgstr "novaina ny"
+
+#: espace/models.py:45
+msgid "demande de dossier"
+msgstr "fangatahana antontan-taratasy"
+
+#: espace/models.py:46
+msgid "demandes de dossiers"
+msgstr "fangatahana antontan-taratasy"
+
+#: espace/models.py:90
+msgid "message"
+msgstr "hafatra"
+
+#: espace/models.py:91
+msgid "traité"
+msgstr "voakarakara"
+
+#: espace/models.py:92
+msgid "reçu le"
+msgstr "voaray ny"
+
+#: espace/models.py:96
+msgid "message de contact"
+msgstr "hafatra fifandraisana"
+
+#: espace/models.py:97
+msgid "messages de contact"
+msgstr "hafatra fifandraisana"
+
+#: espace/models.py:107
+msgid "première visite"
+msgstr "fitsidihana voalohany"
+
+#: espace/models.py:108
+msgid "dernière activité"
+msgstr "hetsika farany"
+
+#: espace/models.py:112
+msgid "usager de l'espace"
+msgstr "mpampiasa ny sehatra"
+
+#: espace/models.py:113
+msgid "usagers de l'espace"
+msgstr "mpampiasa ny sehatra"
+
+#: templates/admin/analytics.html:28
+#, python-format
+msgid "12 derniers mois · %(total)s au total"
+msgstr "12 volana farany · %(total)s raha atambatra"
+
+#: templates/admin/analytics.html:40 templates/agents/dashboard.html:57
+#, python-format
+msgid "%(total)s au total"
+msgstr "%(total)s raha atambatra"
+
+#: templates/admin/analytics.html:57
+msgid "Vous n'avez accès à aucune statistique."
+msgstr "Tsy afaka mijery antontan’isa ianao."
+
+#: templates/admin/base_site.html:4 templates/admin/login.html:8
+msgid "Django site admin"
+msgstr "Fitantanana ny tranonkala"
+
+#: templates/admin/base_site.html:18 templates/agents/base.html:19
+msgid "Ouvrir le menu"
+msgstr "Sokafy ny menio"
+
+#: templates/admin/base_site.html:25
+msgid "Demandes en attente"
+msgstr "Fangatahana miandry"
+
+#: templates/admin/base_site.html:31
+msgid "Messages de contact non traités"
+msgstr "Hafatra fifandraisana tsy mbola voakarakara"
+
+#: templates/admin/base_site.html:36 templates/agents/base.html:31
+msgid "Voir le site"
+msgstr "Jereo ny tranonkala"
+
+#: templates/admin/base_site.html:49
+msgid "Change password"
+msgstr "Hanova ny teny miafina"
+
+#: templates/admin/base_site.html:53
+msgid "Log out"
+msgstr "Hivoaka"
+
+#: templates/admin/base_site.html:60
+msgid "Menu principal"
+msgstr "Menio lehibe"
+
+#: templates/admin/base_site.html:86
+msgid "Django administration"
+msgstr "Fitantanana"
+
+#: templates/admin/base_site.html:98 templates/agents/forbidden.html:18
+msgid "Retour"
+msgstr "Hiverina"
+
+#: templates/admin/index.html:22 templates/agents/dashboard.html:37
+#, python-format
+msgid "Ce mois-ci, comparé au mois dernier · %(total)s au total"
+msgstr ""
+"Ity volana ity, raha oharina amin’ny volana lasa · %(total)s raha atambatra"
+
+#: templates/admin/index.html:32 templates/agents/dashboard.html:50
+#, python-format
+msgid "12 derniers mois · %(counter)s demande"
+msgid_plural "12 derniers mois · %(counter)s demandes"
+msgstr[0] "12 volana farany · fangatahana %(counter)s"
+msgstr[1] "12 volana farany · fangatahana %(counter)s"
+
+#: templates/admin/index.html:42
+msgid "Nouveaux membres"
+msgstr "Mpikambana vaovao"
+
+#: templates/admin/index.html:43 templates/admin/index.html:66
+#: templates/agents/dashboard.html:84
+msgid "Tout voir"
+msgstr "Jereo daholo"
+
+#: templates/admin/index.html:51
+msgid "Utilisateur"
+msgstr "Mpampiasa"
+
+#: templates/admin/index.html:53 templates/agents/_requests_table.html:20
+#: templates/agents/dashboard.html:22
+msgid "Voir"
+msgstr "Jereo"
+
+#: templates/admin/index.html:56
+msgid "Aucun membre pour le moment."
+msgstr "Tsy mbola misy mpikambana."
+
+#: templates/admin/index.html:65 templates/agents/dashboard.html:83
+msgid "Dernières demandes"
+msgstr "Fangatahana farany"
+
+#: templates/admin/index.html:71
+msgid "Date"
+msgstr "Daty"
+
+#: templates/admin/index.html:71 templates/agents/_requests_table.html:4
+msgid "Dossier"
+msgstr "Antontan-taratasy"
+
+#: templates/admin/index.html:71 templates/admin/mail.html:52
+#: templates/agents/_requests_table.html:4 templates/agents/documents.html:27
+msgid "Statut"
+msgstr "Sata"
+
+#: templates/admin/login.html:8 templates/agents/inscription.html:8
+msgid "Erreur :"
+msgstr "Hadisoana:"
+
+#: templates/admin/login.html:8 templates/admin/login.html:37
+#: templates/agents/inscription.html:34
+msgid "Connexion"
+msgstr "Fidirana"
+
+#: templates/admin/login.html:38
+msgid "Agents et administrateurs de la Commune Urbaine de Mahajanga"
+msgstr "Mpiasa sy mpitantana ny Kaominina Ambonivohitr’i Mahajanga"
+
+#: templates/admin/login.html:42
+msgid "Please correct the error below."
+msgid_plural "Please correct the errors below."
+msgstr[0] "Amboary ilay hadisoana etsy ambany."
+msgstr[1] "Amboary ireo hadisoana etsy ambany."
+
+#: templates/admin/login.html:51
+#, python-format
+msgid ""
+"Vous êtes connecté en tant que %(username)s, mais ce compte n'a pas accès à "
+"cette page. Connectez-vous avec un autre compte."
+msgstr ""
+"Niditra amin’ny anarana %(username)s ianao, saingy tsy afaka miditra "
+"amin’ity pejy ity io kaonty io. Midira amin’ny kaonty hafa."
+
+#: templates/admin/login.html:73
+msgid "Afficher le mot de passe"
+msgstr "Asehoy ny teny miafina"
+
+#: templates/admin/login.html:83
+msgid "Forgotten your login credentials?"
+msgstr "Hadinonao ve ny mombamomba ny fidiranao?"
+
+#: templates/admin/login.html:86 templates/agents/inscription.html:75
+#: templates/landing.html:40
+msgid "Se connecter"
+msgstr "Hiditra"
+
+#: templates/admin/login.html:92
+msgid "Bonjour, cher agent&nbsp;!"
+msgstr "Manao ahoana, ry mpiasa!"
+
+#: templates/admin/login.html:93
+msgid ""
+"Cet espace est réservé aux agents et aux administrateurs de la Commune. "
+"Connectez-vous pour traiter les demandes des usagers."
+msgstr ""
+"Natokana ho an’ny mpiasa sy mpitantana ny Kaominina ity sehatra ity. Midira "
+"hikarakarana ny fangatahan’ny olom-pirenena."
+
+#: templates/admin/login.html:94
+msgid "Demander un accès"
+msgstr "Hangataka fidirana"
+
+#: templates/admin/mail.html:13
+msgid "Toutes les personnes qui utilisent l'application, avec leur e-mail."
+msgstr "Ireo olona rehetra mampiasa ny rindranasa, miaraka amin’ny mailaka."
+
+#: templates/admin/mail.html:27
+#, python-format
+msgid ""
+"Session ouverte (équipe) ou actif depuis moins de %(minutes)s min (usagers)"
+msgstr ""
+"Misokatra ny fidirana (ekipa) na nihetsika tao anatin’ny %(minutes)s min "
+"farany (olom-pirenena)"
+
+#: templates/admin/mail.html:28
+msgid "Administrateurs et agents des guichets"
+msgstr "Mpitantana sy mpiasan’ny varavarankely"
+
+#: templates/admin/mail.html:29
+msgid "Comptes de l'espace citoyen"
+msgstr "Kaontin’ny sehatry ny olom-pirenena"
+
+#: templates/admin/mail.html:30
+msgid "Équipe et usagers"
+msgstr "Ekipa sy olom-pirenena"
+
+#: templates/admin/mail.html:40 templates/admin/mail.html:42
+#: templates/admin/security.html:37 templates/admin/security.html:39
+#: templates/agents/documents.html:18 templates/agents/documents.html:20
+#: templates/agents/mail.html:17 templates/agents/mail.html:19
+#: templates/agents/requests.html:23 templates/agents/requests.html:25
+msgid "Rechercher"
+msgstr "Hikaroka"
+
+#: templates/admin/mail.html:41 templates/agents/mail.html:18
+msgid "Nom, e-mail, téléphone…"
+msgstr "Anarana, mailaka, telefaonina…"
+
+#: templates/admin/mail.html:45
+msgid "Écrire à toute la liste"
+msgstr "Hanoratra amin’ny lisitra iray manontolo"
+
+#: templates/admin/mail.html:52
+msgid "Personne"
+msgstr "Olona"
+
+#: templates/admin/mail.html:52 templates/agents/mail.html:26
+msgid "E-mail"
+msgstr "Mailaka"
+
+#: templates/admin/mail.html:52
+msgid "Rôle"
+msgstr "Andraikitra"
+
+#: templates/admin/mail.html:52
+msgid "Dernière activité"
+msgstr "Hetsika farany"
+
+#: templates/admin/mail.html:52 templates/admin/security.html:53
+#: templates/agents/documents.html:27
+msgid "Actions"
+msgstr "Hetsika"
+
+#: templates/admin/mail.html:69 templates/agents/requests.html:42
+#, python-format
+msgid "%(counter)s demande"
+msgid_plural "%(counter)s demandes"
+msgstr[0] "fangatahana %(counter)s"
+msgstr[1] "fangatahana %(counter)s"
+
+#: templates/admin/mail.html:71
+msgid "Jamais"
+msgstr "Tsy mbola"
+
+#: templates/admin/mail.html:73
+msgid "Désactivé"
+msgstr "Tsy mandeha"
+
+#: templates/admin/mail.html:75
+msgid "Hors ligne"
+msgstr "Tsy mifandray"
+
+#: templates/admin/mail.html:78 templates/agents/mail.html:26
+#: templates/agents/mail.html:40
+msgid "Écrire"
+msgstr "Hanoratra"
+
+#: templates/admin/mail.html:79
+msgid "Compte"
+msgstr "Kaonty"
+
+#: templates/admin/mail.html:79
+msgid "Ses demandes"
+msgstr "Ny fangatahany"
+
+#: templates/admin/mail.html:83
+msgid "Personne ne correspond à cette recherche."
+msgstr "Tsy misy olona mifanaraka amin’io fikarohana io."
+
+#: templates/admin/security.html:13
+msgid ""
+"Chaque document établi par les agents est re-vérifié à l'ouverture de cette "
+"page : son empreinte SHA-256 et sa signature HMAC sont recalculées et "
+"comparées à celles du scellement."
+msgstr ""
+"Hamarinina indray ny antontan-taratasy rehetra nataon'ny mpiasa rehefa "
+"misokatra ity pejy ity: kajiana indray ny dian-tanana SHA-256 sy ny sonia "
+"HMAC ary ampitahaina amin'ireo voarakitra tamin'ny fanisiana tombo-kase."
+
+#: templates/admin/security.html:24
+msgid "Documents altérés, suppressions demandées ou révoqués"
+msgstr "Antontan-taratasy novaina, nangatahina hofafana na nofoanana"
+
+#: templates/admin/security.html:25
+msgid "Contenu modifié après le scellement : à examiner en priorité"
+msgstr "Votoatiny novaina taorian'ny tombo-kase: dinihina voalohany"
+
+#: templates/admin/security.html:26
+msgid "Demandes des agents en attente de votre décision"
+msgstr "Fangatahan'ny mpiasa miandry ny fanapahan-kevitrao"
+
+#: templates/admin/security.html:27
+msgid "Établis aux guichets 1 à 5"
+msgstr "Natao tao amin'ny varavarankely 1 ka hatramin'ny 5"
+
+#: templates/admin/security.html:38
+msgid "N° d'acte, titulaire, agent…"
+msgstr "Laharan'ny soratra, tompony, mpiasa…"
+
+#: templates/admin/security.html:47
+msgid "Document"
+msgstr "Antontan-taratasy"
+
+#: templates/admin/security.html:49
+msgid "Établi par"
+msgstr "Nataon'i"
+
+#: templates/admin/security.html:50
+msgid "Empreinte"
+msgstr "Dian-tanana"
+
+#: templates/admin/security.html:51
+msgid "Signature"
+msgstr "Sonia"
+
+#: templates/admin/security.html:52
+msgid "État"
+msgstr "Toetra"
+
+#: templates/admin/security.html:61
+#, python-format
+msgid "Guichet %(number)s"
+msgstr "Varavarankely %(number)s"
+
+#: templates/admin/security.html:68
+msgid "Conforme"
+msgstr "Mifanaraka"
+
+#: templates/admin/security.html:68
+msgid "Différente"
+msgstr "Tsy mitovy"
+
+#: templates/admin/security.html:69
+msgid "Invalide"
+msgstr "Tsy manan-kery"
+
+#: templates/admin/security.html:72
+#, python-format
+msgid "%(person)s : « %(reason)s »"
+msgstr "%(person)s: « %(reason)s »"
+
+#: templates/admin/security.html:74
+msgid "Examiner"
+msgstr "Dinihina"
+
+#: templates/admin/security.html:77
+msgid "Aucun document dans cette catégorie."
+msgstr "Tsy misy antontan-taratasy amin'ity sokajy ity."
+
+#: templates/admin/security.html:86
+msgid "Par agent"
+msgstr "Isaky ny mpiasa"
+
+#: templates/admin/security.html:90
+msgid "Guichet"
+msgstr "Varavarankely"
+
+#: templates/admin/security.html:90
+msgid "Documents"
+msgstr "Antontan-taratasy"
+
+#: templates/admin/security.html:90
+msgid "Altérés"
+msgstr "Novaina"
+
+#: templates/admin/security.html:90
+msgid "Suppressions"
+msgstr "Famafana"
+
+#: templates/admin/security.html:95
+#, python-format
+msgid "Dernier document : %(date)s"
+msgstr "Antontan-taratasy farany: %(date)s"
+
+#: templates/admin/security.html:102
+msgid "Aucun document établi pour le moment."
+msgstr "Tsy mbola misy antontan-taratasy natao."
+
+#: templates/admin/security.html:111
+msgid "Vérifications publiques (QR code)"
+msgstr "Fanamarinana ampahibemaso (QR code)"
+
+#: templates/admin/security.html:112
+#, python-format
+msgid "%(ok)s réussies · %(bad)s échouées"
+msgstr "%(ok)s nahomby · %(bad)s tsy nahomby"
+
+#: templates/admin/security.html:117
+msgid "Échec"
+msgstr "Tsy nahomby"
+
+#: templates/admin/security.html:119
+msgid "Document inconnu"
+msgstr "Antontan-taratasy tsy fantatra"
+
+#: templates/admin/security.html:124
+msgid "Aucune vérification échouée : aucun faux document n'a été présenté."
+msgstr ""
+"Tsy nisy fanamarinana tsy nahomby: tsy nisy antontan-taratasy sandoka "
+"naseho."
+
+#: templates/agents/_document_delete.html:2
+msgid "En attente de la décision de l'administrateur"
+msgstr "Miandry ny fanapahan-kevitry ny mpitantana"
+
+#: templates/agents/_document_delete.html:6
+#, python-format
+msgid "Demander la suppression du document %(number)s"
+msgstr "Hangataka ny hamafana ny antontan-taratasy %(number)s"
+
+#: templates/agents/_document_delete.html:6
+msgid "Supprimer"
+msgstr "Fafao"
+
+#: templates/agents/_requests_table.html:4
+msgid "Reçue le"
+msgstr "Voaray ny"
+
+#: templates/agents/_requests_table.html:4
+msgid "Action"
+msgstr "Hetsika"
+
+#: templates/agents/_requests_table.html:17
+msgid "À traiter en premier"
+msgstr "Karakaraina voalohany"
+
+#: templates/agents/_requests_table.html:18
+#, python-format
+msgid "N° %(position)s dans la file"
+msgstr "Laharana %(position)s amin'ny filaharana"
+
+#: templates/agents/_requests_table.html:20
+#: templates/agents/notifications.html:27
+msgid "Traiter"
+msgstr "Karakarao"
+
+#: templates/agents/base.html:8
+msgid "Mairie de Mahajanga"
+msgstr "Lapan’ny tanànan’i Mahajanga"
+
+#: templates/agents/base.html:27
+msgid "Notifications : nouvelles demandes"
+msgstr "Fampahafantarana: fangatahana vaovao"
+
+#: templates/agents/base.html:27
+#, python-format
+msgid "%(counter)s nouvelle demande"
+msgid_plural "%(counter)s nouvelles demandes"
+msgstr[0] "fangatahana vaovao %(counter)s"
+msgstr[1] "fangatahana vaovao %(counter)s"
+
+#: templates/agents/base.html:44 templates/agents/forbidden.html:32
+msgid "Se déconnecter"
+msgstr "Hivoaka"
+
+#: templates/agents/base.html:51
+msgid "Menu du guichet"
+msgstr "Menion’ny varavarankely"
+
+#: templates/agents/dashboard.html:11
+#, python-format
+msgid "%(label)s — tableau de bord de votre guichet"
+msgstr "%(label)s — tabilaon’ny varavarankelinao"
+
+#: templates/agents/dashboard.html:14
+msgid "Traiter les demandes en attente"
+msgstr "Karakarao ny fangatahana miandry"
+
+#: templates/agents/dashboard.html:21
+#, python-format
+msgid ""
+"<strong>%(counter)s nouvelle demande</strong> reçue depuis votre dernière "
+"consultation des notifications."
+msgid_plural ""
+"<strong>%(counter)s nouvelles demandes</strong> reçues depuis votre dernière"
+" consultation des notifications."
+msgstr[0] ""
+"<strong>Fangatahana vaovao %(counter)s</strong> voaray hatramin’ny nijerenao"
+" farany ny fampahafantarana."
+msgstr[1] ""
+"<strong>Fangatahana vaovao %(counter)s</strong> voaray hatramin’ny nijerenao"
+" farany ny fampahafantarana."
+
+#: templates/agents/dashboard.html:43
+msgid "Demandes à prendre en charge"
+msgstr "Fangatahana tokony hokarakaraina"
+
+#: templates/agents/dashboard.html:57
+msgid "Par statut"
+msgstr "Araka ny sata"
+
+#: templates/agents/dashboard.html:68
+msgid "Par type de dossier"
+msgstr "Araka ny karazan’antontan-taratasy"
+
+#: templates/agents/document_delete.html:12
+msgid "Demander la suppression"
+msgstr "Hangataka famafana"
+
+#: templates/agents/document_delete.html:14
+msgid ""
+". Vous ne pouvez pas supprimer un document vous-même : l'administrateur "
+"examinera votre demande."
+msgstr ""
+". Tsy afaka mamafa antontan-taratasy samirery ianao: handinika ny "
+"fangatahanao ny mpitantana."
+
+#: templates/agents/document_delete.html:23
+msgid "Motif de la suppression"
+msgstr "Antony famafana"
+
+#: templates/agents/document_delete.html:25
+msgid "Ex. : erreur dans un nom, document établi en double…"
+msgstr "Ohatra: diso anarana, antontan-taratasy natao indroa…"
+
+#: templates/agents/document_delete.html:30
+#: templates/includes/assistant.html:17
+msgid "Annuler"
+msgstr "Aoka ihany"
+
+#: templates/agents/document_delete.html:31
+msgid "Envoyer la demande à l'administrateur"
+msgstr "Alefaso any amin’ny mpitantana ny fangatahana"
+
+#: templates/agents/document_detail.html:14
+#, python-format
+msgid "%(holder)s · établi le %(date)s"
+msgstr "%(holder)s · natao ny %(date)s"
+
+#: templates/agents/document_detail.html:15
+#: templates/agents/document_detail.html:29
+msgid "par"
+msgstr "nataon’i"
+
+#: templates/agents/document_detail.html:19
+msgid "Aperçu"
+msgstr "Topi-maso"
+
+#: templates/agents/document_detail.html:20
+msgid "Télécharger le PDF"
+msgstr "Alaivo ny PDF"
+
+#: templates/agents/document_detail.html:28
+#, python-format
+msgid "Suppression demandée le %(date)s"
+msgstr "Nangatahina hofafana ny %(date)s"
+
+#: templates/agents/document_detail.html:30
+msgid "— en attente de la décision de l'administrateur."
+msgstr "— miandry ny fanapahan-kevitry ny mpitantana."
+
+#: templates/agents/document_detail.html:31
+#, python-format
+msgid "Motif : %(reason)s"
+msgstr "Antony: %(reason)s"
+
+#: templates/agents/document_detail.html:35
+msgid "Annuler la demande"
+msgstr "Foano ny fangatahana"
+
+#: templates/agents/document_detail.html:43
+#: templates/agents/document_detail.html:74
+msgid "Envoyer à l'usager"
+msgstr "Alefaso amin’ny olom-pirenena"
+
+#: templates/agents/document_detail.html:44
+#, python-format
+msgid "Envoyé le %(date)s"
+msgstr "Nalefa ny %(date)s"
+
+#: templates/agents/document_detail.html:52
+msgid "Destinataire :"
+msgstr "Mpandray:"
+
+#: templates/agents/document_detail.html:53
+msgid "— demande"
+msgstr "— fangatahana"
+
+#: templates/agents/document_detail.html:53
+msgid ". L'usager pourra télécharger le PDF depuis ses notifications."
+msgstr ". Afaka maka ny PDF ao amin’ny fampahafantarana ny olom-pirenena."
+
+#: templates/agents/document_detail.html:57
+msgid "Demande de l'usager"
+msgstr "Fangatahan’ny olom-pirenena"
+
+#: templates/agents/document_detail.html:59
+msgid "Choisissez la demande à laquelle répondre"
+msgstr "Fidio ny fangatahana hovaliana"
+
+#: templates/agents/document_detail.html:64
+msgid ""
+"Ce document a été établi sans demande : choisissez l'usager à qui l'envoyer."
+msgstr ""
+"Natao tsy nisy fangatahana ity antontan-taratasy ity: fidio ny olom-pirenena"
+" handefasana azy."
+
+#: templates/agents/document_detail.html:68
+msgid "Message à l'usager"
+msgstr "Hafatra ho an’ny olom-pirenena"
+
+#: templates/agents/document_detail.html:74
+msgid "Renvoyer à l'usager"
+msgstr "Alefaso indray amin’ny olom-pirenena"
+
+#: templates/agents/document_detail.html:80
+#, python-format
+msgid ""
+"Aucune demande du guichet en attente à laquelle rattacher ce document. Pour "
+"l'envoyer à un usager, établissez-le depuis sa demande (bouton « %(label)s "
+"»)."
+msgstr ""
+"Tsy misy fangatahana miandry ao amin’ny varavarankely hampifandraisina "
+"amin’ity antontan-taratasy ity. Raha handefa azy amin’ny olom-pirenena, "
+"ataovy avy amin’ny fangatahany (bokotra « %(label)s »)."
+
+#: templates/agents/document_detail.html:88
+msgid "Contenu du document"
+msgstr "Votoatin’ny antontan-taratasy"
+
+#: templates/agents/document_detail.html:96
+msgid "Traçabilité"
+msgstr "Fanarahan-dia"
+
+#: templates/agents/document_detail.html:98
+msgid "Demande d'origine"
+msgstr "Fangatahana niaviany"
+
+#: templates/agents/document_detail.html:107
+msgid "Authentique"
+msgstr "Marina"
+
+#: templates/agents/document_detail.html:109
+msgid "Altéré"
+msgstr "Novaina"
+
+#: templates/agents/document_detail.html:113
+msgid "Le QR code ouvre la page de vérification :"
+msgstr "Manokatra ny pejy fanamarinana ny QR code:"
+
+#: templates/agents/document_detail.html:115
+msgid "Empreinte SHA-256"
+msgstr "Dian-tanana SHA-256"
+
+#: templates/agents/document_form.html:15
+#, python-format
+msgid ""
+"Pré-rempli à partir de la demande <strong>%(reference)s</strong> de "
+"%(person)s — vérifiez et complétez."
+msgstr ""
+"Nofenoina mialoha avy amin’ny fangatahana <strong>%(reference)s</strong> "
+"nataon’i %(person)s — hamarino sy fenoy."
+
+#: templates/agents/document_form.html:17
+msgid ""
+"Remplissez les champs du document. Une fois enregistré, il est scellé "
+"(SHA-256) et ne peut plus être modifié."
+msgstr ""
+"Fenoy ireo sahan’ny antontan-taratasy. Rehefa voatahiry dia voaisy tombo-"
+"kase (SHA-256) izy ka tsy azo ovaina intsony."
+
+#: templates/agents/document_form.html:28
+msgid ""
+"Certains champs sont à corriger : ils sont signalés en rouge ci-dessous."
+msgstr "Misy saha tokony hahitsiana: voamarika mena eto ambany izy ireo."
+
+#: templates/agents/document_form.html:54
+msgid "* Champs obligatoires"
+msgstr "* Saha tsy maintsy fenoina"
+
+#: templates/agents/document_form.html:55
+msgid "Établir et sceller le document"
+msgstr "Soraty ary asio tombo-kase ny antontan-taratasy"
+
+#: templates/agents/documents.html:9
+#, python-format
+msgid ""
+"%(plural)s établis au %(guichet)s — chacun est scellé (SHA-256) et porte un "
+"QR code unique."
+msgstr ""
+"%(plural)s natao tao amin’ny %(guichet)s — samy voaisy tombo-kase (SHA-256) "
+"ary manana QR code tokana."
+
+#: templates/agents/documents.html:16
+#, python-format
+msgid "%(counter)s document"
+msgid_plural "%(counter)s documents"
+msgstr[0] "antontan-taratasy %(counter)s"
+msgstr[1] "antontan-taratasy %(counter)s"
+
+#: templates/agents/documents.html:19
+msgid "N° d'acte, nom, objet…"
+msgstr "Laharan’ny soratra, anarana, foto-dresaka…"
+
+#: templates/agents/documents.html:27
+msgid "N° d'acte"
+msgstr "Laharan’ny soratra"
+
+#: templates/agents/documents.html:27
+msgid "Établi le"
+msgstr "Natao ny"
+
+#: templates/agents/documents.html:38
+msgid "Envoyé"
+msgstr "Nalefa"
+
+#: templates/agents/documents.html:44
+msgid "Ouvrir"
+msgstr "Sokafy"
+
+#: templates/agents/documents.html:49
+#, python-format
+msgid ""
+"Aucun document pour le moment. Cliquez sur « %(label)s » pour en établir un."
+msgstr ""
+"Tsy mbola misy antontan-taratasy. Tsindrio ny « %(label)s » mba hanaovana "
+"iray."
+
+#: templates/agents/documents.html:56 templates/agents/messages.html:47
+#: templates/agents/requests.html:32
+msgid "Pages"
+msgstr "Pejy"
+
+#: templates/agents/documents.html:57 templates/agents/messages.html:48
+#: templates/agents/requests.html:34
+msgid "Précédente"
+msgstr "Teo aloha"
+
+#: templates/agents/documents.html:58 templates/agents/messages.html:49
+#: templates/agents/requests.html:36
+#, python-format
+msgid "Page %(number)s sur %(total)s"
+msgstr "Pejy %(number)s amin’ny %(total)s"
+
+#: templates/agents/documents.html:59 templates/agents/messages.html:50
+#: templates/agents/requests.html:38
+msgid "Suivante"
+msgstr "Manaraka"
+
+#: templates/agents/forbidden.html:8
+msgid "Accès refusé | Mairie de Mahajanga"
+msgstr "Tsy azo idirana | Lapan’ny tanànan’i Mahajanga"
+
+#: templates/agents/forbidden.html:20
+msgid "Accès refusé"
+msgstr "Tsy azo idirana"
+
+#: templates/agents/forbidden.html:23
+#, python-format
+msgid ""
+"Ce guichet ne vous est pas attribué. Vous traitez uniquement les demandes du"
+" <strong>%(guichet)s — %(label)s</strong>."
+msgstr ""
+"Tsy anao ity varavarankely ity. Ny fangatahana ao amin’ny "
+"<strong>%(guichet)s — %(label)s</strong> ihany no karakarainao."
+
+#: templates/agents/forbidden.html:25
+msgid "Aller à mon guichet"
+msgstr "Mankany amin’ny varavarankeliko"
+
+#: templates/agents/forbidden.html:28
+msgid ""
+"Ce compte n'a pas encore de rôle. L'administrateur doit valider votre "
+"demande d'accès et vous attribuer un guichet."
+msgstr ""
+"Mbola tsy manana andraikitra ity kaonty ity. Tsy maintsy hankatoavin’ny "
+"mpitantana ny fangatahanao ary homeny varavarankely ianao."
+
+#: templates/agents/inscription.html:8
+msgid "Demande d'accès agent | Mairie de Mahajanga"
+msgstr "Fangatahana fidirana mpiasa | Lapan’ny tanànan’i Mahajanga"
+
+#: templates/agents/inscription.html:39
+msgid "Demande envoyée"
+msgstr "Lasa ny fangatahana"
+
+#: templates/agents/inscription.html:41
+#, python-format
+msgid ""
+"Merci %(name)s ! Votre demande est en attente de validation par "
+"l'administrateur, qui vous attribuera votre guichet."
+msgstr ""
+"Misaotra %(name)s! Miandry fankatoavan’ny mpitantana ny fangatahanao, izy no"
+" hanome anao ny varavarankelinao."
+
+#: templates/agents/inscription.html:44
+msgid "Une fois acceptée, connectez-vous avec"
+msgstr "Rehefa voaray, midira amin’ny"
+
+#: templates/agents/inscription.html:44
+msgid ""
+"et le mot de passe que vous venez de choisir : vous arriverez directement "
+"sur la page de votre guichet."
+msgstr ""
+"sy ny teny miafina vao nofidinao: ho tonga mivantana eo amin’ny pejin’ny "
+"varavarankelinao ianao."
+
+#: templates/agents/inscription.html:46
+msgid "Aller à la connexion"
+msgstr "Mankany amin’ny fidirana"
+
+#: templates/agents/inscription.html:48
+msgid "Demande d'accès"
+msgstr "Fangatahana fidirana"
+
+#: templates/agents/inscription.html:49
+msgid "Agents municipaux de la Commune Urbaine de Mahajanga"
+msgstr "Mpiasan’ny Kaominina Ambonivohitr’i Mahajanga"
+
+#: templates/agents/inscription.html:64 templates/includes/assistant.html:35
+msgid "Envoyer"
+msgstr "Alefaso"
+
+#: templates/agents/inscription.html:71
+msgid "Rejoignez l'équipe&nbsp;!"
+msgstr "Midira ao amin’ny ekipa!"
+
+#: templates/agents/inscription.html:73
+msgid ""
+"Choisissez vos identifiants. L'administrateur valide votre demande et vous "
+"attribue votre guichet : vous accédez alors à votre propre espace pour "
+"traiter les demandes des usagers."
+msgstr ""
+"Fidio ny mombamomba ny fidiranao. Hankatoavin’ny mpitantana ny fangatahanao "
+"ary homeny anao ny varavarankelinao: hanana sehatra ho anao manokana ianao "
+"avy eo hikarakarana ny fangatahan’ny olom-pirenena."
+
+#: templates/agents/mail.html:9
+#, python-format
+msgid "Adresses e-mail des usagers qui ont fait une demande au %(guichet)s."
+msgstr "Adiresy mailaky ny olom-pirenena nangataka tao amin’ny %(guichet)s."
+
+#: templates/agents/mail.html:15
+#, python-format
+msgid "%(counter)s usager"
+msgid_plural "%(counter)s usagers"
+msgstr[0] "olom-pirenena %(counter)s"
+msgstr[1] "olom-pirenena %(counter)s"
+
+#: templates/agents/mail.html:26
+msgid "Téléphone"
+msgstr "Telefaonina"
+
+#: templates/agents/mail.html:26
+msgid "Demandes"
+msgstr "Fangatahana"
+
+#: templates/agents/mail.html:26
+msgid "Dernière demande"
+msgstr "Fangatahana farany"
+
+#: templates/agents/mail.html:44
+msgid "Aucun usager pour le moment."
+msgstr "Tsy mbola misy olom-pirenena."
+
+#: templates/agents/messages.html:9
+#, python-format
+msgid ""
+"Réponses envoyées aux usagers du %(guichet)s (elles apparaissent dans leurs "
+"notifications)."
+msgstr ""
+"Valiny nalefa tamin’ny olom-pirenena ao amin’ny %(guichet)s (miseho ao "
+"amin’ny fampahafantarana azy ireo)."
+
+#: templates/agents/messages.html:12
+#, python-format
+msgid "%(counter)s demande sans réponse"
+msgid_plural "%(counter)s demandes sans réponse"
+msgstr[0] "fangatahana %(counter)s tsy mbola novaliana"
+msgstr[1] "fangatahana %(counter)s tsy mbola novaliana"
+
+#: templates/agents/messages.html:18
+msgid "Filtrer les messages"
+msgstr "Sivano ny hafatra"
+
+#: templates/agents/messages.html:36
+msgid "Lu"
+msgstr "Voavaky"
+
+#: templates/agents/messages.html:36
+msgid "Non lu"
+msgstr "Tsy mbola voavaky"
+
+#: templates/agents/messages.html:42
+msgid "Aucun message pour le moment."
+msgstr "Tsy mbola misy hafatra."
+
+#: templates/agents/notifications.html:9
+#, python-format
+msgid "Demandes envoyées par les usagers au %(guichet)s — %(label)s."
+msgstr ""
+"Fangatahana nalefan’ny olom-pirenena tany amin’ny %(guichet)s — %(label)s."
+
+#: templates/agents/notifications.html:20
+msgid "Nouveau"
+msgstr "Vaovao"
+
+#: templates/agents/notifications.html:21
+msgid "a envoyé une demande"
+msgstr "nandefa fangatahana"
+
+#: templates/agents/password_change.html:9
+msgid ""
+"Remplacez le mot de passe provisoire reçu de l'administrateur par le vôtre."
+msgstr "Soloy ny anao ny teny miafina vonjimaika nomen’ny mpitantana."
+
+#: templates/agents/password_change.html:26
+#: templates/agents/request_detail.html:92
+msgid "Enregistrer"
+msgstr "Tehirizo"
+
+#: templates/agents/request_detail.html:14
+#, python-format
+msgid "Déposée le %(date)s par %(person)s"
+msgstr "Napetrak’i %(person)s ny %(date)s"
+
+#: templates/agents/request_detail.html:34
+#, python-format
+msgid "Ouvrir la demande %(reference)s"
+msgstr "Sokafy ny fangatahana %(reference)s"
+
+#: templates/agents/request_detail.html:40
+msgid "Document établi pour cette demande"
+msgstr "Antontan-taratasy natao ho an’ity fangatahana ity"
+
+#: templates/agents/request_detail.html:57
+msgid "Aucune information."
+msgstr "Tsy misy fampahalalana."
+
+#: templates/agents/request_detail.html:64
+msgid "Aucun détail."
+msgstr "Tsy misy antsipiriany."
+
+#: templates/agents/request_detail.html:74
+#, python-format
+msgid "Réponse envoyée le %(date)s"
+msgstr "Valiny nalefa ny %(date)s"
+
+#: templates/agents/request_detail.html:75
+msgid "lue par l'usager"
+msgstr "novakian’ny olom-pirenena"
+
+#: templates/agents/request_detail.html:75
+msgid "pas encore lue"
+msgstr "tsy mbola voavaky"
+
+#: templates/agents/requests.html:15
+msgid "Filtrer par statut"
+msgstr "Sivano araka ny sata"
+
+#: templates/agents/requests.html:24
+msgid "Référence, nom, e-mail, téléphone…"
+msgstr "Laharana, anarana, mailaka, telefaonina…"
+
+#: templates/includes/assistant.html:11 templates/includes/assistant.html:15
+#: templates/includes/assistant.html:23
+msgid "Assistant IA"
+msgstr "Mpanampy IA"
+
+#: templates/includes/assistant.html:16
+msgid ""
+"Bonjour ! Je peux répondre à vos questions sur les demandes et documents, ou"
+" effectuer une tâche à votre place (je vous demande toujours de confirmer). "
+"Tapez « aide » pour des exemples."
+msgstr ""
+"Manao ahoana! Afaka mamaly ny fanontanianao momba ny fangatahana sy "
+"antontan-taratasy aho, na manao asa ho anao (angatahiko foana ny "
+"fanamafisanao). Soraty « aide » raha hahita ohatra."
+
+#: templates/includes/assistant.html:17
+msgid "Confirmer"
+msgstr "Hamafiso"
+
+#: templates/includes/assistant.html:18
+msgid "Je confirme."
+msgstr "Hamafisiko."
+
+#: templates/includes/assistant.html:18
+msgid "D'accord, je n'ai rien modifié."
+msgstr "Eny, tsy nanova na inona na inona aho."
+
+#: templates/includes/assistant.html:19
+msgid "Je n'arrive pas à joindre le serveur. Réessayez dans un instant."
+msgstr "Tsy tratrako ny mpizara. Andramo indray afaka kelikely."
+
+#: templates/includes/assistant.html:24
+msgid "Uniquement pour cette application"
+msgstr "Ho an'ity rindranasa ity ihany"
+
+#: templates/includes/assistant.html:26
+msgid "Effacer la conversation"
+msgstr "Fafao ny resaka"
+
+#: templates/includes/assistant.html:27
+msgid "Fermer"
+msgstr "Akatona"
+
+#: templates/includes/assistant.html:32
+msgid "Votre demande"
+msgstr "Ny fangatahanao"
+
+#: templates/includes/assistant.html:34
+msgid "Ex. : prends en charge la prochaine demande"
+msgstr "Ohatra: prends en charge la prochaine demande"
+
+#: templates/includes/language_switcher.html:14
+msgid "Langue"
+msgstr "Fiteny"
+
+#: templates/includes/language_switcher.html:20
+msgid "OK"
+msgstr "OK"
+
+#: templates/landing.html:8 templates/landing.html:18
+msgid "Commune Urbaine de Mahajanga"
+msgstr "Kaominina Ambonivohitr’i Mahajanga"
+
+#: templates/landing.html:24
+msgid "Administration numérique de la Commune"
+msgstr "Fitantanana nomerikan’ny Kaominina"
+
+#: templates/landing.html:25
+msgid "Gérez la mairie en ligne."
+msgstr "Tantano an-tserasera ny lapan’ny tanàna."
+
+#: templates/landing.html:27
+msgid "Simple, sûr et rapide pour"
+msgstr "Tsotra, azo antoka ary haingana ho an’ny"
+
+#: templates/landing.html:29
+msgid ""
+"les actes de naissance, les actes de mariage, les actes de décès, les "
+"demandes des usagers et les documents officiels"
+msgstr ""
+"kopia nahaterahana, soratra fanambadiana, soratra fahafatesana, "
+"fangatahan’ny olom-pirenena ary antontan-taratasy ofisialy"
+
+#: templates/landing.html:32
+msgid ""
+"Traitez les demandes des usagers, délivrez des documents officiels sécurisés"
+" par QR code et suivez l'activité de chaque guichet, depuis un seul espace "
+"réservé aux agents et aux administrateurs."
+msgstr ""
+"Karakarao ny fangatahan’ny olom-pirenena, avoahy ny antontan-taratasy "
+"ofisialy voaaro amin’ny QR code ary araho ny asan’ny varavarankely "
+"tsirairay, avy amin’ny sehatra tokana natokana ho an’ny mpiasa sy "
+"mpitantana."
+
+#: templates/landing.html:38
+msgid "Mon espace"
+msgstr "Ny sehatro"
+
+#~ msgid "Messages de contact"
+#~ msgstr "Hafatra fifandraisana"

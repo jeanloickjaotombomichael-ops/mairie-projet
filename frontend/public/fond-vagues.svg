@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 666" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="fond" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#05153a"/>
+      <stop offset="0.55" stop-color="#0a3684"/>
+      <stop offset="1" stop-color="#0c62d4"/>
+    </linearGradient>
+    <linearGradient id="vague-haute" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#0d3c8f" stop-opacity="0"/>
+      <stop offset="1" stop-color="#1f74e6" stop-opacity="0.55"/>
+    </linearGradient>
+    <linearGradient id="vague" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#071b4a"/>
+      <stop offset="0.6" stop-color="#0a3d97"/>
+      <stop offset="1" stop-color="#0d5fcf"/>
+    </linearGradient>
+    <linearGradient id="vague-basse" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#061840"/>
+      <stop offset="1" stop-color="#0b4fb5"/>
+    </linearGradient>
+    <filter id="ombre" x="-10%" y="-40%" width="120%" height="180%">
+      <feDropShadow dx="0" dy="-10" stdDeviation="16" flood-color="#020a1f" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  <rect width="1440" height="666" fill="url(#fond)"/>
+
+  <!-- Voile clair en haut à droite -->
+  <path d="M560 0 C760 110 930 250 1440 70 L1440 0 Z" fill="url(#vague-haute)"/>
+
+  <!-- Vague principale -->
+  <path d="M0 175 C280 50 560 120 790 270 C1010 410 1210 330 1440 55 L1440 666 L0 666 Z"
+        fill="url(#vague)" fill-opacity="0.75" filter="url(#ombre)"/>
+
+  <!-- Vague du bas -->
+  <path d="M0 300 C300 190 560 300 800 450 C1020 590 1250 520 1440 330 L1440 666 L0 666 Z"
+        fill="url(#vague-basse)" fill-opacity="0.6" filter="url(#ombre)"/>
+
+  <!-- Fins liserés -->
+  <path d="M0 95 C320 80 600 200 880 330 C1080 420 1290 300 1440 150"
+        fill="none" stroke="#3a86f0" stroke-opacity="0.22" stroke-width="2"/>
+  <path d="M260 0 C520 120 760 300 1060 330 C1240 345 1360 260 1440 200"
+        fill="none" stroke="#3a86f0" stroke-opacity="0.15" stroke-width="2"/>
+</svg>

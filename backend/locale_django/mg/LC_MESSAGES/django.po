@@ -1,0 +1,407 @@
+#
+msgid ""
+msgstr ""
+"Language: mg\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "Save"
+msgstr "Tehirizo"
+
+msgid "Save and add another"
+msgstr "Tehirizo ary manampia hafa"
+
+msgid "Save and continue editing"
+msgstr "Tehirizo ary manohiza manova"
+
+msgid "Save as new"
+msgstr "Tehirizo ho vaovao"
+
+msgid "Delete"
+msgstr "Fafao"
+
+msgid "Close"
+msgstr "Akatona"
+
+msgid "Search"
+msgstr "Hikaroka"
+
+msgid "Action:"
+msgstr "Hetsika:"
+
+msgid "History"
+msgstr "Tantara"
+
+msgid "View on site"
+msgstr "Jereo amin’ny tranonkala"
+
+msgid "Home"
+msgstr "Fandraisana"
+
+msgid "Add"
+msgstr "Hampiditra"
+
+msgid "Change"
+msgstr "Hanova"
+
+msgid "View"
+msgstr "Jereo"
+
+msgid "Add %(name)s"
+msgstr "Hampiditra %(name)s"
+
+msgid "Add %s"
+msgstr "Hampiditra %s"
+
+msgid "Change %s"
+msgstr "Hanova %s"
+
+msgid "View %s"
+msgstr "Hijery %s"
+
+msgid "Select %s"
+msgstr "Mifidiana %s"
+
+msgid "Select %s to change"
+msgstr "Mifidiana %s hovaina"
+
+msgid "Select %s to view"
+msgstr "Mifidiana %s hojerena"
+
+msgid "Filter"
+msgstr "Sivana"
+
+msgid "Show counts"
+msgstr "Asehoy ny isa"
+
+msgid "Hide counts"
+msgstr "Afeno ny isa"
+
+msgid "Clear all filters"
+msgstr "Fafao ny sivana rehetra"
+
+msgid "All"
+msgstr "Rehetra"
+
+msgid "Yes"
+msgstr "Eny"
+
+msgid "No"
+msgstr "Tsia"
+
+msgid "Unknown"
+msgstr "Tsy fantatra"
+
+msgid "Any date"
+msgstr "Daty rehetra"
+
+msgid "Today"
+msgstr "Androany"
+
+msgid "Past 7 days"
+msgstr "7 andro farany"
+
+msgid "This month"
+msgstr "Ity volana ity"
+
+msgid "This year"
+msgstr "Ity taona ity"
+
+msgid "No date"
+msgstr "Tsy misy daty"
+
+msgid "Has date"
+msgstr "Misy daty"
+
+msgid "Empty"
+msgstr "Banga"
+
+msgid "Not empty"
+msgstr "Tsy banga"
+
+msgid "Delete selected %(verbose_name_plural)s"
+msgstr "Fafao ireo %(verbose_name_plural)s voafidy"
+
+msgid "Yes, I’m sure"
+msgstr "Eny, azoko antoka"
+
+msgid "No, take me back"
+msgstr "Tsia, hiverina aho"
+
+msgid "Objects"
+msgstr "Zavatra"
+
+msgid "Summary"
+msgstr "Famintinana"
+
+msgid "Recent actions"
+msgstr "Hetsika farany"
+
+msgid "My actions"
+msgstr "Ny hetsiko"
+
+msgid "None available"
+msgstr "Tsy misy"
+
+msgid "Unknown content"
+msgstr "Votoatiny tsy fantatra"
+
+msgid "Show all"
+msgstr "Asehoy daholo"
+
+msgid "Clear selection"
+msgstr "Fafao ny safidy"
+
+msgid "Date/time"
+msgstr "Daty/ora"
+
+msgid "User"
+msgstr "Mpampiasa"
+
+msgid "Action"
+msgstr "Hetsika"
+
+msgid "Log in"
+msgstr "Hiditra"
+
+msgid "Password"
+msgstr "Teny miafina"
+
+msgid "Log out"
+msgstr "Hivoaka"
+
+msgid "Change password"
+msgstr "Hanova ny teny miafina"
+
+msgid "Password change"
+msgstr "Fanovana teny miafina"
+
+msgid "Password change successful"
+msgstr "Voaova ny teny miafina"
+
+msgid "Your password was changed."
+msgstr "Voaova ny teny miafinao."
+
+msgid "Change my password"
+msgstr "Hanova ny teny miafiko"
+
+msgid "Old password"
+msgstr "Teny miafina taloha"
+
+msgid "New password"
+msgstr "Teny miafina vaovao"
+
+msgid "New password confirmation"
+msgstr "Fanamafisana ny teny miafina vaovao"
+
+msgid "Toggle theme (current theme: auto)"
+msgstr "Hanova endrika (endrika ankehitriny: mandeha ho azy)"
+
+msgid "Toggle theme (current theme: light)"
+msgstr "Hanova endrika (endrika ankehitriny: mazava)"
+
+msgid "Toggle theme (current theme: dark)"
+msgstr "Hanova endrika (endrika ankehitriny: maizina)"
+
+msgid "Skip to main content"
+msgstr "Mankany amin’ny votoaty lehibe"
+
+msgid "Breadcrumbs"
+msgstr "Lalana"
+
+msgid "Start typing to filter…"
+msgstr "Manomboha manoratra hanivana…"
+
+msgid "Filter navigation items"
+msgstr "Sivano ireo singa amin’ny menio"
+
+msgid "Django site admin"
+msgstr "Fitantanana ny tranonkala"
+
+msgid "Django administration"
+msgstr "Fitantanana"
+
+msgid "Site administration"
+msgstr "Fitantanana ny tranonkala"
+
+msgid "Please correct the error below."
+msgid_plural "Please correct the errors below."
+msgstr[0] "Amboary ilay hadisoana etsy ambany."
+msgstr[1] "Amboary ilay hadisoana etsy ambany."
+
+msgid "Forgotten your login credentials?"
+msgstr "Hadinonao ve ny mombamomba ny fidiranao?"
+
+msgid "Successfully deleted %(count)d %(items)s."
+msgstr "%(items)s %(count)d voafafa soa aman-tsara."
+
+msgid ""
+"Items must be selected in order to perform actions on them. No items have "
+"been changed."
+msgstr ""
+"Tsy maintsy misafidy singa vao afaka manao hetsika. Tsy nisy singa novaina."
+
+msgid "No action selected."
+msgstr "Tsy nisy hetsika voafidy."
+
+msgid "The {name} “{obj}” was added successfully."
+msgstr "Tafiditra soa aman-tsara ny {name} « {obj} »."
+
+msgid "The {name} “{obj}” was changed successfully."
+msgstr "Voaova soa aman-tsara ny {name} « {obj} »."
+
+msgid "The %(name)s “%(obj)s” was deleted successfully."
+msgstr "Voafafa soa aman-tsara ny %(name)s « %(obj)s »."
+
+msgid "Add another %(verbose_name)s"
+msgstr "Hampiditra %(verbose_name)s hafa"
+
+msgid "Remove"
+msgstr "Esory"
+
+msgid "Delete?"
+msgstr "Hofafana?"
+
+msgid "Currently:"
+msgstr "Ankehitriny:"
+
+msgid "Change:"
+msgstr "Ovay:"
+
+msgid "Clear"
+msgstr "Fafao"
+
+msgid "Date:"
+msgstr "Daty:"
+
+msgid "Time:"
+msgstr "Ora:"
+
+msgid "Model name"
+msgstr "Anaran’ny modely"
+
+msgid "action time"
+msgstr "fotoana nanaovana"
+
+msgid "user"
+msgstr "mpampiasa"
+
+msgid "object repr"
+msgstr "fanehoana ny zavatra"
+
+msgid "change message"
+msgstr "hafatra fanovana"
+
+msgid "log entry"
+msgstr "soratra ao amin’ny diary"
+
+msgid "log entries"
+msgstr "soratra ao amin’ny diary"
+
+msgid "Permissions"
+msgstr "Fahazoan-dalana"
+
+msgid "Personal info"
+msgstr "Mombamomba manokana"
+
+msgid "Important dates"
+msgstr "Daty manan-danja"
+
+msgid "first name"
+msgstr "fanampin’anarana"
+
+msgid "last name"
+msgstr "anarana"
+
+msgid "email address"
+msgstr "adiresy mailaka"
+
+msgid "staff status"
+msgstr "sata mpiasa"
+
+msgid "active"
+msgstr "mavitrika"
+
+msgid "superuser status"
+msgstr "sata mpitantana ambony"
+
+msgid "groups"
+msgstr "vondrona"
+
+msgid "user permissions"
+msgstr "fahazoan-dalan’ny mpampiasa"
+
+msgid "last login"
+msgstr "fidirana farany"
+
+msgid "date joined"
+msgstr "daty nidirana"
+
+msgid "username"
+msgstr "anarana fidirana"
+
+msgid "password"
+msgstr "teny miafina"
+
+msgid "Authentication and Authorization"
+msgstr "Fanamarinana sy fahazoan-dalana"
+
+msgid "name"
+msgstr "anarana"
+
+msgid "permissions"
+msgstr "fahazoan-dalana"
+
+msgid "This field is required."
+msgstr "Tsy maintsy fenoina ity saha ity."
+
+msgid "Enter a valid email address."
+msgstr "Ampidiro adiresy mailaka marina."
+
+msgid "Enter a valid date."
+msgstr "Ampidiro daty marina."
+
+msgid "Enter a valid time."
+msgstr "Ampidiro ora marina."
+
+msgid "Enter a whole number."
+msgstr "Ampidiro isa feno."
+
+msgid "Enter a number."
+msgstr "Ampidiro isa."
+
+msgid ""
+"Select a valid choice. That choice is not one of the available choices."
+msgstr "Mifidiana safidy marina. Tsy anisan’ireo safidy misy io."
+
+msgid "Page not found"
+msgstr "Tsy hita ny pejy"
+
+msgid "Server error"
+msgstr "Hadisoana tamin’ny mpizara"
+
+msgid "Welcome,"
+msgstr "Tongasoa,"
+
+msgid "View site"
+msgstr "Jereo ny tranonkala"
+
+msgid "Documentation"
+msgstr "Torolalana"
+
+msgid "Change history: %s"
+msgstr "Tantaran’ny fanovana: %s"
+
+msgid "Added."
+msgstr "Tafiditra."
+
+msgid "No fields changed."
+msgstr "Tsy nisy saha novaina."
+
+msgid "and"
+msgstr "sy"
+
+msgid "Delete multiple objects"
+msgstr "Mamafa zavatra maromaro"

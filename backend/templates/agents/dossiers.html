@@ -1,0 +1,145 @@
+{% extends "agents/base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="mairy-page">
+  <div class="agent-head">
+    <div>
+      <h1>{% translate "Dossiers" %}</h1>
+      <p class="mairy-muted">{% translate "Vos dossiers et fichiers personnels. Vous seul pouvez les voir." %}</p>
+    </div>
+    <div class="files-actions">
+      <details class="files-new">
+        <summary class="agent-btn"><svg class="mairy-ico"><use href="#mi-folder"/></svg>{% translate "Nouveau dossier" %}</summary>
+        <form method="post" class="files-inline-form">
+          {% csrf_token %}
+          <input type="hidden" name="action" value="create_folder">
+          <label class="agent-sr" for="folder-name">{% translate "Nom du dossier" %}</label>
+          <input id="folder-name" name="name" maxlength="120" required placeholder="{% translate "Nom du dossier" %}">
+          <button type="submit" class="agent-btn">{% translate "Créer" %}</button>
+        </form>
+      </details>
+      <form method="post" enctype="multipart/form-data" data-upload>
+        {% csrf_token %}
+        <input type="hidden" name="action" value="upload">
+        <label class="agent-btn files-upload">
+          <svg class="mairy-ico"><use href="#mi-upload"/></svg>{% translate "Importer des fichiers" %}
+          <input type="file" name="files" multiple hidden>
+        </label>
+      </form>
+    </div>
+  </div>
+
+  <section class="mairy-card files-card" data-dropzone>
+    <div class="agent-toolbar">
+      <nav class="files-breadcrumb" aria-label="{% translate "Emplacement" %}">
+        <a href="{% url 'agents:folders' number %}">{% translate "Dossiers" %}</a>
+        {% for crumb in breadcrumb %}
+        <span aria-hidden="true">›</span>
+        {% if forloop.last %}<strong aria-current="page">{{ crumb.name }}</strong>{% else %}<a href="{{ crumb.url }}">{{ crumb.name }}</a>{% endif %}
+        {% endfor %}
+        {% if query %}<span aria-hidden="true">›</span><strong>{% blocktranslate %}Résultats pour « {{ query }} »{% endblocktranslate %}</strong>{% endif %}
+      </nav>
+      <form method="get" class="agent-search" role="search">
+        <label class="agent-sr" for="q">{% translate "Rechercher" %}</label>
+        <input id="q" type="search" name="q" value="{{ query }}" placeholder="{% translate "Rechercher dans mes dossiers…" %}">
+        <button type="submit" class="agent-btn">{% translate "Rechercher" %}</button>
+      </form>
+    </div>
+
+    <div class="mairy-table-wrap">
+      <table class="mairy-table files-table">
+        <thead>
+          <tr><th>{% translate "Nom" %}</th><th>{% translate "Taille" %}</th><th>{% translate "Date" %}</th><th><span class="agent-sr">{% translate "Actions" %}</span></th></tr>
+        </thead>
+        <tbody>
+          {% for folder in subfolders %}
+          <tr>
+            <td>
+              <a class="files-name" href="{{ folder.url }}">
+                <svg class="mairy-ico files-ico is-folder"><use href="#mi-folder"/></svg><strong>{{ folder.name }}</strong>
+              </a>
+            </td>
+            <td class="mairy-muted">{% blocktranslate count counter=folder.count %}{{ counter }} élément{% plural %}{{ counter }} éléments{% endblocktranslate %}</td>
+            <td class="mairy-muted">{{ folder.created_at|date:"d M Y" }}</td>
+            <td class="agent-cell-action">
+              <div class="agent-row-actions">
+                {% include "agents/_file_rename.html" with item=folder action="rename_folder" %}
+                <form method="post">
+                  {% csrf_token %}
+                  <input type="hidden" name="action" value="trash_folder">
+                  <input type="hidden" name="id" value="{{ folder.pk }}">
+                  <button type="submit" class="mairy-btn" title="{% translate "Placer dans la corbeille" %}"><svg class="mairy-ico"><use href="#mi-trash"/></svg></button>
+                </form>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+          {% for item in files %}
+          <tr>
+            <td>
+              <a class="files-name" href="{% url 'agents:file_open' number item.pk %}?voir=1" target="_blank" rel="noopener">
+                <span class="files-ext">{{ item.extension }}</span>{{ item.name }}
+              </a>
+              {% if query and item.folder %}<span class="mairy-muted mairy-ref">{% translate "Dans" %} {{ item.folder.name }}</span>{% endif %}
+            </td>
+            <td class="mairy-muted">{{ item.size|filesizeformat }}</td>
+            <td class="mairy-muted">{{ item.created_at|date:"d M Y" }}</td>
+            <td class="agent-cell-action">
+              <div class="agent-row-actions">
+                <a class="mairy-btn" href="{% url 'agents:file_open' number item.pk %}" title="{% translate "Télécharger" %}"><svg class="mairy-ico"><use href="#mi-download"/></svg></a>
+                {% include "agents/_file_rename.html" with action="rename_file" %}
+                <form method="post">
+                  {% csrf_token %}
+                  <input type="hidden" name="action" value="trash_file">
+                  <input type="hidden" name="id" value="{{ item.pk }}">
+                  <button type="submit" class="mairy-btn" title="{% translate "Placer dans la corbeille" %}"><svg class="mairy-ico"><use href="#mi-trash"/></svg></button>
+                </form>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+          {% if not subfolders and not files %}
+          <tr><td colspan="4" class="files-empty">
+            {% if query %}{% translate "Aucun dossier ni fichier ne correspond à cette recherche." %}
+            {% else %}
+            <svg class="mairy-ico"><use href="#mi-folder"/></svg>
+            <strong>{% translate "Ce dossier est vide" %}</strong>
+            <span class="mairy-muted">{% blocktranslate with size=max_size_mb %}Créez un dossier ou déposez des fichiers ici (jusqu'à {{ size }} Mo par fichier).{% endblocktranslate %}</span>
+            {% endif %}
+          </td></tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>
+
+<script>
+  (function () {
+    var form = document.querySelector('[data-upload]');
+    var input = form.querySelector('input[type=file]');
+    input.addEventListener('change', function () { if (input.files.length) form.submit(); });
+
+    // Glisser-déposer des fichiers sur la liste.
+    var zone = document.querySelector('[data-dropzone]');
+    ['dragenter', 'dragover'].forEach(function (name) {
+      zone.addEventListener(name, function (event) {
+        if (event.dataTransfer && Array.prototype.indexOf.call(event.dataTransfer.types, 'Files') !== -1) {
+          event.preventDefault();
+          zone.classList.add('is-dragging');
+        }
+      });
+    });
+    zone.addEventListener('dragleave', function (event) {
+      if (!zone.contains(event.relatedTarget)) zone.classList.remove('is-dragging');
+    });
+    zone.addEventListener('drop', function (event) {
+      if (!event.dataTransfer || !event.dataTransfer.files.length) return;
+      event.preventDefault();
+      input.files = event.dataTransfer.files;
+      form.submit();
+    });
+  })();
+</script>
+{% endblock %}

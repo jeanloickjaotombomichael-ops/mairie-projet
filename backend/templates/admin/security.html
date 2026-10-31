@@ -1,0 +1,130 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block breadcrumbs %}
+<ol class="breadcrumbs">
+  <li><a href="{% url 'admin:index' %}">{% translate "Accueil" %}</a></li>
+  <li aria-current="page">{% translate "Sécurité et fraude" %}</li>
+</ol>
+{% endblock %}
+
+{% block content_title %}
+<h1>{% translate "Sécurité et fraude" %}</h1>
+<h2>{% translate "Chaque document établi par les agents est re-vérifié à l'ouverture de cette page : son empreinte SHA-256 et sa signature HMAC sont recalculées et comparées à celles du scellement." %}</h2>
+{% endblock %}
+
+{% block content %}
+<div class="mairy-page">
+  <section class="mairy-kpis">
+    {% for tab in tabs %}
+    <a class="mairy-card mairy-kpi mail-kpi{% if tab.active %} is-active{% endif %}{% if tab.value == 'alteres' and tab.count %} sec-kpi-danger{% endif %}" href="?{% if tab.value %}vue={{ tab.value }}{% endif %}">
+      <span class="mairy-kpi-label">{{ tab.label }}</span>
+      <span class="mairy-kpi-row"><span class="mairy-kpi-value">{{ tab.count }}</span></span>
+      <span class="mairy-kpi-sub">
+        {% if tab.value == 'alertes' %}{% translate "Documents altérés, suppressions demandées ou révoqués" %}
+        {% elif tab.value == 'alteres' %}{% translate "Contenu modifié après le scellement : à examiner en priorité" %}
+        {% elif tab.value == 'suppressions' %}{% translate "Demandes des agents en attente de votre décision" %}
+        {% else %}{% translate "Établis aux guichets 1 à 5" %}{% endif %}
+      </span>
+    </a>
+    {% endfor %}
+  </section>
+
+  <section class="mairy-card">
+    <div class="mail-toolbar">
+      <form method="get" role="search" class="mail-search">
+        {% if current %}<input type="hidden" name="vue" value="{{ current }}">{% endif %}
+        <label class="mail-sr" for="q">{% translate "Rechercher" %}</label>
+        <input id="q" type="search" name="q" value="{{ query }}" placeholder="{% translate "N° d'acte, titulaire, agent…" %}">
+        <button type="submit">{% translate "Rechercher" %}</button>
+      </form>
+    </div>
+
+    <div class="mairy-table-wrap">
+      <table class="mairy-table">
+        <thead>
+          <tr>
+            <th>{% translate "Document" %}</th>
+            <th>{% translate "Titulaire" %}</th>
+            <th>{% translate "Établi par" %}</th>
+            <th>{% translate "Empreinte" %}</th>
+            <th>{% translate "Signature" %}</th>
+            <th>{% translate "État" %}</th>
+            <th><span class="mail-sr">{% translate "Actions" %}</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in rows %}
+          <tr{% if row.level == 'altered' %} class="sec-row-danger"{% endif %}>
+            <td>
+              <strong>{{ row.number }}</strong>
+              <span class="mairy-muted mairy-ref">{{ row.kind|capfirst }} · {% blocktranslate with number=row.guichet %}Guichet {{ number }}{% endblocktranslate %}</span>
+            </td>
+            <td>{{ row.holder }}</td>
+            <td>
+              {{ row.agent|default:"—" }}
+              <span class="mairy-muted mairy-ref">{{ row.created_at|date:"DATETIME_FORMAT" }}</span>
+            </td>
+            <td>{% if row.hash_matches %}<span class="sec-check is-ok">{% translate "Conforme" %}</span>{% else %}<span class="sec-check is-bad">{% translate "Différente" %}</span>{% endif %}</td>
+            <td>{% if row.signature_valid %}<span class="sec-check is-ok">{% translate "Valide" %}</span>{% else %}<span class="sec-check is-bad">{% translate "Invalide" %}</span>{% endif %}</td>
+            <td>
+              <span class="mairy-status {% if row.level == 'altered' %}s-rejected{% elif row.level == 'deletion' %}s-pending{% elif row.level == 'revoked' %}s-completed{% else %}s-approved{% endif %}">{{ row.level_label }}</span>
+              {% if row.deletion_reason %}<span class="mairy-muted mairy-ref">{% blocktranslate with person=row.deletion_by reason=row.deletion_reason %}{{ person }} : « {{ reason }} »{% endblocktranslate %}</span>{% endif %}
+            </td>
+            <td class="mail-actions">{% if row.admin_url %}<a class="mairy-btn" href="{{ row.admin_url }}">{% translate "Examiner" %}</a>{% endif %}</td>
+          </tr>
+          {% empty %}
+          <tr><td colspan="7" class="mairy-muted">{% translate "Aucun document dans cette catégorie." %}</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="sec-columns">
+    <section class="mairy-card">
+      <div class="mairy-card-head"><h2>{% translate "Par agent" %}</h2></div>
+      <div class="mairy-table-wrap">
+        <table class="mairy-table">
+          <thead>
+            <tr><th>{% translate "Agent" %}</th><th>{% translate "Guichet" %}</th><th>{% translate "Documents" %}</th><th>{% translate "Altérés" %}</th><th>{% translate "Suppressions" %}</th></tr>
+          </thead>
+          <tbody>
+            {% for agent in agents %}
+            <tr{% if agent.altered %} class="sec-row-danger"{% endif %}>
+              <td>{{ agent.name }}<span class="mairy-muted mairy-ref">{% if agent.last %}{% blocktranslate with date=agent.last|date:"DATETIME_FORMAT" %}Dernier document : {{ date }}{% endblocktranslate %}{% endif %}</span></td>
+              <td>{{ agent.guichets }}</td>
+              <td>{{ agent.documents }}</td>
+              <td>{% if agent.altered %}<span class="sec-check is-bad">{{ agent.altered }}</span>{% else %}0{% endif %}</td>
+              <td>{{ agent.deletions }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="5" class="mairy-muted">{% translate "Aucun document établi pour le moment." %}</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="mairy-card">
+      <div class="mairy-card-head">
+        <h2>{% translate "Vérifications publiques (QR code)" %}</h2>
+        <span class="mairy-muted">{% blocktranslate with ok=verified_ok bad=verified_fraud %}{{ ok }} réussies · {{ bad }} échouées{% endblocktranslate %}</span>
+      </div>
+      <ul class="sec-frauds">
+        {% for log in recent_frauds %}
+        <li>
+          <span class="sec-check is-bad">{% translate "Échec" %}</span>
+          <span>
+            <strong>{{ log.details|default:_("Document inconnu") }}</strong>
+            <span class="mairy-muted mairy-ref">{{ log.timestamp|date:"DATETIME_FORMAT" }}{% if log.ip_address %} · IP {{ log.ip_address }}{% endif %}</span>
+          </span>
+        </li>
+        {% empty %}
+        <li class="mairy-muted">{% translate "Aucune vérification échouée : aucun faux document n'a été présenté." %}</li>
+        {% endfor %}
+      </ul>
+    </section>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,99 @@
+/* Sélecteur de langue (partagé : administration, espace agent, accueil, connexion). */
+
+.lang-switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  margin: 0;
+}
+
+.lang-switch-icon {
+  position: absolute;
+  left: 10px;
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  pointer-events: none;
+}
+
+.lang-switch select {
+  height: 36px;
+  appearance: none;
+  border: 1px solid rgba(127, 127, 127, 0.35);
+  border-radius: 999px;
+  background: transparent;
+  padding: 0 14px 0 32px;
+  color: inherit;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.lang-switch select:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+.lang-switch select option {
+  color: #1c1d2b;
+}
+
+.lang-switch-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Sur fond sombre (page d'accueil, page de connexion) */
+.lang-switch.on-dark {
+  color: #ffffff;
+}
+
+.lang-switch.on-dark select {
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* Coin supérieur droit des pages autonomes (connexion, demande d'accès, accès refusé) */
+.lang-corner {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 20;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  color: #1c1d2b;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.12);
+}
+
+.lang-corner .lang-switch select {
+  border-color: transparent;
+}
+
+.lang-switch-code {
+  display: none;
+}
+
+/* Téléphone : menu réduit au code de la langue pour tenir dans la barre du haut. */
+@media (max-width: 600px) {
+  .lang-switch select {
+    width: 4rem;
+    padding-right: 4px;
+    color: transparent;
+  }
+
+  .lang-switch-code {
+    display: block;
+    position: absolute;
+    left: 31px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    pointer-events: none;
+  }
+}

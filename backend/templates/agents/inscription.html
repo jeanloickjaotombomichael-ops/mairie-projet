@@ -1,0 +1,81 @@
+{% load static i18n %}<!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="NONE,NOARCHIVE">
+  <title>{% if form.errors %}{% translate "Erreur :" %} {% endif %}{% translate "Demande d'accès agent | Mairie de Mahajanga" %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&display=swap">
+  <link rel="stylesheet" href="{% static 'mairy_admin/login.css' %}">
+  <link rel="stylesheet" href="{% static 'mairy_admin/lang.css' %}?v=3">
+  <link rel="stylesheet" href="{% static 'mairy_admin/responsive.css' %}?v=1">
+</head>
+<body>
+  <div class="lang-corner">{% include "includes/language_switcher.html" with switcher_id="corner" %}</div>
+  {# Même fond animé que la page de connexion #}
+  <div class="bg" aria-hidden="true">
+    <span class="blob blob-1"></span>
+    <span class="blob blob-2"></span>
+    <span class="blob blob-3"></span>
+    <svg class="wave wave-1" viewBox="0 0 2880 320" preserveAspectRatio="none">
+      <path d="M0 160 C240 80 480 80 720 160 S1200 240 1440 160 S1920 80 2160 160 S2640 240 2880 160 V320 H0 Z"/>
+    </svg>
+    <svg class="wave wave-2" viewBox="0 0 2880 320" preserveAspectRatio="none">
+      <path d="M0 200 C240 130 480 130 720 200 S1200 270 1440 200 S1920 130 2160 200 S2640 270 2880 200 V320 H0 Z"/>
+    </svg>
+    <svg class="wave wave-3" viewBox="0 0 2880 320" preserveAspectRatio="none">
+      <path d="M0 240 C240 190 480 190 720 240 S1200 290 1440 240 S1920 190 2160 240 S2640 290 2880 240 V320 H0 Z"/>
+    </svg>
+  </div>
+
+  <main class="card">
+    <section class="card-form">
+      <a class="back" href="{% url 'connexion' %}">&larr; {% translate "Connexion" %}</a>
+
+      <img class="logo" src="{% static 'mairy_admin/logo.png' %}" alt="" width="64" height="64">
+
+      {% if sent %}
+      <h1>{% translate "Demande envoyée" %}</h1>
+      <p class="subtitle">
+        {% blocktranslate with name=sent.first_name %}Merci {{ name }} ! Votre demande est en attente de validation par l'administrateur, qui vous attribuera votre guichet.{% endblocktranslate %}
+      </p>
+      <p class="subtitle">
+        {% translate "Une fois acceptée, connectez-vous avec" %} <strong>{{ sent.email }}</strong> {% translate "et le mot de passe que vous venez de choisir : vous arriverez directement sur la page de votre guichet." %}
+      </p>
+      <a class="btn btn-inline" href="{% url 'connexion' %}">{% translate "Aller à la connexion" %}</a>
+      {% else %}
+      <h1>{% translate "Demande d'accès" %}</h1>
+      <p class="subtitle">{% translate "Agents municipaux de la Commune Urbaine de Mahajanga" %}</p>
+
+      {% for error in form.non_field_errors %}
+      <p class="error" role="alert">{{ error }}</p>
+      {% endfor %}
+
+      <form method="post" novalidate class="signup">
+        {% csrf_token %}
+        <div class="field-row">
+          {% include "agents/_signup_field.html" with field=form.last_name %}
+          {% include "agents/_signup_field.html" with field=form.first_name %}
+        </div>
+        {% include "agents/_signup_field.html" with field=form.email %}
+        {% include "agents/_signup_field.html" with field=form.password1 %}
+        {% include "agents/_signup_field.html" with field=form.password2 %}
+        <button type="submit" class="btn">{% translate "Envoyer" %}</button>
+      </form>
+      {% endif %}
+    </section>
+
+    <section class="card-panel">
+      <div class="panel-content">
+        <h2>{% translate "Rejoignez l'équipe&nbsp;!" %}</h2>
+        <p>
+          {% translate "Choisissez vos identifiants. L'administrateur valide votre demande et vous attribue votre guichet : vous accédez alors à votre propre espace pour traiter les demandes des usagers." %}
+        </p>
+        <a class="btn-outline" href="{% url 'connexion' %}">{% translate "Se connecter" %}</a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

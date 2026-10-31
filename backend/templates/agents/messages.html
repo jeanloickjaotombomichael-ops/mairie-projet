@@ -1,0 +1,55 @@
+{% extends "agents/base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="mairy-page">
+  <div class="agent-head">
+    <div>
+      <h1>{% translate "Messages" %}</h1>
+      <p class="mairy-muted">{% blocktranslate with guichet=guichet.title %}Réponses envoyées aux usagers du {{ guichet }} (elles apparaissent dans leurs notifications).{% endblocktranslate %}</p>
+    </div>
+    {% if without_reply %}
+    <a class="agent-btn" href="{{ list_url }}?statut=PENDING">{% blocktranslate count counter=without_reply %}{{ counter }} demande sans réponse{% plural %}{{ counter }} demandes sans réponse{% endblocktranslate %}</a>
+    {% endif %}
+  </div>
+
+  <section class="mairy-card">
+    <div class="agent-toolbar">
+      <nav class="agent-tabs" aria-label="{% translate "Filtrer les messages" %}">
+        {% for tab in tabs %}
+        <a href="?{% if tab.value %}filtre={{ tab.value }}{% endif %}" {% if tab.active %}class="active" aria-current="page"{% endif %}>
+          {{ tab.label }}{% if tab.value == 'non-lues' and unread %} ({{ unread }}){% endif %}
+        </a>
+        {% endfor %}
+      </nav>
+    </div>
+
+    <ul class="agent-messages-list">
+      {% for dossier in page.object_list %}
+      <li>
+        <div class="agent-message-head">
+          <strong>{{ dossier.applicant }}</strong>
+          <span class="mairy-muted">· {{ dossier.get_dossier_type_display }} ·
+            <a href="{% url 'agents:request_detail' number dossier.pk %}">{{ dossier.reference }}</a></span>
+          <span class="agent-message-meta">
+            {{ dossier.responded_at|date:"DATETIME_FORMAT" }}
+            {% if dossier.response_read %}<span class="mairy-status s-approved">{% translate "Lu" %}</span>{% else %}<span class="mairy-status s-pending">{% translate "Non lu" %}</span>{% endif %}
+          </span>
+        </div>
+        <p>{{ dossier.response_message|linebreaksbr }}</p>
+      </li>
+      {% empty %}
+      <li class="mairy-muted">{% translate "Aucun message pour le moment." %}</li>
+      {% endfor %}
+    </ul>
+
+    {% if page.paginator.num_pages > 1 %}
+    <nav class="agent-pagination" aria-label="{% translate "Pages" %}">
+      {% if page.has_previous %}<a href="?{% for tab in tabs %}{% if tab.active and tab.value %}filtre={{ tab.value }}&amp;{% endif %}{% endfor %}page={{ page.previous_page_number }}">&larr; {% translate "Précédente" %}</a>{% endif %}
+      <span>{% blocktranslate with number=page.number total=page.paginator.num_pages %}Page {{ number }} sur {{ total }}{% endblocktranslate %}</span>
+      {% if page.has_next %}<a href="?{% for tab in tabs %}{% if tab.active and tab.value %}filtre={{ tab.value }}&amp;{% endif %}{% endfor %}page={{ page.next_page_number }}">{% translate "Suivante" %} &rarr;</a>{% endif %}
+    </nav>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% load i18n %}
+<details class="files-rename">
+  <summary class="mairy-btn" title="{% translate "Renommer" %}"><svg class="mairy-ico"><use href="#mi-pencil"/></svg></summary>
+  <form method="post" class="files-inline-form">
+    {% csrf_token %}
+    <input type="hidden" name="action" value="{{ action }}">
+    <input type="hidden" name="id" value="{{ item.pk }}">
+    <label class="agent-sr" for="rename-{{ action }}-{{ item.pk }}">{% translate "Nouveau nom" %}</label>
+    <input id="rename-{{ action }}-{{ item.pk }}" name="name" value="{{ item.name }}" required>
+    <button type="submit" class="agent-btn">{% translate "Renommer" %}</button>
+  </form>
+</details>

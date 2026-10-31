@@ -1,0 +1,107 @@
+{% extends "agents/base.html" %}
+{% load i18n %}
+
+{% block back %}{% endblock %}
+
+{% block content %}
+<div class="mairy-page">
+  <a class="agent-back" href="{{ list_url }}">&larr; {% translate "Demandes du guichet" %}</a>
+
+  <div class="agent-head">
+    <div>
+      <h1>{{ dossier.get_dossier_type_display }} — {{ dossier.reference }}</h1>
+      <p class="mairy-muted">
+        {% blocktranslate with date=dossier.created_at|date:"DATETIME_FORMAT" person=applicant %}Déposée le {{ date }} par {{ person }}{% endblocktranslate %}
+      </p>
+    </div>
+    <div class="agent-head-actions">
+      <span class="mairy-status s-{{ dossier.status|lower }}">{{ dossier.get_status_display }}</span>
+      {% if can_issue_document %}
+      {% if blocker %}
+      <span class="agent-btn is-disabled" aria-disabled="true" title="{{ blocked_message }}">{{ issue_label }}</span>
+      {% else %}
+      <a class="agent-btn" href="{% url 'agents:document_create' number %}?demande={{ dossier.pk }}">{{ issue_label }}</a>
+      {% endif %}
+      {% endif %}
+    </div>
+  </div>
+
+  {% if blocker %}
+  {# Premier arrivé, premier servi : une demande plus ancienne du même type attend encore. #}
+  <div class="agent-queue-alert" role="alert">
+    <svg class="mairy-ico" aria-hidden="true"><use href="#mi-bell"/></svg>
+    <p>{{ blocked_message }}</p>
+    <a class="agent-btn" href="{% url 'agents:request_detail' number blocker.pk %}">{% blocktranslate with reference=blocker.reference %}Ouvrir la demande {{ reference }}{% endblocktranslate %}</a>
+  </div>
+  {% endif %}
+
+  {% if issued_documents %}
+  <section class="mairy-card">
+    <div class="mairy-card-head"><h2>{% translate "Document établi pour cette demande" %}</h2></div>
+    <ul class="agent-plain-list">
+      {% for act in issued_documents %}
+      <li>
+        <a href="{% url 'agents:document_detail' number act.pk %}"><strong>{{ act.label }}</strong></a>
+        <span class="mairy-muted">— {{ act.created_at|date:"d M Y" }}</span>
+        <a class="mairy-btn" href="{% url 'agents:document_pdf' number act.pk %}">PDF</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  <div class="agent-detail-grid">
+    <section class="mairy-card">
+      <div class="mairy-card-head"><h2>{% translate "Demandeur" %}</h2></div>
+      <dl class="agent-dl">
+        {% for row in identity_rows %}<dt>{{ row.label }}</dt><dd>{{ row.value }}</dd>{% empty %}<dd class="mairy-muted">{% translate "Aucune information." %}</dd>{% endfor %}
+      </dl>
+    </section>
+
+    <section class="mairy-card">
+      <div class="mairy-card-head"><h2>{% translate "Détails de la demande" %}</h2></div>
+      <dl class="agent-dl">
+        {% for row in detail_rows %}<dt>{{ row.label }}</dt><dd>{{ row.value|linebreaksbr }}</dd>{% empty %}<dd class="mairy-muted">{% translate "Aucun détail." %}</dd>{% endfor %}
+      </dl>
+    </section>
+
+    {% if quartier_rows %}
+    <section class="mairy-card">
+      <div class="mairy-card-head"><h2>{% translate "Quartier" %}</h2></div>
+      <dl class="agent-dl">
+        {% for row in quartier_rows %}<dt>{{ row.label }}</dt><dd>{{ row.value }}</dd>{% endfor %}
+      </dl>
+    </section>
+    {% endif %}
+  </div>
+
+  <section class="mairy-card">
+    <div class="mairy-card-head">
+      <h2>{% translate "Traitement" %}</h2>
+      {% if dossier.responded_at %}
+      <span class="mairy-muted">
+        {% blocktranslate with date=dossier.responded_at|date:"DATETIME_FORMAT" %}Réponse envoyée le {{ date }}{% endblocktranslate %} ·
+        {% if dossier.response_read %}{% translate "lue par l'usager" %}{% else %}{% translate "pas encore lue" %}{% endif %}
+      </span>
+      {% endif %}
+    </div>
+
+    <form method="post" class="agent-form" novalidate>
+      {% csrf_token %}
+      <fieldset class="agent-fieldset"{% if blocker %} disabled{% endif %}>
+      {% for field in form %}
+      <div class="agent-field{% if field.errors %} has-error{% endif %}">
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field }}
+        {% if field.help_text %}<p class="mairy-muted agent-help">{{ field.help_text }}</p>{% endif %}
+        {% for error in field.errors %}<p class="agent-error">{{ error }}</p>{% endfor %}
+      </div>
+      {% endfor %}
+      <div class="agent-actions">
+        <button type="submit" class="agent-btn">{% translate "Enregistrer" %}</button>
+      </div>
+      </fieldset>
+    </form>
+  </section>
+</div>
+{% endblock %}

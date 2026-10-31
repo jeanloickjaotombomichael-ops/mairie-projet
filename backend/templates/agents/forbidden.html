@@ -1,0 +1,39 @@
+{% load static i18n %}<!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="NONE,NOARCHIVE">
+  <title>{% translate "Accès refusé | Mairie de Mahajanga" %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&display=swap">
+  <link rel="stylesheet" href="{% static 'mairy_admin/login.css' %}">
+  <link rel="stylesheet" href="{% static 'mairy_admin/lang.css' %}?v=3">
+  <link rel="stylesheet" href="{% static 'mairy_admin/responsive.css' %}?v=1">
+</head>
+<body>
+  <div class="lang-corner">{% include "includes/language_switcher.html" with switcher_id="corner" %}</div>
+  <main class="card card-single">
+    <section class="card-form">
+      <a class="back" href="{% url 'agents:home' %}" onclick="if (history.length > 1) { history.back(); return false; }">&larr; {% translate "Retour" %}</a>
+      <img class="logo" src="{% static 'mairy_admin/logo.png' %}" alt="" width="64" height="64">
+      <h1>{% translate "Accès refusé" %}</h1>
+      {% if reason == 'other_guichet' %}
+      <p class="subtitle">
+        {% blocktranslate with guichet=own_guichet.title label=own_guichet.label %}Ce guichet ne vous est pas attribué. Vous traitez uniquement les demandes du <strong>{{ guichet }} — {{ label }}</strong>.{% endblocktranslate %}
+      </p>
+      <a class="btn btn-inline" href="{% url 'agents:dashboard' own_guichet.number %}">{% translate "Aller à mon guichet" %}</a>
+      {% else %}
+      <p class="subtitle">
+        {% translate "Ce compte n'a pas encore de rôle. L'administrateur doit valider votre demande d'accès et vous attribuer un guichet." %}
+      </p>
+      <form method="post" action="{% url 'deconnexion' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn">{% translate "Se déconnecter" %}</button>
+      </form>
+      {% endif %}
+    </section>
+  </main>
+</body>
+</html>
