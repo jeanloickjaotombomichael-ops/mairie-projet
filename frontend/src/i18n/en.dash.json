@@ -64,6 +64,7 @@
         "too_long": "Text too long.",
         "email": "Invalid e-mail address.",
         "phone": "Invalid phone number.",
+        "cin": "The national ID number must have 12 digits.",
         "global": "Some fields are invalid. Please correct them and try again.",
         "throttled": "Too many requests sent. Please try again later.",
         "network": "Unable to reach the server. Check your connection and try again.",
@@ -76,7 +77,18 @@
       "previous": "Previous",
       "stepOf": "Step {{current}} of {{total}}",
       "fillStep": "Fill in every field of this step to continue.",
-      "chooseFokontany": "Choose a fokontany"
+      "chooseFokontany": "Choose a fokontany",
+      "steps": {
+        "child": "The child",
+        "parents": "The parents",
+        "request": "Your request",
+        "celebration": "Ceremony",
+        "spouses": "The spouses",
+        "witnesses": "Witnesses",
+        "deceased": "The deceased",
+        "death": "The death",
+        "declarant": "Declarant"
+      }
     },
     "fields": {
       "last_name": "Last name",

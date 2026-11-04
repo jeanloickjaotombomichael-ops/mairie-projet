@@ -365,6 +365,26 @@ class DossierCreateTests(EspaceTestCase):
         payload.pop('guichet')
         self.assertEqual(self.create(payload).status_code, 201)
 
+    def test_email_and_phone_are_optional(self):
+        payload = make_payload()
+        for name in ('email', 'phone'):
+            payload['identity'].pop(name)
+        errors = self.create(payload).json().get('errors', {})
+        self.assertNotIn('identity.email', errors)
+        self.assertNotIn('identity.phone', errors)
+
+    def test_national_id_must_have_12_digits(self):
+        for value in ('101 234 567', '1012345678901', '10123456789a'):
+            payload = make_payload()
+            payload['identity']['national_id'] = value
+            response = self.create(payload)
+            self.assertEqual(response.status_code, 400, value)
+            self.assertEqual(response.json()['errors']['identity.national_id'], ['invalid'])
+        for value in ('101234567890', '101 234 567 890'):
+            payload = make_payload()
+            payload['identity']['national_id'] = value
+            self.assertNotIn('identity.national_id', self.create(payload).json().get('errors', {}), value)
+
     def test_numbers_may_be_sent_as_json_numbers(self):
         payload = make_payload()
         payload['details']['copies'] = 2
@@ -376,9 +396,10 @@ class DossierCreateTests(EspaceTestCase):
         self.assertEqual(response.status_code, 400)
         errors = response.json()['errors']
         self.assertEqual(errors['dossier_type'], ['required'])
-        for name in ('last_name', 'first_name', 'email', 'phone'):
+        for name in ('last_name', 'first_name'):
             self.assertEqual(errors[f'identity.{name}'], ['required'])
-        self.assertNotIn('identity.address', errors)
+        for name in ('email', 'phone', 'address'):
+            self.assertNotIn(f'identity.{name}', errors)
         self.assertEqual(DossierRequest.objects.count(), 0)
 
     def test_missing_details_are_required(self):

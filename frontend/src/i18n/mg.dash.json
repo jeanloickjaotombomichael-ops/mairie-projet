@@ -64,6 +64,7 @@
         "too_long": "Lava loatra ny lahatsoratra.",
         "email": "Tsy mety ny adiresy mailaka.",
         "phone": "Tsy mety ny laharana finday.",
+        "cin": "Tokony hisy isa 12 ny laharan'ny CIN.",
         "global": "Misy saha tsy mety. Ahitsio ary andramo indray.",
         "throttled": "Be loatra ny fangatahana nalefa. Andramo indray any aoriana kely.",
         "network": "Tsy afaka mifandray amin'ny mpizara. Hamarino ny rohy ary andramo indray.",
@@ -76,7 +77,18 @@
       "previous": "Teo aloha",
       "stepOf": "Dingana {{current}} amin'ny {{total}}",
       "fillStep": "Fenoy ny saha rehetra amin'ity dingana ity vao manohy.",
-      "chooseFokontany": "Misafidiana fokontany"
+      "chooseFokontany": "Misafidiana fokontany",
+      "steps": {
+        "child": "Ny zaza",
+        "parents": "Ny ray aman-dreny",
+        "request": "Ny fangatahanao",
+        "celebration": "Fankalazana",
+        "spouses": "Ny mpivady",
+        "witnesses": "Vavolombelona",
+        "deceased": "Ny maty",
+        "death": "Ny fahafatesana",
+        "declarant": "Mpanambara"
+      }
     },
     "fields": {
       "last_name": "Anarana",

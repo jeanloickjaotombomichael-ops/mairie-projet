@@ -64,6 +64,7 @@
         "too_long": "Texte trop long.",
         "email": "Adresse e-mail invalide.",
         "phone": "Numéro de téléphone invalide.",
+        "cin": "Le N° de CIN doit comporter 12 chiffres.",
         "global": "Certains champs sont invalides. Corrigez-les puis réessayez.",
         "throttled": "Trop de demandes envoyées. Réessayez plus tard.",
         "network": "Impossible de joindre le serveur. Vérifiez votre connexion puis réessayez.",
@@ -76,7 +77,18 @@
       "previous": "Précédent",
       "stepOf": "Étape {{current}} sur {{total}}",
       "fillStep": "Remplissez tous les champs de cette étape pour continuer.",
-      "chooseFokontany": "Choisir un fokontany"
+      "chooseFokontany": "Choisir un fokontany",
+      "steps": {
+        "child": "L'enfant",
+        "parents": "Les parents",
+        "request": "Votre demande",
+        "celebration": "Célébration",
+        "spouses": "Les époux",
+        "witnesses": "Témoins",
+        "deceased": "Le défunt",
+        "death": "Le décès",
+        "declarant": "Déclarant"
+      }
     },
     "fields": {
       "last_name": "Nom",
