@@ -1,0 +1,11 @@
+{% load i18n %}
+<nav class="agent-stats" aria-label="{% translate "Demandes" %}">
+  {% for stat in request_stats %}
+  <a class="agent-stat{% if stat.count %} has-items{% endif %}{% if stat.active %} is-active{% endif %}" href="{{ stat.url }}"{% if stat.active %} aria-current="page"{% endif %}>
+    <span class="agent-stat-title"><svg class="mairy-ico"><use href="#mi-{{ stat.icon }}"/></svg>{{ stat.label }}</span>
+    <span class="agent-stat-count">{{ stat.count }}</span>
+    <span class="agent-stat-unit">{{ stat.unit }}</span>
+    <span class="agent-stat-plus" aria-hidden="true"><svg class="mairy-ico"><use href="#mi-plus"/></svg></span>
+  </a>
+  {% endfor %}
+</nav>

@@ -3099,5 +3099,53 @@ msgstr ""
 msgid "Mon espace"
 msgstr "My space"
 
+msgid "Paramètres"
+msgstr "Settings"
+
+msgid "Gérez votre profil, votre mot de passe et vos préférences."
+msgstr "Manage your profile, your password and your preferences."
+
+msgid "Profil"
+msgstr "Profile"
+
+msgid "L'e-mail, l'identifiant et le guichet sont gérés par l'administrateur."
+msgstr "The e-mail, username and counter are managed by the administrator."
+
+msgid "Identifiant"
+msgstr "Username"
+
+msgid "Dernière connexion"
+msgstr "Last sign-in"
+
+msgid "Votre profil a été mis à jour."
+msgstr "Your profile has been updated."
+
+msgid "Langue d'affichage de l'espace agent."
+msgstr "Display language of the agent area."
+
+msgid "Apparence"
+msgstr "Appearance"
+
+msgid "Ce choix est enregistré sur cet appareil."
+msgstr "This choice is saved on this device."
+
+msgid "Automatique"
+msgstr "Automatic"
+
+msgid "Clair"
+msgstr "Light"
+
+msgid "Sombre"
+msgstr "Dark"
+
+msgid "Afficher une alerte à l'écran pour chaque nouvelle demande"
+msgstr "Show an on-screen alert for each new request"
+
+msgid "Session"
+msgstr "Session"
+
+msgid "Déconnectez-vous si vous utilisez un ordinateur partagé."
+msgstr "Sign out if you are using a shared computer."
+
 #~ msgid "Messages de contact"
 #~ msgstr "Contact messages"

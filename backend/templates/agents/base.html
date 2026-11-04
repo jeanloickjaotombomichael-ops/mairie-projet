@@ -5,12 +5,19 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="NONE,NOARCHIVE">
+  {# Apparence choisie dans les Paramètres : appliquée avant l'affichage pour éviter un flash. #}
+  <script>
+    try {
+      var agentTheme = localStorage.getItem('mairy-agent-theme');
+      if (agentTheme === 'light' || agentTheme === 'dark') document.documentElement.dataset.theme = agentTheme;
+    } catch (e) {}
+  </script>
   <title>{{ title }} | {{ guichet.title }} — {% translate "Mairie de Mahajanga" %}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap">
   {# Même apparence que l'administration (admin.css), plus le socle propre à l'espace agent. #}
   <link rel="stylesheet" href="{% static 'mairy_admin/admin.css' %}?v=18">
-  <link rel="stylesheet" href="{% static 'mairy_admin/agents.css' %}?v=14">
+  <link rel="stylesheet" href="{% static 'mairy_admin/agents.css' %}?v=18">
   <link rel="stylesheet" href="{% static 'mairy_admin/lang.css' %}?v=3">
   <link rel="stylesheet" href="{% static 'mairy_admin/responsive.css' %}?v=1">
   {% block extrahead %}{% endblock %}
@@ -40,7 +47,7 @@
         </summary>
         <div class="mairy-account-menu">
           <p><strong>{% firstof user.get_full_name user.get_username %}</strong><br><span>{{ guichet.title }} — {{ guichet.label }}</span></p>
-          <a href="{% url 'agents:password' %}"><svg class="mairy-ico"><use href="#mi-gear"/></svg>{% translate "Changer mon mot de passe" %}</a>
+          <a href="{% url 'agents:settings' %}"><svg class="mairy-ico"><use href="#mi-gear"/></svg>{% translate "Paramètres" %}</a>
           <form method="post" action="{% url 'deconnexion' %}">
             {% csrf_token %}
             <button type="submit"><svg class="mairy-ico"><use href="#mi-logout"/></svg>{% translate "Se déconnecter" %}</button>
@@ -97,6 +104,11 @@
     var badge = document.getElementById('agent-bell-count');
     var toasts = document.getElementById('agent-toasts');
 
+    // Alertes à l'écran désactivables dans les Paramètres (la cloche reste à jour).
+    function alertsEnabled() {
+      try { return localStorage.getItem('mairy-agent-alerts') !== 'off'; } catch (e) { return true; }
+    }
+
     function toast(item, count) {
       var link = document.createElement('a');
       link.className = 'agent-toast';
@@ -119,7 +131,7 @@
           if (!data) return;
           badge.textContent = data.new_count;
           badge.hidden = data.new_count === 0;
-          if (data.new_count > known && data.latest) toast(data.latest, data.new_count - known);
+          if (data.new_count > known && data.latest && alertsEnabled()) toast(data.latest, data.new_count - known);
           known = data.new_count;
         })
         .catch(function () {});

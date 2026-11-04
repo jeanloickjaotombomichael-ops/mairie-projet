@@ -31,7 +31,7 @@ from messagerie.views import mailbox, unread_count
 
 from . import assistant as assistant_engine
 from .access import agent_profile, guichet_required, home_url_for
-from .forms import AgentSignupForm, ConnexionForm, DecisionForm
+from .forms import AgentProfileForm, AgentSignupForm, ConnexionForm, DecisionForm
 from .guichets import GUICHETS
 from .labels import field_label, option_label
 from .official import OFFICIAL_DOCUMENTS
@@ -158,12 +158,28 @@ def _new_requests(request, number):
     return requests.filter(created_at__gt=seen_at) if seen_at else requests
 
 
+def _request_stats(request, number, current):
+    """Cartes de chiffres de « Toutes les demandes » : notifications, en attente, en cours."""
+    requests = _guichet_requests(GUICHETS[number])
+    list_url = reverse('agents:requests', args=[number])
+    return [
+        {'label': _('Notifications'), 'icon': 'bell', 'url': reverse('agents:notifications', args=[number]),
+         'count': _new_requests(request, number).count(), 'unit': _('Non lues'), 'active': current == 'notifications'},
+        {'label': _('En attente'), 'icon': 'message', 'url': f'{list_url}?statut={Status.PENDING}',
+         'count': requests.filter(status=Status.PENDING).count(), 'unit': _('Demandes'),
+         'active': current == Status.PENDING},
+        {'label': _('En cours'), 'icon': 'trend', 'url': f'{list_url}?statut={Status.IN_PROGRESS}',
+         'count': requests.filter(status=Status.IN_PROGRESS).count(), 'unit': _('Demandes'),
+         'active': current == Status.IN_PROGRESS},
+    ]
+
+
 def _shell(request, number, active):
     """Contexte du cadre (barre du haut, menu latéral) commun aux pages de l'espace agent."""
     guichet = GUICHETS[number]
     requests = _guichet_requests(guichet)
     pending = requests.filter(status=Status.PENDING).count()
-    in_progress = requests.filter(status=Status.IN_PROGRESS).count()
+    new_count = _new_requests(request, number).count()
     list_url = reverse('agents:requests', args=[number])
 
     nav = [
@@ -171,15 +187,7 @@ def _shell(request, number, active):
             {'label': _('Tableau de bord'), 'icon': 'home', 'url': reverse('agents:dashboard', args=[number]),
              'active': active == 'dashboard', 'badge': 0},
             {'label': _('Toutes les demandes'), 'icon': 'message', 'url': list_url,
-             'active': active == 'requests:', 'badge': 0},
-        ]},
-        {'title': _('À traiter'), 'items': [
-            {'label': _('Notifications'), 'icon': 'bell', 'url': reverse('agents:notifications', args=[number]),
-             'active': active == 'notifications', 'badge': _new_requests(request, number).count()},
-            {'label': _('En attente'), 'icon': 'message', 'url': f'{list_url}?statut={Status.PENDING}',
-             'active': active == f'requests:{Status.PENDING}', 'badge': pending},
-            {'label': _('En cours'), 'icon': 'trend', 'url': f'{list_url}?statut={Status.IN_PROGRESS}',
-             'active': active == f'requests:{Status.IN_PROGRESS}', 'badge': in_progress},
+             'active': active.startswith('requests:') or active == 'notifications', 'badge': 0},
         ]},
         {'title': _('Outils'), 'items': ([
             {'label': _('Documents officiels'), 'icon': 'doc', 'url': reverse('agents:documents', args=[number]),
@@ -197,8 +205,8 @@ def _shell(request, number, active):
              'active': active == 'trash', 'badge': trash_count(request.user)},
         ]},
         {'title': _('Mon compte'), 'items': [
-            {'label': _('Mot de passe'), 'icon': 'gear', 'url': reverse('agents:password'),
-             'active': active == 'password', 'badge': 0},
+            {'label': _('Paramètres'), 'icon': 'gear', 'url': reverse('agents:settings'),
+             'active': active == 'settings', 'badge': 0},
         ]},
     ]
     if request.user.is_superuser:
@@ -214,7 +222,7 @@ def _shell(request, number, active):
         'number': number,
         'mairy_nav': nav,
         'pending_count': pending,
-        'new_count': _new_requests(request, number).count(),
+        'new_count': new_count,
         'list_url': list_url,
         'frontend_url': settings.FRONTEND_URL,
     }
@@ -314,6 +322,7 @@ def guichet_requests(request, number):
     context = {
         **_shell(request, number, f'requests:{status}'),
         'title': _('Demandes du guichet'),
+        'request_stats': _request_stats(request, number, status),
         'tabs': [{'value': value, 'label': label, 'active': value == status} for value, label in STATUS_TABS],
         'status': status,
         'query': query,
@@ -367,29 +376,38 @@ def guichet_request_detail(request, number, pk):
 
 
 @login_required
-def password_change(request):
+def agent_settings(request):
+    """Paramètres de l'agent : profil, mot de passe ; langue, apparence et alertes (préférences du navigateur)."""
     profile = agent_profile(request.user)
     if profile is None:
         if request.user.is_staff:
             return redirect('admin:password_change')
         return render(request, 'agents/forbidden.html', {'reason': 'no_role'}, status=403)
 
+    profile_form = AgentProfileForm(instance=request.user)
+    password_form = PasswordChangeForm(request.user)
     if request.method == 'POST':
-        form = PasswordChangeForm(request.user, request.POST)
-        if form.is_valid():
-            user = form.save()
-            update_session_auth_hash(request, user)
-            messages.success(request, _('Votre mot de passe a été modifié.'))
-            return redirect('agents:dashboard', profile.guichet)
-    else:
-        form = PasswordChangeForm(request.user)
+        if request.POST.get('section') == 'password':
+            password_form = PasswordChangeForm(request.user, request.POST)
+            if password_form.is_valid():
+                user = password_form.save()
+                update_session_auth_hash(request, user)
+                messages.success(request, _('Votre mot de passe a été modifié.'))
+                return redirect('agents:settings')
+        else:
+            profile_form = AgentProfileForm(request.POST, instance=request.user)
+            if profile_form.is_valid():
+                profile_form.save()
+                messages.success(request, _('Votre profil a été mis à jour.'))
+                return redirect('agents:settings')
 
     context = {
-        **_shell(request, profile.guichet, 'password'),
-        'title': _('Changer mon mot de passe'),
-        'form': form,
+        **_shell(request, profile.guichet, 'settings'),
+        'title': _('Paramètres'),
+        'profile_form': profile_form,
+        'password_form': password_form,
     }
-    return render(request, 'agents/password_change.html', context)
+    return render(request, 'agents/settings.html', context)
 
 
 # ---------------------------------------------------------------------------
@@ -668,6 +686,7 @@ def guichet_notifications(request, number):
     context = {
         **_shell(request, number, 'notifications'),
         'title': _('Notifications'),
+        'request_stats': _request_stats(request, number, 'notifications'),
         'notifications': latest,
     }
     _mark_seen(request, number)  # consultées : la cloche repart de zéro

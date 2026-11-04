@@ -3126,5 +3126,53 @@ msgstr ""
 msgid "Mon espace"
 msgstr "Ny sehatro"
 
+msgid "Paramètres"
+msgstr "Fandrindrana"
+
+msgid "Gérez votre profil, votre mot de passe et vos préférences."
+msgstr "Tantano ny mombamomba anao, ny tenimiafinao ary ny safidinao."
+
+msgid "Profil"
+msgstr "Mombamomba"
+
+msgid "L'e-mail, l'identifiant et le guichet sont gérés par l'administrateur."
+msgstr "Ny mpitantana no mikarakara ny mailaka, ny anarana fidirana ary ny varavarankely."
+
+msgid "Identifiant"
+msgstr "Anarana fidirana"
+
+msgid "Dernière connexion"
+msgstr "Fidirana farany"
+
+msgid "Votre profil a été mis à jour."
+msgstr "Voavao ny mombamomba anao."
+
+msgid "Langue d'affichage de l'espace agent."
+msgstr "Fiteny ampiasaina amin'ny sehatry ny mpiasa."
+
+msgid "Apparence"
+msgstr "Endrika"
+
+msgid "Ce choix est enregistré sur cet appareil."
+msgstr "Voatahiry amin'ity fitaovana ity io safidy io."
+
+msgid "Automatique"
+msgstr "Mandeha ho azy"
+
+msgid "Clair"
+msgstr "Mazava"
+
+msgid "Sombre"
+msgstr "Maizina"
+
+msgid "Afficher une alerte à l'écran pour chaque nouvelle demande"
+msgstr "Asehoy eo amin'ny efijery ny fampandrenesana isaky ny misy fangatahana vaovao"
+
+msgid "Session"
+msgstr "Fidirana"
+
+msgid "Déconnectez-vous si vous utilisez un ordinateur partagé."
+msgstr "Mivoaha raha mampiasa solosaina iombonana ianao."
+
 #~ msgid "Messages de contact"
 #~ msgstr "Hafatra fifandraisana"

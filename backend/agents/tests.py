@@ -495,6 +495,59 @@ class RoutingAndNotificationTests(TestCase):
         self.assertContains(self.client.get(reverse('agents:notifications', args=[1])), dossier.reference)
         self.assertEqual(self.client.get(count_url).json()['new_count'], 0)
 
+    def test_notifications_and_statuses_are_cards_of_the_requests_page(self):
+        make_agent('naissance', 1)
+        self.client.login(username='naissance', password=PASSWORD)
+        make_request('naissance')
+        response = self.client.get(reverse('agents:requests', args=[1]))
+        labels = [str(item['label']) for section in response.context['mairy_nav'] for item in section['items']]
+        for label in ('Notifications', 'En attente', 'En cours'):
+            self.assertNotIn(label, labels)
+        stats = {str(stat['label']): stat['count'] for stat in response.context['request_stats']}
+        self.assertEqual(stats, {'Notifications': 1, 'En attente': 1, 'En cours': 0})
+
+        # La page Notifications reste rattachée à « Toutes les demandes » dans le menu.
+        response = self.client.get(reverse('agents:notifications', args=[1]))
+        active = [str(item['label']) for section in response.context['mairy_nav'] for item in section['items'] if item['active']]
+        self.assertEqual(active, ['Toutes les demandes'])
+        self.assertTemplateUsed(response, 'agents/_request_stats.html')
+
+    def test_settings_replace_password_in_sidebar(self):
+        make_agent('naissance', 1)
+        self.client.login(username='naissance', password=PASSWORD)
+        response = self.client.get(reverse('agents:settings'))
+        labels = [str(item['label']) for section in response.context['mairy_nav'] for item in section['items']]
+        self.assertIn('Paramètres', labels)
+        self.assertNotIn('Mot de passe', labels)
+        self.assertRedirects(self.client.get('/agent/mot-de-passe/'), reverse('agents:settings'))
+
+    def test_settings_update_name_but_not_email(self):
+        agent = make_agent('naissance', 1)
+        self.client.login(username='naissance', password=PASSWORD)
+        response = self.client.post(reverse('agents:settings'), {
+            'section': 'profile', 'first_name': 'Rado', 'last_name': 'Be', 'email': 'autre@example.com',
+        })
+        self.assertRedirects(response, reverse('agents:settings'))
+        user = get_user_model().objects.get(username='naissance')
+        self.assertEqual((user.first_name, user.last_name, user.email), ('Rado', 'Be', agent.email))
+
+    def test_settings_change_password_keeps_session(self):
+        make_agent('naissance', 1)
+        self.client.login(username='naissance', password=PASSWORD)
+        new_password = 'Encore-un-mot-de-passe-77'
+        response = self.client.post(reverse('agents:settings'), {
+            'section': 'password', 'old_password': 'mauvais',
+            'new_password1': new_password, 'new_password2': new_password,
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(response.context['password_form'].errors)
+        response = self.client.post(reverse('agents:settings'), {
+            'section': 'password', 'old_password': PASSWORD,
+            'new_password1': new_password, 'new_password2': new_password,
+        })
+        self.assertRedirects(response, reverse('agents:settings'))
+        self.assertTrue(get_user_model().objects.get(username='naissance').check_password(new_password))
+
     def test_guichet_5_agent_is_notified_of_services(self):
         make_agent('services', 5)
         self.client.login(username='services', password=PASSWORD)

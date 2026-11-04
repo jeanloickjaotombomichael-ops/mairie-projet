@@ -1,4 +1,5 @@
 from django.urls import path
+from django.views.generic import RedirectView
 
 from fichiers import views as fichiers_views
 
@@ -9,7 +10,9 @@ app_name = 'agents'
 urlpatterns = [
     path('', views.agent_home, name='home'),
     path('inscription/', views.inscription, name='inscription'),
-    path('mot-de-passe/', views.password_change, name='password'),
+    path('parametres/', views.agent_settings, name='settings'),
+    # Ancienne adresse de la page « Mot de passe » (favoris des agents).
+    path('mot-de-passe/', RedirectView.as_view(pattern_name='agents:settings')),
     path('assistant/', views.assistant, name='assistant'),
     path('guichet-<int:number>/', views.guichet_dashboard, name='dashboard'),
     path('guichet-<int:number>/demandes/', views.guichet_requests, name='requests'),
