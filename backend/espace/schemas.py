@@ -163,7 +163,7 @@ DETAIL_FIELDS = {
         _text('birth_place', True),
         *_person('father', required=False),
         *_person('mother', required=True),
-        _text('declarant_relationship', True, 150),
+        _text('declarant_relationship', False, 150),
         _copies(),
         *QUARTIER_FIELDS,
     ),

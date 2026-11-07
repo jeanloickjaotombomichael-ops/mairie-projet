@@ -3147,5 +3147,120 @@ msgstr "Session"
 msgid "Déconnectez-vous si vous utilisez un ordinateur partagé."
 msgstr "Sign out if you are using a shared computer."
 
+#, python-format
+msgid "%(document)s établi, scellé et rangé dans « Dossiers ». Vous pouvez télécharger le PDF."
+msgstr "%(document)s issued, sealed and filed in “Dossiers”. You can download the PDF."
+
+msgid "Partagé avec les agents du guichet"
+msgstr "Shared with the counter's agents"
+
+msgid "Établissez ici les documents du guichet. Une fois scellés, ils sont rangés automatiquement dans « Dossiers »."
+msgstr "Issue the counter's documents here. Once sealed, they are filed automatically in “Dossiers”."
+
+msgid "Voir les documents établis"
+msgstr "View issued documents"
+
+msgid "Rechercher dans mon espace…"
+msgstr "Search my area…"
+
+msgid "Recherche"
+msgstr "Search"
+
+msgid "Mes fichiers"
+msgstr "My files"
+
+msgid "Saisissez un mot dans la barre de recherche : nom, référence, n° d'acte, fichier…"
+msgstr "Type a word in the search bar: name, reference, act number, file…"
+
+msgid "Aucun résultat pour cette recherche."
+msgstr "No results for this search."
+
+msgid "Activer la caméra"
+msgstr "Turn on the camera"
+
+msgid "Arrêter la caméra"
+msgstr "Stop the camera"
+
+msgid "Aucun document correspondant"
+msgstr "No matching document"
+
+msgid "Ce document a bien été délivré par la Mairie, mais il a depuis été révoqué par l'administration et n'est plus valable pour un usage officiel."
+msgstr "This document was issued by the Town Hall but has since been revoked by the administration and is no longer valid for official use."
+
+msgid "Ce document a expiré"
+msgstr "This document has expired"
+
+msgid "Ce document a été révoqué"
+msgstr "This document has been revoked"
+
+msgid "Ce document n'a pas pu être authentifié. Son contenu a peut-être été modifié, ou il n'a pas été délivré par la Mairie."
+msgstr "This document could not be authenticated. Its content may have been altered, or it may not have been issued by the Town Hall."
+
+msgid "Cet identifiant ne figure pas dans le registre officiel. Le document est probablement falsifié."
+msgstr "This identifier does not appear in the official registry. The document is likely forged."
+
+msgid "Collez l'identifiant (UUID) ou le lien complet imprimé sur le document."
+msgstr "Paste the identifier (UUID) or the full link printed on the document."
+
+msgid "Date de délivrance"
+msgstr "Issue date"
+
+msgid "Document officiel vérifié"
+msgstr "Official document verified"
+
+msgid "Démarrage de la caméra…"
+msgstr "Starting the camera…"
+
+msgid "Identifiant (UUID)"
+msgstr "Identifier (UUID)"
+
+msgid "Identifiant invalide : il doit ressembler à xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx."
+msgstr "Invalid identifier: it must look like xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx."
+
+msgid "Impossible de démarrer la caméra sur cet appareil. Saisissez l'identifiant ci-dessous."
+msgstr "The camera could not be started on this device. Enter the identifier below."
+
+msgid "Impossible de joindre le serveur de vérification. Vérifiez votre connexion puis réessayez."
+msgstr "The verification server could not be reached. Check your connection and try again."
+
+msgid "L'accès à la caméra a été refusé. Autorisez-le dans votre navigateur, ou saisissez l'identifiant ci-dessous."
+msgstr "Camera access was denied. Allow it in your browser, or enter the identifier below."
+
+msgid "La caméra nécessite une connexion sécurisée (HTTPS) ou localhost."
+msgstr "The camera requires a secure connection (HTTPS) or localhost."
+
+msgid "La période de validité de ce document est terminée. Veuillez contacter la Mairie pour obtenir un document à jour."
+msgstr "This document's validity period has ended. Please contact the Town Hall to request an updated document."
+
+msgid "Ou saisissez l'identifiant"
+msgstr "Or enter the identifier"
+
+msgid "Pointez la caméra vers le QR code figurant sur le certificat ou le document officiel. La vérification démarre automatiquement."
+msgstr "Point the camera at the QR code on the official certificate or document. Verification starts automatically."
+
+msgid "QR code non reconnu : il ne contient pas d'identifiant de document."
+msgstr "QR code not recognised: it does not contain a document identifier."
+
+msgid "Scanner"
+msgstr "Scan"
+
+msgid "Scanner un document"
+msgstr "Scan a document"
+
+msgid "Service momentanément indisponible"
+msgstr "Service temporarily unavailable"
+
+msgid "Type de document"
+msgstr "Document type"
+
+msgid "Vérification en cours…"
+msgstr "Verification in progress…"
+
+msgid "Vérification échouée"
+msgstr "Verification failed"
+
+msgid "Vérifier"
+msgstr "Verify"
+
 #~ msgid "Messages de contact"
 #~ msgstr "Contact messages"

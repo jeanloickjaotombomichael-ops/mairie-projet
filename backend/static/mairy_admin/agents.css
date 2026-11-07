@@ -24,6 +24,49 @@ a {
   margin: 0;
 }
 
+/* Barre de recherche de l'en-tête. */
+.agent-topbar-search {
+  display: flex;
+  min-width: 0;
+  max-width: 420px;
+  flex: 1 1 280px;
+  align-items: center;
+  gap: 8px;
+  margin-left: 16px;
+  border: 1px solid var(--m-border);
+  border-radius: 999px;
+  background: var(--m-surface);
+  padding: 0 14px;
+  color: var(--m-muted);
+}
+
+.agent-topbar-search:focus-within {
+  border-color: var(--m-accent);
+}
+
+.agent-topbar-search input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  padding: 8px 0;
+  color: var(--m-text);
+  font: inherit;
+  outline: 0;
+}
+
+/* Résultats de la recherche : une carte par rubrique. */
+.agent-search-group h2 {
+  margin: 0 0 12px;
+  font-size: 1.05rem;
+}
+
+.agent-search-pages {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
 .agent-sr {
   position: absolute;
   width: 1px;

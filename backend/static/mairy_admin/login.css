@@ -27,7 +27,6 @@ body {
   place-items: center;
   overflow-x: hidden;
   padding: 24px 16px;
-  background: linear-gradient(135deg, #140f3d 0%, #2a1a7a 45%, #1d4fbf 100%);
   color: var(--text);
   font-family: "Source Sans 3", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
@@ -39,114 +38,6 @@ body {
   overflow: hidden;
   clip: rect(0 0 0 0);
   white-space: nowrap;
-}
-
-/* ---------- Fond animé ---------- */
-
-.bg {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.blob {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(60px);
-  opacity: 0.55;
-  animation: float 18s ease-in-out infinite alternate;
-}
-
-.blob-1 {
-  top: -10%;
-  left: -8%;
-  width: 42vw;
-  height: 42vw;
-  background: #7b5cff;
-}
-
-.blob-2 {
-  top: 20%;
-  right: -12%;
-  width: 36vw;
-  height: 36vw;
-  background: #2fa8ff;
-  animation-duration: 22s;
-  animation-delay: -6s;
-}
-
-.blob-3 {
-  bottom: 5%;
-  left: 30%;
-  width: 28vw;
-  height: 28vw;
-  background: #c04dff;
-  opacity: 0.35;
-  animation-duration: 26s;
-  animation-delay: -12s;
-}
-
-@keyframes float {
-  0% {
-    transform: translate(0, 0) scale(1);
-  }
-  50% {
-    transform: translate(6vw, 4vh) scale(1.12);
-  }
-  100% {
-    transform: translate(-4vw, -3vh) scale(0.95);
-  }
-}
-
-/* Vagues : deux fois plus larges que l'écran, elles glissent d'une demi-largeur en boucle. */
-.wave {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 200%;
-  height: 34vh;
-  animation: slide 22s linear infinite;
-}
-
-.wave-1 path {
-  fill: rgba(123, 92, 255, 0.35);
-}
-
-.wave-2 {
-  height: 28vh;
-  animation-duration: 16s;
-  animation-direction: reverse;
-}
-
-.wave-2 path {
-  fill: rgba(47, 168, 255, 0.3);
-}
-
-.wave-3 {
-  height: 22vh;
-  animation-duration: 11s;
-}
-
-.wave-3 path {
-  fill: rgba(20, 15, 61, 0.55);
-}
-
-@keyframes slide {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .blob,
-  .wave {
-    animation: none;
-  }
 }
 
 /* ---------- Carte ---------- */

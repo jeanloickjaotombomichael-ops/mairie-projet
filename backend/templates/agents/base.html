@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap">
   {# Même apparence que l'administration (admin.css), plus le socle propre à l'espace agent. #}
   <link rel="stylesheet" href="{% static 'mairy_admin/admin.css' %}?v=18">
-  <link rel="stylesheet" href="{% static 'mairy_admin/agents.css' %}?v=18">
+  <link rel="stylesheet" href="{% static 'mairy_admin/agents.css' %}?v=19">
   <link rel="stylesheet" href="{% static 'mairy_admin/lang.css' %}?v=3">
   <link rel="stylesheet" href="{% static 'mairy_admin/responsive.css' %}?v=1">
   {% block extrahead %}{% endblock %}
@@ -30,6 +30,11 @@
     </button>
     <a class="mairy-logo agent-logo" href="{% url 'agents:dashboard' number %}">{% translate "Agents municipaux" %}</a>
     <span class="agent-guichet-chip">{{ guichet.title }} · {{ guichet.label }}</span>
+    <form class="agent-topbar-search" method="get" action="{% url 'agents:search' number %}" role="search">
+      <svg class="mairy-ico" aria-hidden="true"><use href="#mi-search"/></svg>
+      <label class="agent-sr" for="agent-topbar-q">{% translate "Rechercher" %}</label>
+      <input id="agent-topbar-q" type="search" name="q" value="{{ search_query|default:'' }}" placeholder="{% translate "Rechercher dans mon espace…" %}">
+    </form>
 
     <div class="mairy-topbar-actions">
       <a class="mairy-topbar-icon" id="agent-bell" href="{% url 'agents:notifications' number %}"

@@ -108,6 +108,16 @@ class VerifyTests(BaseTestCase):
         self.assertEqual(self.verify(document.id).status_code, 404)
 
 
+class ScannerPageTests(BaseTestCase):
+    def test_landing_links_to_scanner(self):
+        self.assertContains(self.client.get(reverse('home')), reverse('scanner'))
+
+    def test_scanner_is_public_and_targets_the_verification_api(self):
+        response = self.client.get(reverse('scanner'))
+        self.assertContains(response, 'html5-qrcode.min.js')
+        self.assertContains(response, reverse('verify_document', args=['00000000-0000-0000-0000-000000000000']))
+
+
 class AgentRequestTests(BaseTestCase):
     url_name = 'agent_request_create'
 

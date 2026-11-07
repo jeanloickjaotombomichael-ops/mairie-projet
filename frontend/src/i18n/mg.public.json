@@ -7,7 +7,6 @@
   "search": {
     "label": "Hikaroka eto amin'ny sehatra",
     "submit": "Alefaso ny fikarohana",
-    "scan": "Skana taratasy",
     "noResults": "Tsy misy valiny ho an'ny « {{query}} ».",
     "resultsLabel": "Valin'ny fikarohana",
     "groupService": "Serivisy",

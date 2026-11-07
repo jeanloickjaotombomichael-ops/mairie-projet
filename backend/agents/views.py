@@ -17,7 +17,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone, translation
 from django.utils.formats import date_format
-from django.utils.text import format_lazy
+from django.utils.text import capfirst, format_lazy
 from django.utils.translation import gettext_lazy as _
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.views.decorators.http import require_POST
@@ -26,7 +26,7 @@ from core import dashboard
 from documents.views import _is_rate_limited
 from espace.models import DossierRequest
 from espace.schemas import FOKONTANY
-from fichiers.models import trash_count
+from fichiers.models import Folder, StoredFile, trash_count
 from messagerie.views import mailbox, unread_count
 
 from . import assistant as assistant_engine
@@ -288,6 +288,16 @@ def guichet_dashboard(request, number):
     return render(request, 'agents/dashboard.html', context)
 
 
+def _match_requests(requests, query):
+    return requests.filter(
+        Q(reference__icontains=query)
+        | Q(identity__last_name__icontains=query)
+        | Q(identity__first_name__icontains=query)
+        | Q(identity__email__icontains=query)
+        | Q(identity__phone__icontains=query)
+    )
+
+
 @guichet_required
 def guichet_requests(request, number):
     guichet = request.guichet
@@ -306,13 +316,7 @@ def guichet_requests(request, number):
     if fokontany:
         requests = requests.filter(details__fokontany=fokontany)
     if query:
-        requests = requests.filter(
-            Q(reference__icontains=query)
-            | Q(identity__last_name__icontains=query)
-            | Q(identity__first_name__icontains=query)
-            | Q(identity__email__icontains=query)
-            | Q(identity__phone__icontains=query)
-        )
+        requests = _match_requests(requests, query)
 
     page = Paginator(requests, 20).get_page(request.GET.get('page'))
     for dossier in page.object_list:
@@ -460,21 +464,87 @@ def _document_rows(document, spec):
     return sections
 
 
-@guichet_required
-def documents_list(request, number):
-    spec = _spec(number)
-    query = request.GET.get('q', '').strip()
+# Résultats affichés par rubrique dans la recherche de la barre du haut.
+RESULTS_PER_GROUP = 20
+
+
+def official_acts(number, query=''):
+    """Documents officiels en vigueur d'un guichet, filtrés sur `query` (rien si le guichet n'en établit pas)."""
+    spec = OFFICIAL_DOCUMENTS.get(number)
+    if spec is None:
+        return None
     acts = spec.model.objects.filter(deleted_at=None)
+    return acts.filter(_search(spec.model, query)) if query else acts
+
+
+@guichet_required
+def agent_search(request, number):
+    """Recherche de la barre du haut : pages, demandes, documents officiels et fichiers de l'agent."""
+    query = request.GET.get('q', '').strip()
+    shell = _shell(request, number, 'search')
+    pages, found_requests, acts, folders, files = [], [], [], [], []
     if query:
-        acts = acts.filter(_search(spec.model, query))
+        pages = [
+            item for section in shell['mairy_nav'] for item in section['items']
+            if query.lower() in str(item['label']).lower()
+        ]
+        found_requests = list(
+            _match_requests(_guichet_requests(request.guichet), query).order_by('-created_at')[:RESULTS_PER_GROUP]
+        )
+        for dossier in found_requests:
+            dossier.applicant = _applicant(dossier)
+        annotate_positions(found_requests, request.guichet.dossier_types)
+        if number in OFFICIAL_DOCUMENTS:
+            acts = list(official_acts(number, query)[:RESULTS_PER_GROUP])
+        # Dossiers et fichiers personnels : uniquement ceux de l'agent connecté.
+        folders = [
+            folder for folder in Folder.objects.filter(owner=request.user, trashed_at=None, name__icontains=query)
+            if folder.is_reachable()
+        ][:RESULTS_PER_GROUP]
+        files = [
+            item for item in StoredFile.objects.filter(owner=request.user, trashed_at=None, name__icontains=query)
+            .select_related('folder') if item.is_reachable()
+        ][:RESULTS_PER_GROUP]
+
+    context = {
+        **shell,
+        'title': _('Recherche'),
+        'search_query': query,
+        'pages': pages,
+        'requests': found_requests,
+        'acts': acts,
+        'found_folders': folders,
+        'found_files': files,
+        'has_results': bool(pages or found_requests or acts or folders or files),
+    }
+    return render(request, 'agents/search.html', context)
+
+
+@guichet_required
+def documents_home(request, number):
+    """« Documents officiels » : on y établit les documents ; ils sont ensuite rangés dans « Dossiers »."""
     context = {
         **_shell(request, number, 'documents'),
         'title': _('Documents officiels'),
+        'spec': _spec(number),
+    }
+    return render(request, 'agents/documents.html', context)
+
+
+@guichet_required
+def documents_list(request, number):
+    """Dossier « Actes de… » de la page « Dossiers » : tous les documents établis au guichet."""
+    spec = _spec(number)
+    query = request.GET.get('q', '').strip()
+    acts = official_acts(number, query)
+    context = {
+        **_shell(request, number, 'folders'),
+        'title': capfirst(spec.plural),
         'spec': spec,
         'page': Paginator(acts, 20).get_page(request.GET.get('page')),
         'query': query,
     }
-    return render(request, 'agents/documents.html', context)
+    return render(request, 'agents/folder_documents.html', context)
 
 
 @guichet_required
@@ -496,7 +566,7 @@ def document_create(request, number):
             act.created_by = request.user
             act.request = origin
             act.save()
-            messages.success(request, _('%(document)s établi et scellé. Vous pouvez télécharger le PDF.') % {'document': act.label})
+            messages.success(request, _('%(document)s établi, scellé et rangé dans « Dossiers ». Vous pouvez télécharger le PDF.') % {'document': act.label})
             return redirect('agents:document_detail', number, act.pk)
     else:
         initial = {'registrar_name': request.user.get_full_name()}
@@ -521,7 +591,7 @@ def document_detail(request, number, pk):
     act = get_object_or_404(spec.model, pk=pk, deleted_at=None)
     qr = base64.b64encode(qr_png(act.verification_url)).decode('ascii')
     context = {
-        **_shell(request, number, 'documents'),
+        **_shell(request, number, 'folders'),
         'title': act.label,
         'spec': spec,
         'act': act,
@@ -574,7 +644,7 @@ def document_delete(request, number, pk):
             return redirect('agents:document_detail', number, act.pk)
 
     context = {
-        **_shell(request, number, 'documents'),
+        **_shell(request, number, 'folders'),
         'title': _('Supprimer le document %(number)s') % {'number': act.act_number},
         'act': act,
         'reason': reason,

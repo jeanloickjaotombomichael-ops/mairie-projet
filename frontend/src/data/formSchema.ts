@@ -150,7 +150,7 @@ const DETAIL_FIELDS: Record<DossierType, readonly FieldDef[]> = {
     ]),
     ...parent('father'),
     ...parent('mother'),
-    ...inSection('request', [text('declarant_relationship', true, 150), copies()]),
+    ...inSection('request', [optional(text('declarant_relationship', false, 150)), copies()]),
   ],
   mariage: [
     ...inSection('celebration', [

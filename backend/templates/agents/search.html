@@ -1,0 +1,95 @@
+{% extends "agents/base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="mairy-page">
+  <div class="agent-head">
+    <div>
+      <h1>{% translate "Recherche" %}</h1>
+      {% if search_query %}
+      <p class="mairy-muted">{% blocktranslate with query=search_query %}Résultats pour « {{ query }} »{% endblocktranslate %}</p>
+      {% else %}
+      <p class="mairy-muted">{% translate "Saisissez un mot dans la barre de recherche : nom, référence, n° d'acte, fichier…" %}</p>
+      {% endif %}
+    </div>
+  </div>
+
+  {% if search_query and not has_results %}
+  <section class="mairy-card"><p class="mairy-muted">{% translate "Aucun résultat pour cette recherche." %}</p></section>
+  {% endif %}
+
+  {% if pages %}
+  <section class="mairy-card agent-search-group">
+    <h2>{% translate "Pages" %}</h2>
+    <div class="agent-search-pages">
+      {% for item in pages %}<a class="mairy-btn" href="{{ item.url }}">{{ item.label }}</a>{% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  {% if requests %}
+  <section class="mairy-card agent-search-group">
+    <h2>{% translate "Demandes" %}</h2>
+    {% include "agents/_requests_table.html" %}
+  </section>
+  {% endif %}
+
+  {% if acts %}
+  <section class="mairy-card agent-search-group">
+    <h2>{% translate "Documents officiels" %}</h2>
+    <div class="mairy-table-wrap">
+      <table class="mairy-table">
+        <tbody>
+          {% for act in acts %}
+          <tr>
+            <td><a href="{% url 'agents:document_detail' number act.pk %}"><strong>{{ act.act_number }}</strong></a></td>
+            <td>{{ act.holder_name }}</td>
+            <td>{{ act.created_at|date:"d M Y" }}</td>
+            <td class="agent-cell-action">
+              <div class="agent-row-actions">
+                <a class="mairy-btn" href="{% url 'agents:document_pdf' number act.pk %}">PDF</a>
+                <a class="mairy-btn" href="{% url 'agents:document_detail' number act.pk %}">{% translate "Ouvrir" %}</a>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+  {% endif %}
+
+  {% if found_folders or found_files %}
+  <section class="mairy-card agent-search-group">
+    <h2>{% translate "Mes fichiers" %}</h2>
+    <div class="mairy-table-wrap">
+      <table class="mairy-table files-table">
+        <tbody>
+          {% for folder in found_folders %}
+          <tr>
+            <td>
+              <a class="files-name" href="{% url 'agents:folders' number %}?d={{ folder.pk }}">
+                <svg class="mairy-ico files-ico is-folder"><use href="#mi-folder"/></svg><strong>{{ folder.name }}</strong>
+              </a>
+            </td>
+            <td class="mairy-muted">{{ folder.created_at|date:"d M Y" }}</td>
+          </tr>
+          {% endfor %}
+          {% for item in found_files %}
+          <tr>
+            <td>
+              <a class="files-name" href="{% url 'agents:file_open' number item.pk %}?voir=1" target="_blank" rel="noopener">
+                <span class="files-ext">{{ item.extension }}</span>{{ item.name }}
+              </a>
+              {% if item.folder %}<span class="mairy-muted mairy-ref">{% translate "Dans" %} {{ item.folder.name }}</span>{% endif %}
+            </td>
+            <td class="mairy-muted">{{ item.created_at|date:"d M Y" }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+  {% endif %}
+</div>
+{% endblock %}

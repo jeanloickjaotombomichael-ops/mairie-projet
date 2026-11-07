@@ -1,6 +1,7 @@
 """Routage principal du projet Mairy Project.
 
 - /       : page d'accueil (bouton « Se connecter » vers /connexion/)
+- /scanner/ : vérification d'un document par QR code (caméra) ou identifiant
 - /connexion/ : connexion commune (administrateurs → /admin/, agents → leur guichet)
 - /agent/ : espace des agents municipaux (un guichet par agent)
 - /admin/ : administration Django (administrateurs)
@@ -13,10 +14,11 @@ from django.urls import include, path
 
 from agents.views import ConnexionView, DeconnexionView
 
-from .views import LandingView
+from .views import LandingView, ScannerView
 
 urlpatterns = [
     path('', LandingView.as_view(), name='home'),
+    path('scanner/', ScannerView.as_view(), name='scanner'),
     path('connexion/', ConnexionView.as_view(), name='connexion'),
     path('deconnexion/', DeconnexionView.as_view(), name='deconnexion'),
     path('agent/', include('agents.urls')),

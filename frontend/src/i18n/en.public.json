@@ -7,7 +7,6 @@
   "search": {
     "label": "Search the platform",
     "submit": "Run the search",
-    "scan": "Scan a document",
     "noResults": "No results for \"{{query}}\".",
     "resultsLabel": "Search results",
     "groupService": "Service",

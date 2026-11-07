@@ -8,10 +8,12 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.http import urlencode
+from django.utils.text import capfirst
 from django.utils.translation import gettext as _
 
 from agents.access import guichet_required
-from agents.views import _shell
+from agents.official import OFFICIAL_DOCUMENTS
+from agents.views import _shell, official_acts
 
 from .models import Folder, StoredFile
 
@@ -62,6 +64,18 @@ def folders(request, number):
     else:
         subfolders = list(Folder.objects.filter(owner=user, parent=current, trashed_at=None))
         files = list(StoredFile.objects.filter(owner=user, folder=current, trashed_at=None))
+    # Documents officiels du guichet : un dossier à la racine, et trouvés par la recherche.
+    documents_folder = None
+    found_acts = []
+    if number in OFFICIAL_DOCUMENTS:
+        if query:
+            found_acts = list(official_acts(number, query)[:20])
+        elif current is None:
+            documents_folder = {
+                'name': capfirst(OFFICIAL_DOCUMENTS[number].plural),
+                'url': reverse('agents:folder_documents', args=[number]),
+                'count': official_acts(number).count(),
+            }
     for folder in subfolders:
         folder.url = _folder_url(number, folder)
         folder.count = folder.children.filter(trashed_at=None).count() + folder.files.filter(trashed_at=None).count()
@@ -71,6 +85,8 @@ def folders(request, number):
         'title': current.name if current else _('Dossiers'),
         'current': current,
         'breadcrumb': [{'name': f.name, 'url': _folder_url(number, f)} for f in current.ancestors()] if current else [],
+        'documents_folder': documents_folder,
+        'found_acts': found_acts,
         'subfolders': subfolders,
         'files': files,
         'query': query,

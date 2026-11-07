@@ -187,9 +187,10 @@ function Home() {
               <div className="flex-1">
                 <h2 className="text-xl font-bold">{t('home.verifyTitle')}</h2>
                 <p className="mt-2 text-sm leading-relaxed text-white/65">{t('home.verifyText')}</p>
-                <Link to="/scanner" className={actionClass('primary', 'md', 'mt-4')}>
+                {/* Affiché seulement : ne mène nulle part (non cliquable). */}
+                <span className={actionClass('primary', 'md', 'mt-4 pointer-events-none cursor-default')}>
                   {t('home.ctaScan')}
-                </Link>
+                </span>
               </div>
             </div>
 

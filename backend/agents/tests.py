@@ -5,6 +5,7 @@ from django.urls import reverse
 
 from documents.models import AgentAccessRequest
 from espace.models import DossierRequest
+from fichiers.models import Folder
 
 from .models import AgentProfile
 
@@ -410,8 +411,39 @@ class DeleteBirthCertificateTests(TestCase):
         self.assertIsNone(self.act.deleted_at)  # toujours là
         self.assertTrue(self.act.deletion_pending)
         self.assertEqual(self.act.deletion_reason, 'Erreur sur le nom')
-        self.assertContains(self.client.get(reverse('agents:documents', args=[1])), 'Suppression demandée')
+        self.assertContains(self.client.get(reverse('agents:folder_documents', args=[1])), 'Suppression demandée')
         self.assertTrue(self.client.get(reverse('verify_document', args=[self.act.pk])).json()['is_authentic'])
+
+    def test_documents_are_stored_in_folders(self):
+        detail_url = reverse('agents:document_detail', args=[1, self.act.pk])
+        self.assertNotContains(self.client.get(reverse('agents:documents', args=[1])), detail_url)
+        folders_url = reverse('agents:folders', args=[1])
+        self.assertContains(self.client.get(folders_url), reverse('agents:folder_documents', args=[1]))
+        self.assertContains(self.client.get(reverse('agents:folder_documents', args=[1])), self.act.act_number)
+        self.assertContains(self.client.get(folders_url, {'q': self.act.act_number}), self.act.act_number)
+
+    def test_header_search_finds_documents_requests_and_own_files(self):
+        url = reverse('agents:search', args=[1])
+        self.assertContains(self.client.get(url), 'name="q"')
+
+        response = self.client.get(url, {'q': self.act.act_number})
+        self.assertContains(response, reverse('agents:document_detail', args=[1, self.act.pk]))
+
+        dossier = make_request('naissance')
+        other_guichet = make_request('transport')
+        response = self.client.get(url, {'q': dossier.reference})
+        self.assertContains(response, reverse('agents:request_detail', args=[1, dossier.pk]))
+        response = self.client.get(url, {'q': other_guichet.reference})
+        self.assertFalse(response.context['has_results'])
+
+        agent = get_user_model().objects.get(username='naissance')
+        other = make_agent('autre', 1)
+        Folder.objects.create(owner=agent, name='Budget mine')
+        Folder.objects.create(owner=other, name='Budget autre')
+        response = self.client.get(url, {'q': 'Budget'})
+        self.assertEqual([folder.name for folder in response.context['found_folders']], ['Budget mine'])
+
+        self.assertContains(self.client.get(url, {'q': 'Paramètres'}), reverse('agents:settings'))
 
     def test_reason_is_required(self):
         response = self.client.post(self.delete_url, {'reason': '  '})
@@ -425,7 +457,7 @@ class DeleteBirthCertificateTests(TestCase):
         self.act.refresh_from_db()
         self.assertIsNotNone(self.act.deleted_at)
         self.client.login(username='naissance', password=PASSWORD)
-        self.assertNotContains(self.client.get(reverse('agents:documents', args=[1])), self.act.act_number)
+        self.assertNotContains(self.client.get(reverse('agents:folder_documents', args=[1])), self.act.act_number)
         self.assertEqual(self.client.get(reverse('verify_document', args=[self.act.pk])).json()['status'], 'REVOKED')
 
     def test_admin_rejects_deletion(self):
@@ -766,7 +798,7 @@ class OtherGuichetsDocumentsTests(TestCase):
                 self.assertEqual(document.act_number, f"2026-{case['prefix']}-00001")
                 self.assertTrue(document.verify()['is_authentic'])
 
-                self.assertContains(self.client.get(reverse('agents:documents', args=[number])), document.act_number)
+                self.assertContains(self.client.get(reverse('agents:folder_documents', args=[number])), document.act_number)
                 self.assertContains(self.client.get(reverse('agents:document_detail', args=[number, document.pk])),
                                     document.content_hash)
                 pdf = self.client.get(reverse('agents:document_pdf', args=[number, document.pk]))

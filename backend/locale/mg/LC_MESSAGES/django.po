@@ -3174,5 +3174,120 @@ msgstr "Fidirana"
 msgid "Déconnectez-vous si vous utilisez un ordinateur partagé."
 msgstr "Mivoaha raha mampiasa solosaina iombonana ianao."
 
+#, python-format
+msgid "%(document)s établi, scellé et rangé dans « Dossiers ». Vous pouvez télécharger le PDF."
+msgstr "Vita, voaisy tombo-kase ary voatahiry ao amin'ny « Dossiers » ny %(document)s. Azonao alaina ny PDF."
+
+msgid "Partagé avec les agents du guichet"
+msgstr "Iombonana amin'ny mpiasan'ny varavarankely"
+
+msgid "Établissez ici les documents du guichet. Une fois scellés, ils sont rangés automatiquement dans « Dossiers »."
+msgstr "Eto no anaovana ny taratasin'ny varavarankely. Rehefa voaisy tombo-kase dia voatahiry ho azy ao amin'ny « Dossiers » izy ireo."
+
+msgid "Voir les documents établis"
+msgstr "Hijery ny taratasy vita"
+
+msgid "Rechercher dans mon espace…"
+msgstr "Hikaroka ao amin'ny sehatro…"
+
+msgid "Recherche"
+msgstr "Fikarohana"
+
+msgid "Mes fichiers"
+msgstr "Ny rakitro"
+
+msgid "Saisissez un mot dans la barre de recherche : nom, référence, n° d'acte, fichier…"
+msgstr "Asio teny ao amin'ny fikarohana: anarana, laharana, laharan'ny taratasy, rakitra…"
+
+msgid "Aucun résultat pour cette recherche."
+msgstr "Tsy nisy valiny ho an'ity fikarohana ity."
+
+msgid "Activer la caméra"
+msgstr "Alefaso ny fakantsary"
+
+msgid "Arrêter la caméra"
+msgstr "Atsaharo ny fakantsary"
+
+msgid "Aucun document correspondant"
+msgstr "Tsy misy taratasy mifanaraka"
+
+msgid "Ce document a bien été délivré par la Mairie, mais il a depuis été révoqué par l'administration et n'est plus valable pour un usage officiel."
+msgstr "Navoakan'ny Kaominina ity taratasy ity fa nofoanan'ny fitantanana izao, ka tsy azo ampiasaina intsony ho an'ny raharaha ofisialy."
+
+msgid "Ce document a expiré"
+msgstr "Lany daty ity taratasy ity"
+
+msgid "Ce document a été révoqué"
+msgstr "Nofoanana ity taratasy ity"
+
+msgid "Ce document n'a pas pu être authentifié. Son contenu a peut-être été modifié, ou il n'a pas été délivré par la Mairie."
+msgstr "Tsy nahomby ny fanamarinana ity taratasy ity. Mety novana ny votoatiny, na tsy navoakan'ny Kaominina izy."
+
+msgid "Cet identifiant ne figure pas dans le registre officiel. Le document est probablement falsifié."
+msgstr "Tsy ao amin'ny rejistra ofisialy io famantarana io. Azo inoana fa sandoka ilay taratasy."
+
+msgid "Collez l'identifiant (UUID) ou le lien complet imprimé sur le document."
+msgstr "Apetraho ny famantarana (UUID) na ny rohy feno voasoratra amin'ny taratasy."
+
+msgid "Date de délivrance"
+msgstr "Daty nanomezana"
+
+msgid "Document officiel vérifié"
+msgstr "Voamarina ny taratasy ofisialy"
+
+msgid "Démarrage de la caméra…"
+msgstr "Mandefa ny fakantsary…"
+
+msgid "Identifiant (UUID)"
+msgstr "Famantarana (UUID)"
+
+msgid "Identifiant invalide : il doit ressembler à xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx."
+msgstr "Famantarana diso: tokony ho toy ny xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx izy."
+
+msgid "Impossible de démarrer la caméra sur cet appareil. Saisissez l'identifiant ci-dessous."
+msgstr "Tsy afaka manomboka ny fakantsary amin'ity fitaovana ity. Ampidiro etsy ambany ny famantarana."
+
+msgid "Impossible de joindre le serveur de vérification. Vérifiez votre connexion puis réessayez."
+msgstr "Tsy azo tratra ny mpizara fanamarinana. Hamarino ny fifandraisanao dia andramo indray."
+
+msgid "L'accès à la caméra a été refusé. Autorisez-le dans votre navigateur, ou saisissez l'identifiant ci-dessous."
+msgstr "Nolavina ny fahazoana mampiasa ny fakantsary. Avelao amin'ny navigatera, na ampidiro etsy ambany ny famantarana."
+
+msgid "La caméra nécessite une connexion sécurisée (HTTPS) ou localhost."
+msgstr "Mila fifandraisana azo antoka (HTTPS) na localhost ny fakantsary."
+
+msgid "La période de validité de ce document est terminée. Veuillez contacter la Mairie pour obtenir un document à jour."
+msgstr "Tapitra ny fotoana nanan-kery ity taratasy ity. Mifandraisa amin'ny Kaominina mba hahazoana taratasy vaovao."
+
+msgid "Ou saisissez l'identifiant"
+msgstr "Na ampidiro ny famantarana"
+
+msgid "Pointez la caméra vers le QR code figurant sur le certificat ou le document officiel. La vérification démarre automatiquement."
+msgstr "Asehoy ny fakantsary amin'ny kaody QR eo amin'ny taratasy ofisialy. Hanomboka ho azy ny fanamarinana."
+
+msgid "QR code non reconnu : il ne contient pas d'identifiant de document."
+msgstr "Tsy fantatra ny kaody QR: tsy misy famantarana taratasy ao anatiny."
+
+msgid "Scanner"
+msgstr "Hijery QR"
+
+msgid "Scanner un document"
+msgstr "Sivano ny taratasy"
+
+msgid "Service momentanément indisponible"
+msgstr "Tsy misy ny serivisy amin'izao fotoana izao"
+
+msgid "Type de document"
+msgstr "Karazana taratasy"
+
+msgid "Vérification en cours…"
+msgstr "Mandritra ny fanamarinana…"
+
+msgid "Vérification échouée"
+msgstr "Tsy lasa ny fanamarinana"
+
+msgid "Vérifier"
+msgstr "Hamarino"
+
 #~ msgid "Messages de contact"
 #~ msgstr "Hafatra fifandraisana"

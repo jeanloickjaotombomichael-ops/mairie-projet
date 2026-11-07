@@ -365,6 +365,12 @@ class DossierCreateTests(EspaceTestCase):
         payload.pop('guichet')
         self.assertEqual(self.create(payload).status_code, 201)
 
+    def test_relationship_to_child_is_optional(self):
+        payload = make_payload()
+        payload['details'].pop('declarant_relationship', None)
+        errors = self.create(payload).json().get('errors', {})
+        self.assertNotIn('details.declarant_relationship', errors)
+
     def test_email_and_phone_are_optional(self):
         payload = make_payload()
         for name in ('email', 'phone'):

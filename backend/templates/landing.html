@@ -9,10 +9,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
   <link rel="stylesheet" href="{% static 'mairy_admin/lang.css' %}?v=3">
-  <link rel="stylesheet" href="{% static 'mairy_admin/landing.css' %}?v=3">
+  <link rel="stylesheet" href="{% static 'mairy_admin/landing.css' %}?v=5">
+  <link rel="stylesheet" href="{% static 'mairy_admin/blason.css' %}?v=1">
   <link rel="stylesheet" href="{% static 'mairy_admin/responsive.css' %}?v=1">
 </head>
-<body>
+<body class="bg-blason">
   <header class="top">
     <a class="brand" href="{% url 'home' %}">
       <img src="{% static 'mairy_admin/logo.png' %}" alt="" width="40" height="40">
@@ -35,11 +36,17 @@
         et suivez l'activité de chaque guichet, depuis un seul espace réservé aux agents et aux administrateurs.
       {% endblocktranslate %}
     </p>
-    {% if user.is_authenticated %}
-    <a class="btn" href="{% url 'connexion' %}">{% translate "Mon espace" %}</a>
-    {% else %}
-    <a class="btn" href="{% url 'connexion' %}">{% translate "Se connecter" %}</a>
-    {% endif %}
+    <div class="hero-actions">
+      {% if user.is_authenticated %}
+      <a class="btn" href="{% url 'connexion' %}">{% translate "Mon espace" %}</a>
+      {% else %}
+      <a class="btn" href="{% url 'connexion' %}">{% translate "Se connecter" %}</a>
+      {% endif %}
+      <a class="btn-outline btn-icon" href="{% url 'scanner' %}">
+        {% include "includes/scan_icon.html" %}
+        {% translate "Scanner" %}
+      </a>
+    </div>
   </main>
 
   {# Mots qui s'écrivent puis s'effacent après « Simple, sûr et rapide pour ». #}
