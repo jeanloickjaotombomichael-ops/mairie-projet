@@ -1,4 +1,8 @@
-"""PDF des documents officiels des guichets (mise en page de l'extrait d'acte), avec QR code et empreinte SHA-256."""
+"""PDF des guichets.
+
+- ticket_pdf(act)   : bon de retrait remis au citoyen (petit ticket avec QR code, sans le contenu de l'acte).
+- document_pdf(act) : document officiel imprimé au guichet, signé et cacheté (sans QR code ni empreinte).
+"""
 import io
 from pathlib import Path
 
@@ -8,7 +12,7 @@ from django.utils import timezone, translation
 from django.utils.html import escape
 from reportlab.lib import colors
 from reportlab.lib.enums import TA_CENTER, TA_JUSTIFY
-from reportlab.lib.pagesizes import A4
+from reportlab.lib.pagesizes import A4, A6
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.units import mm
 from reportlab.platypus import Image, KeepTogether, Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
@@ -85,8 +89,21 @@ def _qr_image(url, size):
     return Image(buffer, width=size, height=size)
 
 
-def qr_png(url):
-    """QR code PNG (octets) pour l'aperçu dans l'espace agent."""
+class BonDejaRetire(Exception):
+    """Le document a déjà été retiré au guichet : le bon de retrait et son QR code ne servent plus."""
+
+
+def is_retrieved(act):
+    """Vrai quand l'agent a scanné le bon et remis le document officiel (champ retrieved_at rempli)."""
+    return getattr(act, 'retrieved_at', None) is not None
+
+
+def qr_png(url, act=None):
+    """QR code PNG (octets) pour l'aperçu dans l'espace agent.
+
+    Renvoie None si le document a déjà été retiré : plus aucun QR code n'est affiché après le retrait."""
+    if act is not None and is_retrieved(act):
+        return None
     image = qrcode.make(url, border=1)
     buffer = io.BytesIO()
     image.save(buffer, format='PNG')
@@ -458,34 +475,10 @@ def _signatures(entries):
     return table
 
 
-def _security(act):
-    s = STYLES
-    table = Table(
-        [[
-            _qr_image(act.verification_url, 25 * mm),
-            [
-                Paragraph('<b>Document sécurisé</b> — scannez le QR code pour vérifier son authenticité :', s['small']),
-                Paragraph(escape(act.verification_url), s['mono']),
-                Spacer(1, 2 * mm),
-                Paragraph('<b>Empreinte SHA-256</b>', s['small']),
-                Paragraph(act.content_hash, s['mono']),
-                Spacer(1, 2 * mm),
-                Paragraph(f'<b>Identifiant</b> : {act.id}', s['small']),
-            ],
-        ]],
-        colWidths=[29 * mm, None],
-    )
-    table.setStyle(TableStyle([
-        ('BOX', (0, 0), (-1, -1), 0.6, LINE),
-        ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor('#f7f9fc')),
-        ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
-        ('TOPPADDING', (0, 0), (-1, -1), 6), ('BOTTOMPADDING', (0, 0), (-1, -1), 6),
-    ]))
-    return table
-
-
 def document_pdf(act):
-    """Renvoie les octets du PDF d'un document officiel (tous guichets), toujours rédigé en français."""
+    """Renvoie les octets du PDF du document officiel (tous guichets), toujours rédigé en français.
+
+    Imprimé par l'agent au guichet, après le scan du bon de retrait, puis signé et cacheté."""
     with translation.override('fr'):
         return _build_pdf(act)
 
@@ -508,9 +501,108 @@ def _build_pdf(act):
     if closing:
         story += [Spacer(1, 5 * mm), *closing]
 
-    # Signatures et sécurité gardées ensemble sur la même page.
+    # Le document officiel ne porte ni QR code ni empreinte : sa valeur vient de la signature
+    # manuscrite et du cachet apposés au guichet. Le QR code est réservé au bon de retrait (ticket_pdf).
     story.append(Spacer(1, 5 * mm))
-    story.append(KeepTogether([_signatures(layout['signatures']), Spacer(1, 5 * mm), _security(act)]))
+    story.append(KeepTogether([_signatures(layout['signatures'])]))
 
+    doc.build(story)
+    return buffer.getvalue()
+
+
+# -- Bon de retrait (ticket) -----------------------------------------------------------
+# Petit ticket remis au citoyen quand sa demande est traitée. Il ne reproduit pas l'acte :
+# il permet seulement à l'agent de retrouver la demande au guichet en scannant le QR code.
+# La signature (HMAC-SHA256) n'y est pas imprimée : elle reste sur le serveur, qui la vérifie au scan.
+
+TICKET_STYLES = {
+    'country': ParagraphStyle('t_country', fontName='Helvetica-Bold', fontSize=9, leading=11,
+                              textColor=NAVY, alignment=TA_CENTER),
+    'commune': ParagraphStyle('t_commune', fontName='Helvetica', fontSize=8, leading=10,
+                              textColor=GREY, alignment=TA_CENTER),
+    'title': ParagraphStyle('t_title', fontName='Helvetica-Bold', fontSize=16, leading=19,
+                            textColor=NAVY, alignment=TA_CENTER, spaceBefore=4),
+    'warning': ParagraphStyle('t_warning', fontName='Helvetica-BoldOblique', fontSize=8.5, leading=11,
+                              textColor=colors.HexColor('#b3261e'), alignment=TA_CENTER),
+    'cell': ParagraphStyle('t_cell', fontName='Helvetica', fontSize=9, leading=11.5,
+                           textColor=colors.HexColor('#333a46')),
+    'help': ParagraphStyle('t_help', fontName='Helvetica', fontSize=8, leading=10.5,
+                           textColor=GREY, alignment=TA_CENTER),
+    'mono': ParagraphStyle('t_mono', fontName='Courier', fontSize=6.5, leading=8,
+                           textColor=GREY, alignment=TA_CENTER),
+}
+
+# Personne concernée par l'acte, selon le type de document.
+TICKET_NAMES = {
+    'BirthCertificate': lambda a: f'{a.child_first_names} {a.child_last_name.upper()}',
+    'MarriageCertificate': lambda a: (f'{a.husband_first_names} {a.husband_last_name.upper()} et '
+                                      f'{a.wife_first_names} {a.wife_last_name.upper()}'),
+    'DeathCertificate': lambda a: f'{a.deceased_first_names} {a.deceased_last_name.upper()}',
+    'LegislationExtract': lambda a: a.recipient_name or '',
+    'ServiceCertificate': lambda a: a.holder_full_name,
+}
+
+
+def ticket_pdf(act):
+    """Renvoie les octets du bon de retrait (format A6), toujours rédigé en français.
+
+    Lève BonDejaRetire si le document a déjà été retiré : le bon ne peut plus être téléchargé."""
+    if is_retrieved(act):
+        raise BonDejaRetire(f'Le document N° {act.act_number} a déjà été retiré au guichet.')
+    with translation.override('fr'):
+        return _build_ticket(act)
+
+
+def _build_ticket(act):
+    t = TICKET_STYLES
+    buffer = io.BytesIO()
+    doc = SimpleDocTemplate(
+        buffer, pagesize=A6, leftMargin=8 * mm, rightMargin=8 * mm, topMargin=7 * mm, bottomMargin=6 * mm,
+        title=f'Bon de retrait N° {act.act_number}', author=act.commune, creator='Mairy Project',
+    )
+    name_of = TICKET_NAMES.get(type(act).__name__)
+    name = name_of(act) if name_of else ''
+    drawn = timezone.localtime(act.act_datetime)
+
+    logo = Image(str(LOGO), width=12 * mm, height=12 * mm) if LOGO.exists() else ''
+    story = []
+    if logo:
+        story.append(logo)
+    story += [
+        Paragraph("REPOBLIKAN'I MADAGASIKARA", t['country']),
+        Paragraph(escape(act.commune.upper()), t['commune']),
+        Paragraph('BON DE RETRAIT', t['title']),
+        Paragraph('Ne vaut pas document officiel', t['warning']),
+        Spacer(1, 3 * mm),
+    ]
+
+    rows = [
+        ('Document', act.document_title.capitalize()),
+        ('N°', act.act_number),
+        ('Concerne', name),
+        ('Date', lettres.date_short(drawn)),
+    ]
+    info = Table(
+        [[Paragraph(f'<b>{escape(label)} :</b> {escape(str(value))}', t['cell'])] for label, value in rows if value],
+        colWidths=['100%'],
+    )
+    info.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, -1), LIGHT),
+        ('LINEBELOW', (0, 0), (-1, -2), 0.5, LINE),
+        ('TOPPADDING', (0, 0), (-1, -1), 3), ('BOTTOMPADDING', (0, 0), (-1, -1), 3.5),
+        ('LEFTPADDING', (0, 0), (-1, -1), 6),
+    ]))
+    story += [info, Spacer(1, 4 * mm)]
+
+    qr = _qr_image(act.verification_url, 38 * mm)
+    qr.hAlign = 'CENTER'
+    story += [
+        qr,
+        Spacer(1, 3 * mm),
+        Paragraph('Présentez ce bon au guichet de la mairie, avec votre pièce d\'identité, '
+                  'pour retirer votre document officiel signé et cacheté.', t['help']),
+        Spacer(1, 2 * mm),
+        Paragraph(f'Identifiant : {act.id}', t['mono']),
+    ]
     doc.build(story)
     return buffer.getvalue()

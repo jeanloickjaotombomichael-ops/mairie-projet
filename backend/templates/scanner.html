@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="NONE,NOARCHIVE">
-  <title>{% translate "Scanner un document" %} | {% translate "Commune Urbaine de Mahajanga" %}</title>
+  <title>{% translate "Scanner un bon de retrait" %} | {% translate "Commune Urbaine de Mahajanga" %}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
   <link rel="stylesheet" href="{% static 'mairy_admin/lang.css' %}?v=3">
@@ -22,10 +22,10 @@
     {% include "includes/language_switcher.html" with switcher_class="on-dark" switcher_id="scanner" %}
   </header>
 
-  <main class="scan" data-verify-url="{% url 'verify_document' '00000000-0000-0000-0000-000000000000' %}">
+  <main class="scan" data-verifier-url="{% url 'verifier' '00000000-0000-0000-0000-000000000000' %}">
     <a class="scan-back" href="{% url 'home' %}">&larr; {% translate "Retour" %}</a>
-    <h1 class="scan-title">{% translate "Scanner un document" %}</h1>
-    <p class="scan-help">{% translate "Pointez la caméra vers le QR code figurant sur le certificat ou le document officiel. La vérification démarre automatiquement." %}</p>
+    <h1 class="scan-title">{% translate "Scanner un bon de retrait" %}</h1>
+    <p class="scan-help">{% translate "Pointez la caméra vers le QR code du bon de retrait présenté par l'usager. La page du bon s'ouvre automatiquement." %}</p>
 
     {# La bibliothèque injecte la vidéo dans ce conteneur. #}
     <div id="qr-reader" class="scan-reader" hidden></div>
@@ -39,50 +39,16 @@
       <label for="scan-id">{% translate "Ou saisissez l'identifiant" %}</label>
       <div class="scan-manual-row">
         <input id="scan-id" type="text" autocomplete="off" spellcheck="false" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx">
-        <button type="submit" class="btn-outline">{% translate "Vérifier" %}</button>
+        <button type="submit" class="btn-outline">{% translate "Ouvrir" %}</button>
       </div>
-      <p class="scan-hint">{% translate "Collez l'identifiant (UUID) ou le lien complet imprimé sur le document." %}</p>
+      <p class="scan-hint">{% translate "Saisissez l'identifiant imprimé sous le QR code du bon." %}</p>
       <p id="scan-manual-error" class="scan-message" role="alert" hidden>{% translate "Identifiant invalide : il doit ressembler à xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx." %}</p>
     </form>
 
-    {# Résultats : un seul bloc visible à la fois ; les valeurs sont écrites avec textContent. #}
-    <section id="scan-result" class="scan-result" aria-live="polite" hidden>
-      <div data-result="loading" hidden><p>{% translate "Vérification en cours…" %}</p></div>
-      <div data-result="VALID" class="is-valid" hidden>
-        <h2>{% translate "Document officiel vérifié" %}</h2>
-        <dl>
-          <dt>{% translate "Type de document" %}</dt><dd data-field="type"></dd>
-          <dt>{% translate "Titulaire" %}</dt><dd data-field="holder"></dd>
-          <dt>{% translate "Date de délivrance" %}</dt><dd data-field="date"></dd>
-          <dt>{% translate "Identifiant (UUID)" %}</dt><dd data-field="id"></dd>
-          <dt>{% translate "Empreinte SHA-256" %}</dt><dd data-field="hash"></dd>
-        </dl>
-      </div>
-      <div data-result="REVOKED" class="is-bad" hidden>
-        <h2>{% translate "Ce document a été révoqué" %}</h2>
-        <p>{% translate "Ce document a bien été délivré par la Mairie, mais il a depuis été révoqué par l'administration et n'est plus valable pour un usage officiel." %}</p>
-      </div>
-      <div data-result="EXPIRED" class="is-bad" hidden>
-        <h2>{% translate "Ce document a expiré" %}</h2>
-        <p>{% translate "La période de validité de ce document est terminée. Veuillez contacter la Mairie pour obtenir un document à jour." %}</p>
-      </div>
-      <div data-result="INVALID" class="is-bad" hidden>
-        <h2>{% translate "Vérification échouée" %}</h2>
-        <p>{% translate "Ce document n'a pas pu être authentifié. Son contenu a peut-être été modifié, ou il n'a pas été délivré par la Mairie." %}</p>
-      </div>
-      <div data-result="not_found" class="is-bad" hidden>
-        <h2>{% translate "Aucun document correspondant" %}</h2>
-        <p>{% translate "Cet identifiant ne figure pas dans le registre officiel. Le document est probablement falsifié." %}</p>
-      </div>
-      <div data-result="error" class="is-bad" hidden>
-        <h2>{% translate "Service momentanément indisponible" %}</h2>
-        <p>{% translate "Impossible de joindre le serveur de vérification. Vérifiez votre connexion puis réessayez." %}</p>
-      </div>
-    </section>
   </main>
 
   {{ scan_messages|json_script:"scan-messages" }}
   <script src="{% static 'mairy_admin/vendor/html5-qrcode.min.js' %}"></script>
-  <script src="{% static 'mairy_admin/scanner.js' %}?v=2"></script>
+  <script src="{% static 'mairy_admin/scanner.js' %}?v=3"></script>
 </body>
 </html>

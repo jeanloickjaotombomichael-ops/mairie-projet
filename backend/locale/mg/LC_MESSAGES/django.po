@@ -3289,5 +3289,93 @@ msgstr "Tsy lasa ny fanamarinana"
 msgid "Vérifier"
 msgstr "Hamarino"
 
+msgid "Aucun document ne correspond à ce QR code. Le bon est probablement faux."
+msgstr "Tsy misy taratasy mifanaraka amin'ity QR code ity. Azo inoana fa sandoka ilay bon."
+
+msgid "Autre guichet"
+msgstr "Varavarankely hafa"
+
+msgid "Bon authentique — jamais utilisé"
+msgstr "Bon marina — mbola tsy nampiasaina"
+
+msgid "Bon de retrait"
+msgstr "Bon de retrait"
+
+#, python-format
+msgid "Bon de retrait du document %(document)s envoyé à %(person)s : il le télécharge depuis ses notifications."
+msgstr "Nalefa tany amin'i %(person)s ny bon de retrait an'ny %(document)s : alainy ao amin'ny fampahafantarana azy izany."
+
+msgid "Bon déjà utilisé"
+msgstr "Bon efa nampiasaina"
+
+msgid "Bon introuvable"
+msgstr "Tsy hita ny bon"
+
+msgid "Bon non authentique"
+msgstr "Bon tsy marina"
+
+msgid "Ce bon de retrait ne permet pas de remettre le document."
+msgstr "Tsy azo atao ny manome ny taratasy amin'ity bon de retrait ity."
+
+#, python-format
+msgid "Ce bon se retire au %(guichet)s — %(label)s. Orientez l'usager vers ce guichet."
+msgstr "Ao amin'ny %(guichet)s — %(label)s no alaina ity bon ity. Tondroy any amin'io varavarankely io ny olom-pirenena."
+
+msgid "Ce document a déjà été remis : son bon de retrait ne sert plus."
+msgstr "Efa natolotra ity taratasy ity : tsy manan-kery intsony ny bon de retrait-ny."
+
+msgid "Ce document a été révoqué ou supprimé : il ne peut pas être remis."
+msgstr "Nofoanana na nofafana ity taratasy ity : tsy azo atolotra."
+
+msgid "Concerne"
+msgstr "Mikasika"
+
+#, python-format
+msgid "Document remis au guichet le %(date)s"
+msgstr "Natolotra teo amin'ny varavarankely ny taratasy ny %(date)s"
+
+msgid "La signature ne correspond pas : le document a peut-être été modifié. Ne remettez rien et prévenez l'administrateur."
+msgstr "Tsy mifanaraka ny sonia : mety ho novana ny taratasy. Aza manome na inona na inona ary ampahafantaro ny mpitantana."
+
+msgid "Le QR code du bon de retrait ouvre la page de vérification des agents :"
+msgstr "Ny QR code amin'ny bon de retrait dia manokatra ny pejy fanamarinana ho an'ny mpiasa :"
+
+msgid "Le bon de retrait a servi : son QR code n'est plus affiché."
+msgstr "Efa nampiasaina ny bon de retrait : tsy aseho intsony ny QR code-ny."
+
+#, python-format
+msgid "Le document a été remis le %(date)s"
+msgstr "Natolotra ny %(date)s ny taratasy"
+
+msgid "N° de CIN"
+msgstr "Laharan'ny CIN"
+
+msgid "Pointez la caméra vers le QR code du bon de retrait présenté par l'usager. La page du bon s'ouvre automatiquement."
+msgstr "Atodiho amin'ny QR code amin'ny bon de retrait entin'ny olom-pirenena ny fakantsary. Misokatra ho azy ny pejin'ny bon."
+
+msgid "Remettre le document"
+msgstr "Atolory ny taratasy"
+
+msgid "Saisissez l'identifiant imprimé sous le QR code du bon."
+msgstr "Ampidiro ny famantarana voapirinty eo ambanin'ny QR code amin'ny bon."
+
+msgid "Scanner un autre bon"
+msgstr "Hijery bon hafa"
+
+msgid "Scanner un bon"
+msgstr "Hijery bon"
+
+msgid "Scanner un bon de retrait"
+msgstr "Hijery bon de retrait"
+
+msgid "Vérifiez la pièce d'identité de l'usager avant de remettre le document. Le bon sera alors marqué comme utilisé."
+msgstr "Hamarino ny kara-panondron'ny olom-pirenena alohan'ny hanomezana ny taratasy. Hosoratana ho efa nampiasaina avy eo ilay bon."
+
+msgid "remis au guichet le"
+msgstr "natolotra teo amin'ny varavarankely ny"
+
+msgid "remis par"
+msgstr "natolotr'i"
+
 #~ msgid "Messages de contact"
 #~ msgstr "Hafatra fifandraisana"

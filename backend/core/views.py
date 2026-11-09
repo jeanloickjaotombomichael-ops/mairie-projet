@@ -1,5 +1,6 @@
 """Pages du projet hors API et hors administration."""
 from django.utils.translation import gettext as _
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
 
 
@@ -21,8 +22,8 @@ class LandingView(TemplateView):
         return context
 
 
-class ScannerView(TemplateView):
-    """Scan du QR code d'un document ; le résultat vient de l'API publique de vérification."""
+class ScannerView(LoginRequiredMixin, TemplateView):
+    """Scan du QR code d'un bon de retrait (agents) : ouvre la page /verifier/… du bon."""
 
     template_name = 'scanner.html'
 

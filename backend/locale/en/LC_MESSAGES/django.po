@@ -3262,5 +3262,93 @@ msgstr "Verification failed"
 msgid "Vérifier"
 msgstr "Verify"
 
+msgid "Aucun document ne correspond à ce QR code. Le bon est probablement faux."
+msgstr "No document matches this QR code. The slip is probably fake."
+
+msgid "Autre guichet"
+msgstr "Other counter"
+
+msgid "Bon authentique — jamais utilisé"
+msgstr "Genuine slip — never used"
+
+msgid "Bon de retrait"
+msgstr "Collection slip"
+
+#, python-format
+msgid "Bon de retrait du document %(document)s envoyé à %(person)s : il le télécharge depuis ses notifications."
+msgstr "Collection slip for %(document)s sent to %(person)s: they download it from their notifications."
+
+msgid "Bon déjà utilisé"
+msgstr "Slip already used"
+
+msgid "Bon introuvable"
+msgstr "Slip not found"
+
+msgid "Bon non authentique"
+msgstr "Slip not genuine"
+
+msgid "Ce bon de retrait ne permet pas de remettre le document."
+msgstr "This collection slip cannot be used to hand over the document."
+
+#, python-format
+msgid "Ce bon se retire au %(guichet)s — %(label)s. Orientez l'usager vers ce guichet."
+msgstr "This slip is collected at %(guichet)s — %(label)s. Direct the citizen to that counter."
+
+msgid "Ce document a déjà été remis : son bon de retrait ne sert plus."
+msgstr "This document has already been handed over: its collection slip is no longer valid."
+
+msgid "Ce document a été révoqué ou supprimé : il ne peut pas être remis."
+msgstr "This document has been revoked or deleted: it cannot be handed over."
+
+msgid "Concerne"
+msgstr "Concerns"
+
+#, python-format
+msgid "Document remis au guichet le %(date)s"
+msgstr "Document handed over at the counter on %(date)s"
+
+msgid "La signature ne correspond pas : le document a peut-être été modifié. Ne remettez rien et prévenez l'administrateur."
+msgstr "The signature does not match: the document may have been altered. Do not hand anything over and inform the administrator."
+
+msgid "Le QR code du bon de retrait ouvre la page de vérification des agents :"
+msgstr "The collection slip's QR code opens the agents' verification page:"
+
+msgid "Le bon de retrait a servi : son QR code n'est plus affiché."
+msgstr "The collection slip has been used: its QR code is no longer shown."
+
+#, python-format
+msgid "Le document a été remis le %(date)s"
+msgstr "The document was handed over on %(date)s"
+
+msgid "N° de CIN"
+msgstr "National ID no."
+
+msgid "Pointez la caméra vers le QR code du bon de retrait présenté par l'usager. La page du bon s'ouvre automatiquement."
+msgstr "Point the camera at the QR code on the citizen's collection slip. The slip's page opens automatically."
+
+msgid "Remettre le document"
+msgstr "Hand over the document"
+
+msgid "Saisissez l'identifiant imprimé sous le QR code du bon."
+msgstr "Enter the identifier printed under the slip's QR code."
+
+msgid "Scanner un autre bon"
+msgstr "Scan another slip"
+
+msgid "Scanner un bon"
+msgstr "Scan a slip"
+
+msgid "Scanner un bon de retrait"
+msgstr "Scan a collection slip"
+
+msgid "Vérifiez la pièce d'identité de l'usager avant de remettre le document. Le bon sera alors marqué comme utilisé."
+msgstr "Check the citizen's ID before handing over the document. The slip will then be marked as used."
+
+msgid "remis au guichet le"
+msgstr "handed over at the counter on"
+
+msgid "remis par"
+msgstr "handed over by"
+
 #~ msgid "Messages de contact"
 #~ msgstr "Contact messages"

@@ -58,8 +58,10 @@ else:
 
 ALLOWED_HOSTS = env_list('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1')
 
-# URL publique du frontend React (utilisée dans les QR codes).
+# URL publique du frontend React.
 FRONTEND_URL = os.environ.get('FRONTEND_URL', 'http://localhost:5173').strip().rstrip('/')
+# URL publique de ce backend : le QR code des bons de retrait ouvre /verifier/… (réservée aux agents).
+BACKEND_URL = os.environ.get('BACKEND_URL', 'http://localhost:8000').strip().rstrip('/')
 
 # Limitation de débit des demandes d'accès agent : (nombre de requêtes, fenêtre en secondes).
 AGENT_REQUEST_RATE_LIMIT = (10, 3600)

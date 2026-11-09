@@ -379,6 +379,17 @@ a.agent-btn {
   font-weight: 600;
 }
 
+/* Page « Bon de retrait » (scan au guichet). */
+.agent-ticket {
+  display: grid;
+  justify-items: start;
+  gap: 14px;
+}
+
+.agent-ticket p {
+  margin: 0;
+}
+
 /* Page « Paramètres » : une carte par rubrique, côte à côte (une seule colonne sur petit écran). */
 .agent-settings {
   display: grid;

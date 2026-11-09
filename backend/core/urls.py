@@ -1,7 +1,8 @@
 """Routage principal du projet Mairy Project.
 
 - /       : page d'accueil (bouton « Se connecter » vers /connexion/)
-- /scanner/ : vérification d'un document par QR code (caméra) ou identifiant
+- /scanner/ : scan du QR code d'un bon de retrait (agents)
+- /verifier/<id>/ : vérification d'un bon de retrait et remise du document (agents)
 - /connexion/ : connexion commune (administrateurs → /admin/, agents → leur guichet)
 - /agent/ : espace des agents municipaux (un guichet par agent)
 - /admin/ : administration Django (administrateurs)
@@ -12,13 +13,16 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
-from agents.views import ConnexionView, DeconnexionView
+from agents.views import ConnexionView, DeconnexionView, remettre_document, ticket_verify
 
 from .views import LandingView, ScannerView
 
 urlpatterns = [
     path('', LandingView.as_view(), name='home'),
     path('scanner/', ScannerView.as_view(), name='scanner'),
+    # QR code du bon de retrait (réservé aux agents) et remise du document officiel.
+    path('verifier/<uuid:token>/', ticket_verify, name='verifier'),
+    path('verifier/<uuid:token>/remettre/', remettre_document, name='remettre_document'),
     path('connexion/', ConnexionView.as_view(), name='connexion'),
     path('deconnexion/', DeconnexionView.as_view(), name='deconnexion'),
     path('agent/', include('agents.urls')),

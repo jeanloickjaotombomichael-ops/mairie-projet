@@ -1,0 +1,56 @@
+{% extends "agents/base.html" %}
+{% load i18n %}
+
+{% block back %}{% endblock %}
+
+{% block content %}
+<div class="mairy-page agent-narrow">
+  <a class="agent-back" href="{% url 'scanner' %}">&larr; {% translate "Scanner un autre bon" %}</a>
+
+  <div class="agent-head">
+    <div>
+      <h1>{% translate "Bon de retrait" %}</h1>
+      {% if act %}<p class="mairy-muted">{{ act.label }}{% if act_guichet %} · {{ act_guichet.title }} — {{ act_guichet.label }}{% endif %}</p>{% endif %}
+    </div>
+  </div>
+
+  <section class="mairy-card agent-ticket">
+    {% if state == 'ok' %}
+    <span class="mairy-status s-approved">{% translate "Bon authentique — jamais utilisé" %}</span>
+    {% elif state == 'used' %}
+    <span class="mairy-status s-rejected">{% translate "Bon déjà utilisé" %}</span>
+    <p>{% blocktranslate with date=act.retrieved_at|date:"DATETIME_FORMAT" %}Le document a été remis le {{ date }}{% endblocktranslate %}{% if act.retrieved_by %} {% translate "par" %} {% firstof act.retrieved_by.get_full_name act.retrieved_by.get_username %}{% endif %}.</p>
+    {% elif state == 'revoked' %}
+    <span class="mairy-status s-rejected">{% translate "Document révoqué" %}</span>
+    <p>{% translate "Ce document a été révoqué ou supprimé : il ne peut pas être remis." %}</p>
+    {% elif state == 'invalid' %}
+    <span class="mairy-status s-rejected">{% translate "Bon non authentique" %}</span>
+    <p>{% translate "La signature ne correspond pas : le document a peut-être été modifié. Ne remettez rien et prévenez l'administrateur." %}</p>
+    {% elif state == 'other_guichet' %}
+    <span class="mairy-status s-pending">{% translate "Autre guichet" %}</span>
+    <p>{% blocktranslate with guichet=act_guichet.title label=act_guichet.label %}Ce bon se retire au {{ guichet }} — {{ label }}. Orientez l'usager vers ce guichet.{% endblocktranslate %}</p>
+    {% else %}
+    <span class="mairy-status s-rejected">{% translate "Bon introuvable" %}</span>
+    <p>{% translate "Aucun document ne correspond à ce QR code. Le bon est probablement faux." %}</p>
+    {% endif %}
+
+    {% if act and state != 'invalid' and state != 'not_found' %}
+    <dl class="agent-settings-info">
+      <dt>{% translate "Document" %}</dt><dd>{{ act.label }}</dd>
+      <dt>{% translate "Concerne" %}</dt><dd>{{ act.holder_name }}</dd>
+      {% if applicant %}<dt>{% translate "Demandeur" %}</dt><dd>{{ applicant }}</dd>{% endif %}
+      {% if applicant_id %}<dt>{% translate "N° de CIN" %}</dt><dd>{{ applicant_id }}</dd>{% endif %}
+      <dt>{% translate "Établi le" %}</dt><dd>{{ act.created_at|date:"DATETIME_FORMAT" }}</dd>
+    </dl>
+    {% endif %}
+
+    {% if state == 'ok' %}
+    <p class="mairy-muted">{% translate "Vérifiez la pièce d'identité de l'usager avant de remettre le document. Le bon sera alors marqué comme utilisé." %}</p>
+    <form method="post" action="{% url 'remettre_document' act.pk %}">
+      {% csrf_token %}
+      <button type="submit" class="agent-btn">{% translate "Remettre le document" %}</button>
+    </form>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}

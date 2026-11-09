@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.views import LoginView, LogoutView
 from django.core.paginator import Paginator
-from django.db import models
+from django.db import models, transaction
 from django.db.models import Q
 from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
@@ -23,7 +23,8 @@ from django.utils.http import url_has_allowed_host_and_scheme
 from django.views.decorators.http import require_POST
 
 from core import dashboard
-from documents.views import _is_rate_limited
+from documents.models import DocumentAuditLog
+from documents.views import _is_rate_limited, get_client_ip
 from espace.models import DossierRequest
 from espace.schemas import FOKONTANY
 from fichiers.models import Folder, StoredFile, trash_count
@@ -34,10 +35,10 @@ from .access import agent_profile, guichet_required, home_url_for
 from .forms import AgentProfileForm, AgentSignupForm, ConnexionForm, DecisionForm
 from .guichets import GUICHETS
 from .labels import field_label, option_label
-from .official import OFFICIAL_DOCUMENTS
+from .official import OFFICIAL_DOCUMENTS, find_document
 from .queue import annotate_positions, blocked_message, blocking_request
 from .pdf import document_pdf as document_pdf_bytes
-from .pdf import qr_png
+from .pdf import qr_png, ticket_pdf
 
 Status = DossierRequest.Status
 
@@ -193,6 +194,8 @@ def _shell(request, number, active):
             {'label': _('Documents officiels'), 'icon': 'doc', 'url': reverse('agents:documents', args=[number]),
              'active': active == 'documents', 'badge': 0},
         ] if number in OFFICIAL_DOCUMENTS else []) + [
+            {'label': _('Scanner un bon'), 'icon': 'search', 'url': reverse('scanner'),
+             'active': active == 'scan', 'badge': 0},
             {'label': _('Mail'), 'icon': 'mail', 'url': reverse('agents:mail', args=[number]),
              'active': active == 'mail', 'badge': unread_count(request.user)},
             {'label': _('Messages'), 'icon': 'message', 'url': reverse('agents:messages', args=[number]),
@@ -589,7 +592,7 @@ def document_create(request, number):
 def document_detail(request, number, pk):
     spec = _spec(number)
     act = get_object_or_404(spec.model, pk=pk, deleted_at=None)
-    qr = base64.b64encode(qr_png(act.verification_url)).decode('ascii')
+    qr = qr_png(act.verification_url, act)
     context = {
         **_shell(request, number, 'folders'),
         'title': act.label,
@@ -597,7 +600,7 @@ def document_detail(request, number, pk):
         'act': act,
         'content_sections': _document_rows(act, spec),
         'check': act.verify(),
-        'qr_data_uri': f'data:image/png;base64,{qr}',
+        'qr_data_uri': f'data:image/png;base64,{base64.b64encode(qr).decode("ascii")}' if qr else '',
         'recipient': _applicant(act.request) if act.request else '',
         'recipient_email': (act.request.identity or {}).get('email', '') if act.request else '',
         # Document établi sans demande : l'agent choisit la demande de l'usager à qui l'envoyer.
@@ -605,6 +608,19 @@ def document_detail(request, number, pk):
         'default_message': _default_send_message(act),
     }
     return render(request, 'agents/document_detail.html', context)
+
+
+@guichet_required
+def document_ticket(request, number, pk):
+    """Bon de retrait à imprimer pour l'usager (par exemple s'il n'a pas accès à son espace en ligne)."""
+    spec = _spec(number)
+    act = get_object_or_404(spec.model, pk=pk, deleted_at=None)
+    if act.retrieved_at is not None:
+        messages.error(request, _('Ce document a déjà été remis : son bon de retrait ne sert plus.'))
+        return redirect('agents:document_detail', number, act.pk)
+    response = HttpResponse(ticket_pdf(act), content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="{act.ticket_filename}"'
+    return response
 
 
 @guichet_required
@@ -672,8 +688,9 @@ def _default_send_message(act):
     with translation.override('fr'):
         label = str(act.label)
     return (
-        f'Votre document « {label} » est disponible. '
-        'Vous pouvez le télécharger dès maintenant depuis vos notifications.'
+        f'Votre demande est traitée : le bon de retrait de votre document « {label} » est disponible '
+        "dans vos notifications. Présentez-le au guichet de la mairie, avec votre pièce d'identité, "
+        'pour retirer votre document officiel signé et cacheté.'
     )
 
 
@@ -727,10 +744,92 @@ def document_send(request, number, pk):
 
     messages.success(
         request,
-        _('%(document)s envoyé à %(person)s : il peut le télécharger depuis ses notifications.')
+        _('Bon de retrait du document %(document)s envoyé à %(person)s : il le télécharge depuis ses notifications.')
         % {'document': act.label, 'person': _applicant(dossier)},
     )
     return redirect('agents:document_detail', number, act.pk)
+
+
+# ---------------------------------------------------------------------------
+# Bon de retrait : scan au guichet, puis remise du document officiel
+# ---------------------------------------------------------------------------
+
+def _ticket_context(request, token):
+    """État d'un bon de retrait pour l'agent connecté : (contexte de la page, statut HTTP)."""
+    profile = agent_profile(request.user)
+    act = find_document(token)
+    spec = next((s for s in OFFICIAL_DOCUMENTS.values() if act is not None and isinstance(act, s.model)), None)
+    number = profile.guichet if profile else (spec.guichet if spec else 1)
+
+    if act is None or spec is None:
+        state = 'not_found'
+    else:
+        check = act.verify()
+        if check['status'] == 'REVOKED':
+            state = 'revoked'
+        elif not check['is_authentic']:
+            state = 'invalid'
+        elif act.retrieved_at is not None:
+            state = 'used'
+        elif not request.user.is_superuser and profile.guichet != spec.guichet:
+            state = 'other_guichet'
+        else:
+            state = 'ok'
+    context = {
+        **_shell(request, number, 'scan'),
+        'title': _('Bon de retrait'),
+        'act': act,
+        'state': state,
+        'act_guichet': GUICHETS[spec.guichet] if spec else None,
+        'applicant': _applicant(act.request) if act is not None and act.request else '',
+        'applicant_id': (act.request.identity or {}).get('national_id', '') if act is not None and act.request else '',
+    }
+    return context, 404 if state == 'not_found' else 200
+
+
+def _ticket_access_denied(request):
+    """Page réservée aux agents (et aux administrateurs) : réponse de refus, ou None si l'accès est permis."""
+    if request.user.is_superuser or agent_profile(request.user) is not None:
+        return None
+    return render(request, 'agents/forbidden.html', {'reason': 'no_role'}, status=403)
+
+
+@login_required
+def ticket_verify(request, token):
+    """Page ouverte par le QR code du bon de retrait : authenticité du bon, et s'il a déjà servi."""
+    denied = _ticket_access_denied(request)
+    if denied:
+        return denied
+    context, status = _ticket_context(request, token)
+    return render(request, 'agents/ticket_verify.html', context, status=status)
+
+
+@require_POST
+@login_required
+def remettre_document(request, token):
+    """Bon en règle : il est marqué comme utilisé et le document officiel (sans QR code) est généré."""
+    denied = _ticket_access_denied(request)
+    if denied:
+        return denied
+    with transaction.atomic():
+        act = find_document(token)
+        if act is not None:
+            # Verrou : deux agents qui scannent le même bon en même temps ne remettent pas deux documents.
+            act = type(act).objects.select_for_update().get(pk=act.pk)
+        context, _status = _ticket_context(request, token)
+        if context['state'] != 'ok':
+            messages.error(request, _("Ce bon de retrait ne permet pas de remettre le document."))
+            return redirect('verifier', token)
+        act.retrieved_at = timezone.now()
+        act.retrieved_by = request.user
+        act.save(update_fields=['retrieved_at', 'retrieved_by'])
+        DocumentAuditLog.objects.create(
+            document=None, action=DocumentAuditLog.Action.VERIFIED_SUCCESS, performed_by=request.user,
+            ip_address=get_client_ip(request), details=f'Bon de retrait utilisé : {act.label} remis au guichet',
+        )
+    response = HttpResponse(document_pdf_bytes(act), content_type='application/pdf')
+    response['Content-Disposition'] = f'inline; filename="{act.filename}"'
+    return response
 
 
 # ---------------------------------------------------------------------------

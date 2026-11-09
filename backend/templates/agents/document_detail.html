@@ -18,6 +18,7 @@
     <div class="agent-head-actions">
       <a class="agent-btn agent-btn-ghost" href="{% url 'agents:document_pdf' number act.pk %}?apercu=1" target="_blank" rel="noopener">{% translate "Aperçu" %}</a>
       <a class="agent-btn" href="{% url 'agents:document_pdf' number act.pk %}">{% translate "Télécharger le PDF" %}</a>
+      {% if not act.retrieved_at %}<a class="agent-btn agent-btn-ghost" href="{% url 'agents:document_ticket' number act.pk %}">{% translate "Bon de retrait" %}</a>{% endif %}
       {% include "agents/_document_delete.html" %}
     </div>
   </div>
@@ -109,9 +110,14 @@
         <span class="mairy-status s-rejected">{% if check.status == 'REVOKED' %}{% translate "Révoqué" %}{% else %}{% translate "Altéré" %}{% endif %}</span>
         {% endif %}
       </div>
-      <img src="{{ qr_data_uri }}" alt="QR code de vérification du document {{ act.act_number }}" width="160" height="160">
-      <p class="mairy-muted agent-help">{% translate "Le QR code ouvre la page de vérification :" %}</p>
+      {% if qr_data_uri %}
+      <img src="{{ qr_data_uri }}" alt="QR code du bon de retrait {{ act.act_number }}" width="160" height="160">
+      <p class="mairy-muted agent-help">{% translate "Le QR code du bon de retrait ouvre la page de vérification des agents :" %}</p>
       <p><a href="{{ act.verification_url }}" target="_blank" rel="noopener" class="agent-mono">{{ act.verification_url }}</a></p>
+      {% else %}
+      <p><strong>{% blocktranslate with date=act.retrieved_at|date:"DATETIME_FORMAT" %}Document remis au guichet le {{ date }}{% endblocktranslate %}</strong>{% if act.retrieved_by %} {% translate "par" %} {% firstof act.retrieved_by.get_full_name act.retrieved_by.get_username %}{% endif %}.</p>
+      <p class="mairy-muted agent-help">{% translate "Le bon de retrait a servi : son QR code n'est plus affiché." %}</p>
+      {% endif %}
       <p class="mairy-muted agent-help">{% translate "Empreinte SHA-256" %}</p>
       <p class="agent-mono">{{ act.content_hash }}</p>
     </section>

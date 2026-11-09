@@ -22,6 +22,7 @@ urlpatterns = [
     path('guichet-<int:number>/documents/nouveau/', views.document_create, name='document_create'),
     path('guichet-<int:number>/documents/<uuid:pk>/', views.document_detail, name='document_detail'),
     path('guichet-<int:number>/documents/<uuid:pk>/pdf/', views.document_pdf, name='document_pdf'),
+    path('guichet-<int:number>/documents/<uuid:pk>/bon/', views.document_ticket, name='document_ticket'),
     path('guichet-<int:number>/documents/<uuid:pk>/envoyer/', views.document_send, name='document_send'),
     path('guichet-<int:number>/documents/<uuid:pk>/supprimer/', views.document_delete, name='document_delete'),
     path('guichet-<int:number>/documents/<uuid:pk>/supprimer/annuler/', views.document_cancel_deletion,
