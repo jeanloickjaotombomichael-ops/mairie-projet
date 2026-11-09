@@ -627,7 +627,8 @@ def document_ticket(request, number, pk):
 def document_pdf(request, number, pk):
     spec = _spec(number)
     act = get_object_or_404(spec.model, pk=pk, deleted_at=None)
-    response = HttpResponse(document_pdf_bytes(act), content_type='application/pdf')
+    # Rédigé en malgache par défaut ; « ?langue=fr » pour la version française.
+    response = HttpResponse(document_pdf_bytes(act, request.GET.get('langue', 'mg')), content_type='application/pdf')
     disposition = 'inline' if request.GET.get('apercu') else 'attachment'
     response['Content-Disposition'] = f'{disposition}; filename="{act.filename}"'
     return response

@@ -18,6 +18,7 @@
     <div class="agent-head-actions">
       <a class="agent-btn agent-btn-ghost" href="{% url 'agents:document_pdf' number act.pk %}?apercu=1" target="_blank" rel="noopener">{% translate "Aperçu" %}</a>
       <a class="agent-btn" href="{% url 'agents:document_pdf' number act.pk %}">{% translate "Télécharger le PDF" %}</a>
+      <a class="agent-btn agent-btn-ghost" href="{% url 'agents:document_pdf' number act.pk %}?langue=fr" title="{% translate "Le document est rédigé en malgache par défaut." %}">{% translate "Version française" %}</a>
       {% if not act.retrieved_at %}<a class="agent-btn agent-btn-ghost" href="{% url 'agents:document_ticket' number act.pk %}">{% translate "Bon de retrait" %}</a>{% endif %}
       {% include "agents/_document_delete.html" %}
     </div>

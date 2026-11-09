@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.contrib.messages import get_messages
-from django.test import TestCase
+from django.test import SimpleTestCase, TestCase
 from django.urls import reverse
 
 from documents.models import AgentAccessRequest
@@ -803,6 +803,9 @@ class OtherGuichetsDocumentsTests(TestCase):
                                     document.content_hash)
                 pdf = self.client.get(reverse('agents:document_pdf', args=[number, document.pk]))
                 self.assertTrue(pdf.content.startswith(b'%PDF'))
+                pdf_fr = self.client.get(reverse('agents:document_pdf', args=[number, document.pk]), {'langue': 'fr'})
+                self.assertTrue(pdf_fr.content.startswith(b'%PDF'))
+                self.assertNotEqual(pdf.content, pdf_fr.content)
 
                 data = self.client.get(reverse('verify_document', args=[document.pk])).json()
                 self.assertTrue(data['is_authentic'])
@@ -1142,6 +1145,29 @@ class AdminLogoutTests(TestCase):
         response = self.client.post(reverse('admin:logout'))
         self.assertRedirects(response, reverse('home'))
         self.assertNotIn('_auth_user_id', self.client.session)
+
+
+class MalagasyWordingTests(SimpleTestCase):
+    """Nombres, dates et heures en toutes lettres du document officiel rédigé en malgache."""
+
+    def test_numbers_read_from_units_to_thousands(self):
+        from . import lettres_mg
+
+        self.assertEqual(lettres_mg.number(1), 'iray')
+        self.assertEqual(lettres_mg.number(11), "iraika ambin'ny folo")
+        self.assertEqual(lettres_mg.number(21), 'iraika amby roapolo')
+        self.assertEqual(lettres_mg.number(2026), 'enina amby roapolo sy roa arivo')
+        self.assertEqual(lettres_mg.number(1999), 'sivy amby sivifolo sy sivinjato sy arivo')
+
+    def test_dates_and_times(self):
+        import datetime
+
+        from . import lettres_mg
+
+        moment = datetime.datetime(2026, 5, 1, 14, 30)
+        self.assertEqual(lettres_mg.date(moment), 'voalohany Mey, enina amby roapolo sy roa arivo')
+        self.assertEqual(lettres_mg.date_short(moment), '1 Mey 2026')
+        self.assertEqual(lettres_mg.time(moment), "efatra ambin'ny folo ora sy telopolo minitra")
 
 
 class TicketTests(TestCase):

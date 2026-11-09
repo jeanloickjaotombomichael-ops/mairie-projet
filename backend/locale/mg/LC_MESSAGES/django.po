@@ -3377,5 +3377,11 @@ msgstr "natolotra teo amin'ny varavarankely ny"
 msgid "remis par"
 msgstr "natolotr'i"
 
+msgid "Version française"
+msgstr "Dika frantsay"
+
+msgid "Le document est rédigé en malgache par défaut."
+msgstr "Amin'ny teny malagasy no anoratana ny taratasy raha tsy misy safidy hafa."
+
 #~ msgid "Messages de contact"
 #~ msgstr "Hafatra fifandraisana"

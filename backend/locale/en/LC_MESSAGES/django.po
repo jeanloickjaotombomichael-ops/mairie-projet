@@ -3350,5 +3350,11 @@ msgstr "handed over at the counter on"
 msgid "remis par"
 msgstr "handed over by"
 
+msgid "Version française"
+msgstr "French version"
+
+msgid "Le document est rédigé en malgache par défaut."
+msgstr "The document is written in Malagasy by default."
+
 #~ msgid "Messages de contact"
 #~ msgstr "Contact messages"
