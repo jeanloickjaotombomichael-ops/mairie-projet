@@ -7,6 +7,7 @@ import {
   IDENTITY_FIELDS,
   defaultsFor,
   detailFields,
+  detailSteps,
   quartierFields,
   validateField,
   type FieldDef,
@@ -66,14 +67,15 @@ function bySection(fields: readonly FieldDef[]): { section: string; fields: Fiel
 
 /**
  * Formulaire de demande : identité + détails propres au type de dossier.
- * Actes (naissance, mariage, décès, législation) : en trois étapes — vos informations, détails
- * de la demande, quartier — avec « Suivant » entre chaque étape et « Envoyer » à la fin.
+ * Actes (naissance, mariage, décès, législation) : en étapes — vos informations, détails de la
+ * demande (découpés en trois pour naissance, mariage et décès), quartier — avec « Suivant » entre
+ * chaque étape et « Envoyer » à la fin.
  */
 function DossierForm({ type }: DossierFormProps) {
   const { t, i18n } = useTranslation()
   const { getToken } = useAuth()
   const { user } = useUser()
-  const { reload } = useDossiers()
+  const { reload, items: dossiers, status: dossiersStatus } = useDossiers()
 
   const [values, setValues] = useState<Values>(() => ({
     ...defaultsFor(IDENTITY_FIELDS),
@@ -81,6 +83,8 @@ function DossierForm({ type }: DossierFormProps) {
     ...defaultsFor(quartierFields(type)),
   }))
   const [step, setStep] = useState(0)
+  // Étape la plus avancée déjà atteinte : on peut revenir sur toute étape jusqu'à celle-ci.
+  const [maxStep, setMaxStep] = useState(0)
   // Champ à focaliser après un changement d'étape (il n'existe dans la page qu'après le rendu).
   const [pendingFocus, setPendingFocus] = useState<string | null>(null)
   const [errors, setErrors] = useState<Errors>({})
@@ -97,7 +101,11 @@ function DossierForm({ type }: DossierFormProps) {
   const allFields = [...IDENTITY_FIELDS, ...fields, ...quartier]
   const steps: Step[] = [
     { key: 'identity', title: t('dash.form.identityTitle'), fields: IDENTITY_FIELDS },
-    { key: 'details', title: t('dash.form.detailsTitle'), fields },
+    ...detailSteps(type).map((item) => ({
+      key: item.key,
+      title: item.key === 'details' ? t('dash.form.detailsTitle') : t(`dash.form.steps.${item.key}`),
+      fields: item.fields,
+    })),
     ...(quartier.length ? [{ key: 'quartier', title: t('dash.form.quartierTitle'), fields: quartier }] : []),
   ]
   // Sans étape « Quartier » (autres services), tout le formulaire tient sur une page.
@@ -109,9 +117,10 @@ function DossierForm({ type }: DossierFormProps) {
   // « Suivant » et « Envoyer » restent inactifs tant qu'un champ de l'étape est vide.
   const complete = filled(wizard ? steps[step].fields : allFields)
 
-  // Préremplit l'identité avec le compte connecté, une seule fois et sans écraser la saisie.
+  // Préremplit l'identité, une seule fois et sans écraser la saisie : coordonnées de la dernière
+  // demande de l'usager (la plus récente d'abord), complétées par celles de son compte.
   useEffect(() => {
-    if (prefilled.current || !user) return
+    if (prefilled.current || !user || dossiersStatus === 'loading') return
     prefilled.current = true
 
     const known: Values = {
@@ -119,6 +128,7 @@ function DossierForm({ type }: DossierFormProps) {
       last_name: user.lastName ?? '',
       email: user.primaryEmailAddress?.emailAddress ?? '',
       phone: user.primaryPhoneNumber?.phoneNumber ?? '',
+      ...dossiers[0]?.identity,
     }
     setValues((current) => {
       const next = { ...current }
@@ -127,7 +137,7 @@ function DossierForm({ type }: DossierFormProps) {
       }
       return next
     })
-  }, [user])
+  }, [user, dossiers, dossiersStatus])
 
   // Place le focus sur le message de confirmation (lecteurs d'écran, clavier).
   useEffect(() => {
@@ -163,6 +173,7 @@ function DossierForm({ type }: DossierFormProps) {
 
   const goTo = (index: number) => {
     setStep(index)
+    setMaxStep((current) => Math.max(current, index))
     setFormError(null)
     formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
     setPendingFocus(steps[index].fields[0]?.name ?? null)
@@ -172,6 +183,16 @@ function DossierForm({ type }: DossierFormProps) {
     const found = findErrors(steps[step].fields)
     setErrors((current) => ({ ...current, ...found }))
     if (!showFirstError(found)) goTo(step + 1)
+  }
+
+  /** Clic sur un numéro d'étape : en avant, les étapes intermédiaires doivent être correctes. */
+  const jumpTo = (index: number) => {
+    if (index > step) {
+      const found = findErrors(steps.slice(step, index).flatMap((item) => item.fields))
+      setErrors((current) => ({ ...current, ...found }))
+      if (showFirstError(found)) return
+    }
+    goTo(index)
   }
 
   const identityValues = (source: Values): Values => {
@@ -193,6 +214,7 @@ function DossierForm({ type }: DossierFormProps) {
   const reset = () => {
     setPhase('idle')
     setStep(0)
+    setMaxStep(0)
     setReference('')
     setErrors({})
     setFormError(null)
@@ -202,6 +224,7 @@ function DossierForm({ type }: DossierFormProps) {
   const errorText = (field: FieldDef, code: FieldErrorCode): string => {
     if (code === 'invalid' && field.kind === 'email') return t('dash.form.errors.email')
     if (code === 'invalid' && field.kind === 'phone') return t('dash.form.errors.phone')
+    if (code === 'invalid' && field.kind === 'cin') return t('dash.form.errors.cin')
     return t(`dash.form.errors.${code}`)
   }
 
@@ -319,7 +342,7 @@ function DossierForm({ type }: DossierFormProps) {
               ? field.kind
               : 'text'
       const inputMode: 'numeric' | 'decimal' | undefined =
-        field.kind === 'integer' ? 'numeric' : field.kind === 'number' ? 'decimal' : undefined
+        field.kind === 'integer' || field.kind === 'cin' ? 'numeric' : field.kind === 'number' ? 'decimal' : undefined
       control = (
         <input
           id={id}
@@ -430,27 +453,33 @@ function DossierForm({ type }: DossierFormProps) {
     <form ref={formRef} onSubmit={handleSubmit} noValidate className="scroll-mt-24 space-y-7">
       {wizard && (
         <ol className="d-steps" aria-label={t('dash.form.stepOf', { current: step + 1, total: steps.length })}>
-          {steps.map((item, index) => (
-            <li
-              key={item.key}
-              className={cn('d-step', index === step && 'is-current', index < step && 'is-done')}
-              aria-current={index === step ? 'step' : undefined}
-            >
-              <button type="button" disabled={index >= step} onClick={() => goTo(index)}>
-                <span className="d-step-dot">{index < step ? <CheckIcon className="size-3.5" /> : index + 1}</span>
-                <span className="d-step-label">{item.title}</span>
-              </button>
-            </li>
-          ))}
+          {steps.map((item, index) => {
+            const done = index !== step && index <= maxStep && filled(item.fields)
+            return (
+              <li
+                key={item.key}
+                className={cn('d-step', index === step && 'is-current', done && 'is-done')}
+                aria-current={index === step ? 'step' : undefined}
+              >
+                <button type="button" disabled={index === step || index > maxStep} onClick={() => jumpTo(index)}>
+                  <span className="d-step-dot">{done ? <CheckIcon className="size-3.5" /> : index + 1}</span>
+                  <span className="d-step-label">{item.title}</span>
+                </button>
+              </li>
+            )
+          })}
         </ol>
       )}
 
       {visibleSteps.map((item) => (
         <fieldset key={item.key} className="d-fieldset">
           <legend className="d-legend">{item.title}</legend>
-          {bySection(item.fields).map((group) => (
+          {bySection(item.fields).map((group, _, groups) => (
             <div key={group.section || 'main'} className={cn(group.section && 'd-subsection')}>
-              {group.section && <h3 className="d-subsection-title">{t(`dash.sections.${group.section}`)}</h3>}
+              {/* Titre de rubrique inutile quand l'étape n'en contient qu'une (il répète celui de l'étape). */}
+              {group.section && groups.filter((other) => other.section).length > 1 && (
+                <h3 className="d-subsection-title">{t(`dash.sections.${group.section}`)}</h3>
+              )}
               <div className="grid gap-4 sm:grid-cols-2">{group.fields.map(renderField)}</div>
             </div>
           ))}

@@ -22,7 +22,7 @@ function Topbar({ theme, onThemeChange, menuOpen, onMenuToggle }: TopbarProps) {
   const { total, unread } = useDossiers()
 
   return (
-    <header className="d-topbar sticky top-0 z-30 flex h-16 items-center gap-2 px-4 sm:gap-3 sm:px-6">
+    <header className="d-topbar sticky top-0 z-30 flex h-20 items-center gap-2 px-4 sm:gap-3 sm:px-6">
       <button
         type="button"
         className="d-icon-btn -ml-1"
@@ -35,8 +35,8 @@ function Topbar({ theme, onThemeChange, menuOpen, onMenuToggle }: TopbarProps) {
         <MenuIcon className="size-6" />
       </button>
       <Link to={ESPACE_HOME} className="flex shrink-0 items-center gap-2.5" aria-label={t('dash.nav.home')}>
-        <img src="/logo-mahajanga.png" alt="" className="size-9 object-contain" />
-        <span className="d-heading hidden max-w-40 text-sm font-extrabold leading-tight lg:block">
+        <img src="/logo-mahajanga.png" alt="" className="size-12 object-contain" />
+        <span className="d-heading hidden max-w-48 text-base font-extrabold leading-tight lg:block">
           {t('dash.brand')}
         </span>
       </Link>

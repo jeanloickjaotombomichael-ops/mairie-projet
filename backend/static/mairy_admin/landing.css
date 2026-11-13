@@ -1,7 +1,6 @@
 /* Page d'accueil du backend : fond noir, accent vert, titre centré, mots qui s'écrivent. */
 
 :root {
-  --bg: #050807;
   --text: #ffffff;
   --muted: #8a8f98;
   --soft: #5f646d;
@@ -24,9 +23,6 @@ body {
   min-height: 100vh;
   min-height: 100dvh;
   flex-direction: column;
-  background:
-    radial-gradient(ellipse at 50% 35%, rgba(78, 217, 139, 0.08), transparent 55%),
-    var(--bg);
   color: var(--text);
   font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
@@ -151,6 +147,150 @@ h1 {
   transition:
     background-color 0.15s ease,
     transform 0.15s ease;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn-ico {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.btn-outline {
+  min-width: 160px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 8px;
+  background: transparent;
+  padding: 14px 26px;
+  color: var(--text);
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn-outline:hover {
+  border-color: var(--green);
+  color: var(--green);
+}
+
+.btn:disabled {
+  opacity: 0.7;
+}
+
+button.btn {
+  border: 0;
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* ---------- Page « Scanner un document » ---------- */
+
+.scan {
+  display: flex;
+  width: 100%;
+  max-width: 560px;
+  flex: 1;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 16px;
+  margin: 0 auto;
+  padding: 16px 20px 64px;
+}
+
+.scan-back {
+  color: var(--muted);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.scan-back:hover {
+  color: var(--text);
+}
+
+.scan-title {
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+}
+
+.scan-help,
+.scan-hint {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.scan-hint {
+  font-size: 0.85rem;
+}
+
+.scan-reader {
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  background: #000000;
+}
+
+.scan-message {
+  margin: 0;
+  color: #fda4a4;
+  font-size: 0.9rem;
+}
+
+.scan-manual {
+  display: grid;
+  gap: 8px;
+  margin-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding-top: 18px;
+}
+
+.scan-manual label {
+  font-weight: 700;
+}
+
+.scan-manual-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.scan-manual input {
+  min-width: 0;
+  flex: 1 1 240px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 13px 14px;
+  color: var(--text);
+  font: inherit;
+  font-size: 0.9rem;
+}
+
+.scan-manual input:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+}
+
+/* `hidden` doit primer sur les `display` ci-dessus. */
+.scan [hidden] {
+  display: none;
 }
 
 .btn:hover {

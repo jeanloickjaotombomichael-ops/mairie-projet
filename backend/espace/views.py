@@ -51,8 +51,8 @@ def _documents(dossier, documents=None):
     return [
         {
             'id': str(act.id),
-            'label': act.label,
-            'filename': act.filename,
+            'label': f'Bon de retrait — {act.label}',
+            'filename': act.ticket_filename,
             'sent_at': _iso(act.sent_at),
         }
         for act in documents
@@ -73,6 +73,11 @@ def serialize_dossier(dossier, documents=None):
         'responded_at': _iso(dossier.responded_at),
         'response_read': dossier.response_read,
         'documents': _documents(dossier, documents),
+        # Coordonnées saisies : le formulaire suivant les reprend (seul l'usager voit ses demandes).
+        'identity': {
+            spec.name: (dossier.identity or {}).get(spec.name, '') for spec in IDENTITY_FIELDS
+            if (dossier.identity or {}).get(spec.name)
+        },
     }
 
 
@@ -185,9 +190,9 @@ def dossier_read_all(request):
 @clerk_auth_required
 @require_GET
 def dossier_document(request, pk, document_id):
-    """PDF d'un document envoyé à l'usager : uniquement le sien, pour sa propre demande."""
+    """Bon de retrait envoyé à l'usager : uniquement le sien, pour sa propre demande."""
     from agents.official import find_document
-    from agents.pdf import document_pdf
+    from agents.pdf import ticket_pdf
 
     act = find_document(document_id)
     if (
@@ -196,8 +201,8 @@ def dossier_document(request, pk, document_id):
     ):
         return json_error('not_found', 404)
 
-    response = HttpResponse(document_pdf(act), content_type='application/pdf')
-    response['Content-Disposition'] = f'attachment; filename="{act.filename}"'
+    response = HttpResponse(ticket_pdf(act), content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="{act.ticket_filename}"'
     response['Cache-Control'] = 'private, no-store'
     return response
 

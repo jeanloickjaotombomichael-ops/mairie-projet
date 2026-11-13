@@ -95,6 +95,13 @@ class OfficialDocument(models.Model):
         settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True,
         related_name='+', verbose_name=_('envoyé par'), editable=False,
     )
+    # Retrait au guichet : l'agent a scanné le bon de retrait et remis le document officiel.
+    # Le bon ne sert alors plus (son QR code n'est plus affiché ni téléchargeable).
+    retrieved_at = models.DateTimeField(_('remis au guichet le'), null=True, blank=True, editable=False)
+    retrieved_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True,
+        related_name='+', verbose_name=_('remis par'), editable=False,
+    )
     # Suppression : l'agent la demande (avec un motif), l'administrateur l'accepte ou la refuse.
     deletion_requested_at = models.DateTimeField(_('suppression demandée le'), null=True, blank=True, editable=False)
     deletion_requested_by = models.ForeignKey(
@@ -157,11 +164,15 @@ class OfficialDocument(models.Model):
 
     @property
     def downloadable_by_requester(self):
-        """L'usager de la demande d'origine peut le télécharger (envoyé, ni supprimé ni révoqué)."""
+        """L'usager peut télécharger son bon de retrait (envoyé, pas encore retiré, ni supprimé ni révoqué)."""
         return (
-            self.request_id is not None and self.sent_at is not None
+            self.request_id is not None and self.sent_at is not None and self.retrieved_at is None
             and self.deleted_at is None and self.status == self.Status.ACTIVE
         )
+
+    @property
+    def ticket_filename(self):
+        return f'bon-de-retrait-{self.act_number}.pdf'
 
     @property
     def deletion_pending(self):
@@ -240,7 +251,8 @@ class OfficialDocument(models.Model):
 
     @property
     def verification_url(self):
-        return f'{settings.FRONTEND_URL}/verifier/{self.id}'
+        """Adresse du QR code du bon de retrait : page de vérification réservée aux agents."""
+        return f'{settings.BACKEND_URL}/verifier/{self.id}/'
 
 
 class Sex(models.TextChoices):

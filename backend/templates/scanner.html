@@ -1,0 +1,54 @@
+{% load static i18n %}<!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="NONE,NOARCHIVE">
+  <title>{% translate "Scanner un bon de retrait" %} | {% translate "Commune Urbaine de Mahajanga" %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="{% static 'mairy_admin/lang.css' %}?v=3">
+  <link rel="stylesheet" href="{% static 'mairy_admin/landing.css' %}?v=5">
+  <link rel="stylesheet" href="{% static 'mairy_admin/blason.css' %}?v=1">
+  <link rel="stylesheet" href="{% static 'mairy_admin/responsive.css' %}?v=1">
+</head>
+<body class="bg-blason">
+  <header class="top">
+    <a class="brand" href="{% url 'home' %}">
+      <img src="{% static 'mairy_admin/logo.png' %}" alt="" width="40" height="40">
+      <span>{% translate "Commune Urbaine de Mahajanga" %}</span>
+    </a>
+    {% include "includes/language_switcher.html" with switcher_class="on-dark" switcher_id="scanner" %}
+  </header>
+
+  <main class="scan" data-verifier-url="{% url 'verifier' '00000000-0000-0000-0000-000000000000' %}">
+    <a class="scan-back" href="{% url 'home' %}">&larr; {% translate "Retour" %}</a>
+    <h1 class="scan-title">{% translate "Scanner un bon de retrait" %}</h1>
+    <p class="scan-help">{% translate "Pointez la caméra vers le QR code du bon de retrait présenté par l'usager. La page du bon s'ouvre automatiquement." %}</p>
+
+    {# La bibliothèque injecte la vidéo dans ce conteneur. #}
+    <div id="qr-reader" class="scan-reader" hidden></div>
+    <p id="scan-camera-message" class="scan-message" role="alert" hidden></p>
+    <button type="button" id="scan-toggle" class="btn btn-icon">
+      {% include "includes/scan_icon.html" %}
+      <span id="scan-toggle-label">{% translate "Activer la caméra" %}</span>
+    </button>
+
+    <form id="scan-manual" class="scan-manual" novalidate>
+      <label for="scan-id">{% translate "Ou saisissez l'identifiant" %}</label>
+      <div class="scan-manual-row">
+        <input id="scan-id" type="text" autocomplete="off" spellcheck="false" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx">
+        <button type="submit" class="btn-outline">{% translate "Ouvrir" %}</button>
+      </div>
+      <p class="scan-hint">{% translate "Saisissez l'identifiant imprimé sous le QR code du bon." %}</p>
+      <p id="scan-manual-error" class="scan-message" role="alert" hidden>{% translate "Identifiant invalide : il doit ressembler à xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx." %}</p>
+    </form>
+
+  </main>
+
+  {{ scan_messages|json_script:"scan-messages" }}
+  <script src="{% static 'mairy_admin/vendor/html5-qrcode.min.js' %}"></script>
+  <script src="{% static 'mairy_admin/scanner.js' %}?v=3"></script>
+</body>
+</html>

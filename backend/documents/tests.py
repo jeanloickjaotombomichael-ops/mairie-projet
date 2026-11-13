@@ -108,6 +108,19 @@ class VerifyTests(BaseTestCase):
         self.assertEqual(self.verify(document.id).status_code, 404)
 
 
+class ScannerPageTests(BaseTestCase):
+    def test_landing_links_to_scanner(self):
+        self.assertContains(self.client.get(reverse('home')), reverse('scanner'))
+
+    def test_scanner_is_for_signed_in_staff_and_opens_the_ticket_page(self):
+        self.assertRedirects(self.client.get(reverse('scanner')), f"{reverse('connexion')}?next={reverse('scanner')}",
+                             fetch_redirect_response=False)
+        self.client.force_login(User.objects.create_user('agent', password='x'))
+        response = self.client.get(reverse('scanner'))
+        self.assertContains(response, 'html5-qrcode.min.js')
+        self.assertContains(response, reverse('verifier', args=['00000000-0000-0000-0000-000000000000']))
+
+
 class AgentRequestTests(BaseTestCase):
     url_name = 'agent_request_create'
 

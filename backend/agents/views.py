@@ -10,34 +10,35 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.views import LoginView, LogoutView
 from django.core.paginator import Paginator
-from django.db import models
+from django.db import models, transaction
 from django.db.models import Q
 from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone, translation
 from django.utils.formats import date_format
-from django.utils.text import format_lazy
+from django.utils.text import capfirst, format_lazy
 from django.utils.translation import gettext_lazy as _
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.views.decorators.http import require_POST
 
 from core import dashboard
-from documents.views import _is_rate_limited
+from documents.models import DocumentAuditLog
+from documents.views import _is_rate_limited, get_client_ip
 from espace.models import DossierRequest
 from espace.schemas import FOKONTANY
-from fichiers.models import trash_count
+from fichiers.models import Folder, StoredFile, trash_count
 from messagerie.views import mailbox, unread_count
 
 from . import assistant as assistant_engine
 from .access import agent_profile, guichet_required, home_url_for
-from .forms import AgentSignupForm, ConnexionForm, DecisionForm
+from .forms import AgentProfileForm, AgentSignupForm, ConnexionForm, DecisionForm
 from .guichets import GUICHETS
 from .labels import field_label, option_label
-from .official import OFFICIAL_DOCUMENTS
+from .official import OFFICIAL_DOCUMENTS, find_document
 from .queue import annotate_positions, blocked_message, blocking_request
 from .pdf import document_pdf as document_pdf_bytes
-from .pdf import qr_png
+from .pdf import qr_png, ticket_pdf
 
 Status = DossierRequest.Status
 
@@ -158,12 +159,28 @@ def _new_requests(request, number):
     return requests.filter(created_at__gt=seen_at) if seen_at else requests
 
 
+def _request_stats(request, number, current):
+    """Cartes de chiffres de « Toutes les demandes » : notifications, en attente, en cours."""
+    requests = _guichet_requests(GUICHETS[number])
+    list_url = reverse('agents:requests', args=[number])
+    return [
+        {'label': _('Notifications'), 'icon': 'bell', 'url': reverse('agents:notifications', args=[number]),
+         'count': _new_requests(request, number).count(), 'unit': _('Non lues'), 'active': current == 'notifications'},
+        {'label': _('En attente'), 'icon': 'message', 'url': f'{list_url}?statut={Status.PENDING}',
+         'count': requests.filter(status=Status.PENDING).count(), 'unit': _('Demandes'),
+         'active': current == Status.PENDING},
+        {'label': _('En cours'), 'icon': 'trend', 'url': f'{list_url}?statut={Status.IN_PROGRESS}',
+         'count': requests.filter(status=Status.IN_PROGRESS).count(), 'unit': _('Demandes'),
+         'active': current == Status.IN_PROGRESS},
+    ]
+
+
 def _shell(request, number, active):
     """Contexte du cadre (barre du haut, menu latéral) commun aux pages de l'espace agent."""
     guichet = GUICHETS[number]
     requests = _guichet_requests(guichet)
     pending = requests.filter(status=Status.PENDING).count()
-    in_progress = requests.filter(status=Status.IN_PROGRESS).count()
+    new_count = _new_requests(request, number).count()
     list_url = reverse('agents:requests', args=[number])
 
     nav = [
@@ -171,20 +188,14 @@ def _shell(request, number, active):
             {'label': _('Tableau de bord'), 'icon': 'home', 'url': reverse('agents:dashboard', args=[number]),
              'active': active == 'dashboard', 'badge': 0},
             {'label': _('Toutes les demandes'), 'icon': 'message', 'url': list_url,
-             'active': active == 'requests:', 'badge': 0},
-        ]},
-        {'title': _('À traiter'), 'items': [
-            {'label': _('Notifications'), 'icon': 'bell', 'url': reverse('agents:notifications', args=[number]),
-             'active': active == 'notifications', 'badge': _new_requests(request, number).count()},
-            {'label': _('En attente'), 'icon': 'message', 'url': f'{list_url}?statut={Status.PENDING}',
-             'active': active == f'requests:{Status.PENDING}', 'badge': pending},
-            {'label': _('En cours'), 'icon': 'trend', 'url': f'{list_url}?statut={Status.IN_PROGRESS}',
-             'active': active == f'requests:{Status.IN_PROGRESS}', 'badge': in_progress},
+             'active': active.startswith('requests:') or active == 'notifications', 'badge': 0},
         ]},
         {'title': _('Outils'), 'items': ([
             {'label': _('Documents officiels'), 'icon': 'doc', 'url': reverse('agents:documents', args=[number]),
              'active': active == 'documents', 'badge': 0},
         ] if number in OFFICIAL_DOCUMENTS else []) + [
+            {'label': _('Scanner un bon'), 'icon': 'search', 'url': reverse('scanner'),
+             'active': active == 'scan', 'badge': 0},
             {'label': _('Mail'), 'icon': 'mail', 'url': reverse('agents:mail', args=[number]),
              'active': active == 'mail', 'badge': unread_count(request.user)},
             {'label': _('Messages'), 'icon': 'message', 'url': reverse('agents:messages', args=[number]),
@@ -197,8 +208,8 @@ def _shell(request, number, active):
              'active': active == 'trash', 'badge': trash_count(request.user)},
         ]},
         {'title': _('Mon compte'), 'items': [
-            {'label': _('Mot de passe'), 'icon': 'gear', 'url': reverse('agents:password'),
-             'active': active == 'password', 'badge': 0},
+            {'label': _('Paramètres'), 'icon': 'gear', 'url': reverse('agents:settings'),
+             'active': active == 'settings', 'badge': 0},
         ]},
     ]
     if request.user.is_superuser:
@@ -214,7 +225,7 @@ def _shell(request, number, active):
         'number': number,
         'mairy_nav': nav,
         'pending_count': pending,
-        'new_count': _new_requests(request, number).count(),
+        'new_count': new_count,
         'list_url': list_url,
         'frontend_url': settings.FRONTEND_URL,
     }
@@ -280,6 +291,16 @@ def guichet_dashboard(request, number):
     return render(request, 'agents/dashboard.html', context)
 
 
+def _match_requests(requests, query):
+    return requests.filter(
+        Q(reference__icontains=query)
+        | Q(identity__last_name__icontains=query)
+        | Q(identity__first_name__icontains=query)
+        | Q(identity__email__icontains=query)
+        | Q(identity__phone__icontains=query)
+    )
+
+
 @guichet_required
 def guichet_requests(request, number):
     guichet = request.guichet
@@ -298,13 +319,7 @@ def guichet_requests(request, number):
     if fokontany:
         requests = requests.filter(details__fokontany=fokontany)
     if query:
-        requests = requests.filter(
-            Q(reference__icontains=query)
-            | Q(identity__last_name__icontains=query)
-            | Q(identity__first_name__icontains=query)
-            | Q(identity__email__icontains=query)
-            | Q(identity__phone__icontains=query)
-        )
+        requests = _match_requests(requests, query)
 
     page = Paginator(requests, 20).get_page(request.GET.get('page'))
     for dossier in page.object_list:
@@ -314,6 +329,7 @@ def guichet_requests(request, number):
     context = {
         **_shell(request, number, f'requests:{status}'),
         'title': _('Demandes du guichet'),
+        'request_stats': _request_stats(request, number, status),
         'tabs': [{'value': value, 'label': label, 'active': value == status} for value, label in STATUS_TABS],
         'status': status,
         'query': query,
@@ -367,29 +383,38 @@ def guichet_request_detail(request, number, pk):
 
 
 @login_required
-def password_change(request):
+def agent_settings(request):
+    """Paramètres de l'agent : profil, mot de passe ; langue, apparence et alertes (préférences du navigateur)."""
     profile = agent_profile(request.user)
     if profile is None:
         if request.user.is_staff:
             return redirect('admin:password_change')
         return render(request, 'agents/forbidden.html', {'reason': 'no_role'}, status=403)
 
+    profile_form = AgentProfileForm(instance=request.user)
+    password_form = PasswordChangeForm(request.user)
     if request.method == 'POST':
-        form = PasswordChangeForm(request.user, request.POST)
-        if form.is_valid():
-            user = form.save()
-            update_session_auth_hash(request, user)
-            messages.success(request, _('Votre mot de passe a été modifié.'))
-            return redirect('agents:dashboard', profile.guichet)
-    else:
-        form = PasswordChangeForm(request.user)
+        if request.POST.get('section') == 'password':
+            password_form = PasswordChangeForm(request.user, request.POST)
+            if password_form.is_valid():
+                user = password_form.save()
+                update_session_auth_hash(request, user)
+                messages.success(request, _('Votre mot de passe a été modifié.'))
+                return redirect('agents:settings')
+        else:
+            profile_form = AgentProfileForm(request.POST, instance=request.user)
+            if profile_form.is_valid():
+                profile_form.save()
+                messages.success(request, _('Votre profil a été mis à jour.'))
+                return redirect('agents:settings')
 
     context = {
-        **_shell(request, profile.guichet, 'password'),
-        'title': _('Changer mon mot de passe'),
-        'form': form,
+        **_shell(request, profile.guichet, 'settings'),
+        'title': _('Paramètres'),
+        'profile_form': profile_form,
+        'password_form': password_form,
     }
-    return render(request, 'agents/password_change.html', context)
+    return render(request, 'agents/settings.html', context)
 
 
 # ---------------------------------------------------------------------------
@@ -442,21 +467,87 @@ def _document_rows(document, spec):
     return sections
 
 
-@guichet_required
-def documents_list(request, number):
-    spec = _spec(number)
-    query = request.GET.get('q', '').strip()
+# Résultats affichés par rubrique dans la recherche de la barre du haut.
+RESULTS_PER_GROUP = 20
+
+
+def official_acts(number, query=''):
+    """Documents officiels en vigueur d'un guichet, filtrés sur `query` (rien si le guichet n'en établit pas)."""
+    spec = OFFICIAL_DOCUMENTS.get(number)
+    if spec is None:
+        return None
     acts = spec.model.objects.filter(deleted_at=None)
+    return acts.filter(_search(spec.model, query)) if query else acts
+
+
+@guichet_required
+def agent_search(request, number):
+    """Recherche de la barre du haut : pages, demandes, documents officiels et fichiers de l'agent."""
+    query = request.GET.get('q', '').strip()
+    shell = _shell(request, number, 'search')
+    pages, found_requests, acts, folders, files = [], [], [], [], []
     if query:
-        acts = acts.filter(_search(spec.model, query))
+        pages = [
+            item for section in shell['mairy_nav'] for item in section['items']
+            if query.lower() in str(item['label']).lower()
+        ]
+        found_requests = list(
+            _match_requests(_guichet_requests(request.guichet), query).order_by('-created_at')[:RESULTS_PER_GROUP]
+        )
+        for dossier in found_requests:
+            dossier.applicant = _applicant(dossier)
+        annotate_positions(found_requests, request.guichet.dossier_types)
+        if number in OFFICIAL_DOCUMENTS:
+            acts = list(official_acts(number, query)[:RESULTS_PER_GROUP])
+        # Dossiers et fichiers personnels : uniquement ceux de l'agent connecté.
+        folders = [
+            folder for folder in Folder.objects.filter(owner=request.user, trashed_at=None, name__icontains=query)
+            if folder.is_reachable()
+        ][:RESULTS_PER_GROUP]
+        files = [
+            item for item in StoredFile.objects.filter(owner=request.user, trashed_at=None, name__icontains=query)
+            .select_related('folder') if item.is_reachable()
+        ][:RESULTS_PER_GROUP]
+
+    context = {
+        **shell,
+        'title': _('Recherche'),
+        'search_query': query,
+        'pages': pages,
+        'requests': found_requests,
+        'acts': acts,
+        'found_folders': folders,
+        'found_files': files,
+        'has_results': bool(pages or found_requests or acts or folders or files),
+    }
+    return render(request, 'agents/search.html', context)
+
+
+@guichet_required
+def documents_home(request, number):
+    """« Documents officiels » : on y établit les documents ; ils sont ensuite rangés dans « Dossiers »."""
     context = {
         **_shell(request, number, 'documents'),
         'title': _('Documents officiels'),
+        'spec': _spec(number),
+    }
+    return render(request, 'agents/documents.html', context)
+
+
+@guichet_required
+def documents_list(request, number):
+    """Dossier « Actes de… » de la page « Dossiers » : tous les documents établis au guichet."""
+    spec = _spec(number)
+    query = request.GET.get('q', '').strip()
+    acts = official_acts(number, query)
+    context = {
+        **_shell(request, number, 'folders'),
+        'title': capfirst(spec.plural),
         'spec': spec,
         'page': Paginator(acts, 20).get_page(request.GET.get('page')),
         'query': query,
     }
-    return render(request, 'agents/documents.html', context)
+    return render(request, 'agents/folder_documents.html', context)
 
 
 @guichet_required
@@ -478,7 +569,7 @@ def document_create(request, number):
             act.created_by = request.user
             act.request = origin
             act.save()
-            messages.success(request, _('%(document)s établi et scellé. Vous pouvez télécharger le PDF.') % {'document': act.label})
+            messages.success(request, _('%(document)s établi, scellé et rangé dans « Dossiers ». Vous pouvez télécharger le PDF.') % {'document': act.label})
             return redirect('agents:document_detail', number, act.pk)
     else:
         initial = {'registrar_name': request.user.get_full_name()}
@@ -501,15 +592,15 @@ def document_create(request, number):
 def document_detail(request, number, pk):
     spec = _spec(number)
     act = get_object_or_404(spec.model, pk=pk, deleted_at=None)
-    qr = base64.b64encode(qr_png(act.verification_url)).decode('ascii')
+    qr = qr_png(act.verification_url, act)
     context = {
-        **_shell(request, number, 'documents'),
+        **_shell(request, number, 'folders'),
         'title': act.label,
         'spec': spec,
         'act': act,
         'content_sections': _document_rows(act, spec),
         'check': act.verify(),
-        'qr_data_uri': f'data:image/png;base64,{qr}',
+        'qr_data_uri': f'data:image/png;base64,{base64.b64encode(qr).decode("ascii")}' if qr else '',
         'recipient': _applicant(act.request) if act.request else '',
         'recipient_email': (act.request.identity or {}).get('email', '') if act.request else '',
         # Document établi sans demande : l'agent choisit la demande de l'usager à qui l'envoyer.
@@ -520,10 +611,24 @@ def document_detail(request, number, pk):
 
 
 @guichet_required
+def document_ticket(request, number, pk):
+    """Bon de retrait à imprimer pour l'usager (par exemple s'il n'a pas accès à son espace en ligne)."""
+    spec = _spec(number)
+    act = get_object_or_404(spec.model, pk=pk, deleted_at=None)
+    if act.retrieved_at is not None:
+        messages.error(request, _('Ce document a déjà été remis : son bon de retrait ne sert plus.'))
+        return redirect('agents:document_detail', number, act.pk)
+    response = HttpResponse(ticket_pdf(act), content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="{act.ticket_filename}"'
+    return response
+
+
+@guichet_required
 def document_pdf(request, number, pk):
     spec = _spec(number)
     act = get_object_or_404(spec.model, pk=pk, deleted_at=None)
-    response = HttpResponse(document_pdf_bytes(act), content_type='application/pdf')
+    # Rédigé en malgache par défaut ; « ?langue=fr » pour la version française.
+    response = HttpResponse(document_pdf_bytes(act, request.GET.get('langue', 'mg')), content_type='application/pdf')
     disposition = 'inline' if request.GET.get('apercu') else 'attachment'
     response['Content-Disposition'] = f'{disposition}; filename="{act.filename}"'
     return response
@@ -556,7 +661,7 @@ def document_delete(request, number, pk):
             return redirect('agents:document_detail', number, act.pk)
 
     context = {
-        **_shell(request, number, 'documents'),
+        **_shell(request, number, 'folders'),
         'title': _('Supprimer le document %(number)s') % {'number': act.act_number},
         'act': act,
         'reason': reason,
@@ -584,8 +689,9 @@ def _default_send_message(act):
     with translation.override('fr'):
         label = str(act.label)
     return (
-        f'Votre document « {label} » est disponible. '
-        'Vous pouvez le télécharger dès maintenant depuis vos notifications.'
+        f'Votre demande est traitée : le bon de retrait de votre document « {label} » est disponible '
+        "dans vos notifications. Présentez-le au guichet de la mairie, avec votre pièce d'identité, "
+        'pour retirer votre document officiel signé et cacheté.'
     )
 
 
@@ -639,10 +745,92 @@ def document_send(request, number, pk):
 
     messages.success(
         request,
-        _('%(document)s envoyé à %(person)s : il peut le télécharger depuis ses notifications.')
+        _('Bon de retrait du document %(document)s envoyé à %(person)s : il le télécharge depuis ses notifications.')
         % {'document': act.label, 'person': _applicant(dossier)},
     )
     return redirect('agents:document_detail', number, act.pk)
+
+
+# ---------------------------------------------------------------------------
+# Bon de retrait : scan au guichet, puis remise du document officiel
+# ---------------------------------------------------------------------------
+
+def _ticket_context(request, token):
+    """État d'un bon de retrait pour l'agent connecté : (contexte de la page, statut HTTP)."""
+    profile = agent_profile(request.user)
+    act = find_document(token)
+    spec = next((s for s in OFFICIAL_DOCUMENTS.values() if act is not None and isinstance(act, s.model)), None)
+    number = profile.guichet if profile else (spec.guichet if spec else 1)
+
+    if act is None or spec is None:
+        state = 'not_found'
+    else:
+        check = act.verify()
+        if check['status'] == 'REVOKED':
+            state = 'revoked'
+        elif not check['is_authentic']:
+            state = 'invalid'
+        elif act.retrieved_at is not None:
+            state = 'used'
+        elif not request.user.is_superuser and profile.guichet != spec.guichet:
+            state = 'other_guichet'
+        else:
+            state = 'ok'
+    context = {
+        **_shell(request, number, 'scan'),
+        'title': _('Bon de retrait'),
+        'act': act,
+        'state': state,
+        'act_guichet': GUICHETS[spec.guichet] if spec else None,
+        'applicant': _applicant(act.request) if act is not None and act.request else '',
+        'applicant_id': (act.request.identity or {}).get('national_id', '') if act is not None and act.request else '',
+    }
+    return context, 404 if state == 'not_found' else 200
+
+
+def _ticket_access_denied(request):
+    """Page réservée aux agents (et aux administrateurs) : réponse de refus, ou None si l'accès est permis."""
+    if request.user.is_superuser or agent_profile(request.user) is not None:
+        return None
+    return render(request, 'agents/forbidden.html', {'reason': 'no_role'}, status=403)
+
+
+@login_required
+def ticket_verify(request, token):
+    """Page ouverte par le QR code du bon de retrait : authenticité du bon, et s'il a déjà servi."""
+    denied = _ticket_access_denied(request)
+    if denied:
+        return denied
+    context, status = _ticket_context(request, token)
+    return render(request, 'agents/ticket_verify.html', context, status=status)
+
+
+@require_POST
+@login_required
+def remettre_document(request, token):
+    """Bon en règle : il est marqué comme utilisé et le document officiel (sans QR code) est généré."""
+    denied = _ticket_access_denied(request)
+    if denied:
+        return denied
+    with transaction.atomic():
+        act = find_document(token)
+        if act is not None:
+            # Verrou : deux agents qui scannent le même bon en même temps ne remettent pas deux documents.
+            act = type(act).objects.select_for_update().get(pk=act.pk)
+        context, _status = _ticket_context(request, token)
+        if context['state'] != 'ok':
+            messages.error(request, _("Ce bon de retrait ne permet pas de remettre le document."))
+            return redirect('verifier', token)
+        act.retrieved_at = timezone.now()
+        act.retrieved_by = request.user
+        act.save(update_fields=['retrieved_at', 'retrieved_by'])
+        DocumentAuditLog.objects.create(
+            document=None, action=DocumentAuditLog.Action.VERIFIED_SUCCESS, performed_by=request.user,
+            ip_address=get_client_ip(request), details=f'Bon de retrait utilisé : {act.label} remis au guichet',
+        )
+    response = HttpResponse(document_pdf_bytes(act), content_type='application/pdf')
+    response['Content-Disposition'] = f'inline; filename="{act.filename}"'
+    return response
 
 
 # ---------------------------------------------------------------------------
@@ -668,6 +856,7 @@ def guichet_notifications(request, number):
     context = {
         **_shell(request, number, 'notifications'),
         'title': _('Notifications'),
+        'request_stats': _request_stats(request, number, 'notifications'),
         'notifications': latest,
     }
     _mark_seen(request, number)  # consultées : la cloche repart de zéro

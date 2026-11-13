@@ -21,7 +21,7 @@ function DashboardLayout() {
   return (
     <DossiersProvider>
       <MailsProvider>
-        <div data-dash-theme={theme} className="dash-root full-height bg-fond flex flex-col">
+        <div data-dash-theme={theme} className="dash-root full-height bg-blason flex flex-col">
           <Topbar
             theme={theme}
             onThemeChange={setTheme}

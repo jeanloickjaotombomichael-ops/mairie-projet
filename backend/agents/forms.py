@@ -20,6 +20,17 @@ from .models import (
     ServiceCertificate,
 )
 
+class AgentProfileForm(forms.ModelForm):
+    """Nom affiché de l'agent. L'e-mail reste géré par l'administrateur : il sert à la connexion et au courrier."""
+
+    first_name = forms.CharField(label=_('Prénom'), max_length=150)
+    last_name = forms.CharField(label=_('Nom'), max_length=150)
+
+    class Meta:
+        model = get_user_model()
+        fields = ('first_name', 'last_name')
+
+
 # Statuts pour lesquels l'usager doit recevoir une explication.
 FINAL_STATUSES = {
     DossierRequest.Status.APPROVED,

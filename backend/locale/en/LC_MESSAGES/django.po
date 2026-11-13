@@ -3099,5 +3099,262 @@ msgstr ""
 msgid "Mon espace"
 msgstr "My space"
 
+msgid "Paramètres"
+msgstr "Settings"
+
+msgid "Gérez votre profil, votre mot de passe et vos préférences."
+msgstr "Manage your profile, your password and your preferences."
+
+msgid "Profil"
+msgstr "Profile"
+
+msgid "L'e-mail, l'identifiant et le guichet sont gérés par l'administrateur."
+msgstr "The e-mail, username and counter are managed by the administrator."
+
+msgid "Identifiant"
+msgstr "Username"
+
+msgid "Dernière connexion"
+msgstr "Last sign-in"
+
+msgid "Votre profil a été mis à jour."
+msgstr "Your profile has been updated."
+
+msgid "Langue d'affichage de l'espace agent."
+msgstr "Display language of the agent area."
+
+msgid "Apparence"
+msgstr "Appearance"
+
+msgid "Ce choix est enregistré sur cet appareil."
+msgstr "This choice is saved on this device."
+
+msgid "Automatique"
+msgstr "Automatic"
+
+msgid "Clair"
+msgstr "Light"
+
+msgid "Sombre"
+msgstr "Dark"
+
+msgid "Afficher une alerte à l'écran pour chaque nouvelle demande"
+msgstr "Show an on-screen alert for each new request"
+
+msgid "Session"
+msgstr "Session"
+
+msgid "Déconnectez-vous si vous utilisez un ordinateur partagé."
+msgstr "Sign out if you are using a shared computer."
+
+#, python-format
+msgid "%(document)s établi, scellé et rangé dans « Dossiers ». Vous pouvez télécharger le PDF."
+msgstr "%(document)s issued, sealed and filed in “Dossiers”. You can download the PDF."
+
+msgid "Partagé avec les agents du guichet"
+msgstr "Shared with the counter's agents"
+
+msgid "Établissez ici les documents du guichet. Une fois scellés, ils sont rangés automatiquement dans « Dossiers »."
+msgstr "Issue the counter's documents here. Once sealed, they are filed automatically in “Dossiers”."
+
+msgid "Voir les documents établis"
+msgstr "View issued documents"
+
+msgid "Rechercher dans mon espace…"
+msgstr "Search my area…"
+
+msgid "Recherche"
+msgstr "Search"
+
+msgid "Mes fichiers"
+msgstr "My files"
+
+msgid "Saisissez un mot dans la barre de recherche : nom, référence, n° d'acte, fichier…"
+msgstr "Type a word in the search bar: name, reference, act number, file…"
+
+msgid "Aucun résultat pour cette recherche."
+msgstr "No results for this search."
+
+msgid "Activer la caméra"
+msgstr "Turn on the camera"
+
+msgid "Arrêter la caméra"
+msgstr "Stop the camera"
+
+msgid "Aucun document correspondant"
+msgstr "No matching document"
+
+msgid "Ce document a bien été délivré par la Mairie, mais il a depuis été révoqué par l'administration et n'est plus valable pour un usage officiel."
+msgstr "This document was issued by the Town Hall but has since been revoked by the administration and is no longer valid for official use."
+
+msgid "Ce document a expiré"
+msgstr "This document has expired"
+
+msgid "Ce document a été révoqué"
+msgstr "This document has been revoked"
+
+msgid "Ce document n'a pas pu être authentifié. Son contenu a peut-être été modifié, ou il n'a pas été délivré par la Mairie."
+msgstr "This document could not be authenticated. Its content may have been altered, or it may not have been issued by the Town Hall."
+
+msgid "Cet identifiant ne figure pas dans le registre officiel. Le document est probablement falsifié."
+msgstr "This identifier does not appear in the official registry. The document is likely forged."
+
+msgid "Collez l'identifiant (UUID) ou le lien complet imprimé sur le document."
+msgstr "Paste the identifier (UUID) or the full link printed on the document."
+
+msgid "Date de délivrance"
+msgstr "Issue date"
+
+msgid "Document officiel vérifié"
+msgstr "Official document verified"
+
+msgid "Démarrage de la caméra…"
+msgstr "Starting the camera…"
+
+msgid "Identifiant (UUID)"
+msgstr "Identifier (UUID)"
+
+msgid "Identifiant invalide : il doit ressembler à xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx."
+msgstr "Invalid identifier: it must look like xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx."
+
+msgid "Impossible de démarrer la caméra sur cet appareil. Saisissez l'identifiant ci-dessous."
+msgstr "The camera could not be started on this device. Enter the identifier below."
+
+msgid "Impossible de joindre le serveur de vérification. Vérifiez votre connexion puis réessayez."
+msgstr "The verification server could not be reached. Check your connection and try again."
+
+msgid "L'accès à la caméra a été refusé. Autorisez-le dans votre navigateur, ou saisissez l'identifiant ci-dessous."
+msgstr "Camera access was denied. Allow it in your browser, or enter the identifier below."
+
+msgid "La caméra nécessite une connexion sécurisée (HTTPS) ou localhost."
+msgstr "The camera requires a secure connection (HTTPS) or localhost."
+
+msgid "La période de validité de ce document est terminée. Veuillez contacter la Mairie pour obtenir un document à jour."
+msgstr "This document's validity period has ended. Please contact the Town Hall to request an updated document."
+
+msgid "Ou saisissez l'identifiant"
+msgstr "Or enter the identifier"
+
+msgid "Pointez la caméra vers le QR code figurant sur le certificat ou le document officiel. La vérification démarre automatiquement."
+msgstr "Point the camera at the QR code on the official certificate or document. Verification starts automatically."
+
+msgid "QR code non reconnu : il ne contient pas d'identifiant de document."
+msgstr "QR code not recognised: it does not contain a document identifier."
+
+msgid "Scanner"
+msgstr "Scan"
+
+msgid "Scanner un document"
+msgstr "Scan a document"
+
+msgid "Service momentanément indisponible"
+msgstr "Service temporarily unavailable"
+
+msgid "Type de document"
+msgstr "Document type"
+
+msgid "Vérification en cours…"
+msgstr "Verification in progress…"
+
+msgid "Vérification échouée"
+msgstr "Verification failed"
+
+msgid "Vérifier"
+msgstr "Verify"
+
+msgid "Aucun document ne correspond à ce QR code. Le bon est probablement faux."
+msgstr "No document matches this QR code. The slip is probably fake."
+
+msgid "Autre guichet"
+msgstr "Other counter"
+
+msgid "Bon authentique — jamais utilisé"
+msgstr "Genuine slip — never used"
+
+msgid "Bon de retrait"
+msgstr "Collection slip"
+
+#, python-format
+msgid "Bon de retrait du document %(document)s envoyé à %(person)s : il le télécharge depuis ses notifications."
+msgstr "Collection slip for %(document)s sent to %(person)s: they download it from their notifications."
+
+msgid "Bon déjà utilisé"
+msgstr "Slip already used"
+
+msgid "Bon introuvable"
+msgstr "Slip not found"
+
+msgid "Bon non authentique"
+msgstr "Slip not genuine"
+
+msgid "Ce bon de retrait ne permet pas de remettre le document."
+msgstr "This collection slip cannot be used to hand over the document."
+
+#, python-format
+msgid "Ce bon se retire au %(guichet)s — %(label)s. Orientez l'usager vers ce guichet."
+msgstr "This slip is collected at %(guichet)s — %(label)s. Direct the citizen to that counter."
+
+msgid "Ce document a déjà été remis : son bon de retrait ne sert plus."
+msgstr "This document has already been handed over: its collection slip is no longer valid."
+
+msgid "Ce document a été révoqué ou supprimé : il ne peut pas être remis."
+msgstr "This document has been revoked or deleted: it cannot be handed over."
+
+msgid "Concerne"
+msgstr "Concerns"
+
+#, python-format
+msgid "Document remis au guichet le %(date)s"
+msgstr "Document handed over at the counter on %(date)s"
+
+msgid "La signature ne correspond pas : le document a peut-être été modifié. Ne remettez rien et prévenez l'administrateur."
+msgstr "The signature does not match: the document may have been altered. Do not hand anything over and inform the administrator."
+
+msgid "Le QR code du bon de retrait ouvre la page de vérification des agents :"
+msgstr "The collection slip's QR code opens the agents' verification page:"
+
+msgid "Le bon de retrait a servi : son QR code n'est plus affiché."
+msgstr "The collection slip has been used: its QR code is no longer shown."
+
+#, python-format
+msgid "Le document a été remis le %(date)s"
+msgstr "The document was handed over on %(date)s"
+
+msgid "N° de CIN"
+msgstr "National ID no."
+
+msgid "Pointez la caméra vers le QR code du bon de retrait présenté par l'usager. La page du bon s'ouvre automatiquement."
+msgstr "Point the camera at the QR code on the citizen's collection slip. The slip's page opens automatically."
+
+msgid "Remettre le document"
+msgstr "Hand over the document"
+
+msgid "Saisissez l'identifiant imprimé sous le QR code du bon."
+msgstr "Enter the identifier printed under the slip's QR code."
+
+msgid "Scanner un autre bon"
+msgstr "Scan another slip"
+
+msgid "Scanner un bon"
+msgstr "Scan a slip"
+
+msgid "Scanner un bon de retrait"
+msgstr "Scan a collection slip"
+
+msgid "Vérifiez la pièce d'identité de l'usager avant de remettre le document. Le bon sera alors marqué comme utilisé."
+msgstr "Check the citizen's ID before handing over the document. The slip will then be marked as used."
+
+msgid "remis au guichet le"
+msgstr "handed over at the counter on"
+
+msgid "remis par"
+msgstr "handed over by"
+
+msgid "Version française"
+msgstr "French version"
+
+msgid "Le document est rédigé en malgache par défaut."
+msgstr "The document is written in Malagasy by default."
+
 #~ msgid "Messages de contact"
 #~ msgstr "Contact messages"

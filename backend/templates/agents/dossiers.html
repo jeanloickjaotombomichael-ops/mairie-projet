@@ -53,6 +53,36 @@
           <tr><th>{% translate "Nom" %}</th><th>{% translate "Taille" %}</th><th>{% translate "Date" %}</th><th><span class="agent-sr">{% translate "Actions" %}</span></th></tr>
         </thead>
         <tbody>
+          {% if documents_folder %}
+          <tr>
+            <td>
+              <a class="files-name" href="{{ documents_folder.url }}">
+                <svg class="mairy-ico files-ico is-folder"><use href="#mi-folder"/></svg><strong>{{ documents_folder.name }}</strong>
+              </a>
+              <span class="mairy-muted mairy-ref">{% translate "Partagé avec les agents du guichet" %}</span>
+            </td>
+            <td class="mairy-muted">{% blocktranslate count counter=documents_folder.count %}{{ counter }} élément{% plural %}{{ counter }} éléments{% endblocktranslate %}</td>
+            <td class="mairy-muted">—</td>
+            <td></td>
+          </tr>
+          {% endif %}
+          {% for act in found_acts %}
+          <tr>
+            <td>
+              <a class="files-name" href="{% url 'agents:document_detail' number act.pk %}">
+                <span class="files-ext">PDF</span>{{ act.act_number }} — {{ act.holder_name }}
+              </a>
+            </td>
+            <td class="mairy-muted">—</td>
+            <td class="mairy-muted">{{ act.created_at|date:"d M Y" }}</td>
+            <td class="agent-cell-action">
+              <div class="agent-row-actions">
+                <a class="mairy-btn" href="{% url 'agents:document_pdf' number act.pk %}">PDF</a>
+                <a class="mairy-btn" href="{% url 'agents:document_detail' number act.pk %}">{% translate "Ouvrir" %}</a>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
           {% for folder in subfolders %}
           <tr>
             <td>
@@ -99,7 +129,7 @@
             </td>
           </tr>
           {% endfor %}
-          {% if not subfolders and not files %}
+          {% if not subfolders and not files and not documents_folder and not found_acts %}
           <tr><td colspan="4" class="files-empty">
             {% if query %}{% translate "Aucun dossier ni fichier ne correspond à cette recherche." %}
             {% else %}

@@ -6,59 +6,13 @@
   <div class="agent-head">
     <div>
       <h1>{% translate "Documents officiels" %}</h1>
-      <p class="mairy-muted">{% blocktranslate with plural=spec.plural|capfirst guichet=guichet.title %}{{ plural }} établis au {{ guichet }} — chacun est scellé (SHA-256) et porte un QR code unique.{% endblocktranslate %}</p>
+      <p class="mairy-muted">{% translate "Établissez ici les documents du guichet. Une fois scellés, ils sont rangés automatiquement dans « Dossiers »." %}</p>
     </div>
     <a class="agent-btn" href="{% url 'agents:document_create' number %}">+ {{ spec.new_label }}</a>
   </div>
 
   <section class="mairy-card">
-    <div class="agent-toolbar">
-      <span class="mairy-muted">{% blocktranslate count counter=page.paginator.count %}{{ counter }} document{% plural %}{{ counter }} documents{% endblocktranslate %}</span>
-      <form method="get" class="agent-search" role="search">
-        <label class="agent-sr" for="q">{% translate "Rechercher" %}</label>
-        <input id="q" type="search" name="q" value="{{ query }}" placeholder="{% translate "N° d'acte, nom, objet…" %}">
-        <button type="submit" class="agent-btn">{% translate "Rechercher" %}</button>
-      </form>
-    </div>
-
-    <div class="mairy-table-wrap">
-      <table class="mairy-table">
-        <thead>
-          <tr><th>{% translate "N° d'acte" %}</th><th>{{ spec.holder_header }}</th><th>{{ spec.date_header }}</th><th>{% translate "Établi le" %}</th><th>{% translate "Statut" %}</th><th><span class="agent-sr">{% translate "Actions" %}</span></th></tr>
-        </thead>
-        <tbody>
-          {% for act in page.object_list %}
-          <tr>
-            <td><a href="{% url 'agents:document_detail' number act.pk %}"><strong>{{ act.act_number }}</strong></a></td>
-            <td>{{ act.holder_name }}</td>
-            <td>{{ act.main_date|date:"d M Y" }}</td>
-            <td>{{ act.created_at|date:"d M Y" }}</td>
-            <td>
-              <span class="mairy-status {% if act.status == 'ACTIVE' %}s-approved{% else %}s-rejected{% endif %}">{{ act.get_status_display }}</span>
-              {% if act.sent_at %}<span class="mairy-status s-pending" title="Envoyé à l'usager le {{ act.sent_at|date:"DATETIME_FORMAT" }}">{% translate "Envoyé" %}</span>{% endif %}
-            </td>
-            <td class="agent-cell-action">
-              <div class="agent-row-actions">
-                {% include "agents/_document_delete.html" with compact=True %}
-                <a class="mairy-btn" href="{% url 'agents:document_pdf' number act.pk %}">PDF</a>
-                <a class="mairy-btn" href="{% url 'agents:document_detail' number act.pk %}">{% translate "Ouvrir" %}</a>
-              </div>
-            </td>
-          </tr>
-          {% empty %}
-          <tr><td colspan="6" class="mairy-muted">{% blocktranslate with label=spec.new_label %}Aucun document pour le moment. Cliquez sur « {{ label }} » pour en établir un.{% endblocktranslate %}</td></tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-
-    {% if page.paginator.num_pages > 1 %}
-    <nav class="agent-pagination" aria-label="{% translate "Pages" %}">
-      {% if page.has_previous %}<a href="?{% if query %}q={{ query|urlencode }}&amp;{% endif %}page={{ page.previous_page_number }}">&larr; {% translate "Précédente" %}</a>{% endif %}
-      <span>{% blocktranslate with number=page.number total=page.paginator.num_pages %}Page {{ number }} sur {{ total }}{% endblocktranslate %}</span>
-      {% if page.has_next %}<a href="?{% if query %}q={{ query|urlencode }}&amp;{% endif %}page={{ page.next_page_number }}">{% translate "Suivante" %} &rarr;</a>{% endif %}
-    </nav>
-    {% endif %}
+    <a class="mairy-btn" href="{% url 'agents:folder_documents' number %}">{% translate "Voir les documents établis" %}</a>
   </section>
 </div>
 {% endblock %}

@@ -18,9 +18,10 @@ export type FieldKind =
   | 'choice'
   | 'email'
   | 'phone'
+  | 'cin'
 
 /** Codes d'erreur ; ils correspondent aux clés `dash.form.errors.*`. */
-export type FieldErrorCode = 'required' | 'invalid' | 'too_long' | 'email' | 'phone'
+export type FieldErrorCode = 'required' | 'invalid' | 'too_long' | 'email' | 'phone' | 'cin'
 
 export interface FieldDef {
   name: string
@@ -123,9 +124,10 @@ const spouse = (prefix: 'husband' | 'wife'): FieldDef[] =>
 export const IDENTITY_FIELDS: readonly FieldDef[] = [
   text('last_name', true, 100),
   text('first_name', true, 100),
-  { name: 'email', kind: 'email', required: true, maxLength: 254 },
-  { name: 'phone', kind: 'phone', required: true, maxLength: 30 },
-  text('national_id', false, 30),
+  // E-mail et téléphone facultatifs : beaucoup d'usagers (notamment en zone rurale) n'en ont pas.
+  optional({ name: 'email', kind: 'email', required: false, maxLength: 254 }),
+  optional({ name: 'phone', kind: 'phone', required: false, maxLength: 30 }),
+  { name: 'national_id', kind: 'cin', required: false, maxLength: 30 },
   text('address', false, 200),
 ]
 
@@ -148,7 +150,7 @@ const DETAIL_FIELDS: Record<DossierType, readonly FieldDef[]> = {
     ]),
     ...parent('father'),
     ...parent('mother'),
-    ...inSection('request', [text('declarant_relationship', true, 150), copies()]),
+    ...inSection('request', [optional(text('declarant_relationship', false, 150)), copies()]),
   ],
   mariage: [
     ...inSection('celebration', [
@@ -298,6 +300,42 @@ export function detailFields(type: DossierType): readonly FieldDef[] {
   return [...DETAIL_FIELDS[type], COMMENT_FIELD]
 }
 
+/*
+ * Découpage des détails en plusieurs étapes (rubriques regroupées) pour les actes les plus longs :
+ * avec « Vos informations » et « Quartier », le formulaire compte alors cinq étapes.
+ */
+const DETAIL_STEPS: Partial<Record<DossierType, readonly { key: string; sections: readonly string[] }[]>> = {
+  naissance: [
+    { key: 'child', sections: ['child'] },
+    { key: 'parents', sections: ['father', 'mother'] },
+    { key: 'request', sections: ['request'] },
+  ],
+  mariage: [
+    { key: 'celebration', sections: ['celebration'] },
+    { key: 'spouses', sections: ['husband', 'wife'] },
+    { key: 'witnesses', sections: ['witnesses', 'request'] },
+  ],
+  deces: [
+    { key: 'deceased', sections: ['deceased', 'family'] },
+    { key: 'death', sections: ['death'] },
+    { key: 'declarant', sections: ['declarant'] },
+  ],
+}
+
+/** Étapes de la partie « Détails » (une seule, `details`, pour les dossiers non découpés). */
+export function detailSteps(type: DossierType): { key: string; fields: FieldDef[] }[] {
+  const fields = detailFields(type)
+  const groups = DETAIL_STEPS[type]
+  if (!groups) return [{ key: 'details', fields: [...fields] }]
+  const steps = groups.map((group) => ({
+    key: group.key,
+    fields: fields.filter((field) => field.section !== undefined && group.sections.includes(field.section)),
+  }))
+  // Champs sans rubrique (« Précisions ») : à la dernière étape des détails.
+  steps[steps.length - 1].fields.push(...fields.filter((field) => field.section === undefined))
+  return steps
+}
+
 /** Valeurs initiales d'une liste de champs (vide, sauf valeur par défaut). */
 export function defaultsFor(fields: readonly FieldDef[]): Record<string, string> {
   const values: Record<string, string> = {}
@@ -309,6 +347,8 @@ export function defaultsFor(fields: readonly FieldDef[]): Record<string, string>
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const PHONE_PATTERN = /^[0-9+()\-.\s]{6,30}$/
+/** N° de CIN malgache : 12 chiffres, espaces de groupement acceptés (« 101 234 567 890 »). */
+const CIN_PATTERN = /^\d{12}$/
 const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/
 const TIME_PATTERN = /^([01]\d|2[0-3]):[0-5]\d$/
 const INTEGER_PATTERN = /^\d{1,4}$/
@@ -331,6 +371,8 @@ export function validateField(field: FieldDef, raw: string): FieldErrorCode | nu
       return EMAIL_PATTERN.test(value) ? null : 'email'
     case 'phone':
       return PHONE_PATTERN.test(value) ? null : 'phone'
+    case 'cin':
+      return CIN_PATTERN.test(value.replace(/\s/g, '')) ? null : 'cin'
     case 'date':
       return isRealDate(value) ? null : 'invalid'
     case 'time':

@@ -1,16 +1,15 @@
 import { useId, useMemo, useRef, useState, type FormEvent, type KeyboardEvent } from 'react'
-import { Link, useNavigate } from 'react-router'
+import { useNavigate } from 'react-router'
 import { useTranslation } from 'react-i18next'
-import { Search } from 'lucide-react'
-import { ScanIcon } from '@/components/icons'
+import { FileText, Search } from 'lucide-react'
 import { useDismiss } from '@/hooks/useDismiss'
 import { buildSiteEntries, searchSiteEntries, type SiteSearchEntry } from '@/lib/siteSearch'
 import { cn } from '@/lib/utils'
 
 /**
  * Barre de recherche de l'accueil : cherche uniquement dans les informations de
- * la plateforme (services, pages). La loupe lance la recherche, l'icône de
- * scanner ouvre directement la page de scan.
+ * la plateforme (services, pages). La loupe lance la recherche ; l'icône de
+ * document est décorative (non cliquable).
  */
 function SiteSearchBar() {
   const { t } = useTranslation()
@@ -94,14 +93,12 @@ function SiteSearchBar() {
           className="min-w-0 flex-1 bg-transparent px-1 text-sm text-white placeholder:text-white/50 focus:outline-none"
         />
 
-        <Link
-          to="/scanner"
-          aria-label={t('search.scan')}
-          title={t('search.scan')}
-          className="inline-flex size-9 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground transition-colors hover:bg-primary/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+        <span
+          aria-hidden="true"
+          className="inline-flex size-9 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground"
         >
-          <ScanIcon className="size-[18px]" />
-        </Link>
+          <FileText className="size-[18px]" />
+        </span>
       </div>
 
       {showList && (

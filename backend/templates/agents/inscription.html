@@ -8,27 +8,14 @@
   <title>{% if form.errors %}{% translate "Erreur :" %} {% endif %}{% translate "Demande d'accès agent | Mairie de Mahajanga" %}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&display=swap">
-  <link rel="stylesheet" href="{% static 'mairy_admin/login.css' %}">
+  <link rel="stylesheet" href="{% static 'mairy_admin/login.css' %}?v=2">
+  <link rel="stylesheet" href="{% static 'mairy_admin/blason.css' %}?v=1">
   <link rel="stylesheet" href="{% static 'mairy_admin/lang.css' %}?v=3">
   <link rel="stylesheet" href="{% static 'mairy_admin/responsive.css' %}?v=1">
 </head>
-<body>
+<body class="bg-blason">
   <div class="lang-corner">{% include "includes/language_switcher.html" with switcher_id="corner" %}</div>
   {# Même fond animé que la page de connexion #}
-  <div class="bg" aria-hidden="true">
-    <span class="blob blob-1"></span>
-    <span class="blob blob-2"></span>
-    <span class="blob blob-3"></span>
-    <svg class="wave wave-1" viewBox="0 0 2880 320" preserveAspectRatio="none">
-      <path d="M0 160 C240 80 480 80 720 160 S1200 240 1440 160 S1920 80 2160 160 S2640 240 2880 160 V320 H0 Z"/>
-    </svg>
-    <svg class="wave wave-2" viewBox="0 0 2880 320" preserveAspectRatio="none">
-      <path d="M0 200 C240 130 480 130 720 200 S1200 270 1440 200 S1920 130 2160 200 S2640 270 2880 200 V320 H0 Z"/>
-    </svg>
-    <svg class="wave wave-3" viewBox="0 0 2880 320" preserveAspectRatio="none">
-      <path d="M0 240 C240 190 480 190 720 240 S1200 290 1440 240 S1920 190 2160 240 S2640 290 2880 240 V320 H0 Z"/>
-    </svg>
-  </div>
 
   <main class="card">
     <section class="card-form">

@@ -26,9 +26,12 @@ NUMBER = 'number'
 SELECT = 'select'
 EMAIL = 'email'
 PHONE = 'phone'
+CIN = 'cin'
 TIME = 'time'
 
 PHONE_PATTERN = re.compile(r'^[0-9+()\-.\s]{6,30}$')
+# N° de CIN malgache : 12 chiffres, espaces de groupement acceptés (« 101 234 567 890 »).
+CIN_PATTERN = re.compile(r'^\d{12}$')
 DATE_PATTERN = re.compile(r'^\d{4}-\d{2}-\d{2}$')
 TIME_PATTERN = re.compile(r'^([01]\d|2[0-3]):[0-5]\d$')
 INTEGER_PATTERN = re.compile(r'^\d{1,4}$')
@@ -90,9 +93,10 @@ def _number(name):
 IDENTITY_FIELDS = (
     _text('last_name', True, 100),
     _text('first_name', True, 100),
-    FieldSpec('email', EMAIL, True, max_length=254),
-    FieldSpec('phone', PHONE, True, max_length=30),
-    _text('national_id', False, 30),
+    # E-mail et téléphone facultatifs : beaucoup d'usagers (notamment en zone rurale) n'en ont pas.
+    FieldSpec('email', EMAIL, False, max_length=254),
+    FieldSpec('phone', PHONE, False, max_length=30),
+    FieldSpec('national_id', CIN, False, max_length=30),
     _text('address', False, 200),
 )
 
@@ -159,7 +163,7 @@ DETAIL_FIELDS = {
         _text('birth_place', True),
         *_person('father', required=False),
         *_person('mother', required=True),
-        _text('declarant_relationship', True, 150),
+        _text('declarant_relationship', False, 150),
         _copies(),
         *QUARTIER_FIELDS,
     ),
@@ -303,6 +307,9 @@ def clean_value(spec, raw):
             return None, INVALID
     elif spec.kind == PHONE:
         if not PHONE_PATTERN.match(value):
+            return None, INVALID
+    elif spec.kind == CIN:
+        if not CIN_PATTERN.match(re.sub(r'\s', '', value)):
             return None, INVALID
     elif spec.kind == DATE:
         if not DATE_PATTERN.match(value):

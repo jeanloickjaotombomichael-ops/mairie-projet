@@ -3126,5 +3126,262 @@ msgstr ""
 msgid "Mon espace"
 msgstr "Ny sehatro"
 
+msgid "Paramètres"
+msgstr "Fandrindrana"
+
+msgid "Gérez votre profil, votre mot de passe et vos préférences."
+msgstr "Tantano ny mombamomba anao, ny tenimiafinao ary ny safidinao."
+
+msgid "Profil"
+msgstr "Mombamomba"
+
+msgid "L'e-mail, l'identifiant et le guichet sont gérés par l'administrateur."
+msgstr "Ny mpitantana no mikarakara ny mailaka, ny anarana fidirana ary ny varavarankely."
+
+msgid "Identifiant"
+msgstr "Anarana fidirana"
+
+msgid "Dernière connexion"
+msgstr "Fidirana farany"
+
+msgid "Votre profil a été mis à jour."
+msgstr "Voavao ny mombamomba anao."
+
+msgid "Langue d'affichage de l'espace agent."
+msgstr "Fiteny ampiasaina amin'ny sehatry ny mpiasa."
+
+msgid "Apparence"
+msgstr "Endrika"
+
+msgid "Ce choix est enregistré sur cet appareil."
+msgstr "Voatahiry amin'ity fitaovana ity io safidy io."
+
+msgid "Automatique"
+msgstr "Mandeha ho azy"
+
+msgid "Clair"
+msgstr "Mazava"
+
+msgid "Sombre"
+msgstr "Maizina"
+
+msgid "Afficher une alerte à l'écran pour chaque nouvelle demande"
+msgstr "Asehoy eo amin'ny efijery ny fampandrenesana isaky ny misy fangatahana vaovao"
+
+msgid "Session"
+msgstr "Fidirana"
+
+msgid "Déconnectez-vous si vous utilisez un ordinateur partagé."
+msgstr "Mivoaha raha mampiasa solosaina iombonana ianao."
+
+#, python-format
+msgid "%(document)s établi, scellé et rangé dans « Dossiers ». Vous pouvez télécharger le PDF."
+msgstr "Vita, voaisy tombo-kase ary voatahiry ao amin'ny « Dossiers » ny %(document)s. Azonao alaina ny PDF."
+
+msgid "Partagé avec les agents du guichet"
+msgstr "Iombonana amin'ny mpiasan'ny varavarankely"
+
+msgid "Établissez ici les documents du guichet. Une fois scellés, ils sont rangés automatiquement dans « Dossiers »."
+msgstr "Eto no anaovana ny taratasin'ny varavarankely. Rehefa voaisy tombo-kase dia voatahiry ho azy ao amin'ny « Dossiers » izy ireo."
+
+msgid "Voir les documents établis"
+msgstr "Hijery ny taratasy vita"
+
+msgid "Rechercher dans mon espace…"
+msgstr "Hikaroka ao amin'ny sehatro…"
+
+msgid "Recherche"
+msgstr "Fikarohana"
+
+msgid "Mes fichiers"
+msgstr "Ny rakitro"
+
+msgid "Saisissez un mot dans la barre de recherche : nom, référence, n° d'acte, fichier…"
+msgstr "Asio teny ao amin'ny fikarohana: anarana, laharana, laharan'ny taratasy, rakitra…"
+
+msgid "Aucun résultat pour cette recherche."
+msgstr "Tsy nisy valiny ho an'ity fikarohana ity."
+
+msgid "Activer la caméra"
+msgstr "Alefaso ny fakantsary"
+
+msgid "Arrêter la caméra"
+msgstr "Atsaharo ny fakantsary"
+
+msgid "Aucun document correspondant"
+msgstr "Tsy misy taratasy mifanaraka"
+
+msgid "Ce document a bien été délivré par la Mairie, mais il a depuis été révoqué par l'administration et n'est plus valable pour un usage officiel."
+msgstr "Navoakan'ny Kaominina ity taratasy ity fa nofoanan'ny fitantanana izao, ka tsy azo ampiasaina intsony ho an'ny raharaha ofisialy."
+
+msgid "Ce document a expiré"
+msgstr "Lany daty ity taratasy ity"
+
+msgid "Ce document a été révoqué"
+msgstr "Nofoanana ity taratasy ity"
+
+msgid "Ce document n'a pas pu être authentifié. Son contenu a peut-être été modifié, ou il n'a pas été délivré par la Mairie."
+msgstr "Tsy nahomby ny fanamarinana ity taratasy ity. Mety novana ny votoatiny, na tsy navoakan'ny Kaominina izy."
+
+msgid "Cet identifiant ne figure pas dans le registre officiel. Le document est probablement falsifié."
+msgstr "Tsy ao amin'ny rejistra ofisialy io famantarana io. Azo inoana fa sandoka ilay taratasy."
+
+msgid "Collez l'identifiant (UUID) ou le lien complet imprimé sur le document."
+msgstr "Apetraho ny famantarana (UUID) na ny rohy feno voasoratra amin'ny taratasy."
+
+msgid "Date de délivrance"
+msgstr "Daty nanomezana"
+
+msgid "Document officiel vérifié"
+msgstr "Voamarina ny taratasy ofisialy"
+
+msgid "Démarrage de la caméra…"
+msgstr "Mandefa ny fakantsary…"
+
+msgid "Identifiant (UUID)"
+msgstr "Famantarana (UUID)"
+
+msgid "Identifiant invalide : il doit ressembler à xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx."
+msgstr "Famantarana diso: tokony ho toy ny xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx izy."
+
+msgid "Impossible de démarrer la caméra sur cet appareil. Saisissez l'identifiant ci-dessous."
+msgstr "Tsy afaka manomboka ny fakantsary amin'ity fitaovana ity. Ampidiro etsy ambany ny famantarana."
+
+msgid "Impossible de joindre le serveur de vérification. Vérifiez votre connexion puis réessayez."
+msgstr "Tsy azo tratra ny mpizara fanamarinana. Hamarino ny fifandraisanao dia andramo indray."
+
+msgid "L'accès à la caméra a été refusé. Autorisez-le dans votre navigateur, ou saisissez l'identifiant ci-dessous."
+msgstr "Nolavina ny fahazoana mampiasa ny fakantsary. Avelao amin'ny navigatera, na ampidiro etsy ambany ny famantarana."
+
+msgid "La caméra nécessite une connexion sécurisée (HTTPS) ou localhost."
+msgstr "Mila fifandraisana azo antoka (HTTPS) na localhost ny fakantsary."
+
+msgid "La période de validité de ce document est terminée. Veuillez contacter la Mairie pour obtenir un document à jour."
+msgstr "Tapitra ny fotoana nanan-kery ity taratasy ity. Mifandraisa amin'ny Kaominina mba hahazoana taratasy vaovao."
+
+msgid "Ou saisissez l'identifiant"
+msgstr "Na ampidiro ny famantarana"
+
+msgid "Pointez la caméra vers le QR code figurant sur le certificat ou le document officiel. La vérification démarre automatiquement."
+msgstr "Asehoy ny fakantsary amin'ny kaody QR eo amin'ny taratasy ofisialy. Hanomboka ho azy ny fanamarinana."
+
+msgid "QR code non reconnu : il ne contient pas d'identifiant de document."
+msgstr "Tsy fantatra ny kaody QR: tsy misy famantarana taratasy ao anatiny."
+
+msgid "Scanner"
+msgstr "Hijery QR"
+
+msgid "Scanner un document"
+msgstr "Sivano ny taratasy"
+
+msgid "Service momentanément indisponible"
+msgstr "Tsy misy ny serivisy amin'izao fotoana izao"
+
+msgid "Type de document"
+msgstr "Karazana taratasy"
+
+msgid "Vérification en cours…"
+msgstr "Mandritra ny fanamarinana…"
+
+msgid "Vérification échouée"
+msgstr "Tsy lasa ny fanamarinana"
+
+msgid "Vérifier"
+msgstr "Hamarino"
+
+msgid "Aucun document ne correspond à ce QR code. Le bon est probablement faux."
+msgstr "Tsy misy taratasy mifanaraka amin'ity QR code ity. Azo inoana fa sandoka ilay bon."
+
+msgid "Autre guichet"
+msgstr "Varavarankely hafa"
+
+msgid "Bon authentique — jamais utilisé"
+msgstr "Bon marina — mbola tsy nampiasaina"
+
+msgid "Bon de retrait"
+msgstr "Bon de retrait"
+
+#, python-format
+msgid "Bon de retrait du document %(document)s envoyé à %(person)s : il le télécharge depuis ses notifications."
+msgstr "Nalefa tany amin'i %(person)s ny bon de retrait an'ny %(document)s : alainy ao amin'ny fampahafantarana azy izany."
+
+msgid "Bon déjà utilisé"
+msgstr "Bon efa nampiasaina"
+
+msgid "Bon introuvable"
+msgstr "Tsy hita ny bon"
+
+msgid "Bon non authentique"
+msgstr "Bon tsy marina"
+
+msgid "Ce bon de retrait ne permet pas de remettre le document."
+msgstr "Tsy azo atao ny manome ny taratasy amin'ity bon de retrait ity."
+
+#, python-format
+msgid "Ce bon se retire au %(guichet)s — %(label)s. Orientez l'usager vers ce guichet."
+msgstr "Ao amin'ny %(guichet)s — %(label)s no alaina ity bon ity. Tondroy any amin'io varavarankely io ny olom-pirenena."
+
+msgid "Ce document a déjà été remis : son bon de retrait ne sert plus."
+msgstr "Efa natolotra ity taratasy ity : tsy manan-kery intsony ny bon de retrait-ny."
+
+msgid "Ce document a été révoqué ou supprimé : il ne peut pas être remis."
+msgstr "Nofoanana na nofafana ity taratasy ity : tsy azo atolotra."
+
+msgid "Concerne"
+msgstr "Mikasika"
+
+#, python-format
+msgid "Document remis au guichet le %(date)s"
+msgstr "Natolotra teo amin'ny varavarankely ny taratasy ny %(date)s"
+
+msgid "La signature ne correspond pas : le document a peut-être été modifié. Ne remettez rien et prévenez l'administrateur."
+msgstr "Tsy mifanaraka ny sonia : mety ho novana ny taratasy. Aza manome na inona na inona ary ampahafantaro ny mpitantana."
+
+msgid "Le QR code du bon de retrait ouvre la page de vérification des agents :"
+msgstr "Ny QR code amin'ny bon de retrait dia manokatra ny pejy fanamarinana ho an'ny mpiasa :"
+
+msgid "Le bon de retrait a servi : son QR code n'est plus affiché."
+msgstr "Efa nampiasaina ny bon de retrait : tsy aseho intsony ny QR code-ny."
+
+#, python-format
+msgid "Le document a été remis le %(date)s"
+msgstr "Natolotra ny %(date)s ny taratasy"
+
+msgid "N° de CIN"
+msgstr "Laharan'ny CIN"
+
+msgid "Pointez la caméra vers le QR code du bon de retrait présenté par l'usager. La page du bon s'ouvre automatiquement."
+msgstr "Atodiho amin'ny QR code amin'ny bon de retrait entin'ny olom-pirenena ny fakantsary. Misokatra ho azy ny pejin'ny bon."
+
+msgid "Remettre le document"
+msgstr "Atolory ny taratasy"
+
+msgid "Saisissez l'identifiant imprimé sous le QR code du bon."
+msgstr "Ampidiro ny famantarana voapirinty eo ambanin'ny QR code amin'ny bon."
+
+msgid "Scanner un autre bon"
+msgstr "Hijery bon hafa"
+
+msgid "Scanner un bon"
+msgstr "Hijery bon"
+
+msgid "Scanner un bon de retrait"
+msgstr "Hijery bon de retrait"
+
+msgid "Vérifiez la pièce d'identité de l'usager avant de remettre le document. Le bon sera alors marqué comme utilisé."
+msgstr "Hamarino ny kara-panondron'ny olom-pirenena alohan'ny hanomezana ny taratasy. Hosoratana ho efa nampiasaina avy eo ilay bon."
+
+msgid "remis au guichet le"
+msgstr "natolotra teo amin'ny varavarankely ny"
+
+msgid "remis par"
+msgstr "natolotr'i"
+
+msgid "Version française"
+msgstr "Dika frantsay"
+
+msgid "Le document est rédigé en malgache par défaut."
+msgstr "Amin'ny teny malagasy no anoratana ny taratasy raha tsy misy safidy hafa."
+
 #~ msgid "Messages de contact"
 #~ msgstr "Hafatra fifandraisana"

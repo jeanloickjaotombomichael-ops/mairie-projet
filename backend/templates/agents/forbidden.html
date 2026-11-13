@@ -8,11 +8,12 @@
   <title>{% translate "Accès refusé | Mairie de Mahajanga" %}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&display=swap">
-  <link rel="stylesheet" href="{% static 'mairy_admin/login.css' %}">
+  <link rel="stylesheet" href="{% static 'mairy_admin/login.css' %}?v=2">
+  <link rel="stylesheet" href="{% static 'mairy_admin/blason.css' %}?v=1">
   <link rel="stylesheet" href="{% static 'mairy_admin/lang.css' %}?v=3">
   <link rel="stylesheet" href="{% static 'mairy_admin/responsive.css' %}?v=1">
 </head>
-<body>
+<body class="bg-blason">
   <div class="lang-corner">{% include "includes/language_switcher.html" with switcher_id="corner" %}</div>
   <main class="card card-single">
     <section class="card-form">

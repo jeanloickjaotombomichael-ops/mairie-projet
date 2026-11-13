@@ -1,0 +1,107 @@
+{% extends "agents/base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="mairy-page">
+  <div class="agent-head">
+    <div>
+      <h1>{% translate "Paramètres" %}</h1>
+      <p class="mairy-muted">{% translate "Gérez votre profil, votre mot de passe et vos préférences." %}</p>
+    </div>
+  </div>
+
+  <div class="agent-settings">
+    <section class="mairy-card" id="profil">
+      <h2>{% translate "Profil" %}</h2>
+      <p class="mairy-muted agent-settings-intro">{% translate "L'e-mail, l'identifiant et le guichet sont gérés par l'administrateur." %}</p>
+      <dl class="agent-settings-info">
+        <dt>{% translate "Identifiant" %}</dt><dd>{{ user.get_username }}</dd>
+        <dt>{% translate "E-mail" %}</dt><dd>{{ user.email|default:"—" }}</dd>
+        <dt>{% translate "Guichet" %}</dt><dd>{{ guichet.title }} — {{ guichet.label }}</dd>
+        <dt>{% translate "Dernière connexion" %}</dt><dd>{{ user.last_login|date:"DATETIME_FORMAT"|default:"—" }}</dd>
+      </dl>
+      <form method="post" class="agent-form" novalidate>
+        {% csrf_token %}
+        <input type="hidden" name="section" value="profile">
+        {% include "agents/_settings_fields.html" with form=profile_form %}
+        <div class="agent-actions">
+          <button type="submit" class="agent-btn">{% translate "Enregistrer" %}</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="mairy-card" id="mot-de-passe">
+      <h2>{% translate "Mot de passe" %}</h2>
+      <p class="mairy-muted agent-settings-intro">{% translate "Remplacez le mot de passe provisoire reçu de l'administrateur par le vôtre." %}</p>
+      <form method="post" class="agent-form" novalidate>
+        {% csrf_token %}
+        <input type="hidden" name="section" value="password">
+        {% include "agents/_settings_fields.html" with form=password_form %}
+        <div class="agent-actions">
+          <button type="submit" class="agent-btn">{% translate "Enregistrer" %}</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="mairy-card" id="langue">
+      <h2>{% translate "Langue" %}</h2>
+      <p class="mairy-muted agent-settings-intro">{% translate "Langue d'affichage de l'espace agent." %}</p>
+      {% include "includes/language_switcher.html" with switcher_id="settings" %}
+    </section>
+
+    <section class="mairy-card" id="apparence">
+      <h2>{% translate "Apparence" %}</h2>
+      <p class="mairy-muted agent-settings-intro">{% translate "Ce choix est enregistré sur cet appareil." %}</p>
+      <div class="agent-settings-choices" role="radiogroup" aria-label="{% translate "Apparence" %}">
+        <label><input type="radio" name="theme" value="auto">{% translate "Automatique" %}</label>
+        <label><input type="radio" name="theme" value="light">{% translate "Clair" %}</label>
+        <label><input type="radio" name="theme" value="dark">{% translate "Sombre" %}</label>
+      </div>
+    </section>
+
+    <section class="mairy-card" id="notifications">
+      <h2>{% translate "Notifications" %}</h2>
+      <p class="mairy-muted agent-settings-intro">{% translate "Ce choix est enregistré sur cet appareil." %}</p>
+      <div class="agent-settings-choices">
+        <label><input type="checkbox" id="agent-alerts">{% translate "Afficher une alerte à l'écran pour chaque nouvelle demande" %}</label>
+      </div>
+    </section>
+
+    <section class="mairy-card" id="session">
+      <h2>{% translate "Session" %}</h2>
+      <p class="mairy-muted agent-settings-intro">{% translate "Déconnectez-vous si vous utilisez un ordinateur partagé." %}</p>
+      <form method="post" action="{% url 'deconnexion' %}">
+        {% csrf_token %}
+        <button type="submit" class="agent-btn">{% translate "Se déconnecter" %}</button>
+      </form>
+    </section>
+  </div>
+</div>
+
+<script>
+  (function () {
+    function read(key) {
+      try { return localStorage.getItem(key); } catch (e) { return null; }
+    }
+    function write(key, value) {
+      try { localStorage.setItem(key, value); } catch (e) {}
+    }
+
+    var theme = read('mairy-agent-theme') || 'auto';
+    document.querySelectorAll('input[name="theme"]').forEach(function (input) {
+      input.checked = input.value === theme;
+      input.addEventListener('change', function () {
+        write('mairy-agent-theme', input.value);
+        if (input.value === 'auto') delete document.documentElement.dataset.theme;
+        else document.documentElement.dataset.theme = input.value;
+      });
+    });
+
+    var alerts = document.getElementById('agent-alerts');
+    alerts.checked = read('mairy-agent-alerts') !== 'off';
+    alerts.addEventListener('change', function () {
+      write('mairy-agent-alerts', alerts.checked ? 'on' : 'off');
+    });
+  })();
+</script>
+{% endblock %}

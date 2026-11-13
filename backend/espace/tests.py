@@ -45,23 +45,39 @@ VALID_DETAILS = {
     'naissance': {
         'concerned_last_name': 'RAKOTO',
         'concerned_first_name': 'Hery',
+        'child_sex': 'M',
         'birth_date': '2001-05-17',
         'birth_place': 'Mahajanga',
-        'father_name': 'Jean',
-        'mother_name': 'Marie',
+        'mother_full_name': 'Marie RABE',
+        'mother_birth_date': '1975-03-02',
+        'mother_birth_place': 'Mahajanga',
+        'mother_address': 'Mahabibo',
         'copies': '2',
         **QUARTIER,
     },
     'mariage': {
-        'spouse1_name': 'Jean RAKOTO',
-        'spouse2_name': 'Marie RABE',
         'marriage_date': '2015-08-01',
         'marriage_place': 'Mahajanga',
+        'husband_last_name': 'RAKOTO',
+        'husband_first_names': 'Jean',
+        'husband_birth_date': '1985-01-10',
+        'husband_birth_place': 'Mahajanga',
+        'husband_address': 'Mahabibo',
+        'wife_last_name': 'RABE',
+        'wife_first_names': 'Marie',
+        'wife_birth_date': '1988-06-20',
+        'wife_birth_place': 'Mahajanga',
+        'wife_address': 'Mahabibo',
+        'witness1_name': 'Paul RANDRIA',
+        'witness2_name': 'Sofia RASOA',
         'copies': '1',
         **QUARTIER,
     },
     'deces': {
-        'deceased_name': 'Paul RAKOTO',
+        'deceased_last_name': 'RAKOTO',
+        'deceased_first_names': 'Paul',
+        'deceased_sex': 'M',
+        'deceased_address': 'Mahabibo',
         'death_date': '2020-01-31',
         'death_place': 'Mahajanga',
         'relationship': 'child',
@@ -345,13 +361,13 @@ class DossierCreateTests(EspaceTestCase):
 
     def test_comment_accepted_for_every_type_and_unknown_or_empty_values_dropped(self):
         payload = make_payload()
-        payload['details'].update({'comment': ' Merci ', 'father_name': '', 'hack': 'x'})
+        payload['details'].update({'comment': ' Merci ', 'father_full_name': '', 'hack': 'x'})
         payload['identity'].update({'address': '', 'unknown': 'x'})
         response = self.create(payload)
         self.assertEqual(response.status_code, 201)
         dossier = DossierRequest.objects.get()
         self.assertEqual(dossier.details['comment'], 'Merci')
-        self.assertNotIn('father_name', dossier.details)
+        self.assertNotIn('father_full_name', dossier.details)
         self.assertNotIn('hack', dossier.details)
         self.assertNotIn('address', dossier.identity)
         self.assertNotIn('unknown', dossier.identity)
@@ -365,6 +381,29 @@ class DossierCreateTests(EspaceTestCase):
         payload.pop('guichet')
         self.assertEqual(self.create(payload).status_code, 201)
 
+    def test_relationship_to_child_is_optional(self):
+        payload = make_payload()
+        payload['details'].pop('declarant_relationship', None)
+        self.assertEqual(self.create(payload).status_code, 201)
+
+    def test_email_and_phone_are_optional(self):
+        payload = make_payload()
+        for name in ('email', 'phone'):
+            payload['identity'].pop(name)
+        self.assertEqual(self.create(payload).status_code, 201)
+
+    def test_national_id_must_have_12_digits(self):
+        for value in ('101 234 567', '1012345678901', '10123456789a'):
+            payload = make_payload()
+            payload['identity']['national_id'] = value
+            response = self.create(payload)
+            self.assertEqual(response.status_code, 400, value)
+            self.assertEqual(response.json()['errors']['identity.national_id'], ['invalid'])
+        for value in ('101234567890', '101 234 567 890'):
+            payload = make_payload()
+            payload['identity']['national_id'] = value
+            self.assertEqual(self.create(payload).status_code, 201, value)
+
     def test_numbers_may_be_sent_as_json_numbers(self):
         payload = make_payload()
         payload['details']['copies'] = 2
@@ -376,9 +415,10 @@ class DossierCreateTests(EspaceTestCase):
         self.assertEqual(response.status_code, 400)
         errors = response.json()['errors']
         self.assertEqual(errors['dossier_type'], ['required'])
-        for name in ('last_name', 'first_name', 'email', 'phone'):
+        for name in ('last_name', 'first_name'):
             self.assertEqual(errors[f'identity.{name}'], ['required'])
-        self.assertNotIn('identity.address', errors)
+        for name in ('email', 'phone', 'address'):
+            self.assertNotIn(f'identity.{name}', errors)
         self.assertEqual(DossierRequest.objects.count(), 0)
 
     def test_missing_details_are_required(self):
@@ -390,11 +430,11 @@ class DossierCreateTests(EspaceTestCase):
             'concerned_first_name',
             'birth_date',
             'birth_place',
-            'mother_name',
+            'mother_full_name',
             'copies',
         ):
             self.assertEqual(errors[f'details.{name}'], ['required'], name)
-        self.assertNotIn('details.father_name', errors)
+        self.assertNotIn('details.father_full_name', errors)
 
     def test_unknown_dossier_type(self):
         for value in ('xxx', 42, ['naissance']):
@@ -474,6 +514,7 @@ class DossierListTests(EspaceTestCase):
         'responded_at',
         'response_read',
         'documents',
+        'identity',
     }
 
     def list(self, user='user_a'):
@@ -498,6 +539,10 @@ class DossierListTests(EspaceTestCase):
         self.assertEqual(results[1]['response_message'], '')
         self.assertIsNone(results[1]['responded_at'])
         self.assertRegex(results[0]['reference'], r'^MV-\d{4}-\d{6}$')
+
+    def test_list_returns_the_identity_to_prefill_the_next_request(self):
+        make_dossier(identity={**IDENTITY, 'unknown': 'x', 'address': ''})
+        self.assertEqual(self.list()[0]['identity'], {key: value for key, value in IDENTITY.items() if key != 'address'})
 
     def test_users_only_see_their_own_dossiers(self):
         mine = make_dossier('user_a')

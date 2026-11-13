@@ -1,10 +1,11 @@
 from django.contrib.auth import get_user_model
 from django.contrib.messages import get_messages
-from django.test import TestCase
+from django.test import SimpleTestCase, TestCase
 from django.urls import reverse
 
 from documents.models import AgentAccessRequest
 from espace.models import DossierRequest
+from fichiers.models import Folder
 
 from .models import AgentProfile
 
@@ -18,11 +19,11 @@ def make_agent(username, guichet):
 
 
 def make_request(dossier_type, **extra):
+    extra.setdefault('details', {'copies': '1'})
     return DossierRequest.objects.create(
         clerk_user_id='user_123',
         dossier_type=dossier_type,
         identity={'last_name': 'RABE', 'first_name': 'Jean', 'email': 'jean@example.com'},
-        details={'copies': '1'},
         **extra,
     )
 
@@ -410,8 +411,39 @@ class DeleteBirthCertificateTests(TestCase):
         self.assertIsNone(self.act.deleted_at)  # toujours là
         self.assertTrue(self.act.deletion_pending)
         self.assertEqual(self.act.deletion_reason, 'Erreur sur le nom')
-        self.assertContains(self.client.get(reverse('agents:documents', args=[1])), 'Suppression demandée')
+        self.assertContains(self.client.get(reverse('agents:folder_documents', args=[1])), 'Suppression demandée')
         self.assertTrue(self.client.get(reverse('verify_document', args=[self.act.pk])).json()['is_authentic'])
+
+    def test_documents_are_stored_in_folders(self):
+        detail_url = reverse('agents:document_detail', args=[1, self.act.pk])
+        self.assertNotContains(self.client.get(reverse('agents:documents', args=[1])), detail_url)
+        folders_url = reverse('agents:folders', args=[1])
+        self.assertContains(self.client.get(folders_url), reverse('agents:folder_documents', args=[1]))
+        self.assertContains(self.client.get(reverse('agents:folder_documents', args=[1])), self.act.act_number)
+        self.assertContains(self.client.get(folders_url, {'q': self.act.act_number}), self.act.act_number)
+
+    def test_header_search_finds_documents_requests_and_own_files(self):
+        url = reverse('agents:search', args=[1])
+        self.assertContains(self.client.get(url), 'name="q"')
+
+        response = self.client.get(url, {'q': self.act.act_number})
+        self.assertContains(response, reverse('agents:document_detail', args=[1, self.act.pk]))
+
+        dossier = make_request('naissance')
+        other_guichet = make_request('transport')
+        response = self.client.get(url, {'q': dossier.reference})
+        self.assertContains(response, reverse('agents:request_detail', args=[1, dossier.pk]))
+        response = self.client.get(url, {'q': other_guichet.reference})
+        self.assertFalse(response.context['has_results'])
+
+        agent = get_user_model().objects.get(username='naissance')
+        other = make_agent('autre', 1)
+        Folder.objects.create(owner=agent, name='Budget mine')
+        Folder.objects.create(owner=other, name='Budget autre')
+        response = self.client.get(url, {'q': 'Budget'})
+        self.assertEqual([folder.name for folder in response.context['found_folders']], ['Budget mine'])
+
+        self.assertContains(self.client.get(url, {'q': 'Paramètres'}), reverse('agents:settings'))
 
     def test_reason_is_required(self):
         response = self.client.post(self.delete_url, {'reason': '  '})
@@ -425,7 +457,7 @@ class DeleteBirthCertificateTests(TestCase):
         self.act.refresh_from_db()
         self.assertIsNotNone(self.act.deleted_at)
         self.client.login(username='naissance', password=PASSWORD)
-        self.assertNotContains(self.client.get(reverse('agents:documents', args=[1])), self.act.act_number)
+        self.assertNotContains(self.client.get(reverse('agents:folder_documents', args=[1])), self.act.act_number)
         self.assertEqual(self.client.get(reverse('verify_document', args=[self.act.pk])).json()['status'], 'REVOKED')
 
     def test_admin_rejects_deletion(self):
@@ -494,6 +526,59 @@ class RoutingAndNotificationTests(TestCase):
         # La page Notifications marque les demandes comme vues.
         self.assertContains(self.client.get(reverse('agents:notifications', args=[1])), dossier.reference)
         self.assertEqual(self.client.get(count_url).json()['new_count'], 0)
+
+    def test_notifications_and_statuses_are_cards_of_the_requests_page(self):
+        make_agent('naissance', 1)
+        self.client.login(username='naissance', password=PASSWORD)
+        make_request('naissance')
+        response = self.client.get(reverse('agents:requests', args=[1]))
+        labels = [str(item['label']) for section in response.context['mairy_nav'] for item in section['items']]
+        for label in ('Notifications', 'En attente', 'En cours'):
+            self.assertNotIn(label, labels)
+        stats = {str(stat['label']): stat['count'] for stat in response.context['request_stats']}
+        self.assertEqual(stats, {'Notifications': 1, 'En attente': 1, 'En cours': 0})
+
+        # La page Notifications reste rattachée à « Toutes les demandes » dans le menu.
+        response = self.client.get(reverse('agents:notifications', args=[1]))
+        active = [str(item['label']) for section in response.context['mairy_nav'] for item in section['items'] if item['active']]
+        self.assertEqual(active, ['Toutes les demandes'])
+        self.assertTemplateUsed(response, 'agents/_request_stats.html')
+
+    def test_settings_replace_password_in_sidebar(self):
+        make_agent('naissance', 1)
+        self.client.login(username='naissance', password=PASSWORD)
+        response = self.client.get(reverse('agents:settings'))
+        labels = [str(item['label']) for section in response.context['mairy_nav'] for item in section['items']]
+        self.assertIn('Paramètres', labels)
+        self.assertNotIn('Mot de passe', labels)
+        self.assertRedirects(self.client.get('/agent/mot-de-passe/'), reverse('agents:settings'))
+
+    def test_settings_update_name_but_not_email(self):
+        agent = make_agent('naissance', 1)
+        self.client.login(username='naissance', password=PASSWORD)
+        response = self.client.post(reverse('agents:settings'), {
+            'section': 'profile', 'first_name': 'Rado', 'last_name': 'Be', 'email': 'autre@example.com',
+        })
+        self.assertRedirects(response, reverse('agents:settings'))
+        user = get_user_model().objects.get(username='naissance')
+        self.assertEqual((user.first_name, user.last_name, user.email), ('Rado', 'Be', agent.email))
+
+    def test_settings_change_password_keeps_session(self):
+        make_agent('naissance', 1)
+        self.client.login(username='naissance', password=PASSWORD)
+        new_password = 'Encore-un-mot-de-passe-77'
+        response = self.client.post(reverse('agents:settings'), {
+            'section': 'password', 'old_password': 'mauvais',
+            'new_password1': new_password, 'new_password2': new_password,
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(response.context['password_form'].errors)
+        response = self.client.post(reverse('agents:settings'), {
+            'section': 'password', 'old_password': PASSWORD,
+            'new_password1': new_password, 'new_password2': new_password,
+        })
+        self.assertRedirects(response, reverse('agents:settings'))
+        self.assertTrue(get_user_model().objects.get(username='naissance').check_password(new_password))
 
     def test_guichet_5_agent_is_notified_of_services(self):
         make_agent('services', 5)
@@ -713,11 +798,14 @@ class OtherGuichetsDocumentsTests(TestCase):
                 self.assertEqual(document.act_number, f"2026-{case['prefix']}-00001")
                 self.assertTrue(document.verify()['is_authentic'])
 
-                self.assertContains(self.client.get(reverse('agents:documents', args=[number])), document.act_number)
+                self.assertContains(self.client.get(reverse('agents:folder_documents', args=[number])), document.act_number)
                 self.assertContains(self.client.get(reverse('agents:document_detail', args=[number, document.pk])),
                                     document.content_hash)
                 pdf = self.client.get(reverse('agents:document_pdf', args=[number, document.pk]))
                 self.assertTrue(pdf.content.startswith(b'%PDF'))
+                pdf_fr = self.client.get(reverse('agents:document_pdf', args=[number, document.pk]), {'langue': 'fr'})
+                self.assertTrue(pdf_fr.content.startswith(b'%PDF'))
+                self.assertNotEqual(pdf.content, pdf_fr.content)
 
                 data = self.client.get(reverse('verify_document', args=[document.pk])).json()
                 self.assertTrue(data['is_authentic'])
@@ -1057,6 +1145,98 @@ class AdminLogoutTests(TestCase):
         response = self.client.post(reverse('admin:logout'))
         self.assertRedirects(response, reverse('home'))
         self.assertNotIn('_auth_user_id', self.client.session)
+
+
+class MalagasyWordingTests(SimpleTestCase):
+    """Nombres, dates et heures en toutes lettres du document officiel rédigé en malgache."""
+
+    def test_numbers_read_from_units_to_thousands(self):
+        from . import lettres_mg
+
+        self.assertEqual(lettres_mg.number(1), 'iray')
+        self.assertEqual(lettres_mg.number(11), "iraika ambin'ny folo")
+        self.assertEqual(lettres_mg.number(21), 'iraika amby roapolo')
+        self.assertEqual(lettres_mg.number(2026), 'enina amby roapolo sy roa arivo')
+        self.assertEqual(lettres_mg.number(1999), 'sivy amby sivifolo sy sivinjato sy arivo')
+
+    def test_dates_and_times(self):
+        import datetime
+
+        from . import lettres_mg
+
+        moment = datetime.datetime(2026, 5, 1, 14, 30)
+        self.assertEqual(lettres_mg.date(moment), 'voalohany Mey, enina amby roapolo sy roa arivo')
+        self.assertEqual(lettres_mg.date_short(moment), '1 Mey 2026')
+        self.assertEqual(lettres_mg.time(moment), "efatra ambin'ny folo ora sy telopolo minitra")
+
+
+class TicketTests(TestCase):
+    """Bon de retrait : envoyé à l'usager, scanné au guichet, puis document remis une seule fois."""
+
+    def setUp(self):
+        from .models import BirthCertificate
+
+        self.agent = make_agent('naissance', 1)
+        self.client.login(username='naissance', password=PASSWORD)
+        self.client.post(reverse('agents:document_create', args=[1]), ACT_DATA)
+        self.act = BirthCertificate.objects.get()
+        self.verify_url = reverse('verifier', args=[self.act.pk])
+        self.deliver_url = reverse('remettre_document', args=[self.act.pk])
+
+    def test_ticket_qr_code_points_to_the_agents_page(self):
+        self.assertEqual(self.act.verification_url, f'http://localhost:8000{self.verify_url}')
+        ticket = self.client.get(reverse('agents:document_ticket', args=[1, self.act.pk]))
+        self.assertTrue(ticket.content.startswith(b'%PDF'))
+        self.assertIn(self.act.ticket_filename, ticket['Content-Disposition'])
+
+    def test_verification_is_reserved_to_agents(self):
+        self.client.logout()
+        self.assertEqual(self.client.get(self.verify_url).status_code, 302)
+        get_user_model().objects.create_user('citoyen', password=PASSWORD)
+        self.client.login(username='citoyen', password=PASSWORD)
+        self.assertEqual(self.client.get(self.verify_url).status_code, 403)
+        self.assertEqual(self.client.post(self.deliver_url).status_code, 403)
+
+    def test_document_is_delivered_once(self):
+        response = self.client.get(self.verify_url)
+        self.assertEqual(response.context['state'], 'ok')
+        self.assertContains(response, self.deliver_url)
+
+        response = self.client.post(self.deliver_url)
+        self.assertEqual(response['Content-Type'], 'application/pdf')
+        self.assertTrue(response.content.startswith(b'%PDF'))
+        self.act.refresh_from_db()
+        self.assertIsNotNone(self.act.retrieved_at)
+        self.assertEqual(self.act.retrieved_by, self.agent)
+
+        # Le bon a servi : plus de remise, plus de QR code ni de bon téléchargeable.
+        self.assertEqual(self.client.get(self.verify_url).context['state'], 'used')
+        self.assertRedirects(self.client.post(self.deliver_url), self.verify_url)
+        detail = self.client.get(reverse('agents:document_detail', args=[1, self.act.pk]))
+        self.assertEqual(detail.context['qr_data_uri'], '')
+        self.assertRedirects(self.client.get(reverse('agents:document_ticket', args=[1, self.act.pk])),
+                             reverse('agents:document_detail', args=[1, self.act.pk]))
+
+        from .pdf import BonDejaRetire, qr_png, ticket_pdf
+
+        self.assertIsNone(qr_png(self.act.verification_url, self.act))
+        with self.assertRaises(BonDejaRetire):
+            ticket_pdf(self.act)
+
+    def test_other_guichet_cannot_deliver(self):
+        make_agent('mariage', 2)
+        self.client.login(username='mariage', password=PASSWORD)
+        self.assertEqual(self.client.get(self.verify_url).context['state'], 'other_guichet')
+        self.client.post(self.deliver_url)
+        self.act.refresh_from_db()
+        self.assertIsNone(self.act.retrieved_at)
+
+    def test_revoked_or_unknown_ticket_is_refused(self):
+        self.act.status = self.act.Status.REVOKED
+        self.act.save(update_fields=['status'])
+        self.assertEqual(self.client.get(self.verify_url).context['state'], 'revoked')
+        unknown = self.client.get(reverse('verifier', args=['00000000-0000-0000-0000-000000000000']))
+        self.assertEqual(unknown.status_code, 404)
 
 
 class QuartierOnAgentPagesTests(TestCase):

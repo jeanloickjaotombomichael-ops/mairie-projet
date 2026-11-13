@@ -1,0 +1,9 @@
+{% for error in form.non_field_errors %}<p class="agent-error">{{ error }}</p>{% endfor %}
+{% for field in form %}
+<div class="agent-field{% if field.errors %} has-error{% endif %}">
+  <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+  {{ field }}
+  {% for error in field.errors %}<p class="agent-error">{{ error }}</p>{% endfor %}
+  {% if field.help_text %}<div class="mairy-muted agent-help">{{ field.help_text|safe }}</div>{% endif %}
+</div>
+{% endfor %}
