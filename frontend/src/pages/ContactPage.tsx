@@ -1,6 +1,5 @@
 import { useId, useState, type ChangeEvent, type FormEvent, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
-import AnimatedBackground from '@/components/AnimatedBackground'
 import BackLink from '@/components/BackLink'
 import ContactIllustration from '@/components/ContactIllustration'
 import { ListIcon, MailIcon, PhoneIcon, PinIcon, SpinnerIcon, UserIcon } from '@/components/icons'
