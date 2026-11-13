@@ -88,12 +88,47 @@
   }
 }
 
-/* Fond « vagues bleues » des pages intérieures et de l'espace usager (public/fond-vagues.svg). */
-@layer components {
-  .bg-fond {
-    background: #0a2f73 url('/fond-vagues.svg') center top / cover no-repeat;
-  }
+/*
+ * Fond aux couleurs du blason de Mahajanga (espace usager et pages intérieures du site) :
+ * noir (bandeau des boutres), rouge (champ du baobab) et lueurs dorées (couronne, crocodiles).
+ * Tons chauds et lumineux en haut pour un accueil plus chaleureux ; le blason en filigrane.
+ */
+.bg-blason {
+  position: relative;
+  isolation: isolate;
+  background-color: #170d0b;
+  background-image:
+    /* Voile noir : les couleurs du blason restent visibles mais le noir domine. */
+    linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+    radial-gradient(ellipse 60% 40% at 50% -8%, rgba(242, 201, 76, 0.28), transparent 70%),
+    radial-gradient(ellipse 45% 35% at 92% 8%, rgba(255, 170, 60, 0.2), transparent 70%),
+    radial-gradient(ellipse 80% 60% at 0% 100%, rgba(220, 38, 38, 0.5), transparent 68%),
+    radial-gradient(ellipse 60% 50% at 100% 95%, rgba(190, 24, 40, 0.38), transparent 70%),
+    linear-gradient(180deg, #2a1712 0%, #1b0e0c 35%, #2a0d0e 70%, #4a1014 100%);
+}
 
+/* Blason en filigrane, discret, en bas à droite. */
+.bg-blason::before {
+  content: '';
+  position: fixed;
+  right: -4rem;
+  bottom: -4rem;
+  z-index: -1;
+  width: min(34rem, 70vw);
+  aspect-ratio: 1;
+  background: url('/logo-mahajanga.png') center / contain no-repeat;
+  opacity: 0.06;
+  pointer-events: none;
+}
+
+@media (min-width: 1024px) {
+  .bg-blason {
+    background-attachment: fixed;
+  }
+}
+
+/* Fond « vagues bleues » de l'accueil et du pied de page (public/fond-vagues.svg). */
+@layer components {
   /* Pied de page : voile noir semi-transparent sur le même fond bleu que les pages. */
   .bg-fond-voile {
     background:
@@ -103,7 +138,6 @@
 
   /* Sur grand écran, le fond reste en place au défilement (rendu irrégulier sur mobile). */
   @media (min-width: 1024px) {
-    .bg-fond,
     .bg-fond-voile {
       background-attachment: fixed;
     }

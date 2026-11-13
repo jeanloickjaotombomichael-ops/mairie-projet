@@ -230,8 +230,7 @@ function ContactPage() {
     )
 
   return (
-    <main className="bg-fond relative -mt-16 flex-1 overflow-hidden pt-16 text-slate-800">
-      <AnimatedBackground grid />
+    <main className="bg-blason relative -mt-16 flex-1 overflow-hidden pt-16 text-slate-800">
       <div className="relative mx-auto max-w-5xl px-4 pb-16 pt-10 sm:px-6 sm:pt-12 lg:px-8">
         <BackLink fallback="/" className="mb-4" />
         <header className="mx-auto max-w-2xl text-center text-white">
