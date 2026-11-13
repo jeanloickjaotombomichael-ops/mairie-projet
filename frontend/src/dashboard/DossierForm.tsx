@@ -75,7 +75,7 @@ function DossierForm({ type }: DossierFormProps) {
   const { t, i18n } = useTranslation()
   const { getToken } = useAuth()
   const { user } = useUser()
-  const { reload } = useDossiers()
+  const { reload, items: dossiers, status: dossiersStatus } = useDossiers()
 
   const [values, setValues] = useState<Values>(() => ({
     ...defaultsFor(IDENTITY_FIELDS),
@@ -117,9 +117,10 @@ function DossierForm({ type }: DossierFormProps) {
   // « Suivant » et « Envoyer » restent inactifs tant qu'un champ de l'étape est vide.
   const complete = filled(wizard ? steps[step].fields : allFields)
 
-  // Préremplit l'identité avec le compte connecté, une seule fois et sans écraser la saisie.
+  // Préremplit l'identité, une seule fois et sans écraser la saisie : coordonnées de la dernière
+  // demande de l'usager (la plus récente d'abord), complétées par celles de son compte.
   useEffect(() => {
-    if (prefilled.current || !user) return
+    if (prefilled.current || !user || dossiersStatus === 'loading') return
     prefilled.current = true
 
     const known: Values = {
@@ -127,6 +128,7 @@ function DossierForm({ type }: DossierFormProps) {
       last_name: user.lastName ?? '',
       email: user.primaryEmailAddress?.emailAddress ?? '',
       phone: user.primaryPhoneNumber?.phoneNumber ?? '',
+      ...dossiers[0]?.identity,
     }
     setValues((current) => {
       const next = { ...current }
@@ -135,7 +137,7 @@ function DossierForm({ type }: DossierFormProps) {
       }
       return next
     })
-  }, [user])
+  }, [user, dossiers, dossiersStatus])
 
   // Place le focus sur le message de confirmation (lecteurs d'écran, clavier).
   useEffect(() => {

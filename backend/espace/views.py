@@ -73,6 +73,11 @@ def serialize_dossier(dossier, documents=None):
         'responded_at': _iso(dossier.responded_at),
         'response_read': dossier.response_read,
         'documents': _documents(dossier, documents),
+        # Coordonnées saisies : le formulaire suivant les reprend (seul l'usager voit ses demandes).
+        'identity': {
+            spec.name: (dossier.identity or {}).get(spec.name, '') for spec in IDENTITY_FIELDS
+            if (dossier.identity or {}).get(spec.name)
+        },
     }
 
 

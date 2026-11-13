@@ -35,6 +35,8 @@ export interface DossierSummary {
   response_read: boolean
   /** Documents téléchargeables (envoyés par l'agent). */
   documents: DossierDocument[]
+  /** Coordonnées saisies dans la demande (nom, e-mail, CIN…), reprises par le formulaire suivant. */
+  identity: Record<string, string>
 }
 
 export interface CreateDossierPayload {

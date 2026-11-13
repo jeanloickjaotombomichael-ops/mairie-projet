@@ -514,6 +514,7 @@ class DossierListTests(EspaceTestCase):
         'responded_at',
         'response_read',
         'documents',
+        'identity',
     }
 
     def list(self, user='user_a'):
@@ -538,6 +539,10 @@ class DossierListTests(EspaceTestCase):
         self.assertEqual(results[1]['response_message'], '')
         self.assertIsNone(results[1]['responded_at'])
         self.assertRegex(results[0]['reference'], r'^MV-\d{4}-\d{6}$')
+
+    def test_list_returns_the_identity_to_prefill_the_next_request(self):
+        make_dossier(identity={**IDENTITY, 'unknown': 'x', 'address': ''})
+        self.assertEqual(self.list()[0]['identity'], {key: value for key, value in IDENTITY.items() if key != 'address'})
 
     def test_users_only_see_their_own_dossiers(self):
         mine = make_dossier('user_a')
