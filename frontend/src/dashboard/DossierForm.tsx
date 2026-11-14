@@ -15,6 +15,7 @@ import {
 } from '@/data/formSchema'
 import { ApiError } from '@/lib/api'
 import { createDossier } from '@/lib/espaceApi'
+import { loadFieldHistory, saveFieldHistory } from '@/lib/fieldHistory'
 import { cn } from '@/lib/utils'
 import { useDossiers } from '@/dashboard/dossiersContext'
 import { CheckIcon, ChevronLeftIcon, ChevronRightIcon, HomeIcon, PinIcon, SendIcon, SpinnerIcon } from '@/dashboard/icons'
@@ -75,6 +76,11 @@ function DossierForm({ type }: DossierFormProps) {
   const { t, i18n } = useTranslation()
   const { getToken } = useAuth()
   const { user } = useUser()
+  // Valeurs déjà saisies dans les demandes précédentes : proposées en suggestions.
+  const [history, setHistory] = useState(() => loadFieldHistory(user?.id))
+  useEffect(() => {
+    setHistory(loadFieldHistory(user?.id))
+  }, [user?.id])
   const { reload, items: dossiers, status: dossiersStatus } = useDossiers()
 
   const [values, setValues] = useState<Values>(() => ({
@@ -261,6 +267,7 @@ function DossierForm({ type }: DossierFormProps) {
         identity,
         details,
       })
+      setHistory(saveFieldHistory(user?.id, { ...identity, ...details }))
       setReference(result.reference)
       setPhase('success')
       void reload()
@@ -341,23 +348,37 @@ function DossierForm({ type }: DossierFormProps) {
             : field.kind === 'date' || field.kind === 'time'
               ? field.kind
               : 'text'
+      // Suggestions des saisies précédentes (pas pour les dates et heures, qui ont leur propre sélecteur).
+      const suggestions = field.kind === 'date' || field.kind === 'time' ? [] : (history[field.name] ?? [])
+      const listId = suggestions.length > 0 ? `${id}-history` : undefined
       const inputMode: 'numeric' | 'decimal' | undefined =
         field.kind === 'integer' || field.kind === 'cin' ? 'numeric' : field.kind === 'number' ? 'decimal' : undefined
       control = (
-        <input
-          id={id}
-          name={field.name}
-          type={inputType}
-          inputMode={inputMode}
-          autoComplete={AUTOCOMPLETE[field.name] ?? 'off'}
-          maxLength={field.kind === 'date' || field.kind === 'time' ? undefined : field.maxLength}
-          value={value}
-          onChange={(event) => setValue(field.name, event.target.value)}
-          aria-required={!field.optional}
-          aria-invalid={invalid}
-          aria-describedby={describedBy}
-          className="d-input"
-        />
+        <>
+          <input
+            id={id}
+            name={field.name}
+            type={inputType}
+            inputMode={inputMode}
+            list={listId}
+            // Avec nos suggestions, on coupe celles du navigateur pour éviter deux listes superposées.
+            autoComplete={listId ? 'off' : (AUTOCOMPLETE[field.name] ?? 'off')}
+            maxLength={field.kind === 'date' || field.kind === 'time' ? undefined : field.maxLength}
+            value={value}
+            onChange={(event) => setValue(field.name, event.target.value)}
+            aria-required={!field.optional}
+            aria-invalid={invalid}
+            aria-describedby={describedBy}
+            className="d-input"
+          />
+          {listId && (
+            <datalist id={listId}>
+              {suggestions.map((suggestion) => (
+                <option key={suggestion} value={suggestion} />
+              ))}
+            </datalist>
+          )}
+        </>
       )
     }
 
