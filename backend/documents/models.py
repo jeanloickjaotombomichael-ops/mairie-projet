@@ -1,21 +1,4 @@
-"""Modèles de Mairy Project.
 
-NB : le models.py d'origine n'a pas pu être retrouvé ; ce fichier est une
-reconstruction fondée sur l'usage qui en était fait dans l'ancien views.py.
-
-Principe de sécurité
---------------------
-À la création, un document est « scellé » une seule fois (``seal()``) :
-
-* ``content_hash`` = SHA-256 d'un payload canonique des champs d'identité ;
-* ``signature``    = HMAC-SHA256 de ``content_hash`` avec ``DOCUMENT_SIGNING_KEY``.
-
-``save()`` ne re-scelle jamais un document existant : toute modification
-ultérieure des champs d'identité en base est donc détectée à la vérification
-(l'empreinte recalculée ne correspond plus à l'empreinte stockée), et une
-falsification de l'empreinte elle-même est détectée par la signature, que
-seul le serveur peut produire.
-"""
 import hashlib
 import hmac
 import json
