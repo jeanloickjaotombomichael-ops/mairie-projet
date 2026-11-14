@@ -5,7 +5,7 @@ import { ESPACE_HOME, typeToSlug, isDossierType } from '@/data/catalog'
 import DocumentDownloads from '@/dashboard/DocumentDownloads'
 import StatusBadge from '@/dashboard/StatusBadge'
 import { useDossiers } from '@/dashboard/dossiersContext'
-import { CheckIcon, InboxIcon, SpinnerIcon } from '@/dashboard/icons'
+import { CheckIcon, InboxIcon, SpinnerIcon, TrashIcon } from '@/dashboard/icons'
 import { formatDate, formatDateTime } from '@/lib/format'
 import type { DossierSummary } from '@/lib/espaceApi'
 
@@ -13,10 +13,21 @@ function hasResponse(dossier: DossierSummary): boolean {
   return dossier.response_message.trim() !== ''
 }
 
+/** Bouton « Supprimer » d'une notification (icône corbeille). */
+function DeleteButton({ onClick, label }: { onClick: () => void; label: string }) {
+  return (
+    <button type="button" className="d-btn-ghost" onClick={onClick} title={label} aria-label={label}>
+      <TrashIcon className="size-4" />
+    </button>
+  )
+}
+
 /** Notifications : les réponses de la Commune, puis la liste de toutes les demandes envoyées. */
 function NotificationsPage() {
   const { t, i18n } = useTranslation()
-  const { items, status, unread, reload, markRead, markAllRead } = useDossiers()
+  const { items: allItems, status, unread, reload, markRead, markAllRead, hideNotification } = useDossiers()
+  // Notifications supprimées par l'usager : masquées ici (la demande reste dans son espace).
+  const items = useMemo(() => allItems.filter((dossier) => !dossier.notification_hidden), [allItems])
 
   const typeTitle = (dossier: DossierSummary): string =>
     isDossierType(dossier.dossier_type) && typeToSlug(dossier.dossier_type)
@@ -104,7 +115,10 @@ function NotificationsPage() {
                         {t('dash.notifications.respondedOn')} {formatDateTime(dossier.responded_at, i18n.language)}
                       </p>
                     </div>
-                    <StatusBadge status={dossier.status} />
+                    <div className="flex items-center gap-2">
+                      <StatusBadge status={dossier.status} />
+                      <DeleteButton onClick={() => void hideNotification(dossier.id)} label={t('dash.notifications.delete')} />
+                    </div>
                   </div>
 
                   <div className="d-divider mt-4 border-t pt-4">
@@ -153,7 +167,10 @@ function NotificationsPage() {
                       {dossier.guichet && ` · ${t('dash.notifications.guichet')} ${dossier.guichet}`}
                     </p>
                   </div>
-                  <StatusBadge status={dossier.status} />
+                  <div className="flex items-center gap-2">
+                    <StatusBadge status={dossier.status} />
+                    <DeleteButton onClick={() => void hideNotification(dossier.id)} label={t('dash.notifications.delete')} />
+                  </div>
                 </div>
                 <DocumentDownloads dossierId={dossier.id} documents={dossier.documents} />
               </li>

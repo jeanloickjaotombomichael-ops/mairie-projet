@@ -265,7 +265,8 @@
       "documentsTitle": "Documents disponibles",
       "download": "Télécharger",
       "downloading": "Téléchargement…",
-      "downloadError": "Le téléchargement a échoué. Réessayez."
+      "downloadError": "Le téléchargement a échoué. Réessayez.",
+      "delete": "Supprimer la notification"
     },
     "status": {
       "PENDING": "En attente",

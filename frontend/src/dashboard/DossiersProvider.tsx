@@ -1,6 +1,12 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { useAuth } from '@clerk/react'
-import { listDossiers, markAllRead as apiMarkAllRead, markDossierRead, type DossierSummary } from '@/lib/espaceApi'
+import {
+  hideDossierNotification,
+  listDossiers,
+  markAllRead as apiMarkAllRead,
+  markDossierRead,
+  type DossierSummary,
+} from '@/lib/espaceApi'
 import { DossiersContext, type DossiersState, type DossiersStatus } from '@/dashboard/dossiersContext'
 
 /** Intervalle de rafraîchissement : les réponses de la Commune arrivent sans recharger la page. */
@@ -78,6 +84,22 @@ function DossiersProvider({ children }: { children: ReactNode }) {
     }
   }, [fetchItems])
 
+  const hideNotification = useCallback(
+    async (id: number) => {
+      setItems((current) =>
+        current.map((dossier) =>
+          dossier.id === id ? { ...dossier, notification_hidden: true, response_read: true } : dossier,
+        ),
+      )
+      try {
+        await hideDossierNotification(() => getTokenRef.current(), id)
+      } catch {
+        await fetchItems()
+      }
+    },
+    [fetchItems],
+  )
+
   const value = useMemo<DossiersState>(() => {
     let pending = 0
     let done = 0
@@ -87,8 +109,19 @@ function DossiersProvider({ children }: { children: ReactNode }) {
       if (dossier.status === 'APPROVED' || dossier.status === 'COMPLETED') done += 1
       if (hasResponse(dossier) && !dossier.response_read) unread += 1
     }
-    return { items, status, total: items.length, pending, done, unread, reload, markRead, markAllRead }
-  }, [items, status, reload, markRead, markAllRead])
+    return {
+      items,
+      status,
+      total: items.length,
+      pending,
+      done,
+      unread,
+      reload,
+      markRead,
+      markAllRead,
+      hideNotification,
+    }
+  }, [items, status, reload, markRead, markAllRead, hideNotification])
 
   return <DossiersContext.Provider value={value}>{children}</DossiersContext.Provider>
 }

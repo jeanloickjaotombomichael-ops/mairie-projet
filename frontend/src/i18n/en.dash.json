@@ -265,7 +265,8 @@
       "documentsTitle": "Available documents",
       "download": "Download",
       "downloading": "Downloading…",
-      "downloadError": "The download failed. Please try again."
+      "downloadError": "The download failed. Please try again.",
+      "delete": "Delete notification"
     },
     "status": {
       "PENDING": "Pending",

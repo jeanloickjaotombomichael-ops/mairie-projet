@@ -72,6 +72,7 @@ def serialize_dossier(dossier, documents=None):
         'response_message': dossier.response_message or '',
         'responded_at': _iso(dossier.responded_at),
         'response_read': dossier.response_read,
+        'notification_hidden': dossier.notification_hidden,
         'documents': _documents(dossier, documents),
         # Coordonnées saisies : le formulaire suivant les reprend (seul l'usager voit ses demandes).
         'identity': {
@@ -169,6 +170,17 @@ def dossier_mark_read(request, pk):
     if not dossiers.exists():
         return json_error('not_found', 404)
     dossiers.update(response_read=True)
+    return JsonResponse({'ok': True})
+
+
+@clerk_auth_required
+@require_POST
+def dossier_hide_notification(request, pk):
+    """Supprime la notification d'un dossier de la page de l'usager (la demande reste)."""
+    dossiers = DossierRequest.objects.filter(pk=pk, clerk_user_id=request.clerk_user_id)
+    if not dossiers.exists():
+        return json_error('not_found', 404)
+    dossiers.update(notification_hidden=True, response_read=True)
     return JsonResponse({'ok': True})
 
 

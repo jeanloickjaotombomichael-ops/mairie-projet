@@ -33,6 +33,8 @@ export interface DossierSummary {
   response_message: string
   responded_at: string | null
   response_read: boolean
+  /** Notification supprimée par l'usager : masquée de la page Notifications. */
+  notification_hidden: boolean
   /** Documents téléchargeables (envoyés par l'agent). */
   documents: DossierDocument[]
   /** Coordonnées saisies dans la demande (nom, e-mail, CIN…), reprises par le formulaire suivant. */
@@ -144,6 +146,14 @@ export async function listDossiers(
 /** Marque la réponse d'une demande comme lue. */
 export async function markDossierRead(getToken: GetToken, id: number): Promise<void> {
   const response = await authorizedFetch(getToken, `/dossiers/${id}/read/`, { method: 'POST' })
+  if (!response.ok) {
+    return failFrom(response)
+  }
+}
+
+/** Supprime la notification d'une demande (la demande elle-même est conservée). */
+export async function hideDossierNotification(getToken: GetToken, id: number): Promise<void> {
+  const response = await authorizedFetch(getToken, `/dossiers/${id}/hide/`, { method: 'POST' })
   if (!response.ok) {
     return failFrom(response)
   }

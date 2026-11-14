@@ -152,9 +152,17 @@ def _mark_seen(request, number):
         request.session[f'notifications_seen_{number}'] = now.isoformat()
 
 
+def _notified_requests(request, number):
+    """Demandes du guichet affichées en notification (sans celles que l'agent a supprimées)."""
+    from .models import NotificationDismissal
+
+    dismissed = NotificationDismissal.objects.filter(user=request.user).values('dossier_id')
+    return _guichet_requests(GUICHETS[number]).exclude(pk__in=dismissed)
+
+
 def _new_requests(request, number):
     """Demandes reçues par le guichet depuis la dernière consultation des notifications."""
-    requests = _guichet_requests(GUICHETS[number])
+    requests = _notified_requests(request, number)
     seen_at = _seen_at(request, number)
     return requests.filter(created_at__gt=seen_at) if seen_at else requests
 
@@ -849,7 +857,7 @@ def _notification(request, number, dossier):
 @guichet_required
 def guichet_notifications(request, number):
     seen_at = _seen_at(request, number)
-    latest = list(_guichet_requests(request.guichet).order_by('-created_at')[:30])
+    latest = list(_notified_requests(request, number).order_by('-created_at')[:30])
     for dossier in latest:
         dossier.applicant = _applicant(dossier)
         dossier.is_new = seen_at is None or dossier.created_at > seen_at
@@ -861,6 +869,18 @@ def guichet_notifications(request, number):
     }
     _mark_seen(request, number)  # consultées : la cloche repart de zéro
     return render(request, 'agents/notifications.html', context)
+
+
+@guichet_required
+@require_POST
+def notification_delete(request, number, pk):
+    """Retire une notification de la liste de l'agent (la demande n'est pas supprimée)."""
+    from .models import NotificationDismissal
+
+    dossier = get_object_or_404(_guichet_requests(request.guichet), pk=pk)
+    NotificationDismissal.objects.get_or_create(user=request.user, dossier=dossier)
+    messages.success(request, _('Notification supprimée.'))
+    return redirect('agents:notifications', number)
 
 
 @guichet_required

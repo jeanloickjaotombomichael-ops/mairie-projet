@@ -26,7 +26,13 @@
           </p>
           <span class="mairy-muted">{{ dossier.created_at|date:"DATETIME_FORMAT" }} · {{ dossier.get_status_display }}</span>
         </div>
-        <a class="mairy-btn" href="{% url 'agents:request_detail' number dossier.pk %}">{% translate "Traiter" %}</a>
+        <div class="agent-row-actions">
+          <a class="mairy-btn" href="{% url 'agents:request_detail' number dossier.pk %}">{% translate "Traiter" %}</a>
+          <form method="post" action="{% url 'agents:notification_delete' number dossier.pk %}">
+            {% csrf_token %}
+            <button type="submit" class="mairy-btn files-danger" title="{% translate "Supprimer la notification" %}" aria-label="{% translate "Supprimer la notification" %}"><svg class="mairy-ico"><use href="#mi-trash"/></svg></button>
+          </form>
+        </div>
       </li>
       {% empty %}
       <li class="mairy-muted">{% translate "Aucune demande pour le moment." %}</li>

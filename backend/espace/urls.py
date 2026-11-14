@@ -7,6 +7,7 @@ urlpatterns = [
     # « read-all » doit précéder « <id>/read » (même préfixe).
     path('dossiers/read-all/', views.dossier_read_all, name='dossier_read_all'),
     path('dossiers/<int:pk>/read/', views.dossier_mark_read, name='dossier_mark_read'),
+    path('dossiers/<int:pk>/hide/', views.dossier_hide_notification, name='dossier_hide_notification'),
     path('dossiers/<int:pk>/documents/<uuid:document_id>/', views.dossier_document, name='dossier_document'),
     path('contact/', views.contact_create, name='contact_create'),
     path('mails/', views.mail_collection, name='mail_collection'),

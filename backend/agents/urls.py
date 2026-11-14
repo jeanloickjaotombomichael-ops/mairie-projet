@@ -28,6 +28,8 @@ urlpatterns = [
     path('guichet-<int:number>/documents/<uuid:pk>/supprimer/annuler/', views.document_cancel_deletion,
          name='document_cancel_deletion'),
     path('guichet-<int:number>/notifications/', views.guichet_notifications, name='notifications'),
+    path('guichet-<int:number>/notifications/<int:pk>/supprimer/', views.notification_delete,
+         name='notification_delete'),
     path('guichet-<int:number>/notifications/compteur/', views.notifications_count, name='notifications_count'),
     path('guichet-<int:number>/mail/', views.guichet_mail, name='mail'),
     path('guichet-<int:number>/messages/', views.guichet_messages, name='messages'),

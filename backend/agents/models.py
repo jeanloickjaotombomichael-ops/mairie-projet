@@ -40,6 +40,23 @@ class AgentProfile(models.Model):
         return GUICHETS[self.guichet]
 
 
+class NotificationDismissal(models.Model):
+    """Notification (demande reçue) supprimée de la liste d'un agent ; la demande elle-même reste."""
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='+', verbose_name=_('compte'),
+    )
+    dossier = models.ForeignKey(
+        'espace.DossierRequest', on_delete=models.CASCADE, related_name='+', verbose_name=_('demande'),
+    )
+    dismissed_at = models.DateTimeField(_('supprimée le'), auto_now_add=True)
+
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=['user', 'dossier'], name='agents_notif_dismissal_unique')]
+        verbose_name = _('notification supprimée')
+        verbose_name_plural = _('notifications supprimées')
+
+
 DEFAULT_MARGINAL_NOTES = (
     'Sans objet. (Aucune mention ultérieure enregistrée à la date de délivrance de la présente copie).'
 )

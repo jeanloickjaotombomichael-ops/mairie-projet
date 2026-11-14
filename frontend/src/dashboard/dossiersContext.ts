@@ -18,6 +18,8 @@ export interface DossiersState {
   reload: () => Promise<void>
   markRead: (id: number) => Promise<void>
   markAllRead: () => Promise<void>
+  /** Supprime une notification de la page Notifications. */
+  hideNotification: (id: number) => Promise<void>
 }
 
 export const DossiersContext = createContext<DossiersState | null>(null)

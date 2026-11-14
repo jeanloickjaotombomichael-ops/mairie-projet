@@ -513,6 +513,7 @@ class DossierListTests(EspaceTestCase):
         'response_message',
         'responded_at',
         'response_read',
+        'notification_hidden',
         'documents',
         'identity',
     }
@@ -577,6 +578,26 @@ class ReadTests(EspaceTestCase):
         self.assertEqual(response.json(), {'detail': 'not_found'})
         dossier.refresh_from_db()
         self.assertFalse(dossier.response_read)
+
+    def test_hide_notification(self):
+        dossier = make_dossier(response_message='Prêt.')
+        response = self.call('post', reverse('dossier_hide_notification', args=[dossier.pk]))
+        self.assertEqual(response.status_code, 200)
+        dossier.refresh_from_db()
+        self.assertTrue(dossier.notification_hidden)
+        self.assertTrue(dossier.response_read)
+        # Une nouvelle réponse fait réapparaître la notification.
+        dossier.response_message = 'Document prêt au guichet.'
+        dossier.save()
+        dossier.refresh_from_db()
+        self.assertFalse(dossier.notification_hidden)
+
+    def test_hide_notification_of_someone_else_is_404(self):
+        dossier = make_dossier('user_a', response_message='Prêt.')
+        response = self.call('post', reverse('dossier_hide_notification', args=[dossier.pk]), user='user_b')
+        self.assertEqual(response.status_code, 404)
+        dossier.refresh_from_db()
+        self.assertFalse(dossier.notification_hidden)
 
     def test_mark_read_unknown_id_is_404(self):
         response = self.call('post', reverse('dossier_mark_read', args=[999999]))

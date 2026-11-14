@@ -37,6 +37,8 @@ class DossierRequest(models.Model):
     response_message = models.TextField(_('réponse de la mairie'), blank=True)
     responded_at = models.DateTimeField(_('date de la réponse'), null=True, blank=True)
     response_read = models.BooleanField(_('réponse lue'), default=False)
+    # Notification supprimée par l'usager : masquée de sa page Notifications (la demande reste).
+    notification_hidden = models.BooleanField(_('notification supprimée'), default=False)
     created_at = models.DateTimeField(_('créée le'), auto_now_add=True)
     updated_at = models.DateTimeField(_('modifiée le'), auto_now=True)
 
@@ -67,10 +69,11 @@ class DossierRequest(models.Model):
             if current.strip():
                 self.responded_at = timezone.now()
                 self.response_read = False
+                self.notification_hidden = False  # une nouvelle réponse réapparaît
             else:
                 self.responded_at = None
             if update_fields is not None:
-                kwargs['update_fields'] = set(update_fields) | {'responded_at', 'response_read'}
+                kwargs['update_fields'] = set(update_fields) | {'responded_at', 'response_read', 'notification_hidden'}
 
         super().save(*args, **kwargs)
 

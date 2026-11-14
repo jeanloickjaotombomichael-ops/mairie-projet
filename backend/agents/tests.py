@@ -527,6 +527,20 @@ class RoutingAndNotificationTests(TestCase):
         self.assertContains(self.client.get(reverse('agents:notifications', args=[1])), dossier.reference)
         self.assertEqual(self.client.get(count_url).json()['new_count'], 0)
 
+    def test_agent_can_delete_a_notification(self):
+        make_agent('naissance', 1)
+        self.client.login(username='naissance', password=PASSWORD)
+        dossier = make_request('naissance')
+        url = reverse('agents:notification_delete', args=[1, dossier.pk])
+        self.assertEqual(self.client.get(url).status_code, 405)
+        self.assertRedirects(self.client.post(url), reverse('agents:notifications', args=[1]))
+        self.assertNotContains(self.client.get(reverse('agents:notifications', args=[1])), dossier.reference)
+        self.assertEqual(self.client.get(reverse('agents:notifications_count', args=[1])).json()['new_count'], 0)
+        # La demande elle-même est conservée, et l'agent d'un autre guichet ne peut pas y toucher.
+        self.assertTrue(DossierRequest.objects.filter(pk=dossier.pk).exists())
+        other = make_request('transport')
+        self.assertEqual(self.client.post(reverse('agents:notification_delete', args=[1, other.pk])).status_code, 404)
+
     def test_notifications_and_statuses_are_cards_of_the_requests_page(self):
         make_agent('naissance', 1)
         self.client.login(username='naissance', password=PASSWORD)

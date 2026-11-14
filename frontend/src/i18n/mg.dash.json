@@ -265,7 +265,8 @@
       "documentsTitle": "Antontan-taratasy azo alaina",
       "download": "Alaivo",
       "downloading": "Maka…",
-      "downloadError": "Tsy tafiditra ny fakana. Andramo indray."
+      "downloadError": "Tsy tafiditra ny fakana. Andramo indray.",
+      "delete": "Fafao ny fampahafantarana"
     },
     "status": {
       "PENDING": "Miandry",
