@@ -18,6 +18,7 @@ from reportlab.lib.units import mm
 from reportlab.platypus import Image, KeepTogether, Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
 
 from . import lettres, lettres_mg
+from .guichets import GUICHETS
 
 NAVY = colors.HexColor('#1f3a63')
 BLUE = colors.HexColor('#2f6db5')
@@ -745,8 +746,8 @@ TICKET_STYLES = {
                               textColor=GREY, alignment=TA_CENTER),
     'title': ParagraphStyle('t_title', fontName='Helvetica-Bold', fontSize=16, leading=19,
                             textColor=NAVY, alignment=TA_CENTER, spaceBefore=4),
-    'warning': ParagraphStyle('t_warning', fontName='Helvetica-BoldOblique', fontSize=8.5, leading=11,
-                              textColor=colors.HexColor('#b3261e'), alignment=TA_CENTER),
+    'guichet': ParagraphStyle('t_guichet', fontName='Helvetica-Bold', fontSize=9, leading=11,
+                              textColor=NAVY, alignment=TA_CENTER),
     'cell': ParagraphStyle('t_cell', fontName='Helvetica', fontSize=9, leading=11.5,
                            textColor=colors.HexColor('#333a46')),
     'help': ParagraphStyle('t_help', fontName='Helvetica', fontSize=8, leading=10.5,
@@ -764,6 +765,16 @@ TICKET_NAMES = {
     'LegislationExtract': lambda a: a.recipient_name or '',
     'ServiceCertificate': lambda a: a.holder_full_name,
 }
+
+
+def _ticket_guichet(act):
+    """« Guichet 1 — Actes de naissance » : le guichet qui a établi le document."""
+    from .official import OFFICIAL_DOCUMENTS
+    for spec in OFFICIAL_DOCUMENTS.values():
+        if isinstance(act, spec.model):
+            guichet = GUICHETS[spec.guichet]
+            return f'{guichet.title} — {guichet.label}'
+    return ''
 
 
 def ticket_pdf(act):
@@ -795,7 +806,7 @@ def _build_ticket(act):
         Paragraph("REPOBLIKAN'I MADAGASIKARA", t['country']),
         Paragraph(escape(act.commune.upper()), t['commune']),
         Paragraph('BON DE RETRAIT', t['title']),
-        Paragraph('Ne vaut pas document officiel', t['warning']),
+        Paragraph(escape(_ticket_guichet(act)), t['guichet']),
         Spacer(1, 3 * mm),
     ]
 
