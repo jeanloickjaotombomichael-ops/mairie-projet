@@ -385,7 +385,7 @@ class MailAndMessagesTests(TestCase):
 
 
 class DeleteBirthCertificateTests(TestCase):
-    """L'agent demande la suppression ; seul l'administrateur l'accepte ou la refuse."""
+    """L'agent supprime le document lui-même ; les anciennes demandes restent traitables par l'administrateur."""
 
     def setUp(self):
         from .models import BirthCertificate
@@ -404,15 +404,24 @@ class DeleteBirthCertificateTests(TestCase):
             {'action': action, '_selected_action': [self.act.pk]},
         )
 
-    def test_agent_only_requests_deletion(self):
+    def pending_request(self):
+        """Demande de suppression en attente (ancien circuit, avant la suppression directe)."""
+        from django.utils import timezone
+
+        type(self.act).objects.filter(pk=self.act.pk).update(
+            deletion_requested_at=timezone.now(), deletion_reason='Doublon',
+        )
+
+    def test_agent_deletes_without_admin_approval(self):
         response = self.client.post(self.delete_url, {'reason': 'Erreur sur le nom'})
-        self.assertRedirects(response, reverse('agents:document_detail', args=[1, self.act.pk]))
+        self.assertRedirects(response, reverse('agents:folder_documents', args=[1]))
         self.act.refresh_from_db()
-        self.assertIsNone(self.act.deleted_at)  # toujours là
-        self.assertTrue(self.act.deletion_pending)
+        self.assertIsNotNone(self.act.deleted_at)
+        self.assertEqual(self.act.deleted_by.username, 'naissance')
         self.assertEqual(self.act.deletion_reason, 'Erreur sur le nom')
-        self.assertContains(self.client.get(reverse('agents:folder_documents', args=[1])), 'Suppression demandée')
-        self.assertTrue(self.client.get(reverse('verify_document', args=[self.act.pk])).json()['is_authentic'])
+        self.assertNotContains(self.client.get(reverse('agents:folder_documents', args=[1])), self.act.act_number)
+        self.assertEqual(self.client.get(reverse('verify_document', args=[self.act.pk])).json()['status'], 'REVOKED')
+        self.assertEqual(self.client.get(reverse('agents:document_detail', args=[1, self.act.pk])).status_code, 404)
 
     def test_documents_are_stored_in_folders(self):
         detail_url = reverse('agents:document_detail', args=[1, self.act.pk])
@@ -445,14 +454,22 @@ class DeleteBirthCertificateTests(TestCase):
 
         self.assertContains(self.client.get(url, {'q': 'Paramètres'}), reverse('agents:settings'))
 
-    def test_reason_is_required(self):
-        response = self.client.post(self.delete_url, {'reason': '  '})
-        self.assertEqual(response.status_code, 200)
+    def test_reason_is_optional(self):
+        self.assertEqual(self.client.get(self.delete_url).status_code, 200)  # page de confirmation
+        self.client.post(self.delete_url, {'reason': '  '})
         self.act.refresh_from_db()
-        self.assertFalse(self.act.deletion_pending)
+        self.assertIsNotNone(self.act.deleted_at)
+
+    def test_agent_can_delete_a_pending_request_directly(self):
+        self.pending_request()
+        self.client.post(self.delete_url)
+        self.act.refresh_from_db()
+        self.assertIsNotNone(self.act.deleted_at)
+        self.assertEqual(self.act.deletion_reason, 'Doublon')
 
     def test_admin_approves_deletion(self):
-        self.client.post(self.delete_url, {'reason': 'Doublon'}, follow=True)  # affiche (et consomme) le message
+        self.pending_request()
+        self.client.get(reverse('agents:folder_documents', args=[1]))  # consomme le message de création
         self.admin_action('approve_deletion')
         self.act.refresh_from_db()
         self.assertIsNotNone(self.act.deleted_at)
@@ -461,7 +478,7 @@ class DeleteBirthCertificateTests(TestCase):
         self.assertEqual(self.client.get(reverse('verify_document', args=[self.act.pk])).json()['status'], 'REVOKED')
 
     def test_admin_rejects_deletion(self):
-        self.client.post(self.delete_url, {'reason': 'Doublon'})
+        self.pending_request()
         self.admin_action('reject_deletion')
         self.act.refresh_from_db()
         self.assertIsNone(self.act.deleted_at)
@@ -473,7 +490,7 @@ class DeleteBirthCertificateTests(TestCase):
         self.assertIsNone(self.act.deleted_at)
 
     def test_agent_can_cancel_request(self):
-        self.client.post(self.delete_url, {'reason': 'Doublon'})
+        self.pending_request()
         self.client.post(reverse('agents:document_cancel_deletion', args=[1, self.act.pk]))
         self.act.refresh_from_db()
         self.assertFalse(self.act.deletion_pending)
@@ -482,18 +499,16 @@ class DeleteBirthCertificateTests(TestCase):
         from .models import BirthCertificate
 
         self.client.post(self.delete_url, {'reason': 'Doublon'})
-        self.admin_action('approve_deletion')
-        self.client.login(username='naissance', password=PASSWORD)
         self.client.post(reverse('agents:document_create', args=[1]), ACT_DATA)
         latest = BirthCertificate.objects.filter(deleted_at=None).get()
         self.assertEqual(latest.act_number, '2026-NAI-00002')
 
-    def test_other_guichet_cannot_request_deletion(self):
+    def test_other_guichet_cannot_delete(self):
         make_agent('mariage', 2)
         self.client.login(username='mariage', password=PASSWORD)
         self.assertEqual(self.client.post(self.delete_url, {'reason': 'x'}).status_code, 403)
         self.act.refresh_from_db()
-        self.assertFalse(self.act.deletion_pending)
+        self.assertIsNone(self.act.deleted_at)
 
 
 class RoutingAndNotificationTests(TestCase):
@@ -694,7 +709,9 @@ class SendToRequesterTests(TestCase):
         self.assertEqual(self.api(self.download_url()).status_code, 404)
 
     def test_cannot_send_while_deletion_is_pending(self):
-        self.client.post(reverse('agents:document_delete', args=[1, self.act.pk]), {'reason': 'Doublon'})
+        from django.utils import timezone
+
+        type(self.act).objects.filter(pk=self.act.pk).update(deletion_requested_at=timezone.now())
         self.client.post(self.send_url, {'message': ''})
         self.act.refresh_from_db()
         self.assertIsNone(self.act.sent_at)

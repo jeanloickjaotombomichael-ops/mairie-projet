@@ -1,7 +1,3 @@
-{% load i18n %}{% if act.deletion_pending %}
-<span class="mairy-status s-in_progress" title="{% translate "En attente de la décision de l'administrateur" %}">{% translate "Suppression demandée" %}</span>
-{% else %}
-<a class="{% if compact %}mairy-btn agent-danger{% else %}agent-btn agent-btn-danger{% endif %}"
+{% load i18n %}<a class="{% if compact %}mairy-btn agent-danger{% else %}agent-btn agent-btn-danger{% endif %}"
    href="{% url 'agents:document_delete' number act.pk %}"
-   aria-label="{% blocktranslate with number=act.act_number %}Demander la suppression du document {{ number }}{% endblocktranslate %}">{% translate "Supprimer" %}</a>
-{% endif %}
+   aria-label="{% blocktranslate with number=act.act_number %}Supprimer le document {{ number }}{% endblocktranslate %}">{% translate "Supprimer" %}</a>

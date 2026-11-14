@@ -644,29 +644,30 @@ def document_pdf(request, number, pk):
 
 @guichet_required
 def document_delete(request, number, pk):
-    """L'agent ne supprime pas lui-même : il demande la suppression, avec un motif, à l'administrateur."""
+    """
+    L'agent supprime le document lui-même, sans attendre l'administrateur (motif facultatif).
+
+    Le document est masqué mais conservé : son numéro n'est jamais réattribué et le QR code
+    d'une copie déjà imprimée indique « révoqué ».
+    """
     spec = _spec(number)
     act = get_object_or_404(spec.model, pk=pk, deleted_at=None)
-    if act.deletion_pending:
-        messages.info(request, _("La suppression du document %(number)s attend déjà la décision de l'administrateur.") % {'number': act.act_number})
-        return redirect('agents:document_detail', number, act.pk)
 
     error = ''
     reason = ''
     if request.method == 'POST':
         reason = request.POST.get('reason', '').strip()
-        if not reason:
-            error = _("Indiquez le motif de la suppression : l'administrateur en a besoin pour décider.")
-        else:
-            act.deletion_requested_at = timezone.now()
-            act.deletion_requested_by = request.user
-            act.deletion_reason = reason[:2000]
-            act.save(update_fields=['deletion_requested_at', 'deletion_requested_by', 'deletion_reason'])
-            messages.success(
-                request,
-                _("Demande de suppression du document %(number)s envoyée à l'administrateur.") % {'number': act.act_number},
-            )
-            return redirect('agents:document_detail', number, act.pk)
+        now = timezone.now()
+        act.deletion_requested_at = act.deletion_requested_at or now
+        act.deletion_requested_by = act.deletion_requested_by or request.user
+        act.deletion_reason = reason[:2000] or act.deletion_reason
+        act.deleted_at = now
+        act.deleted_by = request.user
+        act.save(update_fields=[
+            'deletion_requested_at', 'deletion_requested_by', 'deletion_reason', 'deleted_at', 'deleted_by',
+        ])
+        messages.success(request, _('Document %(number)s supprimé.') % {'number': act.act_number})
+        return redirect('agents:folder_documents', number)
 
     context = {
         **_shell(request, number, 'folders'),
