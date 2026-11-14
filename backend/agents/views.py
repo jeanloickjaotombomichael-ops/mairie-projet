@@ -874,6 +874,20 @@ def guichet_notifications(request, number):
 
 @guichet_required
 @require_POST
+def request_delete(request, number, pk):
+    """Supprime une demande d'usager du guichet (les documents déjà établis sont conservés)."""
+    dossier = get_object_or_404(_guichet_requests(request.guichet), pk=pk)
+    reference = dossier.reference
+    dossier.delete()
+    messages.success(request, _('Demande %(reference)s supprimée.') % {'reference': reference})
+    next_url = request.POST.get('next', '')
+    if url_has_allowed_host_and_scheme(next_url, allowed_hosts={request.get_host()}, require_https=request.is_secure()):
+        return redirect(next_url)
+    return redirect('agents:requests', number)
+
+
+@guichet_required
+@require_POST
 def notification_delete(request, number, pk):
     """Retire une notification de la liste de l'agent (la demande n'est pas supprimée)."""
     from .models import NotificationDismissal

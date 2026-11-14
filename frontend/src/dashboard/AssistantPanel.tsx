@@ -3,6 +3,7 @@ import { Link } from 'react-router'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '@clerk/react'
 import { askAssistant, type AssistantItem } from '@/lib/espaceApi'
+import { DOSSIER_ACK_DELAY_MS, DOSSIER_SENT_EVENT, type DossierSentDetail } from '@/dashboard/assistantEvents'
 import { CloseIcon, SendIcon, SparklesIcon } from '@/dashboard/icons'
 
 interface Entry {
@@ -13,6 +14,7 @@ interface Entry {
 
 interface AssistantPanelProps {
   open: boolean
+  onOpen: () => void
   onClose: () => void
 }
 
@@ -28,7 +30,7 @@ function readHistory(): Entry[] {
 }
 
 /** Assistant IA de l'espace usager : suivi des demandes, réponses, documents, démarches. */
-function AssistantPanel({ open, onClose }: AssistantPanelProps) {
+function AssistantPanel({ open, onOpen, onClose }: AssistantPanelProps) {
   const { t } = useTranslation()
   const { getToken } = useAuth()
   const [history, setHistory] = useState<Entry[]>(readHistory)
@@ -52,6 +54,25 @@ function AssistantPanel({ open, onClose }: AssistantPanelProps) {
       // stockage indisponible : l'historique reste en mémoire
     }
   }, [history])
+
+  // Accusé de réception automatique, de la part des agents, quelques secondes après l'envoi d'une demande.
+  useEffect(() => {
+    const timers: number[] = []
+    const onDossierSent = (event: Event) => {
+      const { reference } = (event as CustomEvent<DossierSentDetail>).detail
+      timers.push(
+        window.setTimeout(() => {
+          setHistory((current) => [...current, { from: 'bot', text: t('dash.assistant.dossierReceived', { reference }) }])
+          onOpen()
+        }, DOSSIER_ACK_DELAY_MS),
+      )
+    }
+    window.addEventListener(DOSSIER_SENT_EVENT, onDossierSent)
+    return () => {
+      window.removeEventListener(DOSSIER_SENT_EVENT, onDossierSent)
+      timers.forEach((timer) => window.clearTimeout(timer))
+    }
+  }, [t, onOpen])
 
   useEffect(() => {
     logRef.current?.scrollTo({ top: logRef.current.scrollHeight })

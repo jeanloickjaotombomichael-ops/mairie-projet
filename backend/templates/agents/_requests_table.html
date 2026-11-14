@@ -18,7 +18,18 @@
           {% if req.queue_position == 1 %}<span class="agent-queue is-first">{% translate "À traiter en premier" %}</span>
           {% elif req.queue_position %}<span class="agent-queue">{% blocktranslate with position=req.queue_position %}N° {{ position }} dans la file{% endblocktranslate %}</span>{% endif %}
         </td>
-        <td class="agent-cell-action"><a class="mairy-btn" href="{% url 'agents:request_detail' number req.pk %}">{% if req.queue_position and req.queue_position > 1 %}{% translate "Voir" %}{% else %}{% translate "Traiter" %}{% endif %}</a></td>
+        <td class="agent-cell-action">
+          <div class="agent-row-actions">
+            <a class="mairy-btn" href="{% url 'agents:request_detail' number req.pk %}">{% if req.queue_position and req.queue_position > 1 %}{% translate "Voir" %}{% else %}{% translate "Traiter" %}{% endif %}</a>
+            <form method="post" action="{% url 'agents:request_delete' number req.pk %}"
+                  onsubmit="return confirm(this.dataset.confirm)"
+                  data-confirm="{% blocktranslate with reference=req.reference %}Supprimer définitivement la demande {{ reference }} ? Cette action est irréversible.{% endblocktranslate %}">
+              {% csrf_token %}
+              <input type="hidden" name="next" value="{{ request.get_full_path }}">
+              <button type="submit" class="mairy-btn files-danger" title="{% translate "Supprimer la demande" %}" aria-label="{% blocktranslate with reference=req.reference %}Supprimer la demande {{ reference }}{% endblocktranslate %}"><svg class="mairy-ico"><use href="#mi-trash"/></svg></button>
+            </form>
+          </div>
+        </td>
       </tr>
       {% empty %}
       <tr><td colspan="{% if number <= 4 %}6{% else %}5{% endif %}" class="mairy-muted">{% translate "Aucune demande pour le moment." %}</td></tr>

@@ -542,6 +542,23 @@ class RoutingAndNotificationTests(TestCase):
         self.assertContains(self.client.get(reverse('agents:notifications', args=[1])), dossier.reference)
         self.assertEqual(self.client.get(count_url).json()['new_count'], 0)
 
+    def test_agent_can_delete_a_request(self):
+        make_agent('naissance', 1)
+        self.client.login(username='naissance', password=PASSWORD)
+        dossier = make_request('naissance')
+        list_url = reverse('agents:requests', args=[1])
+        url = reverse('agents:request_delete', args=[1, dossier.pk])
+        self.assertContains(self.client.get(list_url), url)
+        self.assertEqual(self.client.get(url).status_code, 405)
+        self.assertRedirects(self.client.post(url, {'next': list_url}), list_url)
+        self.assertFalse(DossierRequest.objects.filter(pk=dossier.pk).exists())
+        # Redirection externe refusée ; demande d'un autre guichet introuvable.
+        other = make_request('transport')
+        self.assertEqual(self.client.post(reverse('agents:request_delete', args=[1, other.pk])).status_code, 404)
+        mine = make_request('naissance')
+        response = self.client.post(reverse('agents:request_delete', args=[1, mine.pk]), {'next': 'https://evil.example/'})
+        self.assertRedirects(response, list_url)
+
     def test_agent_can_delete_a_notification(self):
         make_agent('naissance', 1)
         self.client.login(username='naissance', password=PASSWORD)

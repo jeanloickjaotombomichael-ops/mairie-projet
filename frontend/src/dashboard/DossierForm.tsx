@@ -16,6 +16,7 @@ import {
 import { ApiError } from '@/lib/api'
 import { createDossier } from '@/lib/espaceApi'
 import { loadFieldHistory, saveFieldHistory } from '@/lib/fieldHistory'
+import { announceDossierSent } from '@/dashboard/assistantEvents'
 import { cn } from '@/lib/utils'
 import { useDossiers } from '@/dashboard/dossiersContext'
 import { CheckIcon, ChevronLeftIcon, ChevronRightIcon, HomeIcon, PinIcon, SendIcon, SpinnerIcon } from '@/dashboard/icons'
@@ -270,6 +271,7 @@ function DossierForm({ type }: DossierFormProps) {
       setHistory(saveFieldHistory(user?.id, { ...identity, ...details }))
       setReference(result.reference)
       setPhase('success')
+      announceDossierSent(result.reference)
       void reload()
     } catch (error) {
       setPhase('idle')

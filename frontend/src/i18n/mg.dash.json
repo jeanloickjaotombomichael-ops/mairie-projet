@@ -303,7 +303,8 @@
       "error": "Tsy tafiditra amin'ny mpizara aho. Andramo indray afaka kelikely.",
       "suggestStatus": "Aiza ny fangatahako ?",
       "suggestDocuments": "Misy antontan-taratasy ho alaina ve ?",
-      "suggestProcedure": "Ahoana no ahazoana kopian'ny fahaterahana ?"
+      "suggestProcedure": "Ahoana no ahazoana kopian'ny fahaterahana ?",
+      "dossierReceived": "Hafatra avy amin'ny mpiasan'ny kaominina: voaray soa aman-tsara ny fangatahanao {{reference}} ary ho karakaraina ao anatin'ny fe-potoana voafaritra. Hampahafantarina anao eto sy amin'ny fampahafantarana ianao raha vao misy fivoarana."
     },
     "mail": {
       "intro": "Manorata amin'ny guichet na amin'ny fitantanan'ny kaominina ; eto no ahitana ny valin'ny mpiasa.",

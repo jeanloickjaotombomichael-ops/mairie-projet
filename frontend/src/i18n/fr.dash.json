@@ -303,7 +303,8 @@
       "error": "Je n'arrive pas à joindre le serveur. Réessayez dans un instant.",
       "suggestStatus": "Où en sont mes demandes ?",
       "suggestDocuments": "Ai-je des documents à télécharger ?",
-      "suggestProcedure": "Comment obtenir un acte de naissance ?"
+      "suggestProcedure": "Comment obtenir un acte de naissance ?",
+      "dossierReceived": "Message des agents de la mairie : votre demande {{reference}} a bien été reçue et sera traitée dans un délai bien défini. Vous serez prévenu ici et dans vos notifications dès qu'elle avancera."
     },
     "mail": {
       "intro": "Écrivez à un guichet ou à l'administration de la mairie ; les réponses des agents arrivent ici.",

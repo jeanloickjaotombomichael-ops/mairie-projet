@@ -303,7 +303,8 @@
       "error": "I can't reach the server. Please try again in a moment.",
       "suggestStatus": "Where are my requests?",
       "suggestDocuments": "Do I have documents to download?",
-      "suggestProcedure": "How do I get a birth certificate?"
+      "suggestProcedure": "How do I get a birth certificate?",
+      "dossierReceived": "Message from the town hall agents: your request {{reference}} has been received and will be processed within a set time frame. You will be notified here and in your notifications as soon as it progresses."
     },
     "mail": {
       "intro": "Write to a desk or to the town hall administration; agents' replies arrive here.",

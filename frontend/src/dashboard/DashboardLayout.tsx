@@ -32,7 +32,7 @@ function DashboardLayout() {
           <main className="flex-1 px-4 py-6 sm:px-6 lg:px-8">
             <Outlet />
           </main>
-          <AssistantPanel open={assistantOpen} onClose={closeAssistant} />
+          <AssistantPanel open={assistantOpen} onOpen={openAssistant} onClose={closeAssistant} />
         </div>
       </MailsProvider>
     </DossiersProvider>

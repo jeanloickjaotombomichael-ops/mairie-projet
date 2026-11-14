@@ -17,6 +17,7 @@ urlpatterns = [
     path('guichet-<int:number>/', views.guichet_dashboard, name='dashboard'),
     path('guichet-<int:number>/demandes/', views.guichet_requests, name='requests'),
     path('guichet-<int:number>/demandes/<int:pk>/', views.guichet_request_detail, name='request_detail'),
+    path('guichet-<int:number>/demandes/<int:pk>/supprimer/', views.request_delete, name='request_delete'),
     path('guichet-<int:number>/recherche/', views.agent_search, name='search'),
     path('guichet-<int:number>/documents/', views.documents_home, name='documents'),
     path('guichet-<int:number>/documents/nouveau/', views.document_create, name='document_create'),
