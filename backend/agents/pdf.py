@@ -82,7 +82,7 @@ def _person(lang, label, name, feminine, place, birth_date, profession, address)
         parts.append(born)
     if profession:
         if lang == 'mg':
-            parts.append(f'asa : {escape(profession)}')
+            parts.append(f'asa : {escape(_mg(lang, profession))}')
         else:
             parts.append(f"profession d'{escape(profession)}" if profession[:1].lower() in 'aeiouéèêh'
                          else f'profession de {escape(profession)}')
@@ -162,6 +162,40 @@ def _std(lang, value):
         DEFAULT_MARGINAL_NOTES: "Tsy misy. (Tsy nisy fanamarihana fanampiny voasoratra hatramin'ny andro "
                                 'nanomezana ity dika ity).',
     }.get((value or '').strip(), value)
+
+
+# Valeurs courantes saisies en français par les agents (qualité du déclarant, profession…) :
+# traduites en malgache dans le PDF pour ne pas mélanger les deux langues.
+MG_COMMON_VALUES = {
+    # Qualité / lien de parenté
+    'père': 'Ray', 'le père': 'Ray', "père de l'enfant": "Rain'ny zaza", "le père de l'enfant": "Rain'ny zaza",
+    'mère': 'Reny', 'la mère': 'Reny', "mère de l'enfant": "Renin'ny zaza", "la mère de l'enfant": "Renin'ny zaza",
+    'fils': 'Zanaka lahy', 'fils du défunt': "Zanaka lahin'ny maty", 'fille': 'Zanaka vavy',
+    'fille du défunt': "Zanaka vavin'ny maty", 'grand-père': 'Dadabe', 'grand-mère': 'Renibe',
+    'oncle': 'Dadatoa', 'tante': 'Nenitoa', 'frère': 'Rahalahy', 'époux': 'Vady', 'épouse': 'Vady',
+    'mari': 'Vady', 'conjoint': 'Vady', 'conjointe': 'Vady', 'voisin': 'Mpifanolo-bodirindrina',
+    'voisine': 'Mpifanolo-bodirindrina', 'sage-femme': 'Mpampivelona', 'la sage-femme': 'Mpampivelona',
+    # Professions
+    'enseignant': 'Mpampianatra', 'enseignante': 'Mpampianatra', 'instituteur': 'Mpampianatra',
+    'institutrice': 'Mpampianatra', 'professeur': 'Mpampianatra', 'cultivateur': 'Mpamboly',
+    'cultivatrice': 'Mpamboly', 'agriculteur': 'Mpamboly', 'agricultrice': 'Mpamboly', 'éleveur': 'Mpiompy',
+    'pêcheur': 'Mpanjono', 'commerçant': 'Mpivarotra', 'commerçante': 'Mpivarotra', 'chauffeur': 'Mpamily',
+    'étudiant': 'Mpianatra', 'étudiante': 'Mpianatra', 'élève': 'Mpianatra', 'médecin': 'Dokotera',
+    'docteur': 'Dokotera', 'dentiste': 'Dokoteran-nify', 'infirmier': 'Mpitsabo mpanampy',
+    'infirmière': 'Mpitsabo mpanampy', 'fonctionnaire': 'Mpiasam-panjakana', 'ménagère': 'Mpikarakara tokantrano',
+    'femme au foyer': 'Mpikarakara tokantrano', 'sans profession': 'Tsy manana asa',
+    'retraité': 'Misotro ronono', 'retraitée': 'Misotro ronono', 'couturier': 'Mpanjaitra',
+    'couturière': 'Mpanjaitra', 'menuisier': 'Mpandrafitra', 'militaire': 'Miaramila', 'gendarme': 'Zandary',
+    'policier': 'Polisy', 'ouvrier': 'Mpiasa', 'ouvrière': 'Mpiasa', 'employé': 'Mpiasa', 'employée': 'Mpiasa',
+}
+
+
+def _mg(lang, value):
+    """Valeur saisie traduite en malgache si c'est une valeur courante (« Père » → « Ray »), sinon inchangée."""
+    value = _std(lang, value)
+    if lang != 'mg' or not value:
+        return value
+    return MG_COMMON_VALUES.get(value.strip().lower(), value)
 
 
 def _commune(act, lang):
@@ -248,7 +282,7 @@ def _birth(act, s, lang):
             f"ny zaza {_b('vavy' if female else 'lahy')} atao hoe {_b(act.child_first_names)}, "
             f'anaram-pianakaviana {_b(act.child_last_name.upper())}.'
         )
-        relationship = f', {escape(act.declarant_relationship)}' if act.declarant_relationship else ''
+        relationship = f', {escape(_mg(lang, act.declarant_relationship))}' if act.declarant_relationship else ''
         declaration = (
             f"Nambaran'i {escape(act.declarant_name)}{relationship}, teo anatrehan'ny mpiandraikitra ny "
             f"fiankohonana, ny fahaterahana. Nosoratana tamin'ny {L.date(drawn)} tamin'ny {L.time(drawn)} "
@@ -294,7 +328,7 @@ def _parent(lang, name, profession, deceased=False, feminine=False):
         text = 'feue ' if feminine else 'feu '
     text += escape(name)
     if profession:
-        text += f' ({escape(profession)})'
+        text += f' ({escape(_mg(lang, profession))})'
     if deceased and lang == 'mg':
         text += ' (efa nodimandry)'
     return text
@@ -325,7 +359,7 @@ def _marriage(act, s, lang):
             (_t(lang, 'Prénoms', "Fanampin'anarana"), escape(getattr(act, f'{prefix}_first_names'))),
             (_t(lang, 'Date de naissance', 'Daty nahaterahana'), L.date_short(birth_date)),
             (_t(lang, 'Lieu de naissance', 'Toerana nahaterahana'), escape(getattr(act, f'{prefix}_birth_place'))),
-            (_t(lang, 'Profession', 'Asa'), escape(getattr(act, f'{prefix}_profession') or '—')),
+            (_t(lang, 'Profession', 'Asa'), escape(_mg(lang, getattr(act, f'{prefix}_profession')) or '—')),
             (_t(lang, 'Domicile', 'Fonenana'), escape(getattr(act, f'{prefix}_address'))),
             (_t(lang, 'Filiation', 'Ray aman-dreny'), '<br/>' + filiation),
         ]
@@ -433,7 +467,7 @@ def _death(act, s, lang):
         text = (
             f"Tamin'ny {_b(L.date_short(died))} tamin'ny {L.time_with_and(died)}, dia maty tao "
             f"{escape(act.death_place)} i {name}, "
-            f"{escape(act.deceased_profession) if act.deceased_profession else 'tsy nanana asa'}"
+            f"{escape(_mg(lang, act.deceased_profession)) if act.deceased_profession else 'tsy nanana asa'}"
         )
         if act.deceased_birth_date or act.deceased_birth_place:
             text += ', teraka'
@@ -456,10 +490,10 @@ def _death(act, s, lang):
         if act.declarant_age:
             declarant += f', {act.declarant_age} taona'
         if act.declarant_profession:
-            declarant += f', {escape(act.declarant_profession)}'
+            declarant += f', {escape(_mg(lang, act.declarant_profession))}'
         if act.declarant_address:
             declarant += f', monina ao {escape(act.declarant_address)}'
-        declarant += f', {escape(act.declarant_relationship)}'
+        declarant += f', {escape(_mg(lang, act.declarant_relationship))}'
         declaration = (
             f'Nosoratana sy nohamarininay {_b(act.registrar_name)}, {escape(_std(lang, act.registrar_title))} ao amin\'ny '
             f"{escape(_commune(act, lang))}, ny fahafatesana, araka ny fanambaran'i {declarant}, izay nanao sonia "
@@ -707,25 +741,26 @@ TEMPLATE_FONT_SIZE = 13
 DOTS_END = 1016
 
 
-def _fr_date(value):
-    return lettres.date_short(value) if value else ''
+def _mg_date(value):
+    return lettres_mg.date_short(value) if value else ''
 
 
 def _death_template(act):
     died = timezone.localtime(act.death_datetime)
-    father = f'Feu {act.father_name}' if act.father_name and act.father_deceased else act.father_name
-    mother = f'Feue {act.mother_name}' if act.mother_name and act.mother_deceased else act.mother_name
+    father = f'{act.father_name} (efa nodimandry)' if act.father_name and act.father_deceased else act.father_name
+    mother = f'{act.mother_name} (efa nodimandry)' if act.mother_name and act.mother_deceased else act.mother_name
+    sex = 'Vavy' if act.deceased_sex == act.Sex.FEMALE else 'Lahy'
     return {
         'image': 'acte_deces.jpg',
         'fields': [
             ((862, 198), act.act_number, 1018),
             ((312, 283), '', 376),
             ((431, 590), f'{act.deceased_last_name.upper()} {act.deceased_first_names}', DOTS_END),
-            ((163, 626), act.get_deceased_sex_display(), DOTS_END),
-            ((328, 660), _fr_date(act.deceased_birth_date), DOTS_END),
+            ((163, 626), sex, DOTS_END),
+            ((328, 660), _mg_date(act.deceased_birth_date), DOTS_END),
             ((328, 695), act.deceased_birth_place, DOTS_END),
-            ((272, 735), _fr_date(died), DOTS_END),
-            ((291, 771), lettres.time_digits(died), DOTS_END),
+            ((272, 735), _mg_date(died), DOTS_END),
+            ((291, 771), lettres_mg.time_digits(died), DOTS_END),
             ((272, 806), act.death_place, DOTS_END),
             ((421, 842), '', DOTS_END),  # cause du décès : non enregistrée
             ((573, 907), act.spouse_name, DOTS_END),
@@ -819,15 +854,15 @@ def _template_pdf(act):
 
 
 def document_pdf(act, lang='mg'):
-    """Renvoie les octets du PDF du document officiel (tous guichets), en malgache par défaut ou en français.
+    """Renvoie les octets du PDF du document officiel (tous guichets), rédigé en malgache.
 
     Imprimé par l'agent au guichet, après le scan du bon de retrait, puis signé et cacheté.
-    Les actes de naissance et de décès suivent le modèle officiel de la Commune (en français)."""
+    Le contenu est toujours rédigé en malgache, sans mélange avec le français : le paramètre
+    `lang` est conservé pour les appels existants mais ignoré."""
+    lang = 'mg'
     if type(act).__name__ in TEMPLATE_BUILDERS:
-        with translation.override('fr'):
+        with translation.override(lang):
             return _template_pdf(act)
-    if lang not in LANGUAGES:
-        lang = 'mg'
     # Libellés des listes (type de texte, service…) dans la langue du document.
     with translation.override(lang):
         return _build_pdf(act, lang)

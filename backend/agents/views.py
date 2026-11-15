@@ -37,7 +37,7 @@ from .guichets import GUICHETS
 from .labels import field_label, option_label
 from .official import OFFICIAL_DOCUMENTS, find_document
 from .queue import annotate_positions, blocked_message, blocking_request
-from .pdf import TEMPLATE_BUILDERS as PDF_TEMPLATES, document_pdf as document_pdf_bytes
+from .pdf import document_pdf as document_pdf_bytes
 from .pdf import qr_png, ticket_pdf
 
 Status = DossierRequest.Status
@@ -606,8 +606,6 @@ def document_detail(request, number, pk):
         'title': act.label,
         'spec': spec,
         'act': act,
-        # Actes de naissance et de décès : modèle officiel, uniquement en français.
-        'bilingual_pdf': type(act).__name__ not in PDF_TEMPLATES,
         'content_sections': _document_rows(act, spec),
         'check': act.verify(),
         'qr_data_uri': f'data:image/png;base64,{base64.b64encode(qr).decode("ascii")}' if qr else '',
@@ -637,8 +635,8 @@ def document_ticket(request, number, pk):
 def document_pdf(request, number, pk):
     spec = _spec(number)
     act = get_object_or_404(spec.model, pk=pk, deleted_at=None)
-    # Rédigé en malgache par défaut ; « ?langue=fr » pour la version française.
-    response = HttpResponse(document_pdf_bytes(act, request.GET.get('langue', 'mg')), content_type='application/pdf')
+    # Toujours rédigé en malgache.
+    response = HttpResponse(document_pdf_bytes(act), content_type='application/pdf')
     disposition = 'inline' if request.GET.get('apercu') else 'attachment'
     response['Content-Disposition'] = f'{disposition}; filename="{act.filename}"'
     return response
