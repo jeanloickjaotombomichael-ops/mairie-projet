@@ -696,10 +696,136 @@ def _signatures(entries):
     return table
 
 
+# -- Actes de naissance et de décès : modèle officiel imprimé ------------------------------
+# Le PDF reprend à l'identique le modèle de la Commune (image de fond : en-tête, armoiries,
+# cachet, filigrane) et écrit les valeurs sur ses lignes pointillées. Toujours en français.
+# Coordonnées en pixels de l'image modèle (1086 × 1448) : (début des pointillés, ligne des pointillés).
+TEMPLATES_DIR = Path(settings.BASE_DIR) / 'static' / 'mairy_admin' / 'actes'
+TEMPLATE_SIZE = (1086, 1448)
+TEMPLATE_FONT = 'Times-Roman'
+TEMPLATE_FONT_SIZE = 13
+DOTS_END = 1016
+
+
+def _fr_date(value):
+    return lettres.date_short(value) if value else ''
+
+
+def _death_template(act):
+    died = timezone.localtime(act.death_datetime)
+    father = f'Feu {act.father_name}' if act.father_name and act.father_deceased else act.father_name
+    mother = f'Feue {act.mother_name}' if act.mother_name and act.mother_deceased else act.mother_name
+    return {
+        'image': 'acte_deces.jpg',
+        'fields': [
+            ((862, 198), act.act_number, 1018),
+            ((312, 283), '', 376),
+            ((431, 590), f'{act.deceased_last_name.upper()} {act.deceased_first_names}', DOTS_END),
+            ((163, 626), act.get_deceased_sex_display(), DOTS_END),
+            ((328, 660), _fr_date(act.deceased_birth_date), DOTS_END),
+            ((328, 695), act.deceased_birth_place, DOTS_END),
+            ((272, 735), _fr_date(died), DOTS_END),
+            ((291, 771), lettres.time_digits(died), DOTS_END),
+            ((272, 806), act.death_place, DOTS_END),
+            ((421, 842), '', DOTS_END),  # cause du décès : non enregistrée
+            ((573, 907), act.spouse_name, DOTS_END),
+            ((220, 983), father, DOTS_END),
+            ((221, 1018), mother, DOTS_END),
+        ],
+        'date': (1082, (330, 412), (440, 520), (548, 632)),
+        'signature': (856, 1300),
+    }
+
+
+TEMPLATE_BUILDERS = {
+    'DeathCertificate': _death_template,
+}
+
+# Acte de naissance : mise en page habituelle (bilingue), avec l'en-tête et le pied de page
+# découpés dans le modèle officiel. Coordonnées en pixels de l'image modèle.
+FRAMED_TEMPLATES = {
+    'BirthCertificate': {
+        'image': 'acte_naissance.jpg',
+        'header_cut': 485,           # en-tête : du haut jusqu'au filet « ooo » sous le titre
+        'footer_cut': 1040,          # pied de page : de « Fait à Mahajanga, le… » jusqu'en bas
+        'act_number': (872, 1018, 198),
+        'date': (1070, (328, 405), (424, 505), (526, 622)),
+        'signature': (847, 1300),
+    },
+}
+PAPER = colors.Color(244 / 255, 242 / 255, 243 / 255)  # teinte du papier du modèle
+# Double filet latéral du cadre (épais à l'extérieur, fin à l'intérieur), en pixels.
+FRAME_LINES = ((13.5, 2), (17, 1), (1070, 1), (1073.5, 2))
+
+
+def _fill(pdf, text, left, right, baseline, align='left'):
+    """Écrit `text` entre `left` et `right` (points), réduit si besoin pour tenir sur la ligne."""
+    from reportlab.pdfbase.pdfmetrics import stringWidth
+
+    text = str(text or '').strip()
+    if not text:
+        return
+    size = TEMPLATE_FONT_SIZE
+    while size > 7 and stringWidth(text, TEMPLATE_FONT, size) > right - left:
+        size -= 0.5
+    pdf.setFont(TEMPLATE_FONT, size)
+    pdf.setFillColor(colors.black)
+    if align == 'center':
+        pdf.drawCentredString((left + right) / 2, baseline, text)
+    else:
+        pdf.drawString(left, baseline, text)
+
+
+def _template_pdf(act):
+    from reportlab.pdfgen import canvas
+
+    layout = TEMPLATE_BUILDERS[type(act).__name__](act)
+    page_w, page_h = A4
+    # L'image garde ses proportions : pleine largeur, centrée verticalement sur la page A4.
+    scale = page_w / TEMPLATE_SIZE[0]
+    image_h = TEMPLATE_SIZE[1] * scale
+    bottom = (page_h - image_h) / 2
+
+    def point(x, y):
+        return x * scale, bottom + (TEMPLATE_SIZE[1] - y) * scale
+
+    def write(text, left, right, y, align='left'):
+        x, base = point(left, y)
+        _fill(pdf, text, x, right * scale, base + 1.5, align)  # juste au-dessus des pointillés
+
+    buffer = io.BytesIO()
+    pdf = canvas.Canvas(buffer, pagesize=A4)
+    title = f"{act._meta.verbose_name.capitalize()} N° {act.act_number}"
+    pdf.setTitle(title)
+    pdf.setAuthor(act.commune)
+    pdf.setSubject(str(act._meta.verbose_name))
+    pdf.setCreator('Mairy Project')
+    pdf.drawImage(str(TEMPLATES_DIR / layout['image']), 0, bottom, width=page_w, height=image_h)
+
+    for (left, y), value, right in layout['fields']:
+        write(value, left + 10, right, y)
+
+    drawn = timezone.localtime(act.act_datetime)
+    y, day, month, year = layout['date']
+    for (left, right), value in ((day, f'{drawn.day:02d}'), (month, f'{drawn.month:02d}'), (year, str(drawn.year))):
+        write(value, left, right, y, align='center')
+
+    center, y = layout['signature']
+    write(act.registrar_name, center - 170, center + 170, y, align='center')
+
+    pdf.showPage()
+    pdf.save()
+    return buffer.getvalue()
+
+
 def document_pdf(act, lang='mg'):
     """Renvoie les octets du PDF du document officiel (tous guichets), en malgache par défaut ou en français.
 
-    Imprimé par l'agent au guichet, après le scan du bon de retrait, puis signé et cacheté."""
+    Imprimé par l'agent au guichet, après le scan du bon de retrait, puis signé et cacheté.
+    Les actes de naissance et de décès suivent le modèle officiel de la Commune (en français)."""
+    if type(act).__name__ in TEMPLATE_BUILDERS:
+        with translation.override('fr'):
+            return _template_pdf(act)
     if lang not in LANGUAGES:
         lang = 'mg'
     # Libellés des listes (type de texte, service…) dans la langue du document.
@@ -707,7 +833,108 @@ def document_pdf(act, lang='mg'):
         return _build_pdf(act, lang)
 
 
+def _build_framed_pdf(act, lang):
+    """Acte au contenu habituel, encadré par l'en-tête et le pied de page du modèle officiel."""
+    from PIL import Image as PILImage
+    from reportlab.lib.utils import ImageReader
+    from reportlab.platypus import BaseDocTemplate, Flowable, Frame, NextPageTemplate, PageTemplate
+
+    spec = FRAMED_TEMPLATES[type(act).__name__]
+    source = PILImage.open(TEMPLATES_DIR / spec['image'])
+    width, height = source.size
+    header = ImageReader(source.crop((0, 0, width, spec['header_cut'])))
+    footer = ImageReader(source.crop((0, spec['footer_cut'], width, height)))
+
+    page_w, page_h = A4
+    scale = page_w / width
+    margin = (page_h - height * scale) / 2       # comme le modèle entier centré sur la page A4
+    top = page_h - margin                        # haut du cadre
+    header_h = spec['header_cut'] * scale
+    footer_h = (height - spec['footer_cut']) * scale
+    header_bottom = top - header_h
+
+    def x_pt(x):
+        return x * scale
+
+    def frame_lines(pdf, upper):
+        pdf.saveState()
+        # Papier du modèle entre les filets, pour que le corps se raccorde à l'en-tête et au pied de page.
+        pdf.setFillColor(PAPER)
+        pdf.rect(x_pt(FRAME_LINES[0][0]), margin, x_pt(FRAME_LINES[-1][0] - FRAME_LINES[0][0]), upper - margin,
+                 stroke=0, fill=1)
+        pdf.setStrokeColor(colors.HexColor('#2b2b2b'))
+        for x, weight in FRAME_LINES:
+            pdf.setLineWidth(weight * scale)
+            pdf.line(x_pt(x), margin, x_pt(x), upper)
+        pdf.restoreState()
+
+    def first_page(pdf, doc):
+        frame_lines(pdf, header_bottom + 1)
+        pdf.drawImage(header, 0, header_bottom, width=page_w, height=header_h)
+        left, right, y = spec['act_number']
+        _fill(pdf, act.act_number, x_pt(left), x_pt(right), top - y * scale + 1.5)
+
+    def later_page(pdf, doc):
+        frame_lines(pdf, top)
+
+    class Footer(Flowable):
+        """Pied de page du modèle, toujours posé en bas de la page (occupe la place restante)."""
+
+        def wrap(self, avail_width, avail_height):
+            self.width = avail_width
+            self.height = max(avail_height, footer_h)
+            return self.width, self.height
+
+        def drawOn(self, pdf, x, y, _sW=0):
+            pdf.drawImage(footer, 0, margin, width=page_w, height=footer_h)
+
+            def baseline(y_px):
+                return margin + (height - y_px) * scale + 1.5
+
+            drawn = timezone.localtime(act.act_datetime)
+            y_px, day, month, year = spec['date']
+            for (left, right), value in ((day, f'{drawn.day:02d}'), (month, f'{drawn.month:02d}'),
+                                         (year, str(drawn.year))):
+                _fill(pdf, value, x_pt(left), x_pt(right), baseline(y_px), align='center')
+            center, y_px = spec['signature']
+            _fill(pdf, act.registrar_name, x_pt(center - 170), x_pt(center + 170), baseline(y_px), align='center')
+
+    buffer = io.BytesIO()
+    doc = BaseDocTemplate(
+        buffer, pagesize=A4,
+        title=f'{_title(act, lang).capitalize()} N° {act.act_number}', author=act.commune,
+        subject=str(act._meta.verbose_name), creator='Mairy Project',
+    )
+    body_left, body_width = 20 * mm, page_w - 40 * mm
+    padding = dict(leftPadding=0, rightPadding=0, topPadding=0, bottomPadding=0)
+    doc.addPageTemplates([
+        PageTemplate('first', [Frame(body_left, margin, body_width, header_bottom - 3 * mm - margin, **padding)],
+                     onPage=first_page),
+        PageTemplate('later', [Frame(body_left, margin, body_width, top - 12 * mm - margin, **padding)],
+                     onPage=later_page),
+    ])
+
+    # Interlignes un peu resserrés : l'en-tête et le pied de page du modèle prennent de la place.
+    styles = {
+        **STYLES,
+        'heading': ParagraphStyle('framed_heading', parent=STYLES['heading'], spaceBefore=6, spaceAfter=3),
+        'body': ParagraphStyle('framed_body', parent=STYLES['body'], leading=14.5),
+        'notes': ParagraphStyle('framed_notes', parent=STYLES['notes'], leading=13),
+    }
+    layout = BUILDERS[type(act).__name__](act, styles, lang)
+    # Région, district, commune et N° d'acte figurent déjà dans l'en-tête du modèle.
+    story = [NextPageTemplate('later')]
+    for heading, flowables in layout['sections']:
+        story.append(Paragraph(heading, styles['heading']))
+        story.extend(flowables)
+    story.append(Footer())  # remplace les signatures : « Le Maire, Officier de l'Etat Civil » et le cachet
+    doc.build(story)
+    return buffer.getvalue()
+
+
 def _build_pdf(act, lang):
+    if type(act).__name__ in FRAMED_TEMPLATES:
+        return _build_framed_pdf(act, lang)
     buffer = io.BytesIO()
     doc = SimpleDocTemplate(
         buffer, pagesize=A4, leftMargin=20 * mm, rightMargin=20 * mm, topMargin=12 * mm, bottomMargin=12 * mm,

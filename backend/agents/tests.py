@@ -8,6 +8,7 @@ from espace.models import DossierRequest
 from fichiers.models import Folder
 
 from .models import AgentProfile
+from .pdf import TEMPLATE_BUILDERS
 
 PASSWORD = 'Un-mot-de-passe-solide-42'
 
@@ -853,7 +854,8 @@ class OtherGuichetsDocumentsTests(TestCase):
                 self.assertTrue(pdf.content.startswith(b'%PDF'))
                 pdf_fr = self.client.get(reverse('agents:document_pdf', args=[number, document.pk]), {'langue': 'fr'})
                 self.assertTrue(pdf_fr.content.startswith(b'%PDF'))
-                self.assertNotEqual(pdf.content, pdf_fr.content)
+                if model.__name__ not in TEMPLATE_BUILDERS:  # naissance et décès : modèle officiel, en français
+                    self.assertNotEqual(pdf.content, pdf_fr.content)
 
                 data = self.client.get(reverse('verify_document', args=[document.pk])).json()
                 self.assertTrue(data['is_authentic'])
