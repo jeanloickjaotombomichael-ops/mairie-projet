@@ -731,8 +731,8 @@ def _signatures(entries):
 
 
 # -- Actes de naissance et de décès : modèle officiel imprimé ------------------------------
-# Le PDF reprend à l'identique le modèle de la Commune (image de fond : en-tête, armoiries,
-# cachet, filigrane) et écrit les valeurs sur ses lignes pointillées. Toujours en français.
+# Le PDF reprend le modèle de la Commune (image de fond : en-tête, armoiries, cachet, filigrane),
+# libellés traduits en malgache (scripts/modeles_actes_mg.py), et écrit les valeurs sur ses pointillés.
 # Coordonnées en pixels de l'image modèle (1086 × 1448) : (début des pointillés, ligne des pointillés).
 TEMPLATES_DIR = Path(settings.BASE_DIR) / 'static' / 'mairy_admin' / 'actes'
 TEMPLATE_SIZE = (1086, 1448)
@@ -753,21 +753,21 @@ def _death_template(act):
     return {
         'image': 'acte_deces.jpg',
         'fields': [
-            ((862, 198), act.act_number, 1018),
-            ((312, 283), '', 376),
-            ((431, 590), f'{act.deceased_last_name.upper()} {act.deceased_first_names}', DOTS_END),
-            ((163, 626), sex, DOTS_END),
-            ((328, 660), _mg_date(act.deceased_birth_date), DOTS_END),
-            ((328, 695), act.deceased_birth_place, DOTS_END),
-            ((272, 735), _mg_date(died), DOTS_END),
-            ((291, 771), lettres_mg.time_digits(died), DOTS_END),
-            ((272, 806), act.death_place, DOTS_END),
-            ((421, 842), '', DOTS_END),  # cause du décès : non enregistrée
-            ((573, 907), act.spouse_name, DOTS_END),
-            ((220, 983), father, DOTS_END),
-            ((221, 1018), mother, DOTS_END),
+            ((869, 201), act.act_number, 1017),
+            ((333, 283), '', 397),  # boriborintany : rempli à la main
+            ((543, 591), f'{act.deceased_last_name.upper()} {act.deceased_first_names}', DOTS_END),
+            ((257, 627), sex, DOTS_END),
+            ((323, 661), _mg_date(act.deceased_birth_date), DOTS_END),
+            ((363, 696), act.deceased_birth_place, DOTS_END),
+            ((316, 736), _mg_date(died), DOTS_END),
+            ((307, 772), lettres_mg.time_digits(died), DOTS_END),
+            ((356, 807), act.death_place, DOTS_END),
+            ((500, 843), '', DOTS_END),  # antony nahafatesana : non enregistré
+            ((369, 908), act.spouse_name, DOTS_END),
+            ((209, 985), father, DOTS_END),
+            ((222, 1019), mother, DOTS_END),
         ],
-        'date': (1082, (330, 412), (440, 520), (548, 632)),
+        'date': (1083, (468, 543), (566, 641), (664, 754)),
         'signature': (856, 1300),
     }
 
@@ -782,9 +782,9 @@ FRAMED_TEMPLATES = {
     'BirthCertificate': {
         'image': 'acte_naissance.jpg',
         'header_cut': 485,           # en-tête : du haut jusqu'au filet « ooo » sous le titre
-        'footer_cut': 1040,          # pied de page : de « Fait à Mahajanga, le… » jusqu'en bas
-        'act_number': (872, 1018, 198),
-        'date': (1070, (328, 405), (424, 505), (526, 622)),
+        'footer_cut': 1040,          # pied de page : de « Natao teto Mahajanga, tamin'ny… » jusqu'en bas
+        'act_number': (881, 1013, 201),
+        'date': (1070, (450, 530), (552, 632), (654, 749)),
         'signature': (847, 1300),
     },
 }
